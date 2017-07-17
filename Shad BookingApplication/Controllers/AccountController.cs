@@ -73,13 +73,41 @@ namespace Shad_BookingApplication.Controllers
                 return View(model);
             }
 
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+
+            }
+            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
+
+                    var userID = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
+
+                    if (UserManager.IsInRole(userID, "Super_Admin"))
+                    {
+                        System.Web.HttpContext.Current.Session["Super_AdminID"] = userID;
+                        return RedirectToAction("Dashboard", "SuperAdmin");
+                    }
+                    else if (UserManager.IsInRole(userID, "Student"))
+                    {
+                        System.Web.HttpContext.Current.Session["StudentID"] = userID;
+                        return RedirectToAction("Dashboard", "Student_Dashboard");
+                    }
+                    else if (UserManager.IsInRole(userID, "Admin"))
+                    {
+                        System.Web.HttpContext.Current.Session["AdminID"] = userID;
+                        return RedirectToAction("Dashboard", "Admin_Dashboard");
+                    }
+
                     return RedirectToLocal(returnUrl);
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -90,6 +118,9 @@ namespace Shad_BookingApplication.Controllers
                     return View(model);
             }
         }
+
+
+     
 
         //
         // GET: /Account/VerifyCode
