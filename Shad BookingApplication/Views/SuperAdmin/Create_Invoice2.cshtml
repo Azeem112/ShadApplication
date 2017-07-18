@@ -1,0 +1,260 @@
+﻿
+@{
+    ViewBag.Title = "Create_Invoice2";
+    Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+}
+
+ <!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
+                <li class="active col-xs-5 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" aria-expanded="true" style="display: inline;" href="create-invoice.html">Create Invoices</a>
+                </li>
+                <li class="col-xs-5 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" aria-expanded="false" style="display: inline;" href="invoicelist.html">View Invoice</a>
+                </li>
+            </ul>
+        </div>
+
+        <!---------------- ----->
+        <!-- Modal -->
+        <!---- -->
+
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel-body pn">
+            <br><br>
+            <div class="row">
+
+                <div class="form-group col-md-12 col-xs-12 " style=" margin-left:3%; padding-bottom: 2%; background-color: #E0EFD9">
+
+                    <h3 class="col-md-12 col-xs-12 text-left"><strong>Invoice #0004 created successfully</strong></h3>
+                    <br>
+                    <a href="#" class="col-md-2 col-xs-2 text-left">
+                        <span class="glyphicon glyphicon-edit"> View-Invoice</span>
+                    </a>
+                    <a href="#" class="col-md-2 col-xs-2 text-left">
+                        <span class="glyphicon glyphicon-envelope"> Email-Invoice</span>
+                    </a>
+                    <a href="#" class="col-md-2 col-xs-2 text-left">
+                        <span class="glyphicon glyphicon-print"> Print-Invoice</span>
+                    </a>
+
+                </div>
+                <div style=" margin-left:3%; padding-bottom: 2%; background-color: black;">
+                    <h3 class="col-md-12 col-xs-12 text-left"><strong>Apply a payment now:</strong></h3>
+                    <br>
+                    <p class="col-md-12 col-xs-12 text-left">The invoice total is<strong> &euro; 50.00</strong> and the amount outstanding is <strong>&euro; 50.00</strong> </p>
+                    <br>
+                    <h3 class="col-md-12 col-xs-12 text-left" style="padding-bottom: 3%; "><strong>Choose payment type</strong></h3>
+                </div>
+
+            </div>
+            <div class="panel" style="width: 98%; margin-left: 1%; margin-top: 2%;">
+                <div class="panel-heading">
+
+                    <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
+                        <li class="active col-xs-4 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                            <a class="col-lg-12" href="#account" data-toggle="tab" aria-expanded="true" style="display: inline; padding: 10px 10px;">On Account</a>
+                        </li>
+                        <li class="col-xs-4 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                            <a class="col-lg-12" href="#Card" data-toggle="tab" aria-expanded="false" style="display: inline; padding: 10px 10px">Credit Card</a>
+                        </li>
+                        <li class="col-xs-4 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                            <a class="col-lg-12" href="#tab2_3" data-toggle="tab" aria-expanded="false" style="display: inline; padding: 10px 10px">On Cash</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-content pn br-n">
+                        <div id="account" class="tab-pane">
+                        </div>
+
+
+                        <div id="Card" class="tab-pane">
+                            <div class="col-md-12 col-xs-12">
+
+                                <div class="row form-group" style="padding: 0px; margin: 0px;">
+                                    <br>
+                                    <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Enter Amount</strong></label><br>
+
+                                    <div class="row form-group">
+
+
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">&euro;</span>
+                                                <input type="text" class="form-control" placeholder="50.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group" style="padding: 0px; margin: 0px;">
+                                    <br>
+                                    <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Confirm Payment Date</strong></label><br>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-12 col-lg-12 col-xs-12">
+                                            <div class="input-group">
+                                                <input type="Date" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row form-group col-md-12" style="padding: 0px; margin: 0px;">
+                                    <br>
+                                    <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Reference(optional)</strong></label><br>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12 " style="margin-left: 0; padding-left: 0">
+                                            <div class="input-group col-md-12">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab2_3" class="tab-pane">
+
+                            <div class="col-md-12 col-xs-12">
+
+                                <div class="row form-group" style="padding: 0px; margin: 0px;">
+                                    <br>
+                                    <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Enter Amount</strong></label><br>
+
+                                    <div class="row form-group">
+
+
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">&euro;</span>
+                                                <input type="text" class="form-control" placeholder="50.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group" style="padding: 0px; margin: 0px;">
+                                    <br>
+                                    <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Confirm Payment Date</strong></label><br>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-12 col-lg-12 col-xs-12">
+                                            <div class="input-group">
+                                                <input type="Date" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row form-group col-md-12" style="padding: 0px; margin: 0px;">
+                                    <br>
+                                    <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Reference(optional)</strong></label><br>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12 " style="margin-left: 0; padding-left: 0">
+                                            <div class="input-group col-md-12">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-offset-8 col-xs-offset-3 col-xs-12" style="margin-top: 2%">
+                    <div class="col-md-12 col-xs-12">
+                        <button type="submit" class="btn btn-default col-md-3 col-xs-4"
+                                style="border-radius:3px;">
+                            Cancel
+                        </button>
+                        <a href="create-invoice2.html" type="submit" class="btn btn-primary col-md-3 col-md-offset-1 col-xs-offset-1 col-xs-4"
+                           style="border-radius:3px;">
+                            Save
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br><br><br>
+            <!-- End: Content -->
+            <!-- Begin: Page Footer -->
+            <footer id="content-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="footer-legal">© 2017 PlateformeRDV</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End: Page Footer -->
+
+</section>
+<!-- End: Content-Wrapper -->
+
+<!-- Screen Animation -->
+
+<script type="text/javascript">
+            jQuery(document).ready(function () {
+
+                "use strict";
+
+                // Init Theme Core
+                Core.init();
+
+                // Init Demo JS
+                Demo.init();
+
+                var modalContent = $('#modal-content');
+
+                modalContent.on('click', '.holder-style', function (e) {
+                    e.preventDefault();
+
+                    modalContent.find('.holder-style').removeClass('holder-active');
+                    $(this).addClass('holder-active');
+                });
+
+                function findActive() {
+                    var activeModal = modalContent.find('.holder-active').attr('href');
+                    return activeModal;
+                };
+
+                // Form Skin Switcher
+                $('#animation-switcher button').on('click', function () {
+                    $('#animation-switcher').find('button').removeClass('active-animation');
+                    $(this).addClass('active-animation item-checked');
+
+                    // Inline Admin-Form example
+                    $.magnificPopup.open({
+                        removalDelay: 500, //delay removal by X to allow out-animation,
+                        items: {
+                            src: findActive()
+                        },
+                        // overflowY: 'hidden', //
+                        callbacks: {
+                            beforeOpen: function (e) {
+                                var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
+                                this.st.mainClass = Animation;
+                            }
+                        },
+                        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                    });
+
+                });
+
+            });
+</script>
+
+

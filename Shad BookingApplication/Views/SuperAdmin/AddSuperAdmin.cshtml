@@ -1,0 +1,438 @@
+﻿
+@{
+    ViewBag.Title = "AddSuperAdmin";
+    Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+}
+
+<section id="content_wrapper">
+    <!-- Start: Topbar-Dropdown -->
+    <div id="topbar-dropmenu">
+        <div class="topbar-menu row">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                    <p class="metro-title">Messages</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-user"></span>
+                    <p class="metro-title">Users</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                    <p class="metro-title">Support</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon fa fa-gears"></span>
+                    <p class="metro-title">Settings</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                    <p class="metro-title">Videos</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-picture"></span>
+                    <p class="metro-title">Pictures</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb" style="text-align: center;">
+                <h3>New User</h3>
+            </ol>
+        </div>
+        <div class="topbar-right">
+            <a href="" class="btn btn-success">Save</a>
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <div style="width: 80%;margin-left: 10%">
+        <br><br>
+        <div class="tab-pane">
+            <div class="row">
+                <div class="row form-group required">
+                    <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
+                    <div class="col-md-8 col-xs-12">
+                        <input type="email" class="form-control" placeholder="Enter Email here" required="required">
+                    </div>
+                </div>
+                <div class="row form-group required">
+                    <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
+                    <div class="col-md-8 col-xs-12">
+                        <input type="password" class="form-control" placeholder="Provide password" required="required">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
+                    <div class="col-md-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="Enter Full name here">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 col-xs-12 text-right">Phone:</label>
+                    <div class="col-md-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="Enter Phone Number name here">
+                    </div>
+                </div>
+                <div class="row form-group ">
+                    <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
+                    <div class="col-md-8 col-xs-12">
+                        <select class="form-control" onchange="calculate()" id="tax" style="margin-bottom: 3%;">
+                            <option selected disabled value="0.00">-Select Status-</option>
+                            <option value="">Active</option>
+                            <option value="">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer" class="affix">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 Plateforme RDV</span>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+</section>
+<!-- end: Content-Wrapper -->
+
+
+<style>
+    /* demo page styles */
+    .admin-form .panel.heading-border:before,
+    .admin-form .panel .heading-border:before {
+        transition: all 0.7s ease;
+    }
+</style>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    "use strict";
+
+    // Init Theme Core
+    Core.init();
+
+    // Init Demo JS
+    Demo.init();
+
+    // Init DataTables
+    $('#datatable').dataTable({
+      "sDom": 't<"dt-panelfooter clearfix"ip>',
+      "oTableTools": {
+        "sSwfPath": "vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+      }
+    });
+
+    $('#datatable2').dataTable({
+      "aoColumnDefs": [{
+        'bSortable': false,
+        'aTargets': [-1]
+      }],
+      "oLanguage": {
+        "oPaginate": {
+          "sPrevious": "",
+          "sNext": ""
+        }
+      },
+      "iDisplayLength": 5,
+      "aLengthMenu": [
+        [5, 10, 25, 50, -1],
+        [5, 10, 25, 50, "All"]
+      ],
+      "sDom": 't<"dt-panelfooter clearfix"ip>',
+      "oTableTools": {
+        "sSwfPath": "vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+      }
+    });
+
+    $('#datatable3').dataTable({
+      "aoColumnDefs": [{
+        'bSortable': false,
+        'aTargets': [-1]
+      }],
+      "oLanguage": {
+        "oPaginate": {
+          "sPrevious": "",
+          "sNext": ""
+        }
+      },
+      "iDisplayLength": 5,
+      "aLengthMenu": [
+        [5, 10, 25, 50, -1],
+        [5, 10, 25, 50, "All"]
+      ],
+      "sDom": 't<"dt-panelfooter clearfix"ip>',
+      "oTableTools": {
+        "sSwfPath": "vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+      }
+    });
+
+    $('#datatable4').dataTable({
+      "aoColumnDefs": [{
+        'bSortable': false,
+        'aTargets': [-1]
+      }],
+      "oLanguage": {
+        "oPaginate": {
+          "sPrevious": "",
+          "sNext": ""
+        }
+      },
+      "iDisplayLength": 5,
+      "aLengthMenu": [
+        [5, 10, 25, 50, -1],
+        [5, 10, 25, 50, "All"]
+      ],
+      "sDom": 'T<"panel-menu dt-panelmenu"lfr><"clearfix">tip',
+
+      "oTableTools": {
+        "sSwfPath": "vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+      }
+    });
+
+    // Multi-Column Filtering
+    $('#datatable5 thead th').each(function() {
+      var title = $('#datatable5 tfoot th').eq($(this).index()).text();
+      $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');
+    });
+
+    // DataTable
+    var table5 = $('#datatable5').DataTable({
+      "sDom": 't<"dt-panelfooter clearfix"ip>',
+      "ordering": false
+    });
+
+    // Apply the search
+    table5.columns().eq(0).each(function(colIdx) {
+      $('input', table5.column(colIdx).header()).on('keyup change', function() {
+        table5
+          .column(colIdx)
+          .search(this.value)
+          .draw();
+      });
+    });
+
+    // ABC FILTERING
+    var table6 = $('#datatable6').DataTable({
+      "sDom": 't<"dt-panelfooter clearfix"ip>',
+      "ordering": false
+    });
+
+    var alphabet = $('<div class="dt-abc-filter"/>').append('<span class="abc-label">Search: </span> ');
+    var columnData = table6.column(0).data();
+    var bins = bin(columnData);
+
+    $('<span class="active"/>')
+      .data('letter', '')
+      .data('match-count', columnData.length)
+      .html('None')
+      .appendTo(alphabet);
+
+    for (var i = 0; i < 26; i++) {
+      var letter = String.fromCharCode(65 + i);
+
+      $('<span/>')
+        .data('letter', letter)
+        .data('match-count', bins[letter] || 0)
+        .addClass(!bins[letter] ? 'empty' : '')
+        .html(letter)
+        .appendTo(alphabet);
+    }
+
+    $('#datatable6').parents('.panel').find('.panel-menu').addClass('dark').html(alphabet);
+
+    alphabet.on('click', 'span', function() {
+      alphabet.find('.active').removeClass('active');
+      $(this).addClass('active');
+
+      _alphabetSearch = $(this).data('letter');
+      table6.draw();
+    });
+
+    var info = $('<div class="alphabetInfo"></div>')
+      .appendTo(alphabet);
+
+    var _alphabetSearch = '';
+
+    $.fn.dataTable.ext.search.push(function(settings, searchData) {
+      if (!_alphabetSearch) {
+        return true;
+      }
+      if (searchData[0].charAt(0) === _alphabetSearch) {
+        return true;
+      }
+      return false;
+    });
+
+    function bin(data) {
+      var letter, bins = {};
+      for (var i = 0, ien = data.length; i < ien; i++) {
+        letter = data[i].charAt(0).toUpperCase();
+
+        if (bins[letter]) {
+          bins[letter]++;
+        } else {
+          bins[letter] = 1;
+        }
+      }
+      return bins;
+    }
+
+    // ROW GROUPING
+    var table7 = $('#datatable7').DataTable({
+      "columnDefs": [{
+        "visible": false,
+        "targets": 2
+      }],
+      "order": [
+        [2, 'asc']
+      ],
+      "sDom": 't<"dt-panelfooter clearfix"ip>',
+      "displayLength": 25,
+      "drawCallback": function(settings) {
+        var api = this.api();
+        var rows = api.rows({
+          page: 'current'
+        }).nodes();
+        var last = null;
+
+        api.column(2, {
+          page: 'current'
+        }).data().each(function(group, i) {
+          if (last !== group) {
+            $(rows).eq(i).before(
+              '<tr class="row-label ' + group.replace(/ /g, '').toLowerCase() + '"><td colspan="5">' + group + '</td></tr>'
+            );
+            last = group;
+          }
+        });
+      }
+    });
+
+    // Order by the grouping
+    $('#datatable7 tbody').on('click', 'tr.row-label', function() {
+      var currentOrder = table7.order()[0];
+      if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+        table7.order([2, 'desc']).draw();
+      } else {
+        table7.order([2, 'asc']).draw();
+      }
+    });
+
+    $('#datatable8').DataTable({
+      "sDom": 'Rt<"dt-panelfooter clearfix"ip>',
+    });
+
+        // COLLAPSIBLE ROWS
+        function format ( d ) {
+        //  d  is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+          '<td class="fw600 pr10">Full name:</td>'+
+          '<td>'+d.name+'</td>'+
+        '</tr>'+
+        '<tr>'+
+          '<td class="fw600 pr10">Extension:</td>'+
+          '<td>'+d.extn+'</td>'+
+        '</tr>'+
+        '<tr>'+
+          '<td class="fw600 pr10">Extra info:</td>'+
+          '<td>And any further details here (images etc)...</td>'+
+        '</tr>'+
+      '</table>';
+        }
+
+    var table = $('#datatable9').DataTable({
+      "sDom": 'Rt<"dt-panelfooter clearfix"ip>',
+      "ajax": "vendor/plugins/datatables/examples/data_sources/objects.txt",
+      "columns": [
+        {
+          "className":      'details-control',
+          "orderable":      false,
+          "data":           null,
+          "defaultContent": ''
+        },
+        { "data": "name" },
+        { "data": "position" },
+        { "data": "office" },
+        { "data": "salary" }
+      ],
+      "order": [[1, 'asc']]
+    });
+
+    // Add event listener for opening and closing details
+    $('#datatable9 tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+
+      if ( row.child.isShown() ) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        // Open this row
+        row.child( format(row.data()) ).show();
+        tr.addClass('shown');
+      }
+    });
+
+
+    // MISC DATATABLE HELPER FUNCTIONS
+
+    // Add Placeholder text to datatables filter bar
+    $('.dataTables_filter input').attr("placeholder", "Enter Terms...");
+
+
+  });
+window.onload = function() {
+ var newWidth = (document.getElementById('datatable3').clientWidth * 1);
+  $(".dt-panelmenu").css({
+    "maxWidth": newWidth
+  });
+
+   $(".dt-panelfooter").css({
+    "maxWidth": newWidth
+  });
+};
+
+
+window.onresize = function() {
+  var newWidth = (document.getElementById('datatable3').clientWidth * 1);
+  $(".dt-panelmenu").css({
+    "maxWidth": newWidth
+  });
+
+   $(".dt-panelfooter").css({
+    "maxWidth": newWidth
+  });
+}
+
+
+
+</script>
+
+

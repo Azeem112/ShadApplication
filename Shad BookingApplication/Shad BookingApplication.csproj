@@ -734,7 +734,23 @@
     <Content Include="vendor\plugins\slick\fonts\slick.ttf" />
     <Content Include="vendor\plugins\slick\fonts\slick.woff" />
     <Content Include="vendor\plugins\slick\fonts\slickd41d.eot" />
+    <Content Include="Views\Shared\_MainHeader.cshtml" />
+    <Content Include="Views\Shared\_SuperAdminNavigationBar.cshtml" />
     <Content Include="Views\SuperAdmin\Dashboard.cshtml" />
+    <Content Include="Views\SuperAdmin\UserList.cshtml" />
+    <Content Include="Views\SuperAdmin\AddSuperAdmin.cshtml" />
+    <Content Include="Views\SuperAdmin\AddItem.cshtml" />
+    <Content Include="Views\SuperAdmin\LoginDetails.cshtml" />
+    <Content Include="Views\SuperAdmin\OptionsOk.cshtml" />
+    <Content Include="Views\SuperAdmin\EditCustomer.cshtml" />
+    <Content Include="Views\SuperAdmin\AddCustomer.cshtml" />
+    <Content Include="Views\SuperAdmin\Create_Invoice.cshtml" />
+    <Content Include="Views\SuperAdmin\Create_Invoice2.cshtml" />
+    <Content Include="Views\SuperAdmin\CustomersList.cshtml" />
+    <Content Include="Views\SuperAdmin\InvoiceList.cshtml" />
+    <Content Include="Views\SuperAdmin\InvoiceOption.cshtml" />
+    <Content Include="Views\SuperAdmin\InvoiceTemplate.cshtml" />
+    <Content Include="Views\SuperAdmin\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

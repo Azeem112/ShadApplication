@@ -34,5 +34,73 @@ namespace Shad_BookingApplication.Controllers
         {
             return View();
         }
+
+        public ActionResult UserList()
+        {
+            return View();
+        }
+        public ActionResult AddSuperAdmin()
+        {
+            return View();
+        }
+
+        public ActionResult AddItem()
+        {
+            return View();
+        }
+
+        public ActionResult LoginDetails()
+        {
+            return View();
+        }
+
+        public ActionResult OptionsOk()
+        {
+            return View();
+        }
+
+        public ActionResult EditCustomer()
+        {
+            return View();
+        }
+
+        public ActionResult AddCustomer()
+        {
+            return View();
+        }
+
+        public ActionResult Create_Invoice()
+        {
+            return View();
+        }
+        public ActionResult Create_Invoice2()
+        {
+            return View();
+        }
+        public ActionResult CustomersList()
+        {
+            return View();
+        }
+        public ActionResult InvoiceList()
+        {
+            return View();
+        }
+        public ActionResult InvoiceOption()
+        {
+            return View();
+        }
+
+        public ActionResult InvoiceTemplate()
+        {
+            return View();
+        }
+
+        public ActionResult ItemList()
+        {
+            return View();
+        }
+
+   
+
     }
 }

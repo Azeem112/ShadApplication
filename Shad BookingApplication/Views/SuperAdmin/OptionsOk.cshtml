@@ -1,0 +1,1126 @@
+﻿
+@{
+    ViewBag.Title = "OptionsOk";
+    Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+}
+
+<style type="text/css">
+    .stylish-input-group .input-group-addon {
+        background: white !important;
+    }
+
+    .stylish-input-group .form-control {
+        border-right: 0;
+        box-shadow: 0 0 0;
+        border-color: #ccc;
+    }
+
+    .stylish-input-group button {
+        border: 0;
+        background: transparent;
+    }
+
+    div#datatable12_filter.dataTables_filter label {
+        display: none;
+    }
+
+    div#datatable2_filter.dataTables_filter label {
+        display: none;
+    }
+
+    div#datatable22_filter.dataTables_filter label {
+        display: none;
+    }
+</style>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    #dataTable3 {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+        #dataTable3 th, #dataTable3 td {
+            text-align: left;
+        }
+
+        #dataTable3 tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+            #dataTable3 tr.header, #dataTable3 tr:hover {
+                background-color: #f1f1f1;
+            }
+</style>
+
+
+
+                                                            <!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+    <h1>HHHHHHHH</h1>
+    <header id="topbar">
+        <div class="alert alert-info" style="margin-bottom: 0">
+            <span class="glyphicon glyphicon-info-sign" style="font-size: 16px; top: 3px"></span>
+            <strong id="headinggg">Backup:</strong>
+            <b id="desccc">We recommend you to regularly backup your database and files to prevent any loss of information.</b>
+        </div>
+    </header>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
+                <li class="active col-xs-3 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" href="#tab2_1" data-toggle="tab" aria-expanded="true" style="display: inline; padding: 10px 10px;" onclick="changeee(1)">Backup</a>
+                </li>
+                <li class="col-xs-3 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" href="#tab2_2" data-toggle="tab" aria-expanded="false" style="display: inline; padding: 10px 10px" onclick="changeee(2)">Countries</a>
+                </li>
+                <li class="col-xs-3 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" href="#tab2_3" data-toggle="tab" aria-expanded="false" style="display: inline; padding: 10px 10px" onclick="changeee(3)">Languages</a>
+                </li>
+                <li class="col-xs-3 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" href="#tab2_4" data-toggle="tab" aria-expanded="false" style="display: inline; padding: 10px 10px" onclick="changeee(4)">SMS</a>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content pn br-n">
+                <div id="tab2_1" class="tab-pane active">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title" style="background-color: rgb(0,52,102); color: white; padding-left: 5%; padding-right: 10%; padding-top: 1%; padding-bottom: 1%"><b>Backup</b></span>
+                        </div>
+                        <div class="panel-body">
+
+                            <form class="form-horizontal" role="form">
+                                <div class="row form-group">
+                                    <label class="col-md-3 text-left">Backup Database</label>
+                                    <input type="checkbox" id="checkboxDefault1">
+                                </div>
+
+                                <div class="row form-group">
+                                    <label class="col-md-3 text-left">Backup Files</label>
+                                    <input type="checkbox" id="checkboxDefault2">
+                                </div>
+
+                                <button type="submit" class="btn btn-default pull-left col-md-1" style="margin-right:90px;border-radius:3px;">Backup</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-body pn">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending" style="width: 5%;">
+                                            <center><input type="checkbox" id="checkboxDefault1"></center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Position: activate to sort column ascending" style="width: 25%;">
+                                            <center>Date/time</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 25%;">
+                                            <center>Type</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 20%;">
+                                            <center>Size</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 20%;">
+                                            <center>File</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 5%;">
+                                            <center></center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myCustomers1"></tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success pull-right col-md-2 col-xs-4 col-sm-3" style="margin-right:90px;border-radius:3px; margin-bottom: 12%; margin-top: 3%; background-color: rgb(99,196,99);">Save</button>
+                </div>
+
+
+                <div id="tab2_2" class="tab-pane">
+                    <header id="topbar">
+
+                        <button class="btn btn-success topbar-right col-xs-5 col-md-2" style="background-color: rgb(97,194,97);">+ Add Country</button>
+                    </header>
+                    <!-- Begin: Content -->
+                    <div class="panel">
+                        <div class="panel-body">
+
+                            <section id="content" class="table-layout">
+                                <!-- Start: Header -->
+                                <!-- End: Header -->
+
+                                <div class="col-md-12" style="display: block;">
+                                    <div class="panel panel-visible" id="spy2">
+                                        <div class="panel-body pn">
+                                            <div class="panel panel-visible" id="spy3">
+                                                <div class="panel-body pn">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" id="datatable12" cellspacing="0" width="100%">
+                                                            <thead>
+                                                                <tr role="row">
+                                                                    <th class="sorting_asc" tabindex="0" aria-controls="datatable12" rowspan="1"
+                                                                        colspan="1" aria-sort="ascending"
+                                                                        aria-label="Name: activate to sort column descending" style="width: 5%;">
+                                                                        <center><input type="checkbox" id="checkboxDefault1"></center>
+                                                                    </th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="datatable12" rowspan="1" colspan="1"
+                                                                        aria-label="Position: activate to sort column ascending" style="width: 50%;">
+                                                                        <center> Country Name</center>
+                                                                    </th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="datatable12" rowspan="1" colspan="1"
+                                                                        aria-label="Office: activate to sort column ascending" style="width: 15%;">
+                                                                        <center>  Alpha 2</center>
+                                                                    </th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="datatable12" rowspan="1" colspan="1"
+                                                                        aria-label="Office: activate to sort column ascending" style="width: 15%;">
+                                                                        <center> Alpha 3</center>
+                                                                    </th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="datatable12" rowspan="1" colspan="1"
+                                                                        aria-label="Age: activate to sort column ascending" style="width: 5%;">
+                                                                        <center>  Status </center>
+                                                                    </th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="datatable12" rowspan="1" colspan="1"
+                                                                        aria-label="Age: activate to sort column ascending" style="width: 10%;">
+                                                                        <center></center>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="myCustomers2">
+
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Afghanistan</center></td>
+                                                                    <td><center>AF</center></td>
+                                                                    <td><center>AFG</center></td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>France</center></td>
+                                                                    <td><center>FR</center></td>
+                                                                    <td><center>FRA</center></td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Australia</center></td>
+                                                                    <td><center>AU</center></td>
+                                                                    <td><center>AUS</td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Australia</center></td>
+                                                                    <td><center>AU</center></td>
+                                                                    <td><center>AUS</td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Australia</center></td>
+                                                                    <td><center>AU</center></td>
+                                                                    <td><center>AUS</td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Australia</center></td>
+                                                                    <td><center>AU</center></td>
+                                                                    <td><center>AUS</td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Australia</center></td>
+                                                                    <td><center>AU</center></td>
+                                                                    <td><center>AUS</td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+
+                                                                </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td><center><input type="checkbox" id="checkboxDefault1"></center></td>
+                                                                    <td class="sorting_1"><center>Australia</center></td>
+                                                                    <td><center>AU</center></td>
+                                                                    <td><center>AUS</td>
+                                                                    <td><center> <button type="button" class="btn active btn-dark btn-block" style="width: 50%">Active</button></center></td>
+                                                                    <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- End: Content -->
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="tab2_3" class="tab-pane">
+                    <div class="panel-heading">
+                        <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
+                            <li class="active col-xs-3 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                                <a class="col-lg-12" href="#tab3_1" data-toggle="tab" aria-expanded="true" style="display: inline; padding: 10px 10px;" onclick="changeee(3)">Languages</a>
+                            </li>
+                            <li class="col-xs-3 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                                <a class="col-lg-12" href="#tab3_2" data-toggle="tab" aria-expanded="false" style="display: inline; padding: 10px 10px" onclick="changeee(5)">Translation</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content pn br-n">
+                            <div id="tab3_1" class="tab-pane active">
+                                <div class="panel">
+                                    <!-- Begin: Content -->
+                                    <div class="panel-body">
+
+                                        <section id="content" class="table-layout">
+                                            <!-- Start: Header -->
+                                            <!-- End: Header -->
+
+                                            <div class="col-md-12" style="display: block;">
+                                                <div class="panel panel-visible" id="spy2">
+                                                    <div class="panel-body pn">
+                                                        <div class="panel panel-visible" id="spy3">
+                                                            <div class="panel-body pn">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" id="datatable22" cellspacing="0" width="100%">
+                                                                        <thead>
+                                                                            <tr role="row">
+                                                                                <th class="sorting_asc" tabindex="0" aria-controls="datatable22" rowspan="1"
+                                                                                    colspan="1" aria-sort="ascending"
+                                                                                    aria-label="Name: activate to sort column descending" style="width: 5%;">
+                                                                                    <center>Language</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Position: activate to sort column ascending" style="width: 50%;">
+                                                                                    <center>Front-end Title</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Office: activate to sort column ascending" style="width: 15%;">
+                                                                                    <center>Flag</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Office: activate to sort column ascending" style="width: 15%;">
+                                                                                    <center></center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Age: activate to sort column ascending" style="width: 15%;">
+                                                                                    <center>Text direction</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Age: activate to sort column ascending" style="width: 10%;">
+                                                                                    <center>Is default</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Age: activate to sort column ascending" style="width: 10%;">
+                                                                                    <center>Order</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable22" rowspan="1" colspan="1"
+                                                                                    aria-label="Age: activate to sort column ascending" style="width: 10%;">
+                                                                                    <center></center>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="myCustomers">
+
+                                                                            <tr role="row" class="odd">
+                                                                                <td class="sorting_1"><center>English (United Kingdom)</center></td>
+                                                                                <td><center>English (United Kingdom)</center></td>
+                                                                                <td><center><img src="img/uk.png"></center></td>
+                                                                                <td><center><button type="button" class="btn btn-default" aria-label="Left Align"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span></button></center></td>
+                                                                                <td><center>Left to Right</center></td>
+                                                                                <td><center><button type="button" class="btn btn-default btn-sm" style="background-color: green"><span class="glyphicon glyphicon-ok" style="color: white"></span></button></center></td>
+                                                                                <td><center>1</center></td>
+                                                                                <td><center></center></td>
+                                                                            </tr>
+
+                                                                            <tr role="row" class="odd">
+                                                                                <td class="sorting_1"><center>Dutch (Netherlands)</center></td>
+                                                                                <td><center>Nederland (Nederland)</center></td>
+                                                                                <td><center><img src="img/netherlands.png"></center></td>
+                                                                                <td><center><button type="button" class="btn btn-default" aria-label="Left Align"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span></button></center></td>
+                                                                                <td><center>Left to Right</center></td>
+                                                                                <td><center><button type="button" class="btn btn-default btn-sm" style="background-color: rgb(197,197,197);"><span class="glyphicon glyphicon-remove" style="color: white"></span></button></center></td>
+                                                                                <td><center>2</center></td>
+                                                                                <td><center><button type="button" class="btn btn-default btn-sm" style="background-color: white"><span class="glyphicon glyphicon-remove" style="color: rgb(197,197,197);"></span></button></center></td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <!-- End: Content -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="tab3_2" class="tab-pane">
+
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <span class="panel-title" style="background-color: rgb(0,52,102); color: white; padding-left: 5%; padding-right: 10%; padding-top: 1%; padding-bottom: 1%"><b>Show IDs</b></span>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <form class="form-horizontal" role="form">
+                                            <div class="row form-group">
+                                                <label class="col-md-3 text-left">Show IDs</label>
+                                                <input type="checkbox" id="checkboxDefault1">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-default pull-left col-md-1" style="margin-right:90px;border-radius:3px;">Save</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="panel">
+                                    <!-- Begin: Content -->
+                                    <div class="panel-body">
+
+                                        <section id="content" class="table-layout">
+                                            <!-- Start: Header -->
+                                            <!-- End: Header -->
+
+                                            <div class="col-md-12" style="display: block;">
+                                                <div class="panel panel-visible" id="spy2">
+                                                    <div class="panel-body pn">
+                                                        <div class="panel panel-visible" id="spy3">
+                                                            <div class="panel-body pn">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" id="datatable52" cellspacing="0" width="100%">
+                                                                        <thead>
+                                                                            <tr role="row">
+                                                                                <th class="sorting_asc" tabindex="0" aria-controls="datatable52" rowspan="1"
+                                                                                    colspan="1" aria-sort="ascending"
+                                                                                    aria-label="Name: activate to sort column descending" style="width: 8%;">
+                                                                                    <center>ID:</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable52" rowspan="1" colspan="1"
+                                                                                    aria-label="Position: activate to sort column ascending" style="width: 23%;">
+                                                                                    <center>English (United Kingdom) - default</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable52" rowspan="1" colspan="1"
+                                                                                    aria-label="Office: activate to sort column ascending" style="width: 23%;">
+                                                                                    <center>Dutch (Netherlands)</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable52" rowspan="1" colspan="1"
+                                                                                    aria-label="Office: activate to sort column ascending" style="width: 23%;">
+                                                                                    <center>Spanish (Spain, International Sort)</center>
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0" aria-controls="datatable52" rowspan="1" colspan="1"
+                                                                                    aria-label="Age: activate to sort column ascending" style="width: 23%;">
+                                                                                    <center>Field</center>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="myCustomers">
+
+                                                                            <tr role="row" class="odd">
+                                                                                <td class="sorting_1"><center>:1:</center></td>
+                                                                                <td><input type="text" class="form-control" id="ukLan" style="border-radius: 5px;" placeholder="Add language"></td>
+                                                                                <td><input type="text" class="form-control" id="duLan" style="border-radius: 5px;" placeholder="Add language"></td>
+                                                                                <td><input type="text" class="form-control" id="spLan" style="border-radius: 5px;" placeholder="Add language"></td>
+                                                                                <td><center>Add Language</center></td>
+                                                                            </tr>
+
+                                                                            <tr role="row" class="odd">
+                                                                                <td class="sorting_1"><center>:2:</center></td>
+                                                                                <td><input type="text" class="form-control" id="ukpa" style="border-radius: 5px;" placeholder="Password reminder"></td>
+                                                                                <td><input type="text" class="form-control" id="dupa" style="border-radius: 5px;" placeholder="Password reminder"></td>
+                                                                                <td><input type="text" class="form-control" id="sppa" style="border-radius: 5px;" placeholder="Password reminder"></td>
+                                                                                <td><center>Forgot password</center></td>
+                                                                            </tr>
+
+                                                                            <tr role="row" class="odd">
+                                                                                <td class="sorting_1"><center>:3:</center></td>
+                                                                                <td><input type="text" class="form-control" id="ukLan" style="border-radius: 5px;" placeholder="Admin Login"></td>
+                                                                                <td><input type="text" class="form-control" id="duLan" style="border-radius: 5px;" placeholder="Admin Login"></td>
+                                                                                <td><input type="text" class="form-control" id="spLan" style="border-radius: 5px;" placeholder="Admin Login"></td>
+                                                                                <td><center>Admin Login</center></td>
+                                                                            </tr>
+
+                                                                            <tr role="row" class="odd">
+                                                                                <td class="sorting_1"><center>:4:</center></td>
+                                                                                <td><input type="text" class="form-control" id="ukLan" style="border-radius: 5px;" placeholder="Back-end titles"></td>
+                                                                                <td><input type="text" class="form-control" id="duLan" style="border-radius: 5px;" placeholder="Back-end titles"></td>
+                                                                                <td><input type="text" class="form-control" id="spLan" style="border-radius: 5px;" placeholder="Back-end titles"></td>
+                                                                                <td><center>Backend titles</center></td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <!-- End: Content -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2_4" class="tab-pane">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title" style="background-color: rgb(0,52,102); color: white; padding-left: 5%; padding-right: 10%; padding-top: 1%; padding-bottom: 1%"><b>SMS Config</b></span>
+                        </div>
+                        <div class="panel-body">
+
+                            <form class="form-horizontal" role="form">
+                                <div class="row form-group">
+                                    <label class="col-md-3 text-left">API Key</label>
+                                    <input type="text" class="form-control" id="apiKey" style="border-radius: 5px; width: 50%">
+                                </div>
+
+                                <button type="submit" class="btn btn-success pull-left col-md-1 col-md-offset-3" style="margin-right:90px;border-radius:3px;">Save</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-body pn">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="datatable42" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="datatable42" rowspan="1" colspan="1"
+                                            aria-label="Position: activate to sort column ascending" style="width: 10%;">
+                                            Date/Time sent
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable42" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 20%;">
+                                            Phone number
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable42" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 40%;">
+                                            Message
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable42" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 20%;">
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myCustomers1"></tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Begin: Page Footer -->
+                <footer id="content-footer" class="affix">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="footer-legal">© 2017 Plateforme RDV</span>
+                        </div>
+
+                    </div>
+                </footer>
+                <!-- End: Page Footer -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<style>
+    /* demo page styles */
+    .admin-form .panel.heading-border:before,
+    .admin-form .panel .heading-border:before {
+        transition: all 0.7s ease;
+    }
+</style>
+
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")"></script>
+
+
+<script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+            var modalContent = $('#modal-content');
+
+            modalContent.on('click', '.holder-style', function (e) {
+                e.preventDefault();
+
+                modalContent.find('.holder-style').removeClass('holder-active');
+                $(this).addClass('holder-active');
+            });
+
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
+
+            // Form Skin Switcher
+            $('#animation-switcher button').on('click', function () {
+                $('#animation-switcher').find('button').removeClass('active-animation');
+                $(this).addClass('active-animation item-checked');
+
+                // Inline Admin-Form example
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: findActive()
+                    },
+                    // overflowY: 'hidden', //
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
+                            this.st.mainClass = Animation;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+
+            });
+
+        });
+</script>
+
+
+<script type="text/javascript">
+  function changeee(id)
+  {
+    if (id == 1)
+    {
+      document.getElementById("headinggg").innerHTML = "Backup:";
+      document.getElementById("desccc").innerHTML = "We recommend you to regularly backup your database and files to prevent any loss of information.";
+  }
+  else
+      if (id == 2)
+      {
+        document.getElementById("headinggg").innerHTML = "Manage countries:";
+        document.getElementById("desccc").innerHTML = "Use grid below to organize your country list";
+    }
+    else
+        if (id == 3)
+        {
+          document.getElementById("headinggg").innerHTML = "Languages:";
+          document.getElementById("desccc").innerHTML = "Add as many languages as you need to your script. For each of the languages added you need to translate all the text titles.";
+      }
+      else
+          if (id == 4)
+          {
+              document.getElementById("headinggg").innerHTML = "SMS:";
+              document.getElementById("desccc").innerHTML = "SMS configuration for the whole system ";
+          }
+          else
+              if (id == 5)
+              {
+                  document.getElementById("headinggg").innerHTML = "Titles:";
+                  document.getElementById("desccc").innerHTML = "Using the form below you can edit all the text in the software.<br>Each piece of tex used in this software is saved in database and has its own unique ID. In the first column below you can see the ID for each piece of text. To show these IDs in the script itself check the &quot;Show IDs&quot; checkbox and click save button net to it. This will show the corresponding :ID: for each text message. Please, note that ONLY you will see these IDs. Now you can search for any ID and easily change and/or translate the text. Have in the mind that you should use : before and after the ID when you search for it.";
+              }
+          }
+          function myFunction() {
+              var input, filter, table, table2, tr, td, tr2, td2, i;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              table = document.getElementById("datatable12");
+              table2 = document.getElementById("datatable22");
+              tr = table.getElementsByTagName("tr");
+              tr2 = table2.getElementsByTagName("tr");
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+              for (i = 0; i < tr2.length; i++) {
+                td2 = tr2[i].getElementsByTagName("td")[0];
+                if (td2) {
+                  if (td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr2[i].style.display = "";
+                } else {
+                    tr2[i].style.display = "none";
+                }
+            }
+        }
+    }
+    jQuery(document).ready(function() {
+
+        "use strict";
+
+                    // Init Theme Core
+                    Core.init();
+
+                    // Init Demo JS
+                    Demo.init();
+
+                    // Init DataTables
+                    $('#datatable').dataTable({
+                      "sDom": 't<"dt-panelfooter clearfix"ip>',
+                      "oTableTools": {
+                        "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                    }
+                });
+
+                    $('#datatable2').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't<"dt-panelmenu clearfix"lfr><"dt-panelfooter clearfix"ip>',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+                    $('#datatable12').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't<"dt-panelmenu clearfix"lfr><"dt-panelfooter clearfix"ip>',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    $('#datatable22').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't<"dt-panelmenu clearfix"lfr><"dt-panelfooter clearfix"ip>',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    $('#datatable32').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't<"dt-panelmenu clearfix"lfr><"dt-panelfooter clearfix<"dt-panelmenu clearfix"lfr>"ip>',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    $('#datatable42').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't<"dt-panelmenu clearfix"lfr><"dt-panelfooter clearfix"ip>',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    $('#datatable52').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't<"dt-panelmenu clearfix"lfr><"dt-panelfooter clearfix"ip>',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    $('#datatable3').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 't',
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    $('#datatable4').dataTable({
+                      "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [-1]
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                          "sPrevious": "",
+                          "sNext": ""
+                      }
+                  },
+                  "iDisplayLength": 5,
+                  "aLengthMenu": [
+                  [5, 10, 25, 50, -1],
+                  [5, 10, 25, 50, "All"]
+                  ],
+                  "sDom": 'T<"panel-menu dt-panelmenu"lfr><"clearfix">tip',
+
+                  "oTableTools": {
+                    "sSwfPath": "~/vendor/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+                }
+            });
+
+                    // Multi-Column Filtering
+                    $('#datatable5 thead th').each(function() {
+                      var title = $('#datatable5 tfoot th').eq($(this).index()).text();
+                      $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');
+                  });
+
+                    // DataTable
+                    var table5 = $('#datatable5').DataTable({
+                      "sDom": 't<"dt-panelfooter clearfix"ip>',
+                      "ordering": false
+                  });
+
+                    // Apply the search
+                    table5.columns().eq(0).each(function(colIdx) {
+                      $('input', table5.column(colIdx).header()).on('keyup change', function() {
+                        table5
+                        .column(colIdx)
+                        .search(this.value)
+                        .draw();
+                    });
+                  });
+
+                    // ABC FILTERING
+                    var table6 = $('#datatable6').DataTable({
+                      "sDom": 't<"dt-panelfooter clearfix"ip>',
+                      "ordering": false
+                  });
+
+                    var alphabet = $('<div class="dt-abc-filter"/>').append('<span class="abc-label">Search: </span> ');
+                    var columnData = table6.column(0).data();
+                    var bins = bin(columnData);
+
+                    $('<span class="active"/>')
+                    .data('letter', '')
+                    .data('match-count', columnData.length)
+                    .html('None')
+                    .appendTo(alphabet);
+
+                    for (var i = 0; i < 26; i++) {
+                      var letter = String.fromCharCode(65 + i);
+
+                      $('<span/>')
+                      .data('letter', letter)
+                      .data('match-count', bins[letter] || 0)
+                      .addClass(!bins[letter] ? 'empty' : '')
+                      .html(letter)
+                      .appendTo(alphabet);
+                  }
+
+                  $('#datatable6').parents('.panel').find('.panel-menu').addClass('dark').html(alphabet);
+
+                  alphabet.on('click', 'span', function() {
+                      alphabet.find('.active').removeClass('active');
+                      $(this).addClass('active');
+
+                      _alphabetSearch = $(this).data('letter');
+                      table6.draw();
+                  });
+
+                  var info = $('<div class="alphabetInfo"></div>')
+                  .appendTo(alphabet);
+
+                  var _alphabetSearch = '';
+
+                  $.fn.dataTable.ext.search.push(function(settings, searchData) {
+                      if (!_alphabetSearch) {
+                        return true;
+                    }
+                    if (searchData[0].charAt(0) === _alphabetSearch) {
+                        return true;
+                    }
+                    return false;
+                });
+
+                  function bin(data) {
+                      var letter, bins = {};
+                      for (var i = 0, ien = data.length; i < ien; i++) {
+                        letter = data[i].charAt(0).toUpperCase();
+
+                        if (bins[letter]) {
+                          bins[letter]++;
+                      } else {
+                          bins[letter] = 1;
+                      }
+                  }
+                  return bins;
+              }
+
+                    // ROW GROUPING
+                    var table7 = $('#datatable7').DataTable({
+                      "columnDefs": [{
+                        "visible": false,
+                        "targets": 2
+                    }],
+                    "order": [
+                    [2, 'asc']
+                    ],
+                    "sDom": 't<"dt-panelfooter clearfix"ip>',
+                    "displayLength": 25,
+                    "drawCallback": function(settings) {
+                        var api = this.api();
+                        var rows = api.rows({
+                          page: 'current'
+                      }).nodes();
+                        var last = null;
+
+                        api.column(2, {
+                          page: 'current'
+                      }).data().each(function(group, i) {
+                          if (last !== group) {
+                            $(rows).eq(i).before(
+                              '<tr class="row-label ' + group.replace(/ /g, '').toLowerCase() + '"><td colspan="5">' + group + '</td></tr>'
+                              );
+                            last = group;
+                        }
+                    });
+                  }
+              });
+
+                    // Order by the grouping
+                    $('#datatable7 tbody').on('click', 'tr.row-label', function() {
+                      var currentOrder = table7.order()[0];
+                      if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                        table7.order([2, 'desc']).draw();
+                    } else {
+                        table7.order([2, 'asc']).draw();
+                    }
+                });
+
+                    $('#datatable8').DataTable({
+                      "sDom": 'Rt<"dt-panelfooter clearfix"ip>',
+                  });
+
+                        // COLLAPSIBLE ROWS
+                        function format ( d ) {
+                        //  d  is the original data object for the row
+                        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                        '<tr>'+
+                        '<td class="fw600 pr10">Full name:</td>'+
+                        '<td>'+d.name+'</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                        '<td class="fw600 pr10">Extension:</td>'+
+                        '<td>'+d.extn+'</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                        '<td class="fw600 pr10">Extra info:</td>'+
+                        '<td>And any further details here (images etc)...</td>'+
+                        '</tr>'+
+                        '</table>';
+                    }
+
+                    var table = $('#datatable9').DataTable({
+                      "sDom": 'Rt<"dt-panelfooter clearfix"ip>',
+                      "ajax": "~/vendor/plugins/datatables/examples/data_sources/objects.txt",
+                      "columns": [
+                      {
+                          "className":      'details-control',
+                          "orderable":      false,
+                          "data":           null,
+                          "defaultContent": ''
+                      },
+                      { "data": "name" },
+                      { "data": "position" },
+                      { "data": "office" },
+                      { "data": "salary" }
+                      ],
+                      "order": [[1, 'asc']]
+                  });
+
+                    // Add event listener for opening and closing details
+                    $('#datatable9 tbody').on('click', 'td.details-control', function () {
+                      var tr = $(this).closest('tr');
+                      var row = table.row( tr );
+
+                      if ( row.child.isShown() ) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    }
+                    else {
+                        // Open this row
+                        row.child( format(row.data()) ).show();
+                        tr.addClass('shown');
+                    }
+                });
+
+
+                    // MISC DATATABLE HELPER FUNCTIONS
+
+                    // Add Placeholder text to datatables filter bar
+
+
+                });
+                window.onload = function() {
+                 var newWidth = (document.getElementById('datatable3').clientWidth * 1);
+                 $(".dt-panelmenu").css({
+                    "maxWidth": newWidth
+                });
+
+                 $(".dt-panelfooter").css({
+                    "maxWidth": newWidth
+                });
+             };
+
+
+             window.onresize = function() {
+              var newWidth = (document.getElementById('datatable3').clientWidth * 1);
+              $(".dt-panelmenu").css({
+                "maxWidth": newWidth
+            });
+
+              $(".dt-panelfooter").css({
+                "maxWidth": newWidth
+            });
+          }
+
+
+
+</script>
+
+
+

@@ -93,14 +93,14 @@ namespace Shad_BookingApplication.Controllers
                     if (UserManager.IsInRole(userID, "Super_Admin"))
                     {
                         System.Web.HttpContext.Current.Session["Super_AdminID"] = userID;
-                        return RedirectToAction("Dashboard", "SuperAdmin");
+                        return RedirectToAction("UserList", "SuperAdmin");
                     }
-                    else if (UserManager.IsInRole(userID, "Student"))
+                    else if (UserManager.IsInRole(userID, "Company_Admin"))
                     {
-                        System.Web.HttpContext.Current.Session["StudentID"] = userID;
+                        System.Web.HttpContext.Current.Session["Company_AdminID"] = userID;
                         return RedirectToAction("Dashboard", "Student_Dashboard");
                     }
-                    else if (UserManager.IsInRole(userID, "Admin"))
+                    else if (UserManager.IsInRole(userID, "Employee"))
                     {
                         System.Web.HttpContext.Current.Session["AdminID"] = userID;
                         return RedirectToAction("Dashboard", "Admin_Dashboard");

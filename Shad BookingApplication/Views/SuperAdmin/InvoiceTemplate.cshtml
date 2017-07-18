@@ -1,0 +1,475 @@
+﻿
+@{
+    ViewBag.Title = "InvoiceTemplate";
+    Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+}
+
+    <!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Invoice Template</a>
+                </li>
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+
+            </ol>
+        </div>
+        <div class="topbar-right">
+            <a href="" class="btn btn-success" style="border-radius:5px;">Save</a>
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel" style="padding-top: 1%">
+        <div class="row alert" style="background-color: rgb(234,245,251); width: 96%; margin-left: 2.5%;">
+
+            <div class="col-md-12">
+                <div class="alert-info alert-dismissable" style="background-color: rgb(234,245,251);">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color: rgb(183,191,194);">×</button>
+                    <span class="glyphicon glyphicon-info-sign" style="font-size: 16px; top: 3px; color: rgb(149,185,237);"></span>
+                    <strong style="color: rgb(101,122,127);">Template</strong><p style="margin-left: 2%; color: rgb(101,122,127);">Use this editor below to create a template for your invoice. Include different tokens which will be replaced by invoice data</p>
+                    <div class="alert-info col-md-12" style="margin-top: 2%; padding-bottom: 2%; background-color: rgb(234,245,251);">
+
+                        <div class="col-md-6" style="float: left; color: rgb(101,122,127);">
+                            {uuid} - invoice unique ID <br>
+                            {order_id} - order ID <br>
+                            {issue_date} - invoice issue date <br>
+                            {due_date} - payment due date <br>
+                            {created} - created date and time  <br>
+                            {modified} - update date and time <br>
+                            {status} - invoice status <br>
+                            {subtotal} - sub total amount <br>
+                            {discount} - discount amount <br>
+                            {tax} - tax amount <br>
+                            {shipping} - shipping amount <br>
+                            {total} - total amount <br>
+                            {paid_deposit} - paid deposit amount <br>
+                            {amount_due} - amount due <br>
+                            {currency} - currency <br>
+                            {notes} - notes <br>
+                            {items} - items Company details <br>
+                            {y_logo} - logo <br>
+                            {y_company} - company name <br>
+                            {y_name} - name <br>
+                            {y_street_address} - address <br>
+                            {y_country} - country <br>
+                            {y_city} - city <br>
+                            {y_state} - state <br>
+                            {y_zip} - zip <br>
+                            {y_phone} - phone <br>
+                            {y_fax} - fax <br>
+                            {y_email} - email <br>
+                            {y_url} - url <br>
+                        </div>
+                        <div class="col-md-6" style="float: right; color: rgb(101,122,127);">
+                            Client billing details <br>
+                            {b_billing_address} - address <br>
+                            {b_company} - company <br>
+                            {b_name} - name <br>
+                            {b_address} - address <br>
+                            {b_street_address} - street address <br>
+                            {b_country} - country <br>
+                            {b_city} - city <br>
+                            {b_state} - state <br>
+                            {b_zip} - zip <br>
+                            {b_phone} - phone <br>
+                            {b_fax} - fax <br>
+                            {b_email} - email <br>
+                            {b_url} - url <br>
+                            Client shipping details <br>
+                            {s_shipping_address} - address <br>
+                            {s_company} - company <br>
+                            {s_name} - name <br>
+                            {s_address} - address <br>
+                            {s_street_address} - street address <br>
+                            {s_country} - country <br>
+                            {s_city} - city <br>
+                            {s_state} - state <br>
+                            {s_zip} - zip <br>
+                            {s_phone} - phone <br>
+                            {s_fax} - fax <br>
+                            {s_email} - email <br>
+                            {s_url} - url <br>
+                            {s_date} - shipping date <br>
+                            {s_terms} - shipping terms <br>
+                            {s_is_shipped} - is shipped status <br>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel">
+
+            <div class="panel-body">
+                <form class="form-horizontal" role="form" style="margin-left:10px">
+
+
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <div class="panel-body pn of-h" id="summer-demo">
+                                <div class="summernote" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- begin: .tray-center -->
+                    <!-- Summernote Editor -->
+                    <!-- end: .tray-center -->
+                    <!-- begin: .tray-right -->
+                    <!-- end: .tray-right -->
+
+
+                    <button type="submit" class="btn btn-primary pull-right col-md-1" style="margin-right:90px;border-radius:3px;">Save</button><br><br><br><br><br><br><br><br>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 PlateformeRDV</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="footer-meta"></span>
+                <a href="#content" class="footer-return-top">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+</section>
+<!-- End: Content-Wrapper -->
+
+<style>
+    /* demo styles -summernote */
+    .btn-toolbar > .btn-group.note-fontname {
+        display: none;
+    }
+    /* demo styles - hides several ckeditor toolbar buttons */
+    #cke_52,
+    #cke_53 {
+        display: none !important;
+    }
+</style>
+
+
+<!-- Page Javascript -->
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")"></script>
+
+
+ <!-- BEGIN: PAGE SCRIPTS -->
+
+ <!-- Ckeditor JS -->
+<script src="@Url.Content("~/vendor/plugins/ckeditor/ckeditor.js")"></script>
+<!-- Summernote Plugin -->
+<script src="@Url.Content("~/vendor/plugins/summernote/summernote.min.js")"></script>
+<!-- MarkDown JS -->
+<script src="@Url.Content("~/vendor/plugins/markdown/markdown.js")"></script>
+<script src="@Url.Content("~/vendor/plugins/markdown/to-markdown.js")"></script>
+<script src="@Url.Content("~/vendor/plugins/markdown/bootstrap-markdown.js")"></script>
+<!-- X-Edit JS -->
+<script src="@Url.Content("~/vendor/plugins/moment/moment.min.js")"></script>
+<!-- X-Edit Dependencies -->
+<script src="@Url.Content("~/vendor/plugins/xeditable/js/bootstrap-editable.min.js")"></script>
+<script src="@Url.Content("~/vendor/plugins/xeditable/inputs/address/address.js")"></script>
+<script src="@Url.Content("~/vendor/plugins/xeditable/inputs/typeaheadjs/lib/typeahead.js")"></script>
+<script src="@Url.Content("~/vendor/plugins/xeditable/inputs/typeaheadjs/typeaheadjs.js")"></script>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    "use strict";
+
+    // Init Theme Core
+    Core.init();
+
+    // Init Demo JS
+    Demo.init();
+
+
+    // Init Summernote Plugin
+    $('.summernote').summernote({
+      height: 255, //set editable area's height
+      focus: false, //set focus editable area after Initialize summernote
+      oninit: function() {},
+      onChange: function(contents, $editable) {},
+    });
+
+    // Init Inline Summernote Plugin
+    $('.summernote-edit').summernote({
+      airMode: true,
+      focus: false //set focus editable area after Initialize summernote
+    });
+
+    // Turn off automatic editor initilization.
+    // Used to prevent conflictions with multiple text
+    // editors being displayed on the same page.
+    CKEDITOR.disableAutoInline = true;
+
+    // Init Ckeditor
+    CKEDITOR.replace('ckeditor1', {
+      height: 210,
+      on: {
+        instanceReady: function(evt) {
+          $('.cke').addClass('admin-skin cke-hide-bottom');
+        }
+      },
+    });
+
+    // Init Inline Ckeditors
+    CKEDITOR.inline('ckeditor-inline1');
+    CKEDITOR.inline('ckeditor-inline2');
+
+    // Init MarkDown Editor
+    $("#markdown-editor").markdown({
+      savable: false,
+      onChange: function(e) {
+        var content = e.parseContent(),
+          content_length = (content.match(/\n/g) || []).length + content.length
+        if (content == '') {
+          $('#md-footer').hide()
+        } else {
+          $('#md-footer').show().html(content)
+        }
+      }
+    });
+
+    // Init X-editable Plugin
+    function XEdit() {
+      //enable / disable xedit
+      $('#enable').click(function() {
+        $(this).toggleClass('active');
+        $('#user .editable').editable('toggleDisabled');
+      });
+
+      //editables
+      $('#username').editable({
+        type: 'text',
+        pk: 1,
+        name: 'username',
+        title: 'Enter username'
+      });
+
+      $('#firstname').editable({
+        validate: function(value) {
+          if ($.trim(value) == '') return 'This field is required';
+        }
+      });
+
+      $('#sex').editable({
+        prepend: "not selected",
+        source: [{
+          value: 1,
+          text: 'Male'
+        }, {
+          value: 2,
+          text: 'Female'
+        }],
+        display: function(value, sourceData) {
+          var colors = {
+              "": "gray",
+              1: "green",
+              2: "blue"
+            },
+            elem = $.grep(sourceData, function(o) {
+              return o.value == value;
+            });
+
+          if (elem.length) {
+            $(this).text(elem[0].text).css("color", colors[value]);
+          } else {
+            $(this).empty();
+          }
+        }
+      });
+
+      $('#status').editable();
+
+      $('#group').editable({
+        showbuttons: false
+      });
+
+      $('#vacation').editable({
+        datepicker: {
+          todayBtn: 'linked'
+        }
+      });
+
+      $('#dob').editable();
+
+      $('#event').editable({
+        placement: 'right',
+        combodate: {
+          firstItem: 'name'
+        }
+      });
+
+      $('#meeting_start').editable({
+        format: 'yyyy-mm-dd hh:ii',
+        viewformat: 'dd/mm/yyyy hh:ii',
+        validate: function(v) {
+          if (v && v.getDate() == 10) return 'Day cant be 10!';
+        },
+        datetimepicker: {
+          todayBtn: 'linked',
+          weekStart: 1
+        }
+      });
+
+      $('#comments').editable({
+        showbuttons: 'bottom'
+      });
+
+      $('#note').editable();
+      $('#pencil').click(function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $('#note').editable('toggle');
+      });
+
+      $('#state').editable({
+        source: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+      });
+
+      $('#state2').editable({
+        value: 'California',
+        typeahead: {
+          name: 'state',
+          local: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+        }
+      });
+
+      $('#fruits').editable({
+        pk: 1,
+        limit: 3,
+        source: [{
+          value: 1,
+          text: 'banana'
+        }, {
+          value: 2,
+          text: 'peach'
+        }, {
+          value: 3,
+          text: 'apple'
+        }, {
+          value: 4,
+          text: 'watermelon'
+        }, {
+          value: 5,
+          text: 'orange'
+        }]
+      });
+
+      $('#address').editable({
+        url: '/post',
+        value: {
+          city: "Moscow",
+          street: "Lenina",
+          building: "12"
+        },
+        validate: function(value) {
+          if (value.city == '') return 'city is required!';
+        },
+        display: function(value) {
+          if (!value) {
+            $(this).empty();
+            return;
+          }
+          var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').text(value.street).html() + ' st., bld. ' + $('<div>').text(value.building).html();
+          $(this).html(html);
+        }
+      });
+
+      $('#user .editable').on('hidden', function(e, reason) {
+        if (reason === 'save' || reason === 'nochange') {
+          var $next = $(this).closest('tr').next().find('.editable');
+          if ($('#autoopen').is(':checked')) {
+            setTimeout(function() {
+              $next.editable('show');
+            }, 300);
+          } else {
+            $next.focus();
+          }
+        }
+      });
+
+    };
+    XEdit();
+
+  });
+</script>
+<!-- END: PAGE SCRIPTS -->
+
+    <!-- Screen Animation -->
+
+<script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+            var modalContent = $('#modal-content');
+
+            modalContent.on('click', '.holder-style', function (e) {
+                e.preventDefault();
+
+                modalContent.find('.holder-style').removeClass('holder-active');
+                $(this).addClass('holder-active');
+            });
+
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
+
+            // Form Skin Switcher
+            $('#animation-switcher button').on('click', function () {
+                $('#animation-switcher').find('button').removeClass('active-animation');
+                $(this).addClass('active-animation item-checked');
+
+                // Inline Admin-Form example
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: findActive()
+                    },
+                    // overflowY: 'hidden', //
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
+                            this.st.mainClass = Animation;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+
+            });
+
+        });
+</script>
