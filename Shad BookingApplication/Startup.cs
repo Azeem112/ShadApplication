@@ -103,7 +103,6 @@ namespace Shad_BookingApplication
                 if (chkUser.Succeeded)
                 {
                     var result1 = UserManager.AddToRole(user.Id, "Super_Admin");
-
                 }
             }
 
