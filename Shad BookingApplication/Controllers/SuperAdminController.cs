@@ -56,24 +56,18 @@ namespace Shad_BookingApplication.Controllers
                     string userPWD = aspNetUser.PasswordHash;
                     var chkUser = UserManager.Create(user, userPWD);
 
+
                     //Add default User to Role Admin   
                     if (chkUser.Succeeded)
                     {
                         var result1 = UserManager.AddToRole(user.Id, "Super_Admin");
-                        //var temp_user = db.AspNetUsers.Where(m => m.Email.Equals(aspNetUser.Email)).ElementAt(0);
-                        //temp_user.Status = aspNetUser.Status;
-                        //db.AspNetUsers.Remove(temp_user);
-                        //db.AspNetUsers.Add(temp_user);
-                        //db.SaveChanges();
-
-
-                    //    db.Entry(aspNetUser).State = EntityState.Modified;
-                       
-
+                        var temp_user = db.AspNetUsers.Where(m => m.Email == user.Email).Select(x => x).FirstOrDefault();
+                        temp_user.Status = aspNetUser.Status;
+                        db.SaveChanges();
                     }
 
 
-                    return Redirect("Account/Login");
+                    return RedirectToAction("AddSuperAdmin");
                 }
             }
             catch(Exception ex)
