@@ -93,7 +93,8 @@ namespace Shad_BookingApplication
                 var user = new ApplicationUser();
                 user.UserName = "Bilal";
                 user.Email = "Bilal@gmail.com";
-
+                user.PhoneNumber = "";
+            
                 string userPWD = "Bilal@1234";
 
                 var chkUser = UserManager.Create(user, userPWD);
@@ -109,19 +110,19 @@ namespace Shad_BookingApplication
             // creating Creating Company_Admin role    
             if (!roleManager.RoleExists("Company_Admin"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Company_Admin";
-                roleManager.Create(role);
-            }
+                var role1 = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role1.Name = "Company_Admin";
+                roleManager.Create(role1);
+           }
 
             // creating Creating Employee role    
             if (!roleManager.RoleExists("Employee"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Employee";
-                roleManager.Create(role);
+                var role2 = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role2.Name = "Employee";
+                roleManager.Create(role2);
 
-            }
+           }
         }
     }
 }

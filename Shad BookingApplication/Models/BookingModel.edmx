@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BookingModelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -510,16 +510,16 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="bit" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" />
+          <Property Name="TwoFactorEnabled" Type="bit" />
           <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LockoutEnabled" Type="bit" />
+          <Property Name="AccessFailedCount" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
@@ -1218,7 +1218,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ModelStoreContainer">
+        <EntityContainer Name="BookingModelModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetAgency" EntityType="Self.AspNetAgency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetBooking" EntityType="Self.AspNetBooking" Schema="dbo" store:Type="Tables" />
@@ -1495,7 +1495,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BookingModelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -2094,16 +2094,16 @@
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" />
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LockoutEnabled" Type="Boolean" />
+          <Property Name="AccessFailedCount" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2787,7 +2787,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BookingModelEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetAgencies" EntityType="Self.AspNetAgency" />
           <EntitySet Name="AspNetBookings" EntityType="Self.AspNetBooking" />
@@ -3060,9 +3060,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="BookingModelModelStoreContainer" CdmEntityContainer="BookingModelEntities">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="Model.C__MigrationHistory">
+            <EntityTypeMapping TypeName="BookingModelModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -3072,7 +3072,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetAgencies">
-            <EntityTypeMapping TypeName="Model.AspNetAgency">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetAgency">
               <MappingFragment StoreEntitySet="AspNetAgency">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DetailId" ColumnName="DetailId" />
@@ -3090,7 +3090,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookings">
-            <EntityTypeMapping TypeName="Model.AspNetBooking">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBooking">
               <MappingFragment StoreEntitySet="AspNetBooking">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
@@ -3111,7 +3111,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingCancelations">
-            <EntityTypeMapping TypeName="Model.AspNetBookingCancelation">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingCancelation">
               <MappingFragment StoreEntitySet="AspNetBookingCancelation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CancleLink" ColumnName="CancleLink" />
@@ -3124,7 +3124,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingForms">
-            <EntityTypeMapping TypeName="Model.AspNetBookingForm">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingForm">
               <MappingFragment StoreEntitySet="AspNetBookingForm">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3143,7 +3143,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingItems">
-            <EntityTypeMapping TypeName="Model.AspNetBookingItem">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingItem">
               <MappingFragment StoreEntitySet="AspNetBookingItem">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -3154,7 +3154,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingOptiones">
-            <EntityTypeMapping TypeName="Model.AspNetBookingOptione">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingOptione">
               <MappingFragment StoreEntitySet="AspNetBookingOptiones">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SetMins" ColumnName="SetMins" />
@@ -3171,7 +3171,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingPayments">
-            <EntityTypeMapping TypeName="Model.AspNetBookingPayment">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingPayment">
               <MappingFragment StoreEntitySet="AspNetBookingPayment">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisablePayment" ColumnName="DisablePayment" />
@@ -3185,7 +3185,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingPaymentTypes">
-            <EntityTypeMapping TypeName="Model.AspNetBookingPaymentType">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingPaymentType">
               <MappingFragment StoreEntitySet="AspNetBookingPaymentType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3193,7 +3193,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingServices">
-            <EntityTypeMapping TypeName="Model.AspNetBookingService">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingService">
               <MappingFragment StoreEntitySet="AspNetBookingServices">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
@@ -3202,7 +3202,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBookingTerms">
-            <EntityTypeMapping TypeName="Model.AspNetBookingTerm">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBookingTerm">
               <MappingFragment StoreEntitySet="AspNetBookingTerms">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
@@ -3211,7 +3211,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBusinessCatageories">
-            <EntityTypeMapping TypeName="Model.AspNetBusinessCatageory">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBusinessCatageory">
               <MappingFragment StoreEntitySet="AspNetBusinessCatageory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3219,7 +3219,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetBusinessSubCatageories">
-            <EntityTypeMapping TypeName="Model.AspNetBusinessSubCatageory">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetBusinessSubCatageory">
               <MappingFragment StoreEntitySet="AspNetBusinessSubCatageory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3228,7 +3228,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCompanyCustomers">
-            <EntityTypeMapping TypeName="Model.AspNetCompanyCustomer">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCompanyCustomer">
               <MappingFragment StoreEntitySet="AspNetCompanyCustomer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DetailId" ColumnName="DetailId" />
@@ -3245,7 +3245,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCompanyNotifinations">
-            <EntityTypeMapping TypeName="Model.AspNetCompanyNotifination">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCompanyNotifination">
               <MappingFragment StoreEntitySet="AspNetCompanyNotifination">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SendAppointmentMessage" ColumnName="SendAppointmentMessage" />
@@ -3259,7 +3259,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCountries">
-            <EntityTypeMapping TypeName="Model.AspNetCountry">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCountry">
               <MappingFragment StoreEntitySet="AspNetCountry">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3270,7 +3270,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCurrencies">
-            <EntityTypeMapping TypeName="Model.AspNetCurrency">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCurrency">
               <MappingFragment StoreEntitySet="AspNetCurrency">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
@@ -3278,7 +3278,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomer_SubCatageory">
-            <EntityTypeMapping TypeName="Model.AspNetCustomer_SubCatageory">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomer_SubCatageory">
               <MappingFragment StoreEntitySet="AspNetCustomer_SubCatageory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
@@ -3287,7 +3287,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerBusinessDetails">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerBusinessDetail">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerBusinessDetail">
               <MappingFragment StoreEntitySet="AspNetCustomerBusinessDetail">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SRIET" ColumnName="SRIET" />
@@ -3299,7 +3299,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerContacts">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerContact">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerContact">
               <MappingFragment StoreEntitySet="AspNetCustomerContact">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Telephone1" ColumnName="Telephone1" />
@@ -3310,7 +3310,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerDetails">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerDetail">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerDetail">
               <MappingFragment StoreEntitySet="AspNetCustomerDetail">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BussinessName" ColumnName="BussinessName" />
@@ -3321,7 +3321,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerGalleries">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerGallery">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerGallery">
               <MappingFragment StoreEntitySet="AspNetCustomerGallery">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Image1" ColumnName="Image1" />
@@ -3333,7 +3333,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerLocations">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerLocation">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerLocation">
               <MappingFragment StoreEntitySet="AspNetCustomerLocation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -3348,7 +3348,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerRegions">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerRegion">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerRegion">
               <MappingFragment StoreEntitySet="AspNetCustomerRegion">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
@@ -3360,7 +3360,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomers">
-            <EntityTypeMapping TypeName="Model.AspNetCustomer">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomer">
               <MappingFragment StoreEntitySet="AspNetCustomers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DetailId" ColumnName="DetailId" />
@@ -3377,7 +3377,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerSMS">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerSM">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerSM">
               <MappingFragment StoreEntitySet="AspNetCustomerSMS">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
@@ -3386,7 +3386,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomerTypes">
-            <EntityTypeMapping TypeName="Model.AspNetCustomerType">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetCustomerType">
               <MappingFragment StoreEntitySet="AspNetCustomerType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
@@ -3396,7 +3396,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetEmailNotifications">
-            <EntityTypeMapping TypeName="Model.AspNetEmailNotification">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetEmailNotification">
               <MappingFragment StoreEntitySet="AspNetEmailNotification">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="EmailNotificationTypeId" ColumnName="EmailNotificationTypeId" />
@@ -3406,7 +3406,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetEmailNotificationTypes">
-            <EntityTypeMapping TypeName="Model.AspNetEmailNotificationType">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetEmailNotificationType">
               <MappingFragment StoreEntitySet="AspNetEmailNotificationType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3415,7 +3415,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetEmployees">
-            <EntityTypeMapping TypeName="Model.AspNetEmployee">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetEmployee">
               <MappingFragment StoreEntitySet="AspNetEmployee">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NickName" ColumnName="NickName" />
@@ -3437,7 +3437,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetExpires">
-            <EntityTypeMapping TypeName="Model.AspNetExpire">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetExpire">
               <MappingFragment StoreEntitySet="AspNetExpire">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -3449,7 +3449,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetGiftVouchers">
-            <EntityTypeMapping TypeName="Model.AspNetGiftVoucher">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetGiftVoucher">
               <MappingFragment StoreEntitySet="AspNetGiftVoucher">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
@@ -3464,7 +3464,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetInvoices">
-            <EntityTypeMapping TypeName="Model.AspNetInvoice">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetInvoice">
               <MappingFragment StoreEntitySet="AspNetInvoice">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
@@ -3477,7 +3477,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetInvoiceOptions">
-            <EntityTypeMapping TypeName="Model.AspNetInvoiceOption">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetInvoiceOption">
               <MappingFragment StoreEntitySet="AspNetInvoiceOptions">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
@@ -3496,7 +3496,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetItems">
-            <EntityTypeMapping TypeName="Model.AspNetItem">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetItem">
               <MappingFragment StoreEntitySet="AspNetItem">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3509,7 +3509,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRemainders">
-            <EntityTypeMapping TypeName="Model.AspNetRemainder">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetRemainder">
               <MappingFragment StoreEntitySet="AspNetRemainder">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SendRemainder" ColumnName="SendRemainder" />
@@ -3522,7 +3522,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="Model.AspNetRole">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3530,7 +3530,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetServices">
-            <EntityTypeMapping TypeName="Model.AspNetService">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetService">
               <MappingFragment StoreEntitySet="AspNetService">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3539,7 +3539,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetService_Group">
-            <EntityTypeMapping TypeName="Model.AspNetService_Group">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetService_Group">
               <MappingFragment StoreEntitySet="AspNetService_Group">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
@@ -3548,7 +3548,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetServiceGroups">
-            <EntityTypeMapping TypeName="Model.AspNetServiceGroup">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetServiceGroup">
               <MappingFragment StoreEntitySet="AspNetServiceGroup">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3557,7 +3557,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetSocials">
-            <EntityTypeMapping TypeName="Model.AspNetSocial">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetSocial">
               <MappingFragment StoreEntitySet="AspNetSocial">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Twitter" ColumnName="Twitter" />
@@ -3566,7 +3566,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetTaxes">
-            <EntityTypeMapping TypeName="Model.AspNetTax">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetTax">
               <MappingFragment StoreEntitySet="AspNetTax">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3575,7 +3575,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="Model.AspNetUserClaim">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -3585,7 +3585,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="Model.AspNetUserLogin">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -3594,7 +3594,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="Model.AspNetUser">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -3617,7 +3617,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetWorkingTimes">
-            <EntityTypeMapping TypeName="Model.AspNetWorkingTime">
+            <EntityTypeMapping TypeName="BookingModelModel.AspNetWorkingTime">
               <MappingFragment StoreEntitySet="AspNetWorkingTime">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Day" ColumnName="Day" />
@@ -3629,7 +3629,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="BookingModelModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>

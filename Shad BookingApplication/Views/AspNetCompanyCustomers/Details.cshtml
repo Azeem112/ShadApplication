@@ -1,0 +1,99 @@
+﻿@model Shad_BookingApplication.Models.AspNetCompanyCustomer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AspNetCompanyCustomer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeZone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeZone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BateofBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BateofBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RefferedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RefferedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contradiction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contradiction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetCompanyNotifination.EmailBeforeArrive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetCompanyNotifination.EmailBeforeArrive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetCustomerDetail.BussinessName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetCustomerDetail.BussinessName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

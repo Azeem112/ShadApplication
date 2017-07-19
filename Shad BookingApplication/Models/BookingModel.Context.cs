@@ -13,10 +13,10 @@ namespace Shad_BookingApplication.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class BookingModelEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public BookingModelEntities()
+            : base("name=BookingModelEntities")
         {
         }
     

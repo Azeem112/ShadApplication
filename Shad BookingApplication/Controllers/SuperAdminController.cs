@@ -1,6 +1,9 @@
-﻿using Shad_BookingApplication.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Shad_BookingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +12,8 @@ namespace Shad_BookingApplication.Controllers
 {
     public class SuperAdminController : Controller
     {
-        private BookingDbContext dbcontext = new BookingDbContext();
+        private BookingModelEntities db = new BookingModelEntities();
+
         // GET: SuperAdmin
         public ActionResult Index()
         {
@@ -17,18 +21,7 @@ namespace Shad_BookingApplication.Controllers
         }
 
 
-        public ActionResult CheckLogin(string email_id, string pass)
-        {
 
-            var obj = dbcontext.Users.Where(x => x.Email.Equals(""));
-            if (obj.Count() != 0)
-            {
-
-            }
-
-            //String email_id,String pass
-            return View();
-        }
 
         public ActionResult Dashboard()
         {
@@ -41,6 +34,53 @@ namespace Shad_BookingApplication.Controllers
         }
         public ActionResult AddSuperAdmin()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSuperAdmin([Bind(Include = "Email,PasswordHash,UserName,PhoneNumber,Status")] AspNetUser aspNetUser)
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = new ApplicationUser();
+                    user.UserName = aspNetUser.UserName;
+                    user.Email = aspNetUser.Email;
+                    user.PhoneNumber = aspNetUser.PhoneNumber;
+                    string userPWD = aspNetUser.PasswordHash;
+                    var chkUser = UserManager.Create(user, userPWD);
+
+                    //Add default User to Role Admin   
+                    if (chkUser.Succeeded)
+                    {
+                        var result1 = UserManager.AddToRole(user.Id, "Super_Admin");
+                        //var temp_user = db.AspNetUsers.Where(m => m.Email.Equals(aspNetUser.Email)).ElementAt(0);
+                        //temp_user.Status = aspNetUser.Status;
+                        //db.AspNetUsers.Remove(temp_user);
+                        //db.AspNetUsers.Add(temp_user);
+                        //db.SaveChanges();
+
+
+                    //    db.Entry(aspNetUser).State = EntityState.Modified;
+                       
+
+                    }
+
+
+                    return Redirect("Account/Login");
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
             return View();
         }
 

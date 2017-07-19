@@ -45,11 +45,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -172,6 +172,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AspNetCompanyCustomersController.cs" />
+    <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -501,13 +503,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\BookingModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BookingModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\BookingModel.edmx.diagram">
-      <DependentUpon>BookingModel.edmx</DependentUpon>
-    </Content>
     <Content Include="assets\fonts\admindesigns\admindesigns.eot" />
     <Content Include="assets\fonts\admindesigns\admindesigns.ttf" />
     <Content Include="assets\fonts\admindesigns\admindesigns.woff" />
@@ -541,6 +536,13 @@
     <Content Include="assets\fonts\stateface\stateface-regular-webfontd41d.eot" />
     <Content Include="assets\fonts\zocial\zocial-regular-webfont.eot" />
     <Content Include="assets\fonts\zocial\zocial-regular-webfont.ttf" />
+    <EntityDeploy Include="Models\BookingModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BookingModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BookingModel.edmx.diagram">
+      <DependentUpon>BookingModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -751,6 +753,16 @@
     <Content Include="Views\SuperAdmin\InvoiceOption.cshtml" />
     <Content Include="Views\SuperAdmin\InvoiceTemplate.cshtml" />
     <Content Include="Views\SuperAdmin\ItemList.cshtml" />
+    <Content Include="Views\AspNetCompanyCustomers\Create.cshtml" />
+    <Content Include="Views\AspNetCompanyCustomers\Delete.cshtml" />
+    <Content Include="Views\AspNetCompanyCustomers\Details.cshtml" />
+    <Content Include="Views\AspNetCompanyCustomers\Edit.cshtml" />
+    <Content Include="Views\AspNetCompanyCustomers\Index.cshtml" />
+    <Content Include="Views\AspNetUsers\Create.cshtml" />
+    <Content Include="Views\AspNetUsers\Delete.cshtml" />
+    <Content Include="Views\AspNetUsers\Details.cshtml" />
+    <Content Include="Views\AspNetUsers\Edit.cshtml" />
+    <Content Include="Views\AspNetUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

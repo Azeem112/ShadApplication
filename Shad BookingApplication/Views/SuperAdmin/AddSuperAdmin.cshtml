@@ -1,7 +1,24 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetUser
+
 @{
     ViewBag.Title = "AddSuperAdmin";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "Active",
+        Value = "Active",
+        Selected = true
+    });
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "InActive",
+        Value = "InActive",
+        Selected = true
+    });
 }
 
 <section id="content_wrapper">
@@ -48,6 +65,10 @@
     </div>
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
+
+@using (Html.BeginForm("AddSuperAdmin", "SuperAdmin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
     <header id="topbar">
         <div class="topbar-left">
             <ol class="breadcrumb" style="text-align: center;">
@@ -55,10 +76,12 @@
             </ol>
         </div>
         <div class="topbar-right">
-            <a href="" class="btn btn-success">Save</a>
+             <input type="submit" class="btn btn-success" value="Save" />
         </div>
     </header>
     <!-- End: Topbar -->
+
+
     <div style="width: 80%;margin-left: 10%">
         <br><br>
         <div class="tab-pane">
@@ -66,44 +89,46 @@
                 <div class="row form-group required">
                     <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
                     <div class="col-md-8 col-xs-12">
-                        <input type="email" class="form-control" placeholder="Enter Email here" required="required">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Email  Here") } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row form-group required">
                     <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
                     <div class="col-md-8 col-xs-12">
-                        <input type="password" class="form-control" placeholder="Provide password" required="required">
+                        @Html.PasswordFor(model => model.PasswordHash, new { @class = "form-control", placeholder = @Html.DisplayName("Provide password") })
+                        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
                     <div class="col-md-8 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Enter Full name here">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Full name here") } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                       
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-md-2 col-xs-12 text-right">Phone:</label>
                     <div class="col-md-8 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Enter Phone Number name here">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Phone Number name here") } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row form-group ">
                     <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
                     <div class="col-md-8 col-xs-12">
-                        <select class="form-control" onchange="calculate()" id="tax" style="margin-bottom: 3%;">
-                            <option selected disabled value="0.00">-Select Status-</option>
-                            <option value="">Active</option>
-                            <option value="">Inactive</option>
-                        </select>
+                        @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", new {  @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-            </div>
+                </div>
         </div>
         <br>
         <br>
     </div>
-    <!-- End: Content -->
+}
+     <!-- End: Content -->
     <!-- Begin: Page Footer -->
     <footer id="content-footer" class="affix">
         <div class="row">
