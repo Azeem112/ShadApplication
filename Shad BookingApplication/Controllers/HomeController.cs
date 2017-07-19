@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Shad_BookingApplication.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()

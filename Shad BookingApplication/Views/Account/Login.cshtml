@@ -22,16 +22,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Font CSS (Via CDN) -->
-    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
+    <link rel='stylesheet' type='text/css' href='@Url.Content("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700")' media="screen">
 
     <!-- Theme CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/skin/default_skin/css/theme.css")" media="screen">
 
     <!-- Admin Forms CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/admin-tools/admin-forms/css/admin-forms.css">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/admin-tools/admin-forms/css/admin-forms.css")"media="screen">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" href="@Url.Content("~/assets/img/favicon.ico")" media="screen">
 
     <style type="text/css">
         button:hover {
@@ -74,7 +74,7 @@
 
 
                     <center>
-                        <img src="img/plateforme-rdv-white.png">
+                        <img src="@Url.Content("~/img/plateforme-rdv-white.png")">
                     </center>
                     <div class="panel panel-info mt10 br-n">
 
@@ -146,16 +146,16 @@
     <!-- End: Main -->
     <!-- BEGIN: PAGE SCRIPTS -->
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
-    <script src="vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+    <script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")"></script>
+    <script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")"></script>
 
     <!-- CanvasBG Plugin(creates mousehover effect) -->
-    <script src="vendor/plugins/canvasbg/canvasbg.js"></script>
+    <script src="@Url.Content("~/vendor/plugins/canvasbg/canvasbg.js")"></script>
 
     <!-- Theme Javascript -->
-    <script src="assets/js/utility/utility.js"></script>
+    <script src="@Url.Content("~/assets/js/utility/utility.js")"></script>
     @*<script src="assets/js/demo/demo.js"></script>*@
-    <script src="assets/js/main.js"></script>
+    <script src="@Url.Content("~/assets/js/main.js")"></script>
 
     <!-- Page Javascript -->
     <script type="text/javascript">

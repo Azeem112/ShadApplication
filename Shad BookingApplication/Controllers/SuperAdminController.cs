@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Shad_BookingApplication.Controllers
 {
+    [Authorize(Roles = "Super_Admin")]   
     public class SuperAdminController : Controller
     {
         private BookingModelEntities db = new BookingModelEntities();
@@ -38,6 +39,7 @@ namespace Shad_BookingApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult AddSuperAdmin([Bind(Include = "Email,PasswordHash,UserName,PhoneNumber,Status")] AspNetUser aspNetUser)
         {
