@@ -21,8 +21,17 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
+        public ActionResult AddBusinessCategory()
+        {
+            return View();
+        }
 
-
+        public ActionResult AddBusinessSubCategory()
+        {
+            var category_ls = db.AspNetBusinessCatageories.ToList();
+            ViewBag.category_list = category_ls;
+            return View();
+        }
 
         public ActionResult Dashboard()
         {
@@ -37,6 +46,26 @@ namespace Shad_BookingApplication.Controllers
         {
             return View();
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddBusinessCategory([Bind(Include="Name")] AspNetBusinessCatageory aspNetBusinessCatageory)
+        {
+            db.AspNetBusinessCatageories.Add(aspNetBusinessCatageory);
+            db.SaveChanges();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddBusinessSubCategory([Bind(Include = "Name,BussinessCatageoryId")] AspNetBusinessSubCatageory aspNetBusinessSubCatageory)
+        {
+            db.AspNetBusinessSubCatageories.Add(aspNetBusinessSubCatageory);
+            db.SaveChanges();
+            return View();
+        }
+
 
         [HttpPost]
         [Authorize]
