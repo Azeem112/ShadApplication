@@ -172,8 +172,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AspNetCompanyCustomersController.cs" />
-    <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -181,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddCustomerViewModel.cs" />
     <Compile Include="Models\AspNetAgency.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
@@ -221,12 +220,6 @@
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetCompanyNotifination.cs">
-      <DependentUpon>BookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetCountry.cs">
-      <DependentUpon>BookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetCurrency.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetCustomer.cs">
@@ -753,16 +746,6 @@
     <Content Include="Views\SuperAdmin\InvoiceOption.cshtml" />
     <Content Include="Views\SuperAdmin\InvoiceTemplate.cshtml" />
     <Content Include="Views\SuperAdmin\ItemList.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Create.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Delete.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Details.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Edit.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Index.cshtml" />
-    <Content Include="Views\AspNetUsers\Create.cshtml" />
-    <Content Include="Views\AspNetUsers\Delete.cshtml" />
-    <Content Include="Views\AspNetUsers\Details.cshtml" />
-    <Content Include="Views\AspNetUsers\Edit.cshtml" />
-    <Content Include="Views\AspNetUsers\Index.cshtml" />
     <Content Include="Views\SuperAdmin\AddBusinessCategory.cshtml" />
     <Content Include="Views\SuperAdmin\AddBusinessSubCategory.cshtml" />
   </ItemGroup>

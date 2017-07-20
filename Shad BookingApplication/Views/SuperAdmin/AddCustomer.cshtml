@@ -1,7 +1,23 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AddCustomerViewModel
 @{
-	ViewBag.Title = "AddCustomer";
-	Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+    ViewBag.Title = "AddCustomer";
+    Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+
+    foreach (var item in Model.BusinessCatageory)
+    {
+        listItems.Add(new SelectListItem
+        {
+            Text = item.Name,
+            Value = item.Id.ToString(),
+            Selected = false
+        });
+    }
+
+
+
+
 }
 
 
@@ -53,6 +69,8 @@
 	</header>
 	<!-- End: Topbar -->
 	<!-- Begin: Content -->
+@using (Html.BeginForm("AddCustomer", "SuperAdmin", FormMethod.Post))
+{
 	<div class="panel">
 		<div class="panel" id="spy3">
 
@@ -95,7 +113,11 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Business Name:</label>
 								<div class="col-md-8 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the business name" required="required">
+									
+                                    @Html.EditorFor(model => model.Detail.BussinessName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the Business name") } })
+                                    @Html.ValidationMessageFor(model => model.Detail.BussinessName, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 							<div class="row form-group">
@@ -103,28 +125,43 @@
 								<div class="col-md-8 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon" id="http-addon">http://</span>
-										<input type="text" class="form-control" placeholder="www.example.com">
+										
+                                        @Html.EditorFor(model => model.Detail.BussinessWebsite, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName(" www.example.com") } })
+                                        @Html.ValidationMessageFor(model => model.Detail.BussinessWebsite, "", new { @class = "text-danger" })
+
+
 									</div>
 								</div>
 							</div>
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the first name" required="required">
+									
+                                    @Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the first name") } })
+                                    @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
+
+
 								</div>
 								<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the last name">
+									
+                                    @Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the last name") } })
+                                    @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Business Category:</label>
 								<div class="col-md-8 col-xs-12">
-									<select class="form-control">
-										<option selected disabled>Select a category</option>
-										<option>Option 1</option>
-										<option>Option 2</option>
-									</select>
+                                    @Html.DropDownListFor(model => model.Detail.BusinessCatageoryId, listItems, "Select a category", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Detail.BusinessCatageoryId, "", new { @class = "text-danger" })
+
+
+
+
+
+
 								</div>
 							</div>
 							<div class="row form-group required">
@@ -148,15 +185,18 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Address:</label>
 								<div class="col-md-8 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the address" required="required">
-									<input type="text" class="form-control mt10" placeholder="">
+                                    @Html.EditorFor(model => model.Location.Address, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the address") } })
+                                    @Html.ValidationMessageFor(model => model.Location.Address, "", new { @class = "text-danger" })
 								</div>
 							</div>
 
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label" name="city">City:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the city" name="city" required="required">
+									@Html.EditorFor(model => model.Location.City, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the City") } })
+                                    @Html.ValidationMessageFor(model => model.Location.City, "", new { @class = "text-danger" })
+
+
 								</div>
 								<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
 									<label class="control-label">
@@ -165,6 +205,8 @@
 								</div>
 								<div class="col-md-3 col-xs-12">
 									<input type="text" class="form-control" placeholder="12345" required="required">
+                                    @Html.EditorFor(model => model.Location.ZipCode, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("12345") } })
+                                    @Html.ValidationMessageFor(model => model.Location.ZipCode, "", new { @class = "text-danger" })
 								</div>
 							</div>
 
@@ -173,6 +215,10 @@
 								<label class="col-md-2 col-xs-12 text-right control-label">State:</label>
 								<div class="col-md-3 col-xs-12">
 									<input type="text" class="form-control" placeholder="Enter the state">
+                                    @Html.EditorFor(model => model.Location.State, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the state") } })
+                                    @Html.ValidationMessageFor(model => model.Location.State, "", new { @class = "text-danger" })
+
+
 								</div>
 								<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
 									<label class="text-right control-label">
@@ -180,7 +226,7 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<select class="form-control">
+									<select class="form-control" name="CountryName">
 										<option disabled selected>Select the country</option>
 										<option value="Afghanistan">Afghanistan</option>
 										<option value="Albania">Albania</option>
@@ -978,8 +1024,6 @@
 						</center>
 					</div>
 
-
-
 					<div id="photoGallery" class="tab-pane">
 						<div class="row form-group">
 
@@ -1376,7 +1420,8 @@
 							</div>
 						</div>
 						<center>
-							<button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>
+							@*<button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>*@
+                            <input type="submit" class="btn btn-success" style="width: 15%; border-radius: 10px" value="Save"/>
 						</center>
 						<br><br>
 						<center>
@@ -1401,13 +1446,15 @@
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc(8)">Next <span><strong>></strong></span></button>
 						</center>
 					</div>
-				</div>
+				
+                </div>
 			</div>
 		</div>
 
 
 		<br><br><br><br><br><br><br>
 	</div>
+}
 	<!-- End: Content -->
 	<!-- Begin: Page Footer -->
 	<footer id="content-footer">

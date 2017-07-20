@@ -188,23 +188,6 @@
           <Property Name="DifferentSmsInterval" Type="bit" />
           <Property Name="SmsBeforeArrive" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="AspNetCountry">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Alpha1" Type="nvarchar" MaxLength="50" />
-          <Property Name="Alpha2" Type="nvarchar" MaxLength="50" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="AspNetCurrency">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CurrencyName" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="AspNetCustomer_SubCatageory">
           <Key>
             <PropertyRef Name="Id" />
@@ -221,7 +204,7 @@
           <Property Name="SRIET" Type="nvarchar" MaxLength="50" />
           <Property Name="VatNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="APE" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="nchar" MaxLength="10" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Logo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AspNetCustomerContact">
@@ -263,20 +246,21 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="ZipCode" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
-          <Property Name="CountryID" Type="int" />
+          <Property Name="CountryName" Type="nvarchar(max)" />
           <Property Name="Latitude" Type="float" />
           <Property Name="Longitude" Type="float" />
-          <Property Name="IntervensionZone" Type="bit" />
+          <Property Name="IntervensionZone" Type="nchar" MaxLength="10" />
           <Property Name="Radius" Type="float" />
+          <Property Name="Address" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetCustomerRegion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CountryId" Type="int" />
-          <Property Name="CurrencyId" Type="int" />
-          <Property Name="TimeZone" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryName" Type="nvarchar(max)" />
+          <Property Name="CurrencyName" Type="nvarchar(max)" />
+          <Property Name="TimeZoneName" Type="nvarchar(max)" />
           <Property Name="DateFormate" Type="nvarchar" MaxLength="50" />
           <Property Name="TimeFormate" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -417,6 +401,7 @@
           <Property Name="Price_W/O_Vat" Type="float" />
           <Property Name="Price_W/_Vat" Type="float" />
           <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsSmsPackage" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetRemainder">
           <Key>
@@ -706,18 +691,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetCustomerLocation_ToAspNetCountry">
-          <End Role="AspNetCountry" Type="Self.AspNetCountry" Multiplicity="0..1" />
-          <End Role="AspNetCustomerLocation" Type="Self.AspNetCustomerLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCountry">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCustomerLocation">
-              <PropertyRef Name="CountryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetCustomerSMS_ToItem">
           <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="0..1" />
           <End Role="AspNetCustomerSMS" Type="Self.AspNetCustomerSMS" Multiplicity="*" />
@@ -823,30 +796,6 @@
             </Principal>
             <Dependent Role="AspNetCustomerDetail">
               <PropertyRef Name="BusinessCatageoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerRegion_Country">
-          <End Role="AspNetCountry" Type="Self.AspNetCountry" Multiplicity="0..1" />
-          <End Role="AspNetCustomerRegion" Type="Self.AspNetCustomerRegion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCountry">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCustomerRegion">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerRegion_Currency">
-          <End Role="AspNetCurrency" Type="Self.AspNetCurrency" Multiplicity="0..1" />
-          <End Role="AspNetCustomerRegion" Type="Self.AspNetCustomerRegion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCurrency">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCustomerRegion">
-              <PropertyRef Name="CurrencyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1234,8 +1183,6 @@
           <EntitySet Name="AspNetBusinessSubCatageory" EntityType="Self.AspNetBusinessSubCatageory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCompanyCustomer" EntityType="Self.AspNetCompanyCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCompanyNotifination" EntityType="Self.AspNetCompanyNotifination" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetCountry" EntityType="Self.AspNetCountry" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetCurrency" EntityType="Self.AspNetCurrency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCustomer_SubCatageory" EntityType="Self.AspNetCustomer_SubCatageory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCustomerBusinessDetail" EntityType="Self.AspNetCustomerBusinessDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCustomerContact" EntityType="Self.AspNetCustomerContact" Schema="dbo" store:Type="Tables" />
@@ -1322,10 +1269,6 @@
             <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetail" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetCustomerLocation_ToAspNetCountry" Association="Self.FK_AspNetCustomerLocation_ToAspNetCountry">
-            <End Role="AspNetCountry" EntitySet="AspNetCountry" />
-            <End Role="AspNetCustomerLocation" EntitySet="AspNetCustomerLocation" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetCustomerSMS_ToItem" Association="Self.FK_AspNetCustomerSMS_ToItem">
             <End Role="AspNetItem" EntitySet="AspNetItem" />
             <End Role="AspNetCustomerSMS" EntitySet="AspNetCustomerSMS" />
@@ -1361,14 +1304,6 @@
           <AssociationSet Name="FK_CustomerDetail_BusinessCatageory" Association="Self.FK_CustomerDetail_BusinessCatageory">
             <End Role="AspNetBusinessCatageory" EntitySet="AspNetBusinessCatageory" />
             <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerRegion_Country" Association="Self.FK_CustomerRegion_Country">
-            <End Role="AspNetCountry" EntitySet="AspNetCountry" />
-            <End Role="AspNetCustomerRegion" EntitySet="AspNetCustomerRegion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerRegion_Currency" Association="Self.FK_CustomerRegion_Currency">
-            <End Role="AspNetCurrency" EntitySet="AspNetCurrency" />
-            <End Role="AspNetCustomerRegion" EntitySet="AspNetCustomerRegion" />
           </AssociationSet>
           <AssociationSet Name="FK_Customers_CustomerBusinessDetail" Association="Self.FK_Customers_CustomerBusinessDetail">
             <End Role="AspNetCustomerBusinessDetail" EntitySet="AspNetCustomerBusinessDetail" />
@@ -1717,26 +1652,6 @@
           <Property Name="SmsBeforeArrive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetCompanyCustomers" Relationship="Self.FK_AspNetCompanyCustomer_CompanyNotification" FromRole="AspNetCompanyNotifination" ToRole="AspNetCompanyCustomer" />
         </EntityType>
-        <EntityType Name="AspNetCountry">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Alpha1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Alpha2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetCustomerLocations" Relationship="Self.FK_AspNetCustomerLocation_ToAspNetCountry" FromRole="AspNetCountry" ToRole="AspNetCustomerLocation" />
-          <NavigationProperty Name="AspNetCustomerRegions" Relationship="Self.FK_CustomerRegion_Country" FromRole="AspNetCountry" ToRole="AspNetCustomerRegion" />
-        </EntityType>
-        <EntityType Name="AspNetCurrency">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetCustomerRegions" Relationship="Self.FK_CustomerRegion_Currency" FromRole="AspNetCurrency" ToRole="AspNetCustomerRegion" />
-        </EntityType>
         <EntityType Name="AspNetCustomer_SubCatageory">
           <Key>
             <PropertyRef Name="Id" />
@@ -1755,7 +1670,7 @@
           <Property Name="SRIET" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="VatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="APE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerBusinessDetailAgency" FromRole="AspNetCustomerBusinessDetail" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerBusinessDetail" FromRole="AspNetCustomerBusinessDetail" ToRole="AspNetCustomers" />
@@ -1807,13 +1722,13 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ZipCode" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CountryID" Type="Int32" />
+          <Property Name="CountryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Latitude" Type="Double" />
           <Property Name="Longitude" Type="Double" />
-          <Property Name="IntervensionZone" Type="Boolean" />
+          <Property Name="IntervensionZone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Radius" Type="Double" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerLocationAgency" FromRole="AspNetCustomerLocation" ToRole="AspNetAgency" />
-          <NavigationProperty Name="AspNetCountry" Relationship="Self.FK_AspNetCustomerLocation_ToAspNetCountry" FromRole="AspNetCustomerLocation" ToRole="AspNetCountry" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerLocation" FromRole="AspNetCustomerLocation" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetCustomerRegion">
@@ -1821,14 +1736,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CountryId" Type="Int32" />
-          <Property Name="CurrencyId" Type="Int32" />
-          <Property Name="TimeZone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TimeZoneName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateFormate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TimeFormate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerRegionAgency" FromRole="AspNetCustomerRegion" ToRole="AspNetAgency" />
-          <NavigationProperty Name="AspNetCountry" Relationship="Self.FK_CustomerRegion_Country" FromRole="AspNetCustomerRegion" ToRole="AspNetCountry" />
-          <NavigationProperty Name="AspNetCurrency" Relationship="Self.FK_CustomerRegion_Currency" FromRole="AspNetCustomerRegion" ToRole="AspNetCurrency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerRegion" FromRole="AspNetCustomerRegion" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetCustomer">
@@ -1998,6 +1911,7 @@
           <Property Name="Price_W_O_Vat" Type="Double" />
           <Property Name="Price_W__Vat" Type="Double" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsSmsPackage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetCustomerSMS" Relationship="Self.FK_AspNetCustomerSMS_ToItem" FromRole="AspNetItem" ToRole="AspNetCustomerSMS" />
         </EntityType>
         <EntityType Name="AspNetRemainder">
@@ -2479,42 +2393,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetCustomerLocation_ToAspNetCountry">
-          <End Role="AspNetCountry" Type="Self.AspNetCountry" Multiplicity="0..1" />
-          <End Role="AspNetCustomerLocation" Type="Self.AspNetCustomerLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCountry">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCustomerLocation">
-              <PropertyRef Name="CountryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerRegion_Country">
-          <End Role="AspNetCountry" Type="Self.AspNetCountry" Multiplicity="0..1" />
-          <End Role="AspNetCustomerRegion" Type="Self.AspNetCustomerRegion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCountry">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCustomerRegion">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerRegion_Currency">
-          <End Role="AspNetCurrency" Type="Self.AspNetCurrency" Multiplicity="0..1" />
-          <End Role="AspNetCustomerRegion" Type="Self.AspNetCustomerRegion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCurrency">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCustomerRegion">
-              <PropertyRef Name="CurrencyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Customer_SubCatageory_Customer">
           <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="0..1" />
           <End Role="AspNetCustomer_SubCatageory" Type="Self.AspNetCustomer_SubCatageory" Multiplicity="*" />
@@ -2803,8 +2681,6 @@
           <EntitySet Name="AspNetBusinessSubCatageories" EntityType="Self.AspNetBusinessSubCatageory" />
           <EntitySet Name="AspNetCompanyCustomers" EntityType="Self.AspNetCompanyCustomer" />
           <EntitySet Name="AspNetCompanyNotifinations" EntityType="Self.AspNetCompanyNotifination" />
-          <EntitySet Name="AspNetCountries" EntityType="Self.AspNetCountry" />
-          <EntitySet Name="AspNetCurrencies" EntityType="Self.AspNetCurrency" />
           <EntitySet Name="AspNetCustomer_SubCatageory" EntityType="Self.AspNetCustomer_SubCatageory" />
           <EntitySet Name="AspNetCustomerBusinessDetails" EntityType="Self.AspNetCustomerBusinessDetail" />
           <EntitySet Name="AspNetCustomerContacts" EntityType="Self.AspNetCustomerContact" />
@@ -2949,18 +2825,6 @@
           <AssociationSet Name="FK_AspNetCompanyCustomer_CustomerDetail" Association="Self.FK_AspNetCompanyCustomer_CustomerDetail">
             <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetails" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetCustomerLocation_ToAspNetCountry" Association="Self.FK_AspNetCustomerLocation_ToAspNetCountry">
-            <End Role="AspNetCountry" EntitySet="AspNetCountries" />
-            <End Role="AspNetCustomerLocation" EntitySet="AspNetCustomerLocations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerRegion_Country" Association="Self.FK_CustomerRegion_Country">
-            <End Role="AspNetCountry" EntitySet="AspNetCountries" />
-            <End Role="AspNetCustomerRegion" EntitySet="AspNetCustomerRegions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerRegion_Currency" Association="Self.FK_CustomerRegion_Currency">
-            <End Role="AspNetCurrency" EntitySet="AspNetCurrencies" />
-            <End Role="AspNetCustomerRegion" EntitySet="AspNetCustomerRegions" />
           </AssociationSet>
           <AssociationSet Name="FK_Customer_SubCatageory_Customer" Association="Self.FK_Customer_SubCatageory_Customer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
@@ -3258,25 +3122,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AspNetCountries">
-            <EntityTypeMapping TypeName="BookingModelModels.AspNetCountry">
-              <MappingFragment StoreEntitySet="AspNetCountry">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Alpha1" ColumnName="Alpha1" />
-                <ScalarProperty Name="Alpha2" ColumnName="Alpha2" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetCurrencies">
-            <EntityTypeMapping TypeName="BookingModelModels.AspNetCurrency">
-              <MappingFragment StoreEntitySet="AspNetCurrency">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetCustomer_SubCatageory">
             <EntityTypeMapping TypeName="BookingModelModels.AspNetCustomer_SubCatageory">
               <MappingFragment StoreEntitySet="AspNetCustomer_SubCatageory">
@@ -3339,11 +3184,12 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="IntervensionZone" ColumnName="IntervensionZone" />
                 <ScalarProperty Name="Radius" ColumnName="Radius" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3351,9 +3197,9 @@
             <EntityTypeMapping TypeName="BookingModelModels.AspNetCustomerRegion">
               <MappingFragment StoreEntitySet="AspNetCustomerRegion">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
-                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
+                <ScalarProperty Name="TimeZoneName" ColumnName="TimeZoneName" />
                 <ScalarProperty Name="DateFormate" ColumnName="DateFormate" />
                 <ScalarProperty Name="TimeFormate" ColumnName="TimeFormate" />
               </MappingFragment>
@@ -3505,6 +3351,7 @@
                 <ScalarProperty Name="Price_W_O_Vat" ColumnName="Price_W/O_Vat" />
                 <ScalarProperty Name="Price_W__Vat" ColumnName="Price_W/_Vat" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsSmsPackage" ColumnName="IsSmsPackage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

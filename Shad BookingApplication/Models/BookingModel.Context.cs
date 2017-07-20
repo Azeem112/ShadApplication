@@ -40,8 +40,6 @@ namespace Shad_BookingApplication.Models
         public virtual DbSet<AspNetBusinessSubCatageory> AspNetBusinessSubCatageories { get; set; }
         public virtual DbSet<AspNetCompanyCustomer> AspNetCompanyCustomers { get; set; }
         public virtual DbSet<AspNetCompanyNotifination> AspNetCompanyNotifinations { get; set; }
-        public virtual DbSet<AspNetCountry> AspNetCountries { get; set; }
-        public virtual DbSet<AspNetCurrency> AspNetCurrencies { get; set; }
         public virtual DbSet<AspNetCustomer_SubCatageory> AspNetCustomer_SubCatageory { get; set; }
         public virtual DbSet<AspNetCustomerBusinessDetail> AspNetCustomerBusinessDetails { get; set; }
         public virtual DbSet<AspNetCustomerContact> AspNetCustomerContacts { get; set; }

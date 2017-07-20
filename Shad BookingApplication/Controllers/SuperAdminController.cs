@@ -4,6 +4,7 @@ using Shad_BookingApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -44,6 +45,7 @@ namespace Shad_BookingApplication.Controllers
         }
         public ActionResult AddSuperAdmin()
         {
+            dynamic mymodel = new ExpandoObject(); 
             return View();
         }
 
@@ -114,6 +116,29 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddItem([Bind(Include = "Id,Name,Description,Vat,Price_W_O_Vat,Price_W__Vat,Status,IsSmsPackage")] AspNetItem aspNetItem)
+        {
+            if (ModelState.IsValid)
+            {
+                db.AspNetItems.Add(aspNetItem);
+                db.SaveChanges();
+
+                if (aspNetItem.IsSmsPackage.Equals("sms"))
+                {
+                    //var obj=db.AspNetItems.Single(x=>x== aspNetItem);
+                    var smspackage = new AspNetCustomerSM();
+                    smspackage.ItemID = aspNetItem.Id;
+                    db.AspNetCustomerSMS.Add(smspackage);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("AddItem");
+            }
+
+            return View(aspNetItem);
+        }
+
         public ActionResult LoginDetails()
         {
             return View();
@@ -130,6 +155,16 @@ namespace Shad_BookingApplication.Controllers
         }
 
         public ActionResult AddCustomer()
+        {
+            AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
+            addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
+            addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
+            return View(addCustomerViewModel);
+        }
+
+        [HttpPost]
+        
+        public ActionResult AddCustomer(AddCustomerViewModel addCustomerViewModel)
         {
             return View();
         }
