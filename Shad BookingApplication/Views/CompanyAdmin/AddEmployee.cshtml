@@ -1,0 +1,414 @@
+﻿
+@{
+    ViewBag.Title = "AddEmployee";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <div id="topbar-dropmenu">
+        <div class="topbar-menu row">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                    <p class="metro-title">Messages</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-user"></span>
+                    <p class="metro-title">Users</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                    <p class="metro-title">Support</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon fa fa-gears"></span>
+                    <p class="metro-title">Settings</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                    <p class="metro-title">Videos</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-picture"></span>
+                    <p class="metro-title">Pictures</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End: Topbar-Dropdown -->
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>CHoose csv format file </h4>
+            <input type="file" name="fileinput" accept=".csv"> </input>
+            <br><br>
+
+            <center><button type="button" class="btn btn-primary">Done</button></center>
+        </div>
+
+    </div>
+
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Add Employee </a>
+                </li>
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+            </ol>
+
+        </div>
+
+
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <section id="content" class="table-layout">
+        <!-- Start: Header -->
+        <!-- End: Header -->
+
+        <div class="panel">
+            <div class="panel" id="spy3">
+
+                <div>
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Employee Details</h4>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Pseudo</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="Your Nick name or actual name" required="required">
+                            </div>
+                        </div>
+
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Firstname</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Last Name:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Notes:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Telephone:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">SMS Number:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Email:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="email" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Password:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="email" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group required">
+
+                            <label class="col-md-2 col-xs-12 text-center control-label">Your Photo:</label>
+
+                            <div ng-app="fileUpload" class="container">
+                                <div ng-controller="upload">
+                                    <div class="col-md-2 col-xs-11">
+                                        <label class="btn btn-default btn-system btn-file btn-block">
+                                            Upload Image <input type="file" fileinput="file" accept="image/*" filepreview="filepreview" />
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2 col-xs-6">
+                                        <img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview" height="200" width="200" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Booking Options</h4>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="checkbox" style="margin-left: 6%">
+                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Send email when new booking is made</label>
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="checkbox" style="margin-left: 6%">
+                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Send sms when new booking is made</label>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Services</h4>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col-md-8 col-xs-10" style="padding: 0px; margin:0px; margin-left: 6%">
+                                <div class="col-md-6 col-xs-12" style=" float: left">
+
+                                    <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;">Category</label>
+                                    <div class="row form-group">
+
+                                        <div class="checkbox" style="margin-left: 6%">
+                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Massage</label>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6 col-xs-12" style=" float: right">
+
+                                    <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;">Sub Category</label>
+                                    <div class="row form-group">
+
+                                        <div class="checkbox" style="margin-left: 6%">
+                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Thai Massage</label>
+                                        </div>
+                                        <div class="checkbox" style="margin-left: 6%">
+                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="">California Massage</label>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Working Place</h4>
+                        </div>
+                        <div class="row form-group">
+                            <div class="radio col-md-1 col-md-offset-1 col-xs-12 text-right">
+                                <label>
+                                    <input type="radio" name="workingPlaceRadio" onchange="func1()" value="1">On site
+                                </label>
+                            </div>
+                            <div class="radio col-md-2 col-md-offset-2 col-xs-12 text-right mt10">
+                                <label>
+                                    <input type="radio" name="workingPlaceRadio" onchange="func2()" value="2">Home
+                                </label>
+                            </div>
+                            <div class="radio col-md-2 col-md-offset-2 col-xs-12 text-right mt10">
+                                <label>
+                                    <input type="radio" name="workingPlaceRadio" onchange="func2()" value="3">Both
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="radio col-md-1 col-md-offset-1 col-xs-12 text-right">
+                                <label>
+                                    <strong>  Location</strong>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="checkbox" style="margin-left: 3%">
+                                <label class=" col-md-4 col-md-offset-1 col-xs-12 text-left"><input type="checkbox" value="">Agency XYZ-----59000Lille</label>
+                            </div>
+
+                            <div class="checkbox" style="margin-left: 3%">
+                                <label class="col-md-4 col-md-offset-1 col-xs-12 text-left"><input type="checkbox" value="">Agency ZUIDP,VCUGE-RUE-----62000Arras</label>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Working Hours</h4>
+                        </div>
+
+                        <div class="col-md-2 ">
+                        </div>
+                        <div class="col-md-7 col-xs-11">
+                            <select class="form-control">
+                                <option selected disabled>Select an Agency</option>
+                                <option>option1</option>
+                                <option>option2</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="row form-group">
+                                <div class="col-md-8 col-md-offset-2 col-xs-11">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Day of Week</th>
+                                                <th>Is Day Off</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Lunch From</th>
+                                                <th>Lunch To</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Monday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59 "></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tuesday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wednesday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thursday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Friday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Saturday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sunday</td>
+                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+                        <div class="row">
+                            <div class="row form-group">
+                                <h4 class="col-md-3 col-xs-12 text-left" style="margin-left: 3%;">Calendar Sync</h4>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-8 col-md-offset-2 col-xs-12" style="margin-left: 3%">
+                                    <input type="checkbox" name="wh-checkbox">  Sync PlatformeRDV with outlook, Google or Apple Calendar
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+                        <div class="row">
+                            <div class="row form-group">
+                                <h4 class="col-md-3 col-xs-12 text-left" style="margin-left: 3%;">Status</h4>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-8 col-md-offset-2 col-xs-12" style="margin-left: 3%">
+                                    <div class="btn-group btn-toggle">
+                                        <button class="btn btn-xs btn-default">ON</button>
+                                        <button class="btn btn-xs btn-info active">OFF</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+    </section>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer" class="affix">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 Plateforme RDV</span>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+
+</section>
+<!-- end: Content-Wrapper -->

@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "AddItem";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+  <!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Add Item</a>
+                </li>
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+
+            </ol>
+        </div>
+        <div class="topbar-right">
+
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel" id="spy3">
+
+            <div class="panel-body">
+
+
+                <div class="tab-pane">
+                    <div class="row">
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Item ID:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <input type="text" class="form-control" placeholder="Enter the item ID" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Item Name:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <input type="text" class="form-control" placeholder="Enter the item name" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-right">Item Description:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <textarea class="form-control" rows="5" id="comment" style="resize: none;"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-right">Price w/o VAT:</label>
+                            <div class="col-md-5 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&euro;</span>
+                                    <input id="w/ovat" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group ">
+                            <label class="col-md-2 col-xs-12 text-right control-label">VAT:</label>
+                            <div class="col-md-2 col-xs-12">
+                                <select class="form-control" id="tax" style="margin-bottom: 3%;">
+                                    <option selected disabled value="0.00">-Taux-</option>
+                                    <option value="0.00">0,00%</option>
+                                    <option value="5.50">5,50%</option>
+                                    <option value="20.00">20,00%</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&euro;</span>
+                                    <input id="multiplyyy" type="text" class="form-control" disabled="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-right">Price w/ VAT:</label>
+                            <div class="col-md-5 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&euro;</span>
+                                    <input id="wvvat" type="number" class="form-control" disabled="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <select class="form-control">
+                                    <option selected>Active</option>
+                                    <option>In Active</option>
+
+                                </select>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="row form-group ">
+                    <div class="col-md-3 col-xs-12">
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                    </div>
+
+                    <div class="col-md-5 col-xs-12">
+                        <center>   <button type="button" class="btn btn-success">Save</button></center>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+            <br><br><br><br><br><br><br>
+        </div>
+        <!-- End: Content -->
+        <!-- Begin: Page Footer -->
+        <footer id="content-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="footer-legal">© 2017 PlateformeRDV</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <span class="footer-meta"></span>
+                    <a href="#content" class="footer-return-top">
+                        <span class="fa fa-arrow-up"></span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+        <!-- End: Page Footer -->
+
+</section>
+<!-- End: Content-Wrapper -->
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script type="text/javascript">
+
+
+$("#tax").change(function (){
+    var wovat=document.getElementById("w/ovat").value;
+    var per=document.getElementById("tax").value;
+    if(wovat=="")
+    {
+        alert("Fill out Price W/O VAT");
+    }
+    else
+    {
+        document.getElementById("multiplyyy").value =  (per/100)*wovat;
+        var final=(per/100)*wovat;
+        wovat=final+wovat;
+        document.getElementById("wvvat").value =  wovat;
+
+
+    }
+}
+);

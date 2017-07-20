@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "AddServiceGroup";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <div id="topbar-dropmenu">
+        <div class="topbar-menu row">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                    <p class="metro-title">Messages</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-user"></span>
+                    <p class="metro-title">Users</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                    <p class="metro-title">Support</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon fa fa-gears"></span>
+                    <p class="metro-title">Settings</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                    <p class="metro-title">Videos</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-picture"></span>
+                    <p class="metro-title">Pictures</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End: Topbar-Dropdown -->
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>CHoose csv format file </h4>
+            <input type="file" name="fileinput" accept=".csv"> </input>
+            <br><br>
+
+            <center><button type="button" class="btn btn-primary">Done</button></center>
+        </div>
+
+    </div>
+
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <h2>Group Service</h2>
+            </ol>
+
+        </div>
+
+
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <section id="content" class="table-layout">
+        <!-- Start: Header -->
+        <!-- End: Header -->
+
+        <div class="panel">
+            <div class="panel" id="spy3">
+
+                <div style="margin-left: 2%">
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Group Details</h4>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Group Name</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-center">Description:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <textarea type="text" class="form-control" placeholder="" style="resize: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Add Services</h4>
+                            <a href="addService.html" type="submit" class="btn btn-primary col-md-offset-6 col-md-2 col-xs-4" style="border-radius:3px;">Create Service</a>
+
+                        </div>
+                        <div class="row form-group ">
+                            <div class="checkbox" style="margin-left: 6%">
+                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Massage</label>
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="checkbox" style="margin-left: 6%">
+                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Haircut</label>
+                            </div>
+                        </div>
+
+                        <div class="row form-group ">
+                            <div class="checkbox" style="margin-left: 6%">
+                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Makeup</label>
+                            </div>
+                        </div>
+                    </div>
+                    <a type="submit" class="btn btn-default col-md-2 col-xs-4 col-md-offset-7 col-xs-offset-2" style="border-radius:3px;">
+                        Cancel
+                    </a>
+                    <a href="serviceGroupList.html" type="submit" class="btn btn-primary col-md-2 col-xs-4" style="border-radius:3px; margin-left: 1%">
+                        Save
+                    </a>
+                </div>
+            </div>
+
+    </section>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer" class="affix">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 Plateforme RDV</span>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+
+</section>
+<!-- end: Content-Wrapper -->

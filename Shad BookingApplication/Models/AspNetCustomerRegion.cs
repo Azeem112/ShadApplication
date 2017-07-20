@@ -22,16 +22,14 @@ namespace Shad_BookingApplication.Models
         }
     
         public int Id { get; set; }
-        public Nullable<int> CountryId { get; set; }
-        public Nullable<int> CurrencyId { get; set; }
-        public string TimeZone { get; set; }
+        public string CountryName { get; set; }
+        public string CurrencyName { get; set; }
+        public string TimeZoneName { get; set; }
         public string DateFormate { get; set; }
         public string TimeFormate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
-        public virtual AspNetCountry AspNetCountry { get; set; }
-        public virtual AspNetCurrency AspNetCurrency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
     }

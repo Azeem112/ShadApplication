@@ -25,15 +25,15 @@ namespace Shad_BookingApplication.Models
         public string City { get; set; }
         public Nullable<int> ZipCode { get; set; }
         public string State { get; set; }
-        public Nullable<int> CountryID { get; set; }
+        public string CountryName { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
-        public Nullable<bool> IntervensionZone { get; set; }
+        public string IntervensionZone { get; set; }
         public Nullable<double> Radius { get; set; }
+        public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
-        public virtual AspNetCountry AspNetCountry { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
     }

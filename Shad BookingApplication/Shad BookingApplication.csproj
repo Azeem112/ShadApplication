@@ -172,8 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AspNetCompanyCustomersController.cs" />
-    <Compile Include="Controllers\AspNetUsersController.cs" />
+    <Compile Include="Controllers\CompanyAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -221,12 +220,6 @@
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetCompanyNotifination.cs">
-      <DependentUpon>BookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetCountry.cs">
-      <DependentUpon>BookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetCurrency.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetCustomer.cs">
@@ -337,6 +330,7 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -753,18 +747,27 @@
     <Content Include="Views\SuperAdmin\InvoiceOption.cshtml" />
     <Content Include="Views\SuperAdmin\InvoiceTemplate.cshtml" />
     <Content Include="Views\SuperAdmin\ItemList.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Create.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Delete.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Details.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Edit.cshtml" />
-    <Content Include="Views\AspNetCompanyCustomers\Index.cshtml" />
-    <Content Include="Views\AspNetUsers\Create.cshtml" />
-    <Content Include="Views\AspNetUsers\Delete.cshtml" />
-    <Content Include="Views\AspNetUsers\Details.cshtml" />
-    <Content Include="Views\AspNetUsers\Edit.cshtml" />
-    <Content Include="Views\AspNetUsers\Index.cshtml" />
     <Content Include="Views\SuperAdmin\AddBusinessCategory.cshtml" />
     <Content Include="Views\SuperAdmin\AddBusinessSubCategory.cshtml" />
+    <Content Include="Views\Shared\_CompanyAdminNavigationBar.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddUser.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddAgency.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddCustomer.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddEmployee.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddItem.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddService.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddServiceGroup.cshtml" />
+    <Content Include="Views\CompanyAdmin\AddVoucher.cshtml" />
+    <Content Include="Views\CompanyAdmin\AgencyList.cshtml" />
+    <Content Include="Views\CompanyAdmin\CompanyProfile.cshtml" />
+    <Content Include="Views\CompanyAdmin\Create_Invoice.cshtml" />
+    <Content Include="Views\CompanyAdmin\Create_Invoice2.cshtml" />
+    <Content Include="Views\CompanyAdmin\CustomerDetails.cshtml" />
+    <Content Include="Views\CompanyAdmin\CustomerList.cshtml" />
+    <Content Include="Views\CompanyAdmin\EditCustomer.cshtml" />
+    <Content Include="Views\CompanyAdmin\EditService.cshtml" />
+    <Content Include="Views\CompanyAdmin\EditServiceGroup.cshtml" />
+    <Content Include="Views\CompanyAdmin\EmployeeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeList";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <div id="topbar-dropmenu">
+        <div class="topbar-menu row">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                    <p class="metro-title">Messages</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-user"></span>
+                    <p class="metro-title">Users</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                    <p class="metro-title">Support</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon fa fa-gears"></span>
+                    <p class="metro-title">Settings</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                    <p class="metro-title">Videos</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-picture"></span>
+                    <p class="metro-title">Pictures</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End: Topbar-Dropdown -->
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>CHoose csv format file </h4>
+            <input type="file" name="fileinput" accept=".csv"> </input>
+            <br><br>
+
+            <center><button type="button" class="btn btn-primary">Done</button></center>
+        </div>
+
+    </div>
+
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Employee List</a>
+                </li>
+            </ol>
+        </div>
+
+        <div class="topbar-right">
+            <a href="addAgency.html" class="btn btn-primary" style="height:30px; padding:5px">+ Add Employee</a>
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <section id="content" class="table-layout">
+        <!-- Start: Header -->
+        <!-- End: Header -->
+
+        <div class="col-md-12" style="display: block;">
+            <div class="panel panel-visible" id="spy2">
+                <div class="panel-heading">
+                    <div class="panel-title hidden-xs">
+                        <span class="glyphicon glyphicon-tasks"></span>Employee List
+                    </div>
+                </div>
+                <div class="panel-body pn">
+
+
+
+                    <div class="panel panel-visible" id="spy3">
+                        <div class="panel-body pn">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
+                                                colspan="1" aria-sort="ascending"
+                                                aria-label="Name: activate to sort column descending" style="width: 15%;">
+                                                <center>Picture</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Position: activate to sort column ascending" style="width: 15%;">
+                                                <center> Employee Name</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Office: activate to sort column ascending" style="width: 15%;">
+                                                <center> Email and Phone</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Office: activate to sort column ascending" style="width: 10%;">
+                                                <center> Service</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 15%;">
+                                                <center> Status</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 15%;">
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 15%;">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myCustomers">
+
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><center><img src="@Url.Content("~/img/avatar1.png")" style="width:75px; height:75px; "></center></td>
+                                            <td><center>XYZ</center></td>
+                                            <td><center>XYZ@gmail.com <br>+92123654789</center></td>
+                                            <td><center>2</center></td>
+                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Active</button></center></td>
+                                            <td><center><div class="btn-group" style="width:100%"><button type="button" class="btn btn-default" style="width: 50%">View</button><button type="button" class="btn btn-danger" style="width: 50%">Delete</button></div></center></td>
+                                            <td>
+                                                <center>
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                                            Menu
+                                                            <span class="caret"></span>
+                                                        </a>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> View Bookings</a></li>
+                                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Working time</a></li>
+                                                        </ul>
+                                                </center>
+                            </div></td>
+                            </tr>
+
+
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer" class="affix">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 Plateforme RDV</span>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+
+</section>
+<!-- end: Content-Wrapper -->
+

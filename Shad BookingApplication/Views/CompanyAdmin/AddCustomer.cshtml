@@ -1,0 +1,813 @@
+﻿
+@{
+    ViewBag.Title = "AddCustomer";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Add Customer</a>
+                </li>
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+
+            </ol>
+        </div>
+        <div class="topbar-right">
+
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel" id="spy3">
+
+            <div class="panel-body">
+                <ul class="nav nav-pills mb20">
+                    <li class="active" id="dynamicItem1">
+                        <a href="#Details" data-toggle="tab" aria-expanded="true">Details</a>
+                    </li>
+                    <li class="" id="dynamicItem2">
+                        <a href="#locationDetails" data-toggle="tab" aria-expanded="false">Addresses</a>
+                    </li>
+                    <li class="" id="dynamicItem3">
+                        <a href="#contactDetails" data-toggle="tab" aria-expanded="true">More Info</a>
+                    </li>
+                    <li class="" id="dynamicItem4">
+                        <a href="#regionalSettings" data-toggle="tab" aria-expanded="true">Notifications</a>
+                    </li>
+                    <li class="" id="dynamicItem5">
+                        <a href="#businessDetails" data-toggle="tab" aria-expanded="true">Photo</a>
+                    </li>
+                </ul>
+                <div class="tab-content br-n pn">
+                    <div id="Details" class="tab-pane active">
+                        <div class="row">
+                            <div class="row form-group required">
+                                <label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group required">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Telephone:</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="number" class="form-control">
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">SMS Number:</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="color: black">+33</span>
+                                        <input type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group required">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Email</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">Occupation</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(1)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="locationDetails" class="tab-pane">
+                        <div class="row">
+                            <div class="row form-group required">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Address:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    <input type="text" class="form-control" required="required">
+                                    <input type="text" class="form-control mt10" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="row form-group required">
+                                <div class="col-md-2 col-xs-12 text-right">
+                                    <label class="control-label">
+                                        Post Code:
+                                    </label>
+                                </div>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="text" class="form-control" required="required">
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label" name="city">City:</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <input type="text" class="form-control" name="city" required="required">
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(2)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(2)">Next <span><strong>></strong></span></button>
+                        </center>
+
+                    </div>
+
+                    <div id="contactDetails" class="tab-pane">
+
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Gender:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <select class="form-control">
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 col-xs-12 text-right control-label">
+                                <label>Date of Birth:</label>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <input type="date" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-right">Reffered By:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <input type="text" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Alerts/Contradictions:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <textarea class="form-control" style="resize: none;"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-right">
+                                Time Zone:
+                            </label>
+                            <div class="col-md-8 col-xs-12">
+                                <select class="form-control">
+                                    <option selected disabled>Select the timezone</option>
+                                    <option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</option>
+                                    <option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</option>
+                                    <option timeZoneId="3" gmtAdjustment="GMT-10:00" useDaylightTime="0" value="-10">(GMT-10:00) Hawaii</option>
+                                    <option timeZoneId="4" gmtAdjustment="GMT-09:00" useDaylightTime="1" value="-9">(GMT-09:00) Alaska</option>
+                                    <option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US and Canada)</option>
+                                    <option timeZoneId="6" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Tijuana, Baja California</option>
+                                    <option timeZoneId="7" gmtAdjustment="GMT-07:00" useDaylightTime="0" value="-7">(GMT-07:00) Arizona</option>
+                                    <option timeZoneId="8" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
+                                    <option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
+                                    <option timeZoneId="10" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Central America</option>
+                                    <option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US and Canada)</option>
+                                    <option timeZoneId="12" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
+                                    <option timeZoneId="13" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Saskatchewan</option>
+                                    <option timeZoneId="14" gmtAdjustment="GMT-05:00" useDaylightTime="0" value="-5">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
+                                    <option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Eastern Time (US and Canada)</option>
+                                    <option timeZoneId="16" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Indiana (East)</option>
+                                    <option timeZoneId="17" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Atlantic Time (Canada)</option>
+                                    <option timeZoneId="18" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Caracas, La Paz</option>
+                                    <option timeZoneId="19" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Manaus</option>
+                                    <option timeZoneId="20" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Santiago</option>
+                                    <option timeZoneId="21" gmtAdjustment="GMT-03:30" useDaylightTime="1" value="-3.5">(GMT-03:30) Newfoundland</option>
+                                    <option timeZoneId="22" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Brasilia</option>
+                                    <option timeZoneId="23" gmtAdjustment="GMT-03:00" useDaylightTime="0" value="-3">(GMT-03:00) Buenos Aires, Georgetown</option>
+                                    <option timeZoneId="24" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Greenland</option>
+                                    <option timeZoneId="25" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Montevideo</option>
+                                    <option timeZoneId="26" gmtAdjustment="GMT-02:00" useDaylightTime="1" value="-2">(GMT-02:00) Mid-Atlantic</option>
+                                    <option timeZoneId="27" gmtAdjustment="GMT-01:00" useDaylightTime="0" value="-1">(GMT-01:00) Cape Verde Is.</option>
+                                    <option timeZoneId="28" gmtAdjustment="GMT-01:00" useDaylightTime="1" value="-1">(GMT-01:00) Azores</option>
+                                    <option timeZoneId="29" gmtAdjustment="GMT+00:00" useDaylightTime="0" value="0">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
+                                    <option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
+                                    <option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+                                    <option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+                                    <option timeZoneId="33" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
+                                    <option timeZoneId="34" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
+                                    <option timeZoneId="35" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) West Central Africa</option>
+                                    <option timeZoneId="36" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Amman</option>
+                                    <option timeZoneId="37" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Athens, Bucharest, Istanbul</option>
+                                    <option timeZoneId="38" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Beirut</option>
+                                    <option timeZoneId="39" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Cairo</option>
+                                    <option timeZoneId="40" gmtAdjustment="GMT+02:00" useDaylightTime="0" value="2">(GMT+02:00) Harare, Pretoria</option>
+                                    <option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+                                    <option timeZoneId="42" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Jerusalem</option>
+                                    <option timeZoneId="43" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Minsk</option>
+                                    <option timeZoneId="44" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Windhoek</option>
+                                    <option timeZoneId="45" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Kuwait, Riyadh, Baghdad</option>
+                                    <option timeZoneId="46" gmtAdjustment="GMT+03:00" useDaylightTime="1" value="3">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
+                                    <option timeZoneId="47" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Nairobi</option>
+                                    <option timeZoneId="48" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Tbilisi</option>
+                                    <option timeZoneId="49" gmtAdjustment="GMT+03:30" useDaylightTime="1" value="3.5">(GMT+03:30) Tehran</option>
+                                    <option timeZoneId="50" gmtAdjustment="GMT+04:00" useDaylightTime="0" value="4">(GMT+04:00) Abu Dhabi, Muscat</option>
+                                    <option timeZoneId="51" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Baku</option>
+                                    <option timeZoneId="52" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Yerevan</option>
+                                    <option timeZoneId="53" gmtAdjustment="GMT+04:30" useDaylightTime="0" value="4.5">(GMT+04:30) Kabul</option>
+                                    <option timeZoneId="54" gmtAdjustment="GMT+05:00" useDaylightTime="1" value="5">(GMT+05:00) Yekaterinburg</option>
+                                    <option timeZoneId="55" gmtAdjustment="GMT+05:00" useDaylightTime="0" value="5">(GMT+05:00) Islamabad, Karachi, Tashkent</option>
+                                    <option timeZoneId="56" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Sri Jayawardenapura</option>
+                                    <option timeZoneId="57" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                                    <option timeZoneId="58" gmtAdjustment="GMT+05:45" useDaylightTime="0" value="5.75">(GMT+05:45) Kathmandu</option>
+                                    <option timeZoneId="59" gmtAdjustment="GMT+06:00" useDaylightTime="1" value="6">(GMT+06:00) Almaty, Novosibirsk</option>
+                                    <option timeZoneId="60" gmtAdjustment="GMT+06:00" useDaylightTime="0" value="6">(GMT+06:00) Astana, Dhaka</option>
+                                    <option timeZoneId="61" gmtAdjustment="GMT+06:30" useDaylightTime="0" value="6.5">(GMT+06:30) Yangon (Rangoon)</option>
+                                    <option timeZoneId="62" gmtAdjustment="GMT+07:00" useDaylightTime="0" value="7">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+                                    <option timeZoneId="63" gmtAdjustment="GMT+07:00" useDaylightTime="1" value="7">(GMT+07:00) Krasnoyarsk</option>
+                                    <option timeZoneId="64" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
+                                    <option timeZoneId="65" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Kuala Lumpur, Singapore</option>
+                                    <option timeZoneId="66" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
+                                    <option timeZoneId="67" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Perth</option>
+                                    <option timeZoneId="68" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Taipei</option>
+                                    <option timeZoneId="69" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
+                                    <option timeZoneId="70" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Seoul</option>
+                                    <option timeZoneId="71" gmtAdjustment="GMT+09:00" useDaylightTime="1" value="9">(GMT+09:00) Yakutsk</option>
+                                    <option timeZoneId="72" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Adelaide</option>
+                                    <option timeZoneId="73" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Darwin</option>
+                                    <option timeZoneId="74" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Brisbane</option>
+                                    <option timeZoneId="75" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Canberra, Melbourne, Sydney</option>
+                                    <option timeZoneId="76" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Hobart</option>
+                                    <option timeZoneId="77" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Guam, Port Moresby</option>
+                                    <option timeZoneId="78" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Vladivostok</option>
+                                    <option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
+                                    <option timeZoneId="80" gmtAdjustment="GMT+12:00" useDaylightTime="1" value="12">(GMT+12:00) Auckland, Wellington</option>
+                                    <option timeZoneId="81" gmtAdjustment="GMT+12:00" useDaylightTime="0" value="12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
+                                    <option timeZoneId="82" gmtAdjustment="GMT+13:00" useDaylightTime="0" value="13">(GMT+13:00) Nuku'alofa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(3)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(3)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="regionalSettings" class="tab-pane">
+                        <h3>Appointment Notifications</h3>
+                        <label class="row" style="width: 100%">
+                            <input type="checkbox" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Send this customer email messages about their appointments?</p>
+                        </label>
+
+                        <h3>Appointment Reminders</h3>
+                        <label class="row" style="width: 100%">
+                            <input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use the default email reminder setting of <span style="font-weight: bolder">48 hours</span> before the customer arrives</p>
+                            <input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use a different interval for this customer</p>
+                        </label>
+
+
+                        <div class="row form-group">
+                            <div class="col-md-3 col-xs-6">
+                                <select class="form-control">
+                                    <option selected="" disabled="">--Never--</option>
+                                    <option value="2">2 hours</option>
+                                    <option value="3">3 hours</option>
+                                    <option value="6">6 hours</option>
+                                    <option value="12">12 hours</option>
+                                    <option value="24">24 hours</option>
+                                    <option value="48">48 hours</option>
+                                    <option value="72">72 hours</option>
+                                    <option value="1w">1 Week</option>
+                                </select>
+                            </div>
+                            <p class="form-control" style="border: none;">before the customer arrives</p>
+                        </div>
+
+                        <label class="row" style="width: 100%">
+                            <input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use the default SMS reminder setting of <span style="font-weight: bolder">24 hours</span> before the customer arrives</p>
+                            <input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use a different interval for this customer</p>
+                        </label>
+
+
+                        <div class="row form-group">
+                            <div class="col-md-3 col-xs-6">
+                                <select class="form-control">
+                                    <option selected="" disabled="">--Never--</option>
+                                    <option value="2">2 hours</option>
+                                    <option value="3">3 hours</option>
+                                    <option value="6">6 hours</option>
+                                    <option value="12">12 hours</option>
+                                    <option value="24">24 hours</option>
+                                    <option value="48">48 hours</option>
+                                    <option value="72">72 hours</option>
+                                    <option value="1w">1 Week</option>
+                                </select>
+                            </div>
+                            <p class="form-control" style="border: none;">before the customer arrives</p>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(4)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(4)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="businessDetails" class="tab-pane">
+
+
+                        <div class="row form-group">
+
+                            <label class="col-md-2 col-xs-12 text-right">Your Photo:</label>
+
+                            <div ng-app="fileUpload" class="container">
+                                <div ng-controller="upload">
+                                    <div class="col-md-2 col-xs-12">
+                                        <label class="btn btn-default btn-system btn-file btn-block">
+                                            Upload Image <input type="file" fileinput="file" accept="image/*" filepreview="filepreview" />
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2 col-xs-6">
+                                        <img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(5)"><span><strong><</strong></span> Back</button>
+                        </center>
+                    </div>
+
+
+
+                    <div id="photoGallery" class="tab-pane">
+                        <div class="row form-group">
+
+                            <label class="col-md-2 col-xs-12 text-right">Upload Images:</label>
+                            <div ng-app="fileUpload" class="container">
+                                <div ng-controller="upload">
+                                    <div class="col-md-2 col-xs-12">
+                                        <label id="upImage" class="btn btn-default btn-system btn-file btn-block">
+                                            Upload Image <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" />
+                                        </label>
+                                    </div>
+                                    <img id="dispImage1" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12">
+                                    <img id="dispImage2" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
+                                    <img id="dispImage3" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
+                                    <img id="dispImage4" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
+                                    <img id="dispImage5" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(6)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(6)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="userAndAccountType" class="tab-pane">
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right  control-label">Email:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">@@</span>
+                                    <input type="email" class="form-control" placeholder="Enter user email address">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                    <input type="password" class="form-control" placeholder="Enter user password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Name:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <input type="text" class="form-control" name="user-name" placeholder="Enter user name">
+                            </div>
+
+                            <div class="col-md-1 col-md-offset-1 col-xs-12 text-right control-label">
+                                <label>Status:</label>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <select class="form-control">
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Company Type:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <select id="drop" class="form-control">
+                                    <option value="1">Single Site Company</option>
+                                    <option value="2">Multi Site Company</option>
+                                </select>
+                            </div>
+
+                            <div style="display: none;" id="agencyyy">
+                                <div class="col-md-2 col-xs-12 text-right control-label">
+                                    <label>Total Agency:</label>
+                                </div>
+                                <div class="col-md-3 col-md-12">
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(7)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(7)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+
+                    <div id="workingHours" class="tab-pane">
+                        <div class="row">
+                            <div class="row form-group">
+                                <div class="col-md-8 col-md-offset-2 col-xs-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Day of Week</th>
+                                                <th>Is Day Off</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Lunch From</th>
+                                                <th>Lunch To</th>
+                                            </tr>
+                                            <tr id="r1">
+                                                <td>Monday</td>
+                                                <td><div class="checkbo ml20"><input id="c1" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(1)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii1'>
+                                                        <input id="i1" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii2'>
+                                                        <input id="i2" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii3'>
+                                                        <input id="i3" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii4'>
+                                                        <input id="i4" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="r2">
+                                                <td>Tuesday</td>
+                                                <td><div class="checkbo ml20"><input id="c2" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(2)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii5'>
+                                                        <input id="i5" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii6'>
+                                                        <input id="i6" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii7'>
+                                                        <input id="i7" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii8'>
+                                                        <input id="i8" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="r3">
+                                                <td>Wednesday</td>
+                                                <td><div class="checkbo ml20"><input id="c3" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(3)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii9'>
+                                                        <input id="i9" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii10'>
+                                                        <input id="i10" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-t4me"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii11'>
+                                                        <input id="i11" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii12'>
+                                                        <input id="i12" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="r4">
+                                                <td>Thursday</td>
+                                                <td><div class="checkbo ml20"><input id="c4" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(4)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii13'>
+                                                        <input id="i13" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii14'>
+                                                        <input id="i14" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii15'>
+                                                        <input id="i15" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii16'>
+                                                        <input id="i16" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr id="r5">
+                                                <td>Friday</td>
+                                                <td><div class="checkbo ml20"><input id="c5" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(5)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii17'>
+                                                        <input id="i17" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii18'>
+                                                        <input id="i18" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii19'>
+                                                        <input id="i19" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii20'>
+                                                        <input id="i20" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr id="r6">
+                                                <td>Saturday</td>
+                                                <td><div class="checkbo ml20"><input id="c6" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(6)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii21'>
+                                                        <input id="i21" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii22'>
+                                                        <input id="i22" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii23'>
+                                                        <input id="i23" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii24'>
+                                                        <input id="i24" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="r7">
+                                                <td>Sunday</td>
+                                                <td><div class="checkbo ml20"><input id="c7" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(7)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii25'>
+                                                        <input id="i25" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class='input-group date' id='ii26'>
+                                                        <input id="i26" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii27'>
+                                                        <input id="i27" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii28'>
+                                                        <input id="i28" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-8 col-md-offset-2 col-xs-12">
+                                    <input type="checkbox" name="wh-checkbox">  Update the default working time for all the employees
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(9)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(9)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="social" class="tab-pane">
+                        <div class="row form-group">
+                            <label class="col-md-2 col-md-offset-2 col-xs-12 text-right">Twitter:</label>
+                            <div class="col-md-5 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">@@</span>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2  col-md-offset-2 col-xs-12 text-right">Facebook Page:</label>
+                            <div class="col-md-5 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">http://</span>
+                                    <input type="text" name="facebookPage" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>
+                        </center>
+                        <br><br>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(10)"><span><strong><</strong></span> Back</button>
+                        </center>
+
+                    </div>
+
+                    <div id="optionSMS" class="tab-pane">
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-right">Option SMS</label>
+                            <div class="col-md-8 col-xs-12">
+                                <select class="form-control">
+                                    <option selected>No SMS Package</option>
+                                    <option>Package 1</option>
+                                    <option>Package 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(8)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(8)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <br><br><br><br><br><br><br>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 PlateformeRDV</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="footer-meta"></span>
+                <a href="#content" class="footer-return-top">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+</section>
+<!-- End: Content-Wrapper -->
+<!-- Start: Right Sidebar -->
+<!-- End: Right Sidebar -->
+</div>
+<!-- End: Main -->
+<!-- BEGIN: PAGE SCRIPTS -->
+<style>
+    /* demo styles -summernote */
+    .btn-toolbar > .btn-group.note-fontname {
+        display: none;
+    }
+
+    /* demo styles - hides several ckeditor toolbar buttons */
+    #cke_52,
+    #cke_53 {
+        display: none !important;
+    }
+</style>

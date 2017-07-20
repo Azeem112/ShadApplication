@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.AspNetItem>
 @{
 	ViewBag.Title = "ItemList";
 	Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
@@ -151,6 +151,7 @@
 							<div class="table-responsive">
 								<table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
 									<thead>
+
 										<tr role="row">
 											<th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
 												colspan="1" aria-sort="ascending"
@@ -183,30 +184,41 @@
 										</tr>
 									</thead>
 									<tbody id="myCustomers">
+					
+											@foreach (Shad_BookingApplication.Models.AspNetItem item in Model)
+											{
+												<tr role="row" class="odd">
+													<td class="sorting_1">
+														<center>
+															@item.Name
+														</center>
+													</td>
+													<td>
+														<center>
+															@Html.DisplayFor(modelItem => item.Description)
+														</center>
+													</td>
+													<td>
+														<center>
+															@Html.DisplayFor(modelItem => item.Vat)
+														</center>
+													</td>
+													<td>
+														<center>
+															@Html.DisplayFor(modelItem => item.Price_W_O_Vat)
+														</center>
+													</td>
+													<td>
+														<center>
+															@Html.DisplayFor(modelItem => item.Price_W__Vat)
+														</center>
+													</td>
+													
+													<td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
+													<td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>												</tr>
 
-										<tr role="row" class="odd">
-											<td class="sorting_1"><center>001</center></td>
-											<td><center>HairStyle</center></td>
-											<td><center>30.00 &euro;</center></td>
-											<td><center>5.00 &euro;</center></td>
-											<td><center>35.00 &euro;</center></td>
-
-											<td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-											<td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1"><center>002</center></td>
-											<td><center>Makeup</center></td>
-											<td><center>35.00 &euro;</center></td>
-											<td><center>6.00 &euro;</center></td>
-											<td><center>41.00 &euro;</center></td>
-
-
-											<td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-											<td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-										</tr>
-
+											}
+										
 
 									</tbody>
 								</table>

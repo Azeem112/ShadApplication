@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "AddService";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <div id="topbar-dropmenu">
+        <div class="topbar-menu row">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                    <p class="metro-title">Messages</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-user"></span>
+                    <p class="metro-title">Users</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                    <p class="metro-title">Support</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon fa fa-gears"></span>
+                    <p class="metro-title">Settings</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                    <p class="metro-title">Videos</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-picture"></span>
+                    <p class="metro-title">Pictures</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End: Topbar-Dropdown -->
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>CHoose csv format file </h4>
+            <input type="file" name="fileinput" accept=".csv"> </input>
+            <br><br>
+
+            <center><button type="button" class="btn btn-primary">Done</button></center>
+        </div>
+
+    </div>
+
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <h2>Add Service</h2>
+            </ol>
+
+        </div>
+
+
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <section id="content" class="table-layout">
+        <!-- Start: Header -->
+        <!-- End: Header -->
+
+        <div class="panel">
+            <div class="panel" id="spy3">
+
+                <div style="margin-left: 2%">
+                    <div class="row">
+                        <div class="row form-group">
+                            <h4 class="col-md-3 col-xs-12 text-left">Service Details</h4>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Service Name:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <input type="text" class="form-control" placeholder="" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Service Group:</label>
+                            <div class="col-md-7 col-xs-8">
+                                <select class="form-control">
+                                    <option selected>None</option>
+                                    <option>Group 1</option>
+                                    <option>Group 2</option>
+                                </select>
+                            </div>
+                            <a href="addServiceGroup.html" type="submit" class="btn btn-danger col-md-1 col-xs-3" style="border-radius:3px; margin-left: -10px">+</a>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-center">Description:</label>
+                            <div class="col-md-8 col-xs-11">
+                                <textarea type="text" class="form-control" placeholder="" style="resize: none;"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="checkbox col-md-offset-2 col-xs-offset-1">
+                                <label style="margin-left: 1%"><input type="checkbox" value="">Customers can book this service online</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-center">Price:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&euro;</span>
+                                    <input id="priceee" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <label class="col-md-1 col-md-offset-1 col-xs-12 text-center control-label">Tax:</label>
+                            <div class="col-md-3 col-xs-12">
+                                <select class="form-control" id="tax" style="margin-bottom: 3%;">
+                                    <option selected disabled value="0.00">-Tax-</option>
+                                    <option value="0.00">0.00%</option>
+                                    <option value="5.50">5.50%</option>
+                                    <option value="20.00">20.00%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-center">Duration:</label>
+                            <div class="col-md-8 col-xs-8">
+                                <select class="form-control">
+                                    <option selected="" disabled="">--Minutes--</option>
+                                    <option value="10">10 Minutes</option>
+                                    <option value="20">20 Minutes</option>
+                                    <option value="30">30 Minutes</option>
+                                    <option value="40">40 Minutes</option>
+                                    <option value="50">50 Minutes</option>
+                                    <option value="60">60 Minutes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:96%; margin-left: 2%; margin-bottom: 2%;"> </div>
+                    <div class="row">
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12">Padding and Processing times:</label>
+                            <div class="col-md-10 col-xs-12">
+                                <div class="input-group">
+                                    Padding time will block out additional time in your calendar.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-md-offset-2 col-xs-12 text-left">Padding before:</label>
+                            <div class="col-md-6 col-xs-8">
+                                <select class="form-control">
+                                    <option selected="" disabled="">--Minutes--</option>
+                                    <option value="15">15 Minutes</option>
+                                    <option value="30">30 Minutes</option>
+                                    <option value="45">45 Minutes</option>
+                                    <option value="60">60 Minutes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12"></label>
+                            <div class="col-md-10 col-xs-12">
+                                <div class="input-group">
+                                    Processing time will create a free gap after the service that is bookable for other appointments.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-md-offset-2 col-xs-12 text-left">Padding after:</label>
+                            <div class="col-md-6 col-xs-8">
+                                <select class="form-control">
+                                    <option selected="" disabled="">--Minutes--</option>
+                                    <option value="15">15 Minutes</option>
+                                    <option value="30">30 Minutes</option>
+                                    <option value="45">45 Minutes</option>
+                                    <option value="60">60 Minutes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2 col-md-offset-2 col-xs-12 text-left">Total minutes:</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon fa fa-clock-o"></span>
+                                    <input id="paft" type="text" class="form-control" placeholder="00:00">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:96%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                    <div class="row">
+                        <div class="row form-group">
+                            <label class="col-md-2 col-xs-12 text-center">Options:</label>
+                            <div class="row form-group col-md-8 col-xs-12">
+                                <label class="col-md-6 col-xs-8" style="font-weight: normal;">Take several appointments simultaneous:</label>
+                                <div class="radio col-md-1 col-xs-2 text-right">
+                                    <label>
+                                        <input type="radio" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Yes
+                                    </label>
+                                </div>
+                                <div class="radio col-md-1 col-md-offset-1 col-xs-2 text-right mt10">
+                                    <label>
+                                        <input type="radio" name="workingPlaceRadio" onchange="func1()" value="1">No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group" id="maxxxx">
+                            <label class="col-md-2 col-xs-12 text-center"></label>
+                            <div class="row form-group col-md-8 col-xs-12">
+                                <label class="col-md-6 col-xs-8" style="font-weight: normal;">Maximum simultaneous appointments:</label>
+                                <div class="col-md-2 col-xs-4">
+                                    <div class="input-group">
+                                        <input id="maxApp" type="number" class="form-control" placeholder="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #eff0f2; height:2px; width:96%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                    <div class="row">
+                        <div class="row form-group">
+                            <label class="col-md-4 col-xs-12 text-left">Service Color:<br><span style="font-weight: normal;">Choose a color this service will use on the calendar</span></label>
+                            <div class="col-md-5 col-xs-12">
+                                <input id="colorPick" type="color">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color: #eff0f2; height:2px; width:96%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                    <div class="row">
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-center control-label">Status:</label>
+                            <div class="col-md-8 col-xs-8">
+                                <select class="form-control">
+                                    <option selected>Active</option>
+                                    <option>InActive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <br><br><br>
+                    <a type="submit" class="btn btn-default col-md-2 col-xs-4 col-md-offset-7 col-xs-offset-2" style="border-radius:3px;">Cancel</a>
+                    <a href="serviceList.html" type="submit" class="btn btn-success col-md-2 col-xs-4" style="border-radius:3px; margin-left: 1%">Save</a>
+                </div>
+            </div>
+
+    </section>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer" class="affix">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 Plateforme RDV</span>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+
+</section>
+<!-- end: Content-Wrapper -->
