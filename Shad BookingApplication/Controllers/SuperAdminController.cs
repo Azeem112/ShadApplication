@@ -41,7 +41,62 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult UserList()
         {
-            return View();
+            List<UserListViewModel> superadmin = new List<UserListViewModel>();
+
+            foreach (var item in db.AspNetUsers)
+            {
+                var superadmin_item = new UserListViewModel();
+                superadmin_item.id = item.Id;
+
+
+                var companyname = db.AspNetCustomerDetails.Where(x => x.Id == Convert.ToInt32(item.Id)).Select(x => x.BussinessName).FirstOrDefault();
+                superadmin.Add(superadmin_item);
+            }
+
+            List<UserListViewModel> Companyadmin = new List<UserListViewModel>();
+            foreach (var item in db.AspNetUsers)
+            {
+                var Companyadmin_item = new UserListViewModel();
+                Companyadmin_item.id = item.Id;
+
+
+
+
+                Companyadmin.Add(Companyadmin_item);
+            }
+
+
+                //var user = db.AspNetUsers.Select(x => new {
+                //    x.LastName,
+                //    x.Id,
+                //    x.FirstName,
+                //    x.UserName,
+                //    x.Status
+
+                //}).ToList();
+
+                //List<string> Roles = new List<string>();
+
+                //for (int i=0;i< user.Count();i++)
+                //{
+                //    var item = user.ElementAt(i);
+                //    var role = db.AspNetUsers.Where(x=> x.Id == item.Id).Select(x => x.AspNetRoles.Select(y => y.Name)).FirstOrDefault().ToString();
+                //    Roles.Add(role);
+                //}
+                //List<string> Comp = new List<string>();
+                //for (int i = 0; i < user.Count(); i++)
+                //{
+                //    var item = user.ElementAt(i);
+                //    var comp = db.AspNetUsers.Where(x => x.Id == item.Id).Select(x => x.AspNetCustomerDetail.Select(y => y.Company)).FirstOrDefault().ToString();
+                //    Comp.Add(comp);
+                //}
+
+
+
+                //ViewBag.company = Comp;
+                //ViewBag.userdata = user;
+                //ViewBag.Roles = Roles;
+                return View();
         }
         public ActionResult AddSuperAdmin()
         {
@@ -197,7 +252,8 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult ItemList()
         {
-            return View();
+            var items = db.AspNetItems.ToList();
+            return View(items);
         }
 
    

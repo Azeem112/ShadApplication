@@ -1,0 +1,418 @@
+﻿
+@{
+    ViewBag.Title = "CustomerDetails";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <!-- End: Topbar -->
+    <header id="topbar">
+        <div class="alert alert-info" style="margin-bottom: 0">
+            <h4 style="margin-bottom: 0px; padding-bottom: 1px">
+                <span class="glyphicon glyphicon-user" style="font-size: 16px; top: 3px"></span>
+                <strong id="headinggg">Note much to see here yet!</strong>
+            </h4><br>
+            <p> This is where all of your customers who book appointments with you can be found. You can start now by <a href="#" style="color: white"><u>adding customer</u></a> or <a href="" style="color: white"><u> importing customer</u></a> from an existing system like Microsoft Outlook  or Gmail.</p>
+        </div>
+    </header>
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel" id="spy3">
+
+            <div class="panel-body">
+                <ul class="nav nav-pills mb20">
+                    <li class="active" id="dynamicItem1">
+                        <a href="#Details" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-user">&nbsp;</span>Summary</a>
+                    </li>
+                    <li class="" id="dynamicItem2">
+                        <a href="#Appointments" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-calendar">&nbsp;</span>Appointments</a>
+                    </li>
+                    <li class="" id="dynamicItem3">
+                        <a href="#Sales" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>Sales</a>
+                    </li>
+                    <li class="" id="dynamicItem4">
+                        <a href="#notes" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-pencil">&nbsp;</span>Notes</a>
+                    </li>
+                    <li class="" id="dynamicItem5">
+                        <a href="#Vouchers" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-gift">&nbsp;</span>Gift Vouchers</a>
+                    </li>
+                </ul>
+                <div class="tab-content br-n pn">
+                    <div id="Details" class="tab-pane active">
+                        <div class="row">
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Address</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>101 ABC Lille France</p></center>
+                                </div>
+                            </div>
+                            <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Zip Code</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>101 ABC Lille France</p></center>
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">City</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>101 ABC Lille France</p></center>
+                                </div>
+                            </div>
+                            <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Birthday</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>12 Dec 1999</p></center>
+                                </div>
+                            </div>
+                            <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">SMS number</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>N/A</p></center>
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">Telephone</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>N/A</p></center>
+                                </div>
+                            </div>
+                            <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Email</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>N/A</p></center>
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">Notification</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>Email</p></center>
+                                </div>
+                            </div>
+                            <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Date Created</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>2  March ,2017</p></center>
+                                </div>
+                                <label class="col-md-2 col-xs-12 text-right control-label">Reminders</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <center><p>SMS and EMAIL</p></center>
+                                </div>
+                            </div>
+                            <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
+
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(1)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="Appointments" class="tab-pane">
+                        <div class="row">
+                            <div class="row form-group ">
+                                <h4 class="col-md-3 col-xs-12 text-left control-label" style="margin-left: 2%;"><span class="glyphicon glyphicon-calendar">&nbsp;</span>Appointments</h4>
+
+                            </div>
+
+                            <div class="row form-group ">
+
+                                <div class="col-md-1 col-xs-1" style="margin-left: 2%">
+                                    <button type="button" class="btn btn-success">+</button>
+                                </div>
+                                <div class="col-md-4 col-xs-9">
+                                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print"></span> Print Appointments</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col-md-8 col-xs-10" style="padding: 0px; margin:0px;">
+                                <div class="col-md-6 col-xs-12" style=" float: left">
+
+                                    <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;margin-left: 2%">Last Appointment</label>
+                                    <div class="row form-group" style="padding-left: 3px; margin-left: 2%">
+                                        This Customer has no previous appointments
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6 col-xs-12" style=" float: right">
+
+                                    <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px; margin-left: 2%">Next Appointment</label>
+                                    <div class="row form-group" style="padding-left: 3px; margin-left: 2%">
+                                        This Customer has no futureappointments
+
+
+
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(2)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(2)">Next <span><strong>></strong></span></button>
+                        </center>
+
+                    </div>
+
+                    <div id="Sales" class="tab-pane">
+                        <div class="row form-group ">
+                            <h4 class="col-md-3 col-xs-12 text-left control-label" style="margin-left: 2%;"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>Sales</h4>
+
+                        </div>
+                        <div class="row form-group ">
+
+                            <div class="col-md-1 col-xs-1" style="margin-left: 2%">
+                                <button type="button" class="btn btn-success">+</button>
+                            </div>
+                            <div class="col-md-4 col-xs-9">
+                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print"></span> Print Statements</button>
+                            </div>
+                        </div>
+
+                        <div class="row form-group ">
+                            <div class="col-md-5 col-xs-10" style="margin-left: 1%">
+                                <label class="col-md-12 col-xs-12  control-label">Unpaid Invoices:</label>
+
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending" style="width: 11%; text-align: center;">
+                                            <center>Invoice #</center>
+                                        </th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 11%; text-align: center;">
+                                            <center> Status</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 11%;  text-align: center;">
+                                            <center> Invoice Date </center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 11%;  text-align: center;">
+                                            <center>  Due Date </center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 5%; text-align: center;">
+                                            <center> Ref</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 5%; text-align: center;">
+                                            <center> Amount</center>
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody id="myCustomers">
+
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1"><a><center>0001</center></a></td>
+                                        <td><center><button type="button" class="btn active btn-success btn-sm">UnPaid</button></center></td>
+                                        <td>
+                                            <label><center>Thus, 2 june 2017</center></label>
+
+                                        </td>
+
+                                        <td><label><center>Thus, 6 june 2017</center></label> </td>
+                                        <td><center>&nbsp  &nbsp  </center> </td>
+                                        <td><label><center>50.00€</center></label></td>
+
+
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1"><a><center>0002</center></a></td>
+                                        <td><center><button type="button" class="btn active btn-success btn-sm">UnPaid</button></center></td>
+                                        <td>
+                                            <label><center>Thus, 2 May 2017</center></label>
+
+                                        </td>
+
+                                        <td><label><center>Thus, 4 May 2017</center></label> </td>
+                                        <td><center>&nbsp  &nbsp  </center> </td>
+                                        <td><label><center>50.00€</center></label></td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(3)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(3)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="notes" class="tab-pane">
+                        <div class="row">
+                            <div class="row form-group ">
+                                <h4 class="col-md-3 col-xs-5 text-left control-label" style="margin-left: 2%;"><span class="glyphicon glyphicon-pencil">&nbsp;</span>Notes</h4>
+                                <a href="#" class="col-md-3 col-xs-5 text-right control-label" style="margin-top: 2%; float:right; margin-right: 5%;"> View all notes</a>
+                            </div>
+
+                            <div class="row form-group ">
+
+                                <div class="col-md-1 col-xs-1" style="margin-left: 2%">
+                                    <button type="button" class="btn btn-success">+</button>
+                                </div>
+                                <div class="col-md-4 col-xs-9">
+                                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print"></span> Print Notes</button>
+                                </div>
+                            </div>
+                            <div class="row form-group ">
+                                <div class="col-md-5 col-xs-10" style="margin-left: 1%">
+
+                                    <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;margin-left: 2%">Most Recent Notes</label>
+                                    <div class="row form-group" style="padding-left: 3px; margin-left: 2%">
+                                        No notes have been recorded for this customer.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(4)"><span><strong><</strong></span> Back</button>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc(4)">Next <span><strong>></strong></span></button>
+                        </center>
+                    </div>
+
+                    <div id="Vouchers" class="tab-pane">
+                        <div class="row form-group ">
+
+                            <div class="col-md-1 col-xs-1" style="margin-left: 2%">
+                                <button type="button" class="btn btn-success">+ Sell Gift Vouchers</button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending" style="width: 12%; text-align: center;">
+                                            <center>Code</center>
+                                        </th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 12%; text-align: center;">
+                                            <center> Issued</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Office: activate to sort column ascending" style="width: 12%;  text-align: center;">
+                                            <center> Expires</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 12%;  text-align: center;">
+                                            <center>  From </center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 12%; text-align: center;">
+                                            <center> TO</center>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 12%; text-align: center;">
+                                            <center> Intial value</center>
+                                        </th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 12%; text-align: center;">
+                                            <center> Balance</center>
+                                        </th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            aria-label="Age: activate to sort column ascending" style="width: 12%; text-align: center;">
+                                            <center> Status</center>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="myCustomers">
+
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1"><a><center>AB152D</center></a></td>
+                                        <td><label>Mon, 6 Mar2017</label></td>
+                                        <td><label>Never Expires</label></td>
+                                        <td><label>ABCDEFG</label></td>
+                                        <td></td>
+                                        <td><label><center>50.00€</center></label></td>
+                                        <td><label><center>50.00€</center></label></td>
+                                        <td><center><button type="button" class="btn active btn-success btn-sm">UnPaid</button></center></td>
+
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <center>
+                            <button type="button" class="btn btn-primary" onclick="changeTabFunc2(5)"><span><strong><</strong></span> Back</button>
+                        </center>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <br><br><br><br><br><br><br>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 PlateformeRDV</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="footer-meta"></span>
+                <a href="#content" class="footer-return-top">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+</section>
+<!-- End: Content-Wrapper -->

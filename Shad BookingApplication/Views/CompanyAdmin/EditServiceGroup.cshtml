@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "EditServiceGroup";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <h3>Edit Service Group</h3>
+            </ol>
+        </div>
+        <div class="topbar-right">
+
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel" id="spy3">
+
+            <div class="panel-body">
+
+
+                <div class="tab-pane">
+                    <div class="row">
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Service Group Name:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <input type="text" id="sgName" class="form-control" required="required">
+                            </div>
+                        </div>
+                        <div class="row form-group required">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
+                            <div class="col-md-8 col-xs-12">
+                                <select class="form-control" id="sgStatus">
+                                    <option selected value="1">Active</option>
+                                    <option value="0">In Active</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary col-xs-12 col-md-2 col-md-offset-5" style="border-radius: 10px">Update</button>
+
+
+
+            </div>
+
+
+            <br><br><br><br><br><br><br>
+        </div>
+        <!-- End: Content -->
+        <!-- Begin: Page Footer -->
+        <footer id="content-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="footer-legal">© 2017 PlateformeRDV</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <span class="footer-meta"></span>
+                    <a href="#content" class="footer-return-top">
+                        <span class="fa fa-arrow-up"></span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+        <!-- End: Page Footer -->
+
+</section>
+<!-- End: Content-Wrapper -->

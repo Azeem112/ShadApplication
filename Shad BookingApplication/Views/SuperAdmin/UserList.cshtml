@@ -1,7 +1,11 @@
-﻿
+﻿@model Shad_BookingApplication.Models.UserListViewModel
+
 @{
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+
+   // Model.AspNetCustomerDetails
+
 }
 
 
@@ -135,19 +139,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                   
+                                        @*@foreach (var item in Model.AspNetRol)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.AspNetUsers.Id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.AspNetUsers.FullName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.AspNetRoles.Role)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.AspNetCustomerDetails.Company)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Email)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Status)
+                                                </td>
 
-                                    <tr role="row" class="odd">
-                                        <td>0001</td>
-                                        <td>Han Se houl</td>
-                                        <td class="sorting_1">Super Admin</td>
-                                        <td>ABC</td>
-                                        <td><a>Han@ahoo.com</a></td>
-                                        <td>+9245645641</td>
-                                        <td>
-                                            <button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Active</button>
-                                        </td>
-                                        <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                    </tr>
+                                                <td>
+                                                    @Html.ActionLink("Active", "Edit", "Edit", new { id = item.AspNetUsers.Id }, new { @class = "btn active btn-dark btn-sm", style = "background-color: rgb(97,144,126);" }) |
+                                                   
+                                                    @Html.ActionLink("View","Details", "Details", new { id = item.AspNetUsers.Id }, new { @class="btn btn-default" }) |
+                                                    @Html.ActionLink("Delete","Delete", "Delete", new { id = item.AspNetUsers.Id }, new { @class = "btn btn-danger" })
+                                                </td>
+                                            </tr>
+                                        
+                                            
+                                    }*@
+                                    
                                     <tr role="row" class="even">
                                         <td>0002</td>
                                         <td>Sean Paul</td>

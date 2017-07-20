@@ -1,0 +1,243 @@
+﻿
+@{
+    ViewBag.Title = "_CompanyAdminNavigationBar";
+    Layout = "~/Views/Shared/_MainHeader.cshtml";
+}
+
+<!-- Start: Sidebar Left -->
+<aside id="sidebar_left" class="nano nano-primary affix">
+    <!-- Start: Sidebar Left Content -->
+    <div class="sidebar-left-content nano-content">
+        <!-- Start: Sidebar Header -->
+        <header class="sidebar-header">
+            <!-- Sidebar Widget - Menu (Slidedown) -->
+            <!-- Sidebar Widget - Search (hidden) -->
+            <div class="sidebar-widget search-widget hidden">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" id="sidebar-search" class="form-control" placeholder="Search...">
+                </div>
+            </div>
+        </header>
+        <!-- End: Sidebar Header -->
+        <!-- Start: Sidebar Left Menu -->
+        <ul class="nav sidebar-menu">
+            <li class="">
+                <a href="#">
+                    <span class="glyphicon glyphicon-dashboard"></span>
+                    <span class="sidebar-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="fa fa-book"></span>
+                    <span class="sidebar-title">Booking</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="bookingList.html">
+                            <span class="fa fa-cube"></span>Booking List
+                        </a>
+                    </li>
+                    <li>
+                        <a href="addBooking.html">
+                            <span class="fa fa-cube"></span>Add Booking
+                        </a>
+                    </li>
+                    <li>
+                        <a href="bookingTools.html">
+                            <span class="fa fa-cube"></span>Booking Tools
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="" class="accordion-toggle">
+                    <span class="glyphicon glyphicon-book"></span>
+                    <span class="sidebar-title">Agency</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li>
+                        <a href="agencyList.html">
+                            <span class="fa fa-cube"></span>Agency List
+                        </a>
+                    </li>
+                    <li>
+                        <a href="addAgency.html">
+                            <span class="fa fa-cube"></span>Add Agency
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="fa fa-users"></span>
+                    <span class="sidebar-title">Customers</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="cutomerslist.html">
+                            <span class="fa fa-cube"></span>Customer List
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="AddCustomer.html">
+                            <span class="fa fa-cube"></span>Add Customer
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="fa fa-user"></span>
+                    <span class="sidebar-title">Employees</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li>
+                        <a href="employelist.html">
+                            <span class="fa fa-cube"></span> Employees List
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="addemployee.html">
+                            <span class="fa fa-cube"></span>Add Employee
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="fa fa-list-alt"></span>
+                    <span class="sidebar-title">Services</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="serviceGroupList.html">
+                            <span class="fa fa-cube"></span>Services Group List
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="addServiceGroup.html">
+                            <span class="fa fa-cube"></span>Add Service Group
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="serviceList.html">
+                            <span class="fa fa-cube"></span>Services List
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="AddService.html">
+                            <span class="fa fa-cube"></span>Add Service
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    <span class="sidebar-title">Invoices</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="invoicelist.html">
+                            <span class="fa fa-cube"></span>Invoices List
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="create-invoice.html">
+                            <span class="fa fa-cube"></span>Create Invoice
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="glyphicon glyphicon-gift"></span>
+                    <span class="sidebar-title">Vouchers</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="vouchersList.html">
+                            <span class="fa fa-cube"></span>Vouchers List
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="addVoucher.html">
+                            <span class="fa fa-cube"></span>Add Vouchers
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="" class="accordion-toggle">
+                    <span class="glyphicon glyphicon-stats"></span>
+                    <span class="sidebar-title">Sales Discount</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="salesDiscountList.html">
+                            <span class="fa fa-cube"></span>List Sales Discount
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="salesDiscountList.html">
+                            <span class="fa fa-cube"></span>Add Sales Discount
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="report.html">
+                    <span class="fa fa-file-text"></span>
+                    <span class="sidebar-title">Reports</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="sms.html">
+                    <span class="glyphicon glyphicon-phone"></span>
+                    <span class="sidebar-title">SMS</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="" class="accordion-toggle">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="sidebar-title">Users</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav" style="">
+                    <li class="">
+                        <a href="userlist.html">
+                            <span class="fa fa-cube"></span> Users List
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="add_user.html">
+                            <span class="fa fa-cube"></span> Add User
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="login.html">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    <span class="sidebar-title">Logout</span>
+                </a>
+            </li>
+        </ul>
+        <!-- End: Sidebar Left Content -->
+</aside>
+<!-- End: Sidebar Left -->
+@RenderBody();
