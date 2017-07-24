@@ -4,16 +4,109 @@
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
 
     List<SelectListItem> listItems = new List<SelectListItem>();
-
-    foreach (var item in Model.BusinessCatageory)
+    List<SelectListItem> listItems0 = new List<SelectListItem>();
+    if (Model.BusinessCatageory != null)
     {
-        listItems.Add(new SelectListItem
+        foreach (var item in Model.BusinessCatageory)
         {
-            Text = item.Name,
+            listItems.Add(new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+                Selected = false
+            });
+        }
+    }
+
+
+    List<SelectListItem> listItems4 = new List<SelectListItem>();
+
+    foreach (var item in Model.SMS)
+    {
+        listItems4.Add(new SelectListItem
+        {
+            Text = item.SmsPackageName,
             Value = item.Id.ToString(),
             Selected = false
         });
     }
+
+    listItems4.Add(new SelectListItem
+    {
+        Text = "No Sms Package",
+        Value = "0",
+        Selected = true
+    });
+
+    List<SelectListItem> listItems1 = new List<SelectListItem>();
+
+    listItems1.Add(new SelectListItem
+    {
+        Text = "Single Site Company",
+        Value = "Single Site Company",
+        Selected = true
+    });
+
+    listItems1.Add(new SelectListItem
+    {
+        Text = "Multi Site Company",
+        Value = "Multi Site Company",
+        Selected = false
+    });
+
+    List<SelectListItem> listItems2 = new List<SelectListItem>();
+
+    listItems2.Add(new SelectListItem
+    {
+        Text = "Active",
+        Value = "Active",
+        Selected = true
+    });
+
+    listItems2.Add(new SelectListItem
+    {
+        Text = "Inactive",
+        Value = "Inactive",
+        Selected = false
+    });
+
+
+    List<SelectListItem> listItems3 = new List<SelectListItem>();
+
+    listItems3.Add(new SelectListItem
+    {
+        Text = "1",
+        Value = "1",
+        Selected = true
+    });
+
+    listItems3.Add(new SelectListItem
+    {
+        Text = "2",
+        Value = "2",
+        Selected = false
+    });
+
+    listItems3.Add(new SelectListItem
+    {
+        Text = "3",
+        Value = "3",
+        Selected = false
+    });
+
+    listItems3.Add(new SelectListItem
+    {
+        Text = "4",
+        Value = "4",
+        Selected = false
+    });
+
+    listItems3.Add(new SelectListItem
+    {
+        Text = "5",
+        Value = "5",
+        Selected = false
+    });
 
 
 
@@ -69,7 +162,7 @@
 	</header>
 	<!-- End: Topbar -->
 	<!-- Begin: Content -->
-@using (Html.BeginForm("AddCustomer", "SuperAdmin", FormMethod.Post))
+@using (Html.BeginForm("AddCustomer", "SuperAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 	<div class="panel">
 		<div class="panel" id="spy3">
@@ -104,7 +197,7 @@
 						<a href="#workingHours" data-toggle="tab" aria-expanded="true">Working Hours</a>
 					</li>
 					<li class="" id="dynamicItem10">
-						<a href="#social" data-toggle="tab" aria-expanded="true">Social</a>
+						<a href="#social" data-toggle="tab" onclick="custome_timepicker()" aria-expanded="true">Social</a>
 					</li>
 				</ul>
 				<div class="tab-content br-n pn">
@@ -154,7 +247,7 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Business Category:</label>
 								<div class="col-md-8 col-xs-12">
-                                    @Html.DropDownListFor(model => model.Detail.BusinessCatageoryId, listItems, "Select a category", new { @class = "form-control" })
+                                    @Html.DropDownListFor(model => model.Detail.BusinessCatageoryId, listItems, "Select a category", new { @class = "form-control",@id= "Bus_CatageoryId" ,@onchange= "populate_subbus_catg()" })
                                     @Html.ValidationMessageFor(model => model.Detail.BusinessCatageoryId, "", new { @class = "text-danger" })
 
 
@@ -167,11 +260,13 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Sub-category:</label>
 								<div class="col-md-8 col-xs-12">
-									<select class="form-control">
-										<option selected disabled>Select a sub-category</option>
-										<option>Option 1</option>
-										<option>Option 2</option>
-									</select>
+                                    @Html.DropDownListFor(model => model.Customer_SubCatageory, listItems0, new { @class = "form-control", @id = "Bus_Sub_CatageoryId" ,@multiple="true" })
+                                    @Html.ValidationMessageFor(model => model.Customer_SubCatageory, "", new { @class = "text-danger" })
+                                    
+
+
+
+
 								</div>
 							</div>
 						</div>
@@ -204,7 +299,7 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="12345" required="required">
+									
                                     @Html.EditorFor(model => model.Location.ZipCode, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("12345") } })
                                     @Html.ValidationMessageFor(model => model.Location.ZipCode, "", new { @class = "text-danger" })
 								</div>
@@ -214,7 +309,7 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">State:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the state">
+									
                                     @Html.EditorFor(model => model.Location.State, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the state") } })
                                     @Html.ValidationMessageFor(model => model.Location.State, "", new { @class = "text-danger" })
 
@@ -226,7 +321,7 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<select class="form-control" name="CountryName">
+									<select class="form-control" name="LocCountryName">
 										<option disabled selected>Select the country</option>
 										<option value="Afghanistan">Afghanistan</option>
 										<option value="Albania">Albania</option>
@@ -482,7 +577,10 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Latitude:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="" required="required">
+                                    @Html.EditorFor(model => model.Location.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Location.Latitude, "", new { @class = "text-danger" })
+
+
 								</div>
 								<div class="col-md-2 col-xs-12 text-right">
 									<label class="text-right control-label">
@@ -490,7 +588,10 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="">
+									@Html.EditorFor(model => model.Location.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Location.Longitude, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
@@ -498,17 +599,18 @@
 								<h3 class="col-md-2" style="margin-left: 1%; margin-top: 1%">Intervension Zone:</h3>
 								<div class="radio col-md-1 col-xs-12 text-right">
 									<label>
-										<input type="radio" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Home
+										<input type="radio" id="Home_id" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Home
 									</label>
 								</div>
 								<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
 									<label>
-										<input type="radio" name="workingPlaceRadio" onchange="func1()" value="1">On site
+										<input type="radio" id="onsite_id" name="workingPlaceRadio" onchange="func1()" value="1">On site
+                                        @Html.HiddenFor(model=>model.Location.IntervensionZone, new { @id= "IntervensionZone_id" })
 									</label>
 								</div>
 								<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
 									<label>
-										<input type="radio" name="workingPlaceRadio" onchange="func2()" value="3">Both
+										<input type="radio" id="both_id" name="workingPlaceRadio" onchange="func22()" value="3">Both
 									</label>
 								</div>
 							</div>
@@ -519,7 +621,11 @@
 							<div class="row form-group">
 								<label class="col-md-2 col-xs-12 text-right" style="margin-top: 1%">Radius of intervention:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="number" class="form-control" placeholder="Distance in KM" required="required">
+									
+                                    @Html.EditorFor(model => model.Location.Radius, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0", @class = "form-control" ,@placeholder= "Distance in KM" } })
+                                    @Html.ValidationMessageFor(model => model.Location.Radius, "", new { @class = "text-danger" })
+
+
 								</div>
 								<br>
 								<br>
@@ -540,21 +646,29 @@
 					<div id="contactDetails" class="tab-pane">
 
 						<div class="row form-group">
-							<label class="col-md-2 col-xs-12 text-right">Telephone:</label>
+							<label class="col-md-2 col-xs-12 text-right">Telephone 1:</label>
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+									
+                                    @Html.EditorFor(model => model.Contact.Telephone1, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Contact.Telephone1, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
 							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
-								<label>Telephone:</label>
+								<label>Telephone 2:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+									
+                                    @Html.EditorFor(model => model.Contact.Telephone2, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Contact.Telephone2, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -564,7 +678,10 @@
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+                                    @Html.EditorFor(model => model.Contact.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
@@ -574,7 +691,11 @@
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+									
+                                    @Html.EditorFor(model => model.Contact.Fax, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Contact.Fax, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -582,7 +703,10 @@
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
 							<div class="col-md-8 col-xs-12">
-								<input type="email" class="form-control" placeholder="">
+								@Html.EditorFor(model => model.Contact.BussinessEmail, new { htmlAttributes = new { @class = "form-control" ,@placeholder="Enter Business Email Address"} })
+                                @Html.ValidationMessageFor(model => model.Contact.BussinessEmail, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 						<center>
@@ -595,7 +719,7 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Country:</label>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_country">
 									<option selected disabled>Choose the country</option>
 									<option value="Afghanistan">Afghanistan</option>
 									<option value="Albania">Albania</option>
@@ -843,7 +967,7 @@
 								<label>Currency:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_currency">
 									<option selected disabled>Choose the currency</option>
 									<option>Euro</option>
 									<option>USD</option>
@@ -856,7 +980,7 @@
 								Time Zone:
 							</label>
 							<div class="col-md-8 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_timezone">
 									<option selected disabled>Select the timezone</option>
 									<option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</option>
 									<option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</option>
@@ -947,10 +1071,10 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Date Format:</label>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
+								<select class="form-control"  name="region_dateformat">
 									<option selected disabled>Choose the date format</option>
-									<option>dd mm yyyy</option>
-									<option>mm dd yyyy</option>
+									<option value="dd mm yyyy">dd mm yyyy</option>
+									<option value="mm dd yyyy">mm dd yyyy</option>
 								</select>
 							</div>
 
@@ -958,7 +1082,7 @@
 								<label>Time Format:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control" onchange="jsFunction(this.value);">
+								<select class="form-control" name="region_timeformat" jsFunction(this.value);">
 									<option selected disabled value="">Choose the time format</option>
 									<option value="12">AM:PM</option>
 									<option value="24">24-Hour</option>
@@ -975,27 +1099,45 @@
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">SIRET:</label>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+								
+                               
+                                @Html.EditorFor(model => model.BusinessDetail.SRIET, new { htmlAttributes = new {  @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BusinessDetail.SRIET, "", new { @class = "text-danger" })
+
+
 							</div>
 
 							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
 								<label class="control-label">APE:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+
+                                @Html.EditorFor(model => model.BusinessDetail.APE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BusinessDetail.APE, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">VAT Number:</label>
 							<div class="col-md-8 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+								
+
+                                @Html.EditorFor(model => model.BusinessDetail.VatNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BusinessDetail.VatNumber, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Description:</label>
 							<div class="col-md-8 col-xs-12">
-								<textarea name="editor1" class="form-control" rows="5" id="business-description"></textarea>
+								<textarea name="editor1" class="form-control" rows="5" id="business-description"  ></textarea>
+                                @*@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control", @name = "editor_id" })
+                                @Html.ValidationMessageFor(model => model.BusinessDetail.Description, "", new { @class = "text-danger" })*@
+
+
 							</div>
 						</div>
 
@@ -1009,7 +1151,7 @@
 								<div ng-controller="upload">
 									<div class="col-md-2 col-xs-12">
 										<label class="btn btn-default btn-system btn-file btn-block">
-											Upload Image <input type="file" fileinput="file" filepreview="filepreview" />
+											Upload Image <input type="file" fileinput="file" filepreview="filepreview" name="business_logo_img"/>
 										</label>
 									</div>
 									<div class="col-md-2 col-xs-12">
@@ -1032,7 +1174,11 @@
 								<div ng-controller="upload">
 									<div class="col-md-2 col-xs-12">
 										<label id="upImage" class="btn btn-default btn-system btn-file btn-block">
-											Upload Image <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" />
+											Upload Image
+                                             @*<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" multiple />*@
+                                            @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" , @id = "fileToUpload" ,@accept = "image/*" ,@class="inputfile"})
+                                            @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                                            
 										</label>
 									</div>
 									<img id="dispImage1" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12">
@@ -1042,6 +1188,7 @@
 									<img id="dispImage5" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12" style="display: none">
 								</div>
 							</div>
+                            
 						</div>
 						<center>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(6)"><span><strong><</strong></span> Back</button>
@@ -1055,7 +1202,11 @@
 							<div class="col-md-8 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"></span>
-									<input type="email" class="form-control" placeholder="Enter user email address">
+									
+                                    @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter user email address") } })
+                                    @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -1064,33 +1215,37 @@
 							<div class="col-md-8 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control" placeholder="Enter user password">
+									
+                                    @Html.PasswordFor(m => m.User.PasswordHash, new { @class = "form-control", @placeholder = "Enter user password" })
+                                    @Html.ValidationMessageFor(m => m.User.PasswordHash, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Name:</label>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" name="user-name" placeholder="Enter user name">
+								
+                                @Html.EditorFor(model => model.User.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter user name") } })
+                                @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+
+
 							</div>
 
 							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right control-label">
 								<label>Status:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
-									<option>Active</option>
-									<option>Inactive</option>
-								</select>
+                                @Html.DropDownListFor(model => model.UserType.Status, listItems2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UserType.Status, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Company Type:</label>
 							<div class="col-md-3 col-xs-12">
-								<select id="drop" class="form-control">
-									<option value="1">Single Site Company</option>
-									<option value="2">Multi Site Company</option>
-								</select>
+                                    @Html.DropDownListFor(model => model.UserType.SingleorMulti, listItems1, new { @class = "form-control", @id = "drop" })
+                                    @Html.ValidationMessageFor(model => model.UserType.SingleorMulti, "", new { @class = "text-danger" })
 							</div>
 
 							<div style="display: none;" id="agencyyy">
@@ -1098,13 +1253,8 @@
 									<label>Total Agency:</label>
 								</div>
 								<div class="col-md-3 col-md-12">
-									<select class="form-control">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
+                                    @Html.DropDownListFor(model => model.UserType.MultiNumber, listItems3, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserType.MultiNumber, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
@@ -1398,6 +1548,7 @@
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(9)"><span><strong><</strong></span> Back</button>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc(9)">Next <span><strong>></strong></span></button>
 						</center>
+                        <input type="hidden" id="custom_timepicker_id" name="custom_timepicker_name" />
 					</div>
 
 					<div id="social" class="tab-pane">
@@ -1406,7 +1557,10 @@
 							<div class="col-md-5 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"> </span>
-									<input type="text" class="form-control" placeholder="">
+									@Html.EditorFor(model => model.Social.Twitter, new { htmlAttributes = new {@class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Social.Twitter, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -1415,7 +1569,8 @@
 							<div class="col-md-5 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon">http://</span>
-									<input type="text" name="facebookPage" class="form-control">
+									@Html.EditorFor(model => model.Social.Facebook, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Social.Facebook, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
@@ -1434,11 +1589,9 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Option SMS</label>
 							<div class="col-md-8 col-xs-12">
-								<select class="form-control">
-									<option selected>No SMS Package</option>
-									<option>Package 1</option>
-									<option>Package 2</option>
-								</select>
+                              
+                                @Html.DropDownListFor(model => model.SingleSms.ItemID, listItems4,new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SingleSms.ItemID, "", new { @class = "text-danger" })
 							</div>
 						</div>
 						<center>
@@ -1491,628 +1644,784 @@
 
 		
 <script type="text/javascript">
-$(function () {
-				$('#ii1').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii2').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii3').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii4').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii5').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii6').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii7').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii8').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii9').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii10').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii11').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii12').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii13').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii14').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii15').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii16').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii17').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii18').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii19').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-$(function () {
-				$('#ii20').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
+    function populate_subbus_catg()
+    {
+        alert($("#Bus_CatageoryId").val());
+        var id = $("#Bus_CatageoryId").val();
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Get_BusinessSubCatg",
+            data: { "id": id },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                var option = "";
+                alert(response);
+                var list = response.split(",");
+                
+                for (var i = 0; i < list.length-1; i++)
+                {
+                    option += '<option value="' + list[i] + '">' + list[i] + '</option>';
+                }
+                alert(option);
+                $('#Bus_Sub_CatageoryId').append(option);
+               // alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
 
-$(function () {
-				$('#ii21').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii22').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii23').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii24').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii25').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii26').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
 
-$(function () {
-				$('#ii27').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-
-$(function () {
-				$('#ii28').datetimepicker({
-					format: 'LT',
-					 pickDate: false
-				});
-			});
-function checkboxDetect(num)
+function custome_timepicker()
 {
-	if(document.getElementById("c"+num).checked == true)
-	{
-		document.getElementById("r"+num).style.backgroundColor = "lightgrey";
-		document.getElementById("i"+((num-1)*4+1)).disabled = true;
-		document.getElementById("i"+((num-1)*4+2)).disabled = true;
-		document.getElementById("i"+((num-1)*4+3)).disabled = true;
-		document.getElementById("i"+((num-1)*4+4)).disabled = true;
-	}
-	else
-	{
-		document.getElementById("r"+num).style.backgroundColor = "white";
-		document.getElementById("i"+((num-1)*4+1)).disabled = false;
-		document.getElementById("i"+((num-1)*4+2)).disabled = false;
-		document.getElementById("i"+((num-1)*4+3)).disabled = false;
-		document.getElementById("i"+((num-1)*4+4)).disabled = false;
-	}
+    var time_string = "";
+    var i=1
+    for(var k=0; k<7;k++)
+    {
+        if (i == 1)
+        {
+            var ckbox = $('#c1');
+            if (!ckbox.is(':checked'))
+            {
+                time_string = time_string + "Monday-";
+                for (var j = i ; j < 5 ; j++) {
+                    var val = $("#i" + j).val();
+                    time_string = time_string + val + ",";
+                }
+                time_string = time_string + "|";
+            }
+        }
+        else if(i == 5)
+        {
+            var ckbox = $('#c2');
+            if (!ckbox.is(':checked')) {
+                time_string = time_string + "Tuesday-";
+                for (var j = i ; j < 9 ; j++) {
+                    time_string = time_string + $("#i" + j).val() + ",";
+                }
+                time_string = time_string + "|";
+            }
+        }
+        else if (i == 9)
+        {
+            var ckbox = $('#c3');
+            if (!ckbox.is(':checked')) {
+                time_string = time_string + "Wednesday-";
+                for (var j = i ; j < 13 ; j++) {
+                    time_string = time_string + $("#i" + j).val() + ",";
+                }
+                time_string = time_string + "|";
+            }
+        }
+        else if (i == 13)
+        {
+            var ckbox = $('#c4');
+            if (!ckbox.is(':checked')) {
+                time_string = time_string + "Thursday-";
+                for (var j = i ; j < 17 ; j++) {
+                    time_string = time_string + $("#i" + j).val() + ",";
+                }
+                time_string = time_string + "|";
+            }
+        }
+        else if (i == 17)
+        {
+            var ckbox = $('#c5');
+            if (!ckbox.is(':checked')) {
+                time_string = time_string + "Friday-";
+                for (var j = i ; j < 21 ; j++) {
+                    time_string = time_string + $("#i" + j).val() + ",";
+                }
+
+                time_string = time_string + "|";
+            }
+        }
+        else if (i == 21)
+        {
+            var ckbox = $('#c6');
+            if (!ckbox.is(':checked')) {
+                time_string = time_string + "Saturday-";
+                for (var j = i ; j < 25 ; j++) {
+                    time_string = time_string + $("#i" + j).val() + ",";
+                }
+                time_string = time_string + "|";
+            }
+        }
+        else if (i == 25)
+        {
+            var ckbox = $('#c7');
+            if (!ckbox.is(':checked')) {
+                time_string = time_string + "Sunday-";
+                for (var j = i ; j < 29 ; j++) {
+                    time_string = time_string + $("#i" + j).val() + ",";
+                }
+                time_string = time_string + "|";
+            }
+        }
+        i = i + 4;
+
+
+    }
+   
+    $("#custom_timepicker_id").val(time_string);
+    
 }
 
- $("#drop").change(function () {
-var ddl = document.getElementById("drop");
-  var selectedValue = ddl.options[ddl.selectedIndex].value;
-  if (selectedValue == "1")
-  {
-	var label1 = document.getElementById("agencyyy");
-	label1.style.display = 'none';
-  }
-  if (selectedValue == "2")
-  {
-	var label3 = document.getElementById("agencyyy");
-	label3.style.display = 'block';
-  }
-});
-
-var image_counter = 1;
-function readFile() {
-			  if (image_counter == 5)
-			  {
-				  document.getElementById("fileToUpload").disabled=true;
-			  }
-
-		  if (this.files && this.files[0]) {
-
-			var FR= new FileReader();
-
-			FR.addEventListener("load", function(e) {
-			  document.getElementById("dispImage"+image_counter).src = e.target.result;
-			  currImage = e.target.result;
-			  image_counter++;
-			  document.getElementById("dispImage"+image_counter).style.display="block";
-
-			  //alert(currImage);
-			});
-
-			FR.readAsDataURL( this.files[0] );
-		  }
-
-		}var sDATA;
-			var currImage="img/avatar1.png";
-			currImage = document.getElementById("fileToUpload").addEventListener("change", readFile);
-			var retrievedObject = JSON.parse(sessionStorage.getItem('curr'));
-
-function jsFunction(a){
-	if(a==12){
-		var x = document.getElementsByClassName("form-control wh-time");
-		var i;
-		for (i = 0; i < x.length; i++) {
-			x[i].placeholder = "11:59 AM";
-		}
-	}
-	if(a==24){
-		var x = document.getElementsByClassName("form-control wh-time");
-		var i;
-		for (i = 0; i < x.length; i++) {
-			x[i].placeholder = "23:59";
-		}
-	}
-}
-function changeTabFunc(a){
-	document.getElementById("dynamicItem"+a).className = "";
-	document.getElementById("dynamicItem"+(a+1)).className = "active";
-	if(a==1){
-		document.getElementById("Details").className = "tab-pane";
-		document.getElementById("locationDetails").className = "tab-pane active";
-	}
-	if(a==2){
-		document.getElementById("locationDetails").className = "tab-pane";
-		document.getElementById("contactDetails").className = "tab-pane active";
-	}
-	if(a==3){
-		document.getElementById("contactDetails").className = "tab-pane";
-		document.getElementById("regionalSettings").className = "tab-pane active";
-	}
-	if(a==4){
-		document.getElementById("regionalSettings").className = "tab-pane";
-		document.getElementById("businessDetails").className = "tab-pane active";
-	}
-	if(a==5){
-		document.getElementById("businessDetails").className = "tab-pane";
-		document.getElementById("photoGallery").className = "tab-pane active";
-	}
-	if(a==6){
-		document.getElementById("photoGallery").className = "tab-pane";
-		document.getElementById("userAndAccountType").className = "tab-pane active";
-	}
-	if(a==7){
-		document.getElementById("userAndAccountType").className = "tab-pane";
-		document.getElementById("optionSMS").className = "tab-pane active";
-	}
-	if(a==8){
-		document.getElementById("optionSMS").className = "tab-pane";
-		document.getElementById("workingHours").className = "tab-pane active";
-	}
-	if(a==9){
-		document.getElementById("workingHours").className = "tab-pane";
-		document.getElementById("social").className = "tab-pane active";
-	}
-}
-function changeTabFunc2(a){
-	document.getElementById("dynamicItem"+a).className = "";
-	document.getElementById("dynamicItem"+(a-1)).className = "active";
-	if(a==2){
-
-		document.getElementById("locationDetails").className = "tab-pane";
-		document.getElementById("Details").className = "tab-pane active";
-	}
-	if(a==3){
-
-		document.getElementById("contactDetails").className = "tab-pane";
-		document.getElementById("locationDetails").className = "tab-pane active";
-	}
-	if(a==4){
-
-		document.getElementById("regionalSettings").className = "tab-pane";
-		document.getElementById("contactDetails").className = "tab-pane active";
-	}
-	if(a==5){
-
-		document.getElementById("businessDetails").className = "tab-pane";
-		document.getElementById("regionalSettings").className = "tab-pane active";
-	}
-	if(a==6){
-
-		document.getElementById("photoGallery").className = "tab-pane";
-		document.getElementById("businessDetails").className = "tab-pane active";
-	}
-	if(a==7){
-
-		document.getElementById("userAndAccountType").className = "tab-pane";
-		document.getElementById("photoGallery").className = "tab-pane active";
-	}
-	if(a==8){
-		document.getElementById("optionSMS").className = "tab-pane";
-		document.getElementById("userAndAccountType").className = "tab-pane active";
-	}
-	if(a==9){
-		document.getElementById("workingHours").className = "tab-pane";
-		document.getElementById("optionSMS").className = "tab-pane active";
-	}
-	if(a==10){
-		document.getElementById("social").className = "tab-pane";
-		document.getElementById("workingHours").className = "tab-pane active";
-	}
-}
-function func1()
-{
-	document.getElementById('interventionZone').style.display="none";
-}
-function func2()
-{
-	document.getElementById('interventionZone').style.display="block";
-}
- var map;
-	  function initMap() {
-		map = new google.maps.Map(document.getElementById('map'), {
-		  center: {lat: 30.397, lng: 64.644},
-		  zoom: 4
-		});
-		google.maps.event.trigger(map, 'resize');
-
-	  }
-	   $(window).load(function () {
-			BindResizeEvent();
-			initMap();
-		});
-		function BindResizeEvent() {
-			$("a[href='#locationDetails']").on('shown.bs.tab', function () {
-				google.maps.event.trigger(map, 'resize');
-			});
-		}
-	jQuery(document).ready(function () {
-
-		"use strict";
-
-		// Init Theme Core
-		Core.init();
-
-		// Init Demo JS
-		Demo.init();
+   
 
 
-		// CKEditor
-		CKEDITOR.replace( 'editor1' );
 
-		// Init Select2 - Basic Single
-		$(".select2-single").select2();
 
-		// Init Select2 - Basic Multiple
-		$(".select2-multiple").select2({
-			placeholder: "Select a state",
-			allowClear: true
-		});
 
-		// Init Select2 - Contextuals (via html classes)
-		$(".select2-primary").select2(); // select2 contextual - primary
-		$(".select2-success").select2(); // select2 contextual - success
-		$(".select2-info").select2();    // select2 contextual - info
-		$(".select2-warning").select2(); // select2 contextual - warning
+        $(function () {
+            $('#ii1').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-		// Init Bootstrap Maxlength Plugin
-		$('input[maxlength]').maxlength({
-			threshold: 15,
-			placement: "right"
-		});
+        $(function () {
+            $('#ii2').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii3').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii4').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii5').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii6').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii7').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii8').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii9').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii10').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii11').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii12').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii13').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii14').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii15').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii16').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii17').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii18').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii19').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('#ii20').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-		// Dual List Plugin Init
-		var demo1 = $('.demo1').bootstrapDualListbox({
-			nonSelectedListLabel: 'Options',
-			selectedListLabel: 'Selected',
-			preserveSelectionOnMove: 'moved',
-			moveOnSelect: true,
-			nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
-		});
+        $(function () {
+            $('#ii21').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-		$("#demoform").submit(function () {
-			alert("Options Selected: " + $('.demo1').val());
-			return false;
-		});
+        $(function () {
+            $('#ii22').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-		// Init Twitter Typeahead.js
-		var substringMatcher = function (strs) {
-			return function findMatches(q, cb) {
-				var matches, substrRegex;
+        $(function () {
+            $('#ii23').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-				// an array that will be populated with substring matches
-				matches = [];
+        $(function () {
+            $('#ii24').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-				// regex used to determine if a string contains the substring `q`
-				substrRegex = new RegExp(q, 'i');
+        $(function () {
+            $('#ii25').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-				// iterate through the pool of strings and for any string that
-				// contains the substring `q`, add it to the `matches` array
-				$.each(strs, function (i, str) {
-					if (substrRegex.test(str)) {
-						// the typeahead jQuery plugin expects suggestions to a
-						// JavaScript object, refer to typeahead docs for more info
-						matches.push({
-							value: str
-						});
-					}
-				});
+        $(function () {
+            $('#ii26').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-				cb(matches);
-			};
-		};
+        $(function () {
+            $('#ii27').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
 
-		var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-			'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-			'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-			'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-			'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-			'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-			'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-			'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-			'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-		];
+        $(function () {
+            $('#ii28').datetimepicker({
+                format: 'LT',
+                pickDate: false
+            });
+        });
+        function checkboxDetect(num)
+        {
+            if(document.getElementById("c"+num).checked == true)
+            {
+                document.getElementById("r"+num).style.backgroundColor = "lightgrey";
+                document.getElementById("i"+((num-1)*4+1)).disabled = true;
+                document.getElementById("i"+((num-1)*4+2)).disabled = true;
+                document.getElementById("i"+((num-1)*4+3)).disabled = true;
+                document.getElementById("i"+((num-1)*4+4)).disabled = true;
+            }
+            else
+            {
+                document.getElementById("r"+num).style.backgroundColor = "white";
+                document.getElementById("i"+((num-1)*4+1)).disabled = false;
+                document.getElementById("i"+((num-1)*4+2)).disabled = false;
+                document.getElementById("i"+((num-1)*4+3)).disabled = false;
+                document.getElementById("i"+((num-1)*4+4)).disabled = false;
+            }
+        }
 
-		// Init Typeahead Plugin with state aray
-		$('.typeahead').typeahead({
-			hint: true,
-			highlight: true,
-			minLength: 1
-		}, {
-			name: 'states',
-			displayKey: 'value',
-			source: substringMatcher(states)
-		});
+        $("#drop").change(function () {
+    
+            var ddl = document.getElementById("drop");
+            var selectedValue = ddl.options[ddl.selectedIndex].value;
 
-		// DateRange plugin options
-		var rangeOptions = {
-			ranges: {
-				'Today': [moment(), moment()],
-				'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-				'Last 7 Days': [moment().subtract('days', 6), moment()],
-				'Last 30 Days': [moment().subtract('days', 29), moment()],
-				'This Month': [moment().startOf('month'), moment().endOf('month')],
-				'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-			},
-			startDate: moment().subtract('days', 29),
-			endDate: moment()
-		}
+            if (selectedValue == "Single Site Company")
+            {
+                var label1 = document.getElementById("agencyyy");
+                label1.style.display = 'none';
+            }
+            if (selectedValue == "Multi Site Company")
+            {
+                var label3 = document.getElementById("agencyyy");
+                label3.style.display = 'block';
+            }
+        });
 
-		// Init DateRange plugin
-		$('#daterangepicker1').daterangepicker();
+        var image_counter = 1;
+        function readFile() {
+            if (image_counter == 5)
+            {
+                document.getElementById("fileToUpload").disabled=true;
+            }
 
-		// Init DateRange plugin
-		$('#daterangepicker2').daterangepicker(
-			rangeOptions,
-			function (start, end) {
-				$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-			}
-		);
+            if (this.files && this.files[0]) {
 
-		// Init DateRange plugin
-		$('#inline-daterange').daterangepicker(
-			rangeOptions,
-			function (start, end) {
-				$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-			}
-		);
+                var FR= new FileReader();
 
-		// Init DateTimepicker - fields
-		$('#datetimepicker1').datetimepicker();
-		$('#datetimepicker2').datetimepicker();
+                FR.addEventListener("load", function(e) {
+                    document.getElementById("dispImage"+image_counter).src = e.target.result;
+                    currImage = e.target.result;
+                    image_counter++;
+                    document.getElementById("dispImage"+image_counter).style.display="block";
 
-		// Init DateTimepicker - inline + range detection
-		$('#datetimepicker3').datetimepicker({
-			defaultDate: "9/4/2014",
-			inline: true,
-		});
+                    //alert(currImage);
+                });
 
-		// Init DateTimepicker - fields + Date disabled (only time picker)
-		$('#datetimepicker5').datetimepicker({
-			defaultDate: "9/25/2014",
-			pickDate: false,
-		});
-		// Init DateTimepicker - fields + Date disabled (only time picker)
-		$('#datetimepicker6').datetimepicker({
-			defaultDate: "9/25/2014",
-			pickDate: false,
-		});
-		// Init DateTimepicker - inline + Date disabled (only time picker)
-		$('#datetimepicker7').datetimepicker({
-			defaultDate: "9/25/2014",
-			pickDate: false,
-			inline: true
-		});
+                FR.readAsDataURL( this.files[0] );
+            }
 
-		// Init Colorpicker plugin
-		$('#demo_apidemo').colorpicker({
-			color: bgPrimary
-		});
-		$('.demo-auto').colorpicker();
+        }var sDATA;
+        var currImage="img/avatar1.png";
+        currImage = document.getElementById("fileToUpload").addEventListener("change", readFile);
+        var retrievedObject = JSON.parse(sessionStorage.getItem('curr'));
 
-		// Init jQuery Tags Manager
-		$(".tm-input").tagsManager({
-			tagsContainer: '.tags',
-			prefilled: ["Miley Cyrus", "Apple", "A Long Tag", "Na uh"],
-			tagClass: 'tm-tag-info',
-		});
+        function jsFunction(a){
+            if(a==12){
+                var x = document.getElementsByClassName("form-control wh-time");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x[i].placeholder = "11:59 AM";
+                }
+            }
+            if(a==24){
+                var x = document.getElementsByClassName("form-control wh-time");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x[i].placeholder = "23:59";
+                }
+            }
+        }
+        function changeTabFunc(a) {
 
-		// Init Boostrap Multiselects
-		$('#multiselect1').multiselect();
-		$('#multiselect2').multiselect({
-			includeSelectAllOption: true
-		});
-		$('#multiselect3').multiselect();
-		$('#multiselect4').multiselect({
-			enableFiltering: true,
-		});
-		$('#multiselect5').multiselect({
-			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-primary'
-		});
-		$('#multiselect6').multiselect({
-			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-info'
-		});
-		$('#multiselect7').multiselect({
-			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-success'
-		});
-		$('#multiselect8').multiselect({
-			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-warning'
-		});
+            custome_timepicker();   // for getting time form value
 
-		// Init jQuery spinner init - default
-		$("#spinner1").spinner();
+            document.getElementById("dynamicItem"+a).className = "";
+            document.getElementById("dynamicItem"+(a+1)).className = "active";
+            if(a==1){
+                document.getElementById("Details").className = "tab-pane";
+                document.getElementById("locationDetails").className = "tab-pane active";
+            }
+            if(a==2){
+                document.getElementById("locationDetails").className = "tab-pane";
+                document.getElementById("contactDetails").className = "tab-pane active";
+            }
+            if(a==3){
+                document.getElementById("contactDetails").className = "tab-pane";
+                document.getElementById("regionalSettings").className = "tab-pane active";
+            }
+            if(a==4){
+                document.getElementById("regionalSettings").className = "tab-pane";
+                document.getElementById("businessDetails").className = "tab-pane active";
+            }
+            if(a==5){
+                document.getElementById("businessDetails").className = "tab-pane";
+                document.getElementById("photoGallery").className = "tab-pane active";
+            }
+            if(a==6){
+                document.getElementById("photoGallery").className = "tab-pane";
+                document.getElementById("userAndAccountType").className = "tab-pane active";
+            }
+            if(a==7){
+                document.getElementById("userAndAccountType").className = "tab-pane";
+                document.getElementById("optionSMS").className = "tab-pane active";
+            }
+            if(a==8){
+                document.getElementById("optionSMS").className = "tab-pane";
+                document.getElementById("workingHours").className = "tab-pane active";
+            }
+            if(a==9){
+                document.getElementById("workingHours").className = "tab-pane";
+                document.getElementById("social").className = "tab-pane active";
+            }
+        }
+        function changeTabFunc2(a){
+            document.getElementById("dynamicItem"+a).className = "";
+            document.getElementById("dynamicItem"+(a-1)).className = "active";
+            if(a==2){
 
-		// Init jQuery spinner init - currency
-		$("#spinner2").spinner({
-			min: 5,
-			max: 2500,
-			step: 25,
-			start: 1000,
-			//numberFormat: "C"
-		});
+                document.getElementById("locationDetails").className = "tab-pane";
+                document.getElementById("Details").className = "tab-pane active";
+            }
+            if(a==3){
 
-		// Init jQuery spinner init - decimal
-		$("#spinner3").spinner({
-			step: 0.01,
-			numberFormat: "n"
-		});
+                document.getElementById("contactDetails").className = "tab-pane";
+                document.getElementById("locationDetails").className = "tab-pane active";
+            }
+            if(a==4){
 
-		// jQuery Time Spinner settings
-		$.widget("ui.timespinner", $.ui.spinner, {
-			options: {
-				// seconds
-				step: 60 * 1000,
-				// hours
-				page: 60
-			},
-			_parse: function (value) {
-				if (typeof value === "string") {
-					// already a timestamp
-					if (Number(value) == value) {
-						return Number(value);
-					}
-					return +Globalize.parseDate(value);
-				}
-				return value;
-			},
+                document.getElementById("regionalSettings").className = "tab-pane";
+                document.getElementById("contactDetails").className = "tab-pane active";
+            }
+            if(a==5){
 
-			_format: function (value) {
-				return Globalize.format(new Date(value), "t");
-			}
-		});
+                document.getElementById("businessDetails").className = "tab-pane";
+                document.getElementById("regionalSettings").className = "tab-pane active";
+            }
+            if(a==6){
 
-		// Init jQuery Time Spinner
-		$("#spinner4").timespinner();
+                document.getElementById("photoGallery").className = "tab-pane";
+                document.getElementById("businessDetails").className = "tab-pane active";
+            }
+            if(a==7){
 
-		// Init jQuery Masked inputs
-		$('.date').mask('99/99/9999');
-		$('.time').mask('99:99:99');
-		$('.date_time').mask('99/99/9999 99:99:99');
-		$('.zip').mask('99999-999');
-		$('.phone').mask('(999) 999-9999');
-		$('.phoneext').mask("(999) 999-9999 x99999");
-		$(".money").mask("999,999,999.999");
-		$(".product").mask("999.999.999.999");
-		$(".tin").mask("99-9999999");
-		$(".ssn").mask("999-99-9999");
-		$(".ip").mask("9ZZ.9ZZ.9ZZ.9ZZ");
-		$(".eyescript").mask("~9.99 ~9.99 999");
-		$(".custom").mask("9.99.999.9999");
+                document.getElementById("userAndAccountType").className = "tab-pane";
+                document.getElementById("photoGallery").className = "tab-pane active";
+            }
+            if(a==8){
+                document.getElementById("optionSMS").className = "tab-pane";
+                document.getElementById("userAndAccountType").className = "tab-pane active";
+            }
+            if(a==9){
+                document.getElementById("workingHours").className = "tab-pane";
+                document.getElementById("optionSMS").className = "tab-pane active";
+            }
+            if(a==10){
+                document.getElementById("social").className = "tab-pane";
+                document.getElementById("workingHours").className = "tab-pane active";
+            }
+        }
+        function func1()
+        {
+            document.getElementById('interventionZone').style.display = "none";
+            $("#IntervensionZone_id").val("On_site");
+            alert($("#IntervensionZone_id").val());
 
-});
+        }
+        function func2()
+        {
+            document.getElementById('interventionZone').style.display = "block";
+            $("#IntervensionZone_id").val("Home");
+
+        }
+        function func22() {
+            document.getElementById('interventionZone').style.display = "block";
+            $("#IntervensionZone_id").val("Both");
+
+        }
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 30.397, lng: 64.644},
+                zoom: 4
+            });
+            google.maps.event.trigger(map, 'resize');
+
+        }
+        $(window).load(function () {
+            BindResizeEvent();
+            initMap();
+        });
+        function BindResizeEvent() {
+            $("a[href='#locationDetails']").on('shown.bs.tab', function () {
+                google.maps.event.trigger(map, 'resize');
+            });
+        }
+        jQuery(document).ready(function () {
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+
+            // CKEditor
+            CKEDITOR.replace( 'editor1' );
+
+            // Init Select2 - Basic Single
+            $(".select2-single").select2();
+
+            // Init Select2 - Basic Multiple
+            $(".select2-multiple").select2({
+                placeholder: "Select a state",
+                allowClear: true
+            });
+
+            // Init Select2 - Contextuals (via html classes)
+            $(".select2-primary").select2(); // select2 contextual - primary
+            $(".select2-success").select2(); // select2 contextual - success
+            $(".select2-info").select2();    // select2 contextual - info
+            $(".select2-warning").select2(); // select2 contextual - warning
+
+            // Init Bootstrap Maxlength Plugin
+            $('input[maxlength]').maxlength({
+                threshold: 15,
+                placement: "right"
+            });
+
+            // Dual List Plugin Init
+            var demo1 = $('.demo1').bootstrapDualListbox({
+                nonSelectedListLabel: 'Options',
+                selectedListLabel: 'Selected',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: true,
+                nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+            });
+
+            $("#demoform").submit(function () {
+                alert("Options Selected: " + $('.demo1').val());
+                return false;
+            });
+
+            // Init Twitter Typeahead.js
+            var substringMatcher = function (strs) {
+                return function findMatches(q, cb) {
+                    var matches, substrRegex;
+
+                    // an array that will be populated with substring matches
+                    matches = [];
+
+                    // regex used to determine if a string contains the substring `q`
+                    substrRegex = new RegExp(q, 'i');
+
+                    // iterate through the pool of strings and for any string that
+                    // contains the substring `q`, add it to the `matches` array
+                    $.each(strs, function (i, str) {
+                        if (substrRegex.test(str)) {
+                            // the typeahead jQuery plugin expects suggestions to a
+                            // JavaScript object, refer to typeahead docs for more info
+                            matches.push({
+                                value: str
+                            });
+                        }
+                    });
+
+                    cb(matches);
+                };
+            };
+
+            var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+                'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+                'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+                'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+                'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+                'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+                'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+                'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+                'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+            ];
+
+            // Init Typeahead Plugin with state aray
+            $('.typeahead').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, {
+                name: 'states',
+                displayKey: 'value',
+                source: substringMatcher(states)
+            });
+
+            // DateRange plugin options
+            var rangeOptions = {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                },
+                startDate: moment().subtract('days', 29),
+                endDate: moment()
+            }
+
+            // Init DateRange plugin
+            $('#daterangepicker1').daterangepicker();
+
+            // Init DateRange plugin
+            $('#daterangepicker2').daterangepicker(
+                rangeOptions,
+                function (start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                }
+            );
+
+            // Init DateRange plugin
+            $('#inline-daterange').daterangepicker(
+                rangeOptions,
+                function (start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                }
+            );
+
+            // Init DateTimepicker - fields
+            $('#datetimepicker1').datetimepicker();
+            $('#datetimepicker2').datetimepicker();
+
+            // Init DateTimepicker - inline + range detection
+            $('#datetimepicker3').datetimepicker({
+                defaultDate: "9/4/2014",
+                inline: true,
+            });
+
+            // Init DateTimepicker - fields + Date disabled (only time picker)
+            $('#datetimepicker5').datetimepicker({
+                defaultDate: "9/25/2014",
+                pickDate: false,
+            });
+            // Init DateTimepicker - fields + Date disabled (only time picker)
+            $('#datetimepicker6').datetimepicker({
+                defaultDate: "9/25/2014",
+                pickDate: false,
+            });
+            // Init DateTimepicker - inline + Date disabled (only time picker)
+            $('#datetimepicker7').datetimepicker({
+                defaultDate: "9/25/2014",
+                pickDate: false,
+                inline: true
+            });
+
+            // Init Colorpicker plugin
+            $('#demo_apidemo').colorpicker({
+                color: bgPrimary
+            });
+            $('.demo-auto').colorpicker();
+
+            // Init jQuery Tags Manager
+            $(".tm-input").tagsManager({
+                tagsContainer: '.tags',
+                prefilled: ["Miley Cyrus", "Apple", "A Long Tag", "Na uh"],
+                tagClass: 'tm-tag-info',
+            });
+
+            // Init Boostrap Multiselects
+            $('#multiselect1').multiselect();
+            $('#multiselect2').multiselect({
+                includeSelectAllOption: true
+            });
+            $('#multiselect3').multiselect();
+            $('#multiselect4').multiselect({
+                enableFiltering: true,
+            });
+            $('#multiselect5').multiselect({
+                buttonClass: 'multiselect dropdown-toggle btn btn-default btn-primary'
+            });
+            $('#multiselect6').multiselect({
+                buttonClass: 'multiselect dropdown-toggle btn btn-default btn-info'
+            });
+            $('#multiselect7').multiselect({
+                buttonClass: 'multiselect dropdown-toggle btn btn-default btn-success'
+            });
+            $('#multiselect8').multiselect({
+                buttonClass: 'multiselect dropdown-toggle btn btn-default btn-warning'
+            });
+
+            // Init jQuery spinner init - default
+            $("#spinner1").spinner();
+
+            // Init jQuery spinner init - currency
+            $("#spinner2").spinner({
+                min: 5,
+                max: 2500,
+                step: 25,
+                start: 1000,
+                //numberFormat: "C"
+            });
+
+            // Init jQuery spinner init - decimal
+            $("#spinner3").spinner({
+                step: 0.01,
+                numberFormat: "n"
+            });
+
+            // jQuery Time Spinner settings
+            $.widget("ui.timespinner", $.ui.spinner, {
+                options: {
+                    // seconds
+                    step: 60 * 1000,
+                    // hours
+                    page: 60
+                },
+                _parse: function (value) {
+                    if (typeof value === "string") {
+                        // already a timestamp
+                        if (Number(value) == value) {
+                            return Number(value);
+                        }
+                        return +Globalize.parseDate(value);
+                    }
+                    return value;
+                },
+
+                _format: function (value) {
+                    return Globalize.format(new Date(value), "t");
+                }
+            });
+
+            // Init jQuery Time Spinner
+            $("#spinner4").timespinner();
+
+            // Init jQuery Masked inputs
+            $('.date').mask('99/99/9999');
+            $('.time').mask('99:99:99');
+            $('.date_time').mask('99/99/9999 99:99:99');
+            $('.zip').mask('99999-999');
+            $('.phone').mask('(999) 999-9999');
+            $('.phoneext').mask("(999) 999-9999 x99999");
+            $(".money").mask("999,999,999.999");
+            $(".product").mask("999.999.999.999");
+            $(".tin").mask("99-9999999");
+            $(".ssn").mask("999-99-9999");
+            $(".ip").mask("9ZZ.9ZZ.9ZZ.9ZZ");
+            $(".eyescript").mask("~9.99 ~9.99 999");
+            $(".custom").mask("9.99.999.9999");
+
+        });
 </script>
 <script type="text/javascript">
 jQuery(document).ready(function () {

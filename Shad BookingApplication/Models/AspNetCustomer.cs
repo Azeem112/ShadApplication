@@ -33,6 +33,7 @@ namespace Shad_BookingApplication.Models
         public Nullable<int> SmsID { get; set; }
         public string UserID { get; set; }
         public Nullable<int> WorkingID { get; set; }
+        public Nullable<int> SocialID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
@@ -44,10 +45,11 @@ namespace Shad_BookingApplication.Models
         public virtual AspNetCustomerGallery AspNetCustomerGallery { get; set; }
         public virtual AspNetCustomerLocation AspNetCustomerLocation { get; set; }
         public virtual AspNetCustomerRegion AspNetCustomerRegion { get; set; }
+        public virtual AspNetSocial AspNetSocial { get; set; }
         public virtual AspNetCustomerSM AspNetCustomerSM { get; set; }
         public virtual AspNetCustomerType AspNetCustomerType { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetWorkingTime AspNetWorkingTime { get; set; }
+        public virtual AspNetWorkingWeekTime AspNetWorkingWeekTime { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetInvoice> AspNetInvoices { get; set; }
     }

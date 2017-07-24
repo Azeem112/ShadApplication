@@ -26,6 +26,7 @@ namespace Shad_BookingApplication.Models
         public Nullable<int> Telephone2 { get; set; }
         public Nullable<int> Fax { get; set; }
         public string BussinessEmail { get; set; }
+        public string Mobile { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }

@@ -23,8 +23,13 @@ namespace Shad_BookingApplication.Models
         public AspNetBusinessCatageory BusinessCatageorySingle { get; set; }
 
         public IEnumerable<AspNetCustomerSM> SMS { get; set; }
+        public AspNetCustomerSM SingleSms { get; set; }
         public IEnumerable<AspNetBusinessCatageory> BusinessCatageory { get; set; }
         public IEnumerable<AspNetBusinessSubCatageory> BusinessSubCatageory { get; set; }
 
-}
+        public string[] Customer_SubCatageory { get; set; }
+        public HttpPostedFileBase[] files { get; set; }
+
+        //AspNetCustomer_SubCatageory
+    }
 }

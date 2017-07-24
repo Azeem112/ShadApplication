@@ -236,10 +236,21 @@
                         <div class="row form-group ">
                             <label class="col-md-2 col-xs-12 text-right control-label">Category:</label>
                             <div class="col-md-3 col-xs-12">
-                                @Html.DropDownListFor(model => model.IsSmsPackage, listItems2, "- Category -", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.IsSmsPackage, listItems2, "- Category -", new { @class = "form-control" ,@id="rem_drop"})
                                 @Html.ValidationMessageFor(model => model.IsSmsPackage, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
+                        <div style="display: none;" id="rem_sms">
+                            <div class="col-md-2 col-xs-12 text-right control-label">
+                                <label>Remaining SMS:</label>
+                            </div>
+                            <div class="col-md-3 col-md-12">
+                               <input type="text" name="no_remaining_sms" class="form-control" placeholder="Remaining Sms" />
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -295,6 +306,21 @@
 </style>
 
 <script type="text/javascript">
+
+    $("#rem_drop").change(function () {
+
+        var ddl = document.getElementById("rem_drop");
+        var selectedValue = ddl.options[ddl.selectedIndex].value;
+        
+        if (selectedValue == "non sms") {
+            var label1 = document.getElementById("rem_sms");
+            label1.style.display = 'none';
+        }
+        if (selectedValue == "sms") {
+            var label3 = document.getElementById("rem_sms");
+            label3.style.display = 'block';
+        }
+    });
 
 
 $("#tax").change(function (){

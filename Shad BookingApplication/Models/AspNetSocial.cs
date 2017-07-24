@@ -14,8 +14,17 @@ namespace Shad_BookingApplication.Models
     
     public partial class AspNetSocial
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AspNetSocial()
+        {
+            this.AspNetCustomers = new HashSet<AspNetCustomer>();
+        }
+    
         public int Id { get; set; }
         public string Twitter { get; set; }
         public string Facebook { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
     }
 }

@@ -69,5 +69,6 @@ namespace Shad_BookingApplication.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AspNetWorkingTime> AspNetWorkingTimes { get; set; }
+        public virtual DbSet<AspNetWorkingWeekTime> AspNetWorkingWeekTimes { get; set; }
     }
 }
