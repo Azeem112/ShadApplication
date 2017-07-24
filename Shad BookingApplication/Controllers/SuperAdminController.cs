@@ -40,29 +40,29 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult UserList()
         {
-            List<UserListViewModel> superadmin = new List<UserListViewModel>();
+            //List<UserListViewModel> superadmin = new List<UserListViewModel>();
 
-            foreach (var item in db.AspNetUsers)
-            {
-                var superadmin_item = new UserListViewModel();
-                superadmin_item.id = item.Id;
-
-
-                var companyname = db.AspNetCustomerDetails.Where(x => x.Id == Convert.ToInt32(item.Id)).Select(x => x.BussinessName).FirstOrDefault();
-                superadmin.Add(superadmin_item);
-            }
-
-            List<UserListViewModel> Companyadmin = new List<UserListViewModel>();
-            foreach (var item in db.AspNetUsers)
-            {
-                var Companyadmin_item = new UserListViewModel();
-                Companyadmin_item.id = item.Id;
+            //foreach (var item in db.AspNetUsers)
+            //{
+            //    var superadmin_item = new UserListViewModel();
+            //    superadmin_item.id = item.Id;
 
 
+            //    var companyname = db.AspNetCustomerDetails.Where(x => x.Id == Convert.ToInt32(item.Id)).Select(x => x.BussinessName).FirstOrDefault();
+            //    superadmin.Add(superadmin_item);
+            //}
+
+            //List<UserListViewModel> Companyadmin = new List<UserListViewModel>();
+            //foreach (var item in db.AspNetUsers)
+            //{
+            //    var Companyadmin_item = new UserListViewModel();
+            //    Companyadmin_item.id = item.Id;
 
 
-                Companyadmin.Add(Companyadmin_item);
-            }
+
+
+            //    Companyadmin.Add(Companyadmin_item);
+            //}
 
 
                 //var user = db.AspNetUsers.Select(x => new {
@@ -136,6 +136,7 @@ namespace Shad_BookingApplication.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = new ApplicationUser();
+                    
                     user.UserName = aspNetUser.UserName;
                     user.Email = aspNetUser.Email;
                     user.PhoneNumber = aspNetUser.PhoneNumber;

@@ -11,7 +11,8 @@ namespace Shad_BookingApplication.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AspNetUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,6 +27,7 @@ namespace Shad_BookingApplication.Models
         }
     
         public string Id { get; set; }
+        [Required]
         public string Email { get; set; }
         public Nullable<bool> EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }
@@ -36,10 +38,13 @@ namespace Shad_BookingApplication.Models
         public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
         public Nullable<bool> LockoutEnabled { get; set; }
         public Nullable<int> AccessFailedCount { get; set; }
+        [Required]
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+      
         public string FullName { get; set; }
+        [Required]
         public string Status { get; set; }
         public string Address { get; set; }
     

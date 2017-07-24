@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "InvoiceList";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+
+    <!-- Start: Topbar-Dropdown -->
+    <div id="topbar-dropmenu">
+        <div class="topbar-menu row">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                    <p class="metro-title">Messages</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-user"></span>
+                    <p class="metro-title">Users</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                    <p class="metro-title">Support</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon fa fa-gears"></span>
+                    <p class="metro-title">Settings</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                    <p class="metro-title">Videos</p>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="metro-tile">
+                    <span class="metro-icon glyphicon glyphicon-picture"></span>
+                    <p class="metro-title">Pictures</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
+                <li class="col-xs-5 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" aria-expanded="true" style="display: inline;" href="create-invoice.html">Create Invoices</a>
+                </li>
+                <li class="active col-xs-5 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
+                    <a class="col-lg-12" aria-expanded="false" style="display: inline;" href="invoicelist.html">View Invoice</a>
+                </li>
+            </ul>
+        </div>
+
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <section id="content" class="table-layout">
+        <!-- Start: Header -->
+        <!-- End: Header -->
+
+        <div class="col-md-12" style="display: block;">
+            <div class="panel panel-visible" id="spy2">
+                <div class="panel-heading">
+                    <div class="panel-title hidden-xs">
+                        <span class="glyphicon glyphicon-tasks"></span>Invoice List
+                    </div>
+                </div>
+                <div class="panel-body pn">
+
+
+
+                    <div class="panel panel-visible" id="spy3">
+                        <div class="panel-body pn">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
+                                                colspan="1" aria-sort="ascending"
+                                                aria-label="Name: activate to sort column descending" style="width: 11%; text-align: center;">
+                                                <center>Invoice #</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Position: activate to sort column ascending" style="width: 12%; text-align: center;">
+                                                <center> Customer </center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Office: activate to sort column ascending" style="width: 11%; text-align: center;">
+                                                <center> Status</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Office: activate to sort column ascending" style="width: 11%;  text-align: center;">
+                                                <center> Invoice Date </center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 11%;  text-align: center;">
+                                                <center>  Due Date </center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 5%; text-align: center;">
+                                                <center> Ref</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 5%; text-align: center;">
+                                                <center> Amount</center>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                aria-label="Age: activate to sort column ascending" style="width: 14%; text-align: center;">
+                                                <center> Invoice Option</center>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myCustomers">
+
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a><center>0001</center></a></td>
+                                            <td><center>Laurent <br> <a>Laurent@gmail.com</a><br>+3314566778</center></td>
+                                            <td><center><button type="button" class="btn active btn-success btn-sm">Paid</button></center></td>
+                                            <td>
+                                                <label><center>Thus, 2 june 2017</center></label>
+
+                                            </td>
+
+                                            <td><label><center>Thus, 6 june 2017</center></label> </td>
+                                            <td><center>&nbsp  &nbsp  </center> </td>
+                                            <td><label><center>50.00€</center></label></td>
+
+                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-print">&nbsp</span>Print</button></div></center></td>
+
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a><center>0002</center></a></td>
+                                            <td><center>Shaad <br> <a>shaad@gmail.com</a><br>+44314566778</center></td>
+                                            <td><center><button type="button" class="btn active btn-success btn-sm">Paid</button></center></td>
+                                            <td>
+                                                <label><center>Thus, 2 May 2017</center></label>
+
+                                            </td>
+
+                                            <td><label><center>Thus, 4 May 2017</center></label> </td>
+                                            <td><center>&nbsp  &nbsp  </center> </td>
+                                            <td><label><center>50.00€</center></label></td>
+
+                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-print">&nbsp</span>Print</button></div></center></td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div class=" row form-group">
+                                    <br>
+                                    <label class="col-md-3 col-md-offset-6 col-xs-offset-0 col-xs-4" style="font-weight: bolder;">Total :</label>
+                                    <div class="col-md-2">
+                                        <p style="font-weight: bolder;">€100.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer" class="affix">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 Plateforme RDV</span>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+
+
+</section>
+<!-- end: Content-Wrapper -->
+ 

@@ -1,156 +1,186 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetUser
 @{
     ViewBag.Title = "AddUser";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+    List<SelectListItem>
+        listItems = new List<SelectListItem>();
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "Active",
+        Value = "Active",
+        Selected = true
+    });
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "InActive",
+        Value = "InActive",
+        Selected = true
+    });
+
 }
 
-<!-- Start: Content-Wrapper -->
-<section id="content_wrapper">
-    <!-- Start: Topbar-Dropdown -->
-    <div id="topbar-dropmenu">
-        <div class="topbar-menu row">
-            <div class="col-xs-4 col-sm-2">
-                <a href="#" class="metro-tile">
-                    <span class="metro-icon glyphicon glyphicon-inbox"></span>
-                    <p class="metro-title">Messages</p>
-                </a>
+  
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+            <!-- Start: Topbar-Dropdown -->
+            <div id="topbar-dropmenu">
+                <div class="topbar-menu row">
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="#" class="metro-tile">
+                            <span class="metro-icon glyphicon glyphicon-inbox"></span>
+                            <p class="metro-title">Messages</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="#" class="metro-tile">
+                            <span class="metro-icon glyphicon glyphicon-user"></span>
+                            <p class="metro-title">Users</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="#" class="metro-tile">
+                            <span class="metro-icon glyphicon glyphicon-headphones"></span>
+                            <p class="metro-title">Support</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="#" class="metro-tile">
+                            <span class="metro-icon fa fa-gears"></span>
+                            <p class="metro-title">Settings</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="#" class="metro-tile">
+                            <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
+                            <p class="metro-title">Videos</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="#" class="metro-tile">
+                            <span class="metro-icon glyphicon glyphicon-picture"></span>
+                            <p class="metro-title">Pictures</p>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-4 col-sm-2">
-                <a href="#" class="metro-tile">
-                    <span class="metro-icon glyphicon glyphicon-user"></span>
-                    <p class="metro-title">Users</p>
-                </a>
-            </div>
-            <div class="col-xs-4 col-sm-2">
-                <a href="#" class="metro-tile">
-                    <span class="metro-icon glyphicon glyphicon-headphones"></span>
-                    <p class="metro-title">Support</p>
-                </a>
-            </div>
-            <div class="col-xs-4 col-sm-2">
-                <a href="#" class="metro-tile">
-                    <span class="metro-icon fa fa-gears"></span>
-                    <p class="metro-title">Settings</p>
-                </a>
-            </div>
-            <div class="col-xs-4 col-sm-2">
-                <a href="#" class="metro-tile">
-                    <span class="metro-icon glyphicon glyphicon-facetime-video"></span>
-                    <p class="metro-title">Videos</p>
-                </a>
-            </div>
-            <div class="col-xs-4 col-sm-2">
-                <a href="#" class="metro-tile">
-                    <span class="metro-icon glyphicon glyphicon-picture"></span>
-                    <p class="metro-title">Pictures</p>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- End: Topbar-Dropdown -->
-    <!-- Start: Topbar -->
-    <header id="topbar">
-        <div class="topbar-left">
-            <ol class="breadcrumb" style="text-align: center;">
-                <h3>New User</h3>
-            </ol>
-        </div>
-        <div class="topbar-right">
-            <a href="" class="btn btn-success" onclick="addFunction()">Save</a>
-        </div>
-    </header>
+            <!-- End: Topbar-Dropdown -->
+            <!-- Start: Topbar -->
+            @using (Html.BeginForm("AddUser", "CompanyAdmin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken();
+
+                <header id="topbar">
+                    <div class="topbar-left">
+                        <ol class="breadcrumb" style="text-align: center;">
+                            <h3>New User</h3>
+                        </ol>
+                    </div>
+                    <div class="topbar-right">
+                        <input type="submit" class="btn btn-success" value="Save">
+                    </div>
+                </header>
     <!-- End: Topbar -->
-    <div style="width: 80%;margin-left: 10%">
-        <br><br>
-        <div class="tab-pane">
-            <div class="row">
-                <div class="row form-group">
-                    <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
-                    <div class="col-md-8 col-xs-12">
-                        <input type="text" class="form-control" id="name" placeholder="Enter Full name here">
-                    </div>
-                </div>
-                <div class="row form-group required">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
-                    <div class="col-md-8 col-xs-12">
-                        <input type="email" class="form-control" id="email" placeholder="Enter Email here" required="required">
-                    </div>
-                </div>
-                <div class="row form-group required">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
-                    <div class="col-md-8 col-xs-12">
-                        <input type="password" class="form-control" id="password" placeholder="Provide password" required="required">
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label class="col-md-2 col-xs-12 text-right">Phone:</label>
-                    <div class="col-md-8 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Enter Phone Number name here" id="phone">
-                    </div>
-                </div>
-                <div class="row form-group ">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Role:</label>
-                    <div class="col-md-8 col-xs-12">
-                        <select class="form-control" id="tax" style="margin-bottom: 3%;">
-                            <option selected disabled value="">-Select Role-</option>
-                            <option value="2">Admin</option>
-                            <option value="3">Agency Manager</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row form-group ">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
-                    <div class="col-md-8 col-xs-12">
-                        <select class="form-control" id="tax2" style="margin-bottom: 3%;">
-                            <option selected disabled value="">-Select Status-</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-                </div>
+                <div style="width: 80%;margin-left: 10%">
+                    <br><br>
+                    <div class="tab-pane">
+                        <div class="row">
+                            <div class="row form-group required">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Email  Here") } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row form-group required">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    @Html.PasswordFor(model => model.PasswordHash, new { @class = "form-control", placeholder = @Html.DisplayName("Provide password") })
+                                    @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Full name here") } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
 
-            </div>
-        </div>
-        <br>
-        <br>
-    </div>
-    <!-- End: Content -->
-    <!-- Begin: Page Footer -->
-    <footer id="content-footer" class="affix">
-        <div class="row">
-            <div class="col-md-6">
-                <span class="footer-legal">© 2017 Plateforme RDV</span>
-            </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-2 col-xs-12 text-right">Phone:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Phone Number name here") } })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-        </div>
-    </footer>
-    <!-- End: Page Footer -->
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Role:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    @Html.DropDownList("Name", new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text="- Select Role -", Value = "" },
+                            new SelectListItem{ Text="Admin", Value = "Company_Admin" },
+                            new SelectListItem{ Text="Agency Manager", Value = "Agency_Manager" },
+                            }, new { @class = "form-control" })
+                                </div>
+                            </div>
 
-</section>
-<!-- end: Content-Wrapper -->
-<!-- BEGIN: PAGE SCRIPTS -->
-<script type="text/javascript">
-    function addFunction(){
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var phone = document.getElementById('phone').value;
-        var password = document.getElementById('password').value;
-        var role = document.getElementById('tax').value;
-        alert(role);
-        if(name==""||email==""||phone==""||password==""){
-            alert("Please Fill All Data");
-            return;
-        }
-        $.ajax({
+
+                            
+
+                            <div class="row form-group ">
+                                <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
+                                <div class="col-md-8 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            }
+            <!-- End: Content -->
+            <!-- Begin: Page Footer -->
+            <footer id="content-footer" class="affix">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="footer-legal">© 2017 Plateforme RDV</span>
+                    </div>
+
+                </div>
+            </footer>
+            <!-- End: Page Footer -->
+
+        </section>
+        <!-- end: Content-Wrapper -->
+        <!-- BEGIN: PAGE SCRIPTS -->
+        <script type="text/javascript">
+            function addFunction() {
+                var name = document.getElementById('name').value;
+                var email = document.getElementById('email').value;
+                var phone = document.getElementById('phone').value;
+                var password = document.getElementById('password').value;
+                var role = document.getElementById('tax').value;
+                alert(role);
+                if (name == "" || email == "" || phone == "" || password == "") {
+                    alert("Please Fill All Data");
+                    return;
+                }
+                $.ajax({
                     type: "POST",
                     url: "http://localhost/shaadcompany/servercontroller.php",
-                    data: { REQUEST_TYPE: "SIGNUP", NAME:name,EMAIL:email,PASSWORD:password,PHONE:phone,STATUS:document.getElementById('tax2').value, ROLE:role},
+                    data: { REQUEST_TYPE: "SIGNUP", NAME: name, EMAIL: email, PASSWORD: password, PHONE: phone, STATUS: document.getElementById('tax2').value, ROLE: role },
                     dataType: 'json',
                     timeout: 30000,
                     success: function (data) {
                         if (data.STATUS == "SUCCESS") {
-                          alert("SUCCESS");
-                          location.reload();
+                            alert("SUCCESS");
+                            location.reload();
                         }
                         else if (data.STATUS == "FAIL") {
                             alert('Login Failed');
@@ -168,13 +198,13 @@
                         }
                     }
                 });
-    }
-</script>
+            }
+        </script>
 
-<style>
-    /* demo page styles */
-    .admin-form .panel.heading-border:before,
-    .admin-form .panel .heading-border:before {
-        transition: all 0.7s ease;
-    }
-</style>
+        <style>
+            /* demo page styles */
+            .admin-form .panel.heading-border:before,
+            .admin-form .panel .heading-border:before {
+                transition: all 0.7s ease;
+            }
+        </style>

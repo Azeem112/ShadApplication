@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "SalesDiscountListCara";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Discount</a>
+                </li>
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+            </ol>
+        </div>
+        <!---------------- ----->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="display: block;padding-right: 17px;padding-top: 76px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add Dicount</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" style="margin-left:10px">
+
+
+                            <div class="form-group">
+                                <div class="col-md-3"> Name:</div>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" placeholder="Name ...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3"> Tax:</div>
+                                <div class="col-md-7">
+                                    <select class="form-control">
+                                        <option>Not applicable</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3"> Tax:</div>
+                                <div class="col-md-7">
+                                    <div class="radio-custom mb5">
+                                        <input type="radio" id="1" name="radioExample">
+                                        <label for="1">Generic (specify discount when applying)</label>
+                                    </div>
+
+                                    <div class="radio-custom mb5">
+                                        <input type="radio" id="2" name="radioExample">
+                                        <label for="2">Percentage</label>
+                                    </div>
+                                    <div class="radio-custom mb5">
+                                        <input type="radio" id="3" name="radioExample">
+                                        <label for="3">Fixed amount</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group" id="per" hidden="hidden">
+                                <div class="col-md-3"> Discount value:</div>
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i>%</i>
+                                        </span>
+                                        <input class="form-control" type="text" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="val" hidden="hidden">
+                                <div class="col-md-3"> Discount value:</div>
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-eur"></i>
+                                        </span>
+                                        <input class="form-control" type="text" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!---- -->
+        <div class="topbar-right">
+            <button class="btn btn-success btn-sm" style="border-radius:3px" data-toggle="modal" data-target="#myModal"> Add discount</button>
+
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel-body pn">
+            <form class="form-horizontal" role="form" style="margin-left:10px">
+                <div class=" row form-group" style="margin-left:25px">
+                    <br><br>
+                    <label class="col-md-8"> <h3><i class="fa fa-cut"></i> Remise Exceptionelle</h3><h5>20.00% </h5></label><br>
+                    <div>
+                        <button class="btn btn-primary " style="border-radius:5px"><i class="fa fa-edit"></i>Edit</button>
+                        <button class="btn btn-danger " style="border-radius:5px"><i class="fa fa-trash"></i></button>
+                    </div>
+                    <label class="col-md-8"> <h3><i class="fa fa-cut"></i> Remise Exceptionelle</h3><h5>20.00€ discount </h5></label><br>
+                    <div>
+                        <button class="btn btn-primary " style="border-radius:5px"><i class="fa fa-edit"></i>Edit</button>
+                        <button class="btn btn-danger " style="border-radius:5px"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <br><br>
+                <br><br>
+                <br><br><br><br><br><br><br><br><br>
+                <br><br><br>
+            </form>
+
+        </div><br>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 PlateformeRDV</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="footer-meta"></span>
+                <a href="#content" class="footer-return-top">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+</section>
+<!-- End: Content-Wrapper -->

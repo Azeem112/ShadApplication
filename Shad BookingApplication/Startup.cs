@@ -61,14 +61,22 @@ namespace Shad_BookingApplication
                 roleManager.Create(role);
 
             }
+            
+            // creating Creating Agency MAnager role    
+            if (!roleManager.RoleExists("Agency_Manager"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Agency_Manager";
+                roleManager.Create(role);
+            }
 
-            // creating Creating Employee role    
             if (!roleManager.RoleExists("Employee"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Employee";
                 roleManager.Create(role);
             }
+           
         }
 
         private void CreateRolesandUsers()
@@ -122,6 +130,14 @@ namespace Shad_BookingApplication
                 roleManager.Create(role2);
 
            }
+            // creating Creating Agency MAnager role    
+            if (!roleManager.RoleExists("Agency_Manager"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Agency_Manager";
+                roleManager.Create(role);
+            }
+
         }
     }
 }

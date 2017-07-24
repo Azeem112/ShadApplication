@@ -768,6 +768,23 @@
     <Content Include="Views\CompanyAdmin\EditService.cshtml" />
     <Content Include="Views\CompanyAdmin\EditServiceGroup.cshtml" />
     <Content Include="Views\CompanyAdmin\EmployeeList.cshtml" />
+    <Content Include="Views\CompanyAdmin\Index.cshtml" />
+    <Content Include="Views\CompanyAdmin\InvoiceList.cshtml" />
+    <Content Include="Views\CompanyAdmin\InvoiceOption.cshtml" />
+    <Content Include="Views\CompanyAdmin\InvoiceTemplate.cshtml" />
+    <Content Include="Views\CompanyAdmin\ItemList.cshtml" />
+    <Content Include="Views\CompanyAdmin\Login.cshtml" />
+    <Content Include="Views\CompanyAdmin\LoginDetails.cshtml" />
+    <Content Include="Views\CompanyAdmin\OptionsOk.cshtml" />
+    <Content Include="Views\CompanyAdmin\Report.cshtml" />
+    <Content Include="Views\CompanyAdmin\SalesDiscountList.cshtml" />
+    <Content Include="Views\CompanyAdmin\SalesDiscountListCara.cshtml" />
+    <Content Include="Views\CompanyAdmin\ServiceGroupList.cshtml" />
+    <Content Include="Views\CompanyAdmin\ServiceList.cshtml" />
+    <Content Include="Views\CompanyAdmin\UserList.cshtml" />
+    <Content Include="Views\CompanyAdmin\ViewService.cshtml" />
+    <Content Include="Views\CompanyAdmin\ViewServiceGroup.cshtml" />
+    <Content Include="Views\CompanyAdmin\VoucherList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

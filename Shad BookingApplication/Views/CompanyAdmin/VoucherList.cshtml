@@ -1,9 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "CustomerList";
+    ViewBag.Title = "VoucherList";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
 }
-
 <!-- Start: Content-Wrapper -->
 <section id="content_wrapper">
 
@@ -69,23 +68,23 @@
         <div class="topbar-left">
             <ol class="breadcrumb">
                 <li class="crumb-active">
-                    <h2>Customers List</h2>
+                    <h2>Vouchers List</h2>
                 </li>
             </ol>
         </div>
 
         <div class="topbar-right">
-            <a href="AddCustomer.html" class="btn btn-primary" style="height:30px; padding:5px">+ Add Customer</a>
+            <a href="addVoucher.html" class="btn btn-success" style="height:30px; padding:5px">+ Add Voucher</a>
         </div>
     </header>
     <!-- End: Topbar -->
     <header id="topbar">
         <div class="alert alert-info" style="margin-bottom: 0">
             <h4 style="margin-bottom: 0px; padding-bottom: 1px">
-                <span class="glyphicon glyphicon-user" style="font-size: 16px; top: 3px"></span>
-                <strong id="headinggg">Note much to see here yet!</strong>
-            </h4><br>
-            <p> This is where all of your customers who book appointments with you can be found. You can start now by <a href="#" style="color: white"><u>adding customer</u></a> or <a href="" style="color: white"><u> importing customer</u></a> from an existing system like Microsoft Outlook  or Gmail.</p>
+                <span class="fa fa-ticket" style="font-size: 16px; top: 3px"></span>
+                <strong id="headinggg">Voucher List</strong>
+            </h4>
+            <p>Below is the list of vouchers. If you want to add new voucher, click on the "Add voucher" Tab. To edit or delete a certain voucher, click on corresponding icons on the row. You can also export the list of vouchers or delete multiple selected vouchers by using the popup menu at the bottom of the table.</p>
         </div>
     </header>
     <!-- Begin: Content -->
@@ -97,7 +96,7 @@
             <div class="panel panel-visible" id="spy2">
                 <div class="panel-heading">
                     <div class="panel-title hidden-xs">
-                        <span class="glyphicon glyphicon-tasks"></span>Customer List
+                        <span class="glyphicon glyphicon-tasks"></span>Voucher List
                     </div>
                 </div>
                 <div class="panel-body pn">
@@ -112,48 +111,51 @@
                                         <tr role="row">
                                             <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
                                                 colspan="1" aria-sort="ascending"
-                                                aria-label="Name: activate to sort column descending" style="width: 12%;">
-                                                <center>Customers id</center>
+                                                aria-label="Name: activate to sort column descending" style="width: 20%;">
+                                                <center>Voucher Code</center>
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Position: activate to sort column ascending" style="width: 25%;">
-                                                <center> Customer details</center>
+                                                aria-label="Position: activate to sort column ascending" style="width: 15%;">
+                                                <center> Discount</center>
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
                                                 aria-label="Office: activate to sort column ascending" style="width: 25%;">
-                                                <center> Address</center>
+                                                <center> Type</center>
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Office: activate to sort column ascending" style="width: 13%;">
-                                                <center> SMS Remain</center>
+                                                aria-label="Office: activate to sort column ascending" style="width: 15%;">
+                                                <center> Valid</center>
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Age: activate to sort column ascending" style="width: 10%;">
-                                                <center> Status</center>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Age: activate to sort column ascending" style="width: 15%;">
+                                                aria-label="Age: activate to sort column ascending" style="width: 25%;">
+                                                <center> </center>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody id="myCustomers">
 
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>001</center></td>
-                                            <td><center>hamza <br> <a>hamza@gmail.com</a><br>+92314566778</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                            <td class="sorting_1"><center>CPKTNWT</center></td>
+                                            <td><center>20.00</center></td>
+                                            <td><center>amount</center></td>
+                                            <td><center>period</center></td>
+                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary">Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
                                         </tr>
 
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>002</center></td>
-                                            <td><center>hamza <br> <a>hamza@gmail.com</a><br>+92314566778</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                            <td class="sorting_1"><center>BAGUVIX</center></td>
+                                            <td><center>15.00</center></td>
+                                            <td><center>percent</center></td>
+                                            <td><center>recurring</center></td>
+                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary">Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                        </tr>
+
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><center>CAINEMVHZC</center></td>
+                                            <td><center>20.00</center></td>
+                                            <td><center>percent</center></td>
+                                            <td><center>fixed</center></td>
+                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary">Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
                                         </tr>
 
                                     </tbody>
@@ -181,15 +183,3 @@
 
 </section>
 <!-- end: Content-Wrapper -->
-
-<style>
-    /* demo page styles */
-    .admin-form .panel.heading-border:before,
-    .admin-form .panel .heading-border:before {
-        transition: all 0.7s ease;
-    }
-</style>
-
-   <!-- Jquery -->
-
-

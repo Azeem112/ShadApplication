@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "InvoiceTemplate";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}
+
+<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <a href="dashboard.html">Invoice Template</a>
+                </li>
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+
+            </ol>
+        </div>
+        <div class="topbar-right">
+            <a href="" class="btn btn-success" style="border-radius:5px;">Save</a>
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel" style="padding-top: 1%">
+        <div class="row alert" style="background-color: rgb(234,245,251); width: 96%; margin-left: 2.5%;">
+
+            <div class="col-md-12">
+                <div class="alert-info alert-dismissable" style="background-color: rgb(234,245,251);">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color: rgb(183,191,194);">×</button>
+                    <span class="glyphicon glyphicon-info-sign" style="font-size: 16px; top: 3px; color: rgb(149,185,237);"></span>
+                    <strong style="color: rgb(101,122,127);">Template</strong><p style="margin-left: 2%; color: rgb(101,122,127);">Use this editor below to create a template for your invoice. Include different tokens which will be replaced by invoice data</p>
+                    <div class="alert-info col-md-12" style="margin-top: 2%; padding-bottom: 2%; background-color: rgb(234,245,251);">
+
+                        <div class="col-md-6" style="float: left; color: rgb(101,122,127);">
+                            {uuid} - invoice unique ID <br>
+                            {order_id} - order ID <br>
+                            {issue_date} - invoice issue date <br>
+                            {due_date} - payment due date <br>
+                            {created} - created date and time  <br>
+                            {modified} - update date and time <br>
+                            {status} - invoice status <br>
+                            {subtotal} - sub total amount <br>
+                            {discount} - discount amount <br>
+                            {tax} - tax amount <br>
+                            {shipping} - shipping amount <br>
+                            {total} - total amount <br>
+                            {paid_deposit} - paid deposit amount <br>
+                            {amount_due} - amount due <br>
+                            {currency} - currency <br>
+                            {notes} - notes <br>
+                            {items} - items Company details <br>
+                            {y_logo} - logo <br>
+                            {y_company} - company name <br>
+                            {y_name} - name <br>
+                            {y_street_address} - address <br>
+                            {y_country} - country <br>
+                            {y_city} - city <br>
+                            {y_state} - state <br>
+                            {y_zip} - zip <br>
+                            {y_phone} - phone <br>
+                            {y_fax} - fax <br>
+                            {y_email} - email <br>
+                            {y_url} - url <br>
+                        </div>
+                        <div class="col-md-6" style="float: right; color: rgb(101,122,127);">
+                            Client billing details <br>
+                            {b_billing_address} - address <br>
+                            {b_company} - company <br>
+                            {b_name} - name <br>
+                            {b_address} - address <br>
+                            {b_street_address} - street address <br>
+                            {b_country} - country <br>
+                            {b_city} - city <br>
+                            {b_state} - state <br>
+                            {b_zip} - zip <br>
+                            {b_phone} - phone <br>
+                            {b_fax} - fax <br>
+                            {b_email} - email <br>
+                            {b_url} - url <br>
+                            Client shipping details <br>
+                            {s_shipping_address} - address <br>
+                            {s_company} - company <br>
+                            {s_name} - name <br>
+                            {s_address} - address <br>
+                            {s_street_address} - street address <br>
+                            {s_country} - country <br>
+                            {s_city} - city <br>
+                            {s_state} - state <br>
+                            {s_zip} - zip <br>
+                            {s_phone} - phone <br>
+                            {s_fax} - fax <br>
+                            {s_email} - email <br>
+                            {s_url} - url <br>
+                            {s_date} - shipping date <br>
+                            {s_terms} - shipping terms <br>
+                            {s_is_shipped} - is shipped status <br>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel">
+
+            <div class="panel-body">
+                <form class="form-horizontal" role="form" style="margin-left:10px">
+
+
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <div class="panel-body pn of-h" id="summer-demo">
+                                <div class="summernote" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- begin: .tray-center -->
+                    <!-- Summernote Editor -->
+                    <!-- end: .tray-center -->
+                    <!-- begin: .tray-right -->
+                    <!-- end: .tray-right -->
+
+
+                    <button type="submit" class="btn btn-primary pull-right col-md-1" style="margin-right:90px;border-radius:3px;">Save</button><br><br><br><br><br><br><br><br>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 PlateformeRDV</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="footer-meta"></span>
+                <a href="#content" class="footer-return-top">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+</section>
+<!-- End: Content-Wrapper -->
+<!-- Page Javascript -->
+<!-- Jquery -->
+
+
+
+
+<!-- Jquery -->
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+
+  <!-- BEGIN: PAGE SCRIPTS -->
+<style>
+    /* demo styles -summernote */
+    .btn-toolbar > .btn-group.note-fontname {
+        display: none;
+    }
+    /* demo styles - hides several ckeditor toolbar buttons */
+    #cke_52,
+    #cke_53 {
+        display: none !important;
+    }
+</style>
