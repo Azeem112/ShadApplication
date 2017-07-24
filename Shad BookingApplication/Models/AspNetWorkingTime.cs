@@ -18,8 +18,14 @@ namespace Shad_BookingApplication.Models
         public AspNetWorkingTime()
         {
             this.AspNetAgencies = new HashSet<AspNetAgency>();
-            this.AspNetCustomers = new HashSet<AspNetCustomer>();
             this.AspNetEmployees = new HashSet<AspNetEmployee>();
+            this.AspNetWorkingWeekTimes = new HashSet<AspNetWorkingWeekTime>();
+            this.AspNetWorkingWeekTimes1 = new HashSet<AspNetWorkingWeekTime>();
+            this.AspNetWorkingWeekTimes2 = new HashSet<AspNetWorkingWeekTime>();
+            this.AspNetWorkingWeekTimes3 = new HashSet<AspNetWorkingWeekTime>();
+            this.AspNetWorkingWeekTimes4 = new HashSet<AspNetWorkingWeekTime>();
+            this.AspNetWorkingWeekTimes5 = new HashSet<AspNetWorkingWeekTime>();
+            this.AspNetWorkingWeekTimes6 = new HashSet<AspNetWorkingWeekTime>();
         }
     
         public int Id { get; set; }
@@ -33,8 +39,20 @@ namespace Shad_BookingApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetEmployee> AspNetEmployees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes4 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes5 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetWorkingWeekTime> AspNetWorkingWeekTimes6 { get; set; }
     }
 }

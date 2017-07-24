@@ -205,7 +205,7 @@
           <Property Name="VatNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="APE" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Logo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Logo" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetCustomerContact">
           <Key>
@@ -216,6 +216,7 @@
           <Property Name="Telephone2" Type="int" />
           <Property Name="Fax" Type="int" />
           <Property Name="BussinessEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AspNetCustomerDetail">
           <Key>
@@ -232,17 +233,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Image1" Type="nvarchar" MaxLength="20" />
-          <Property Name="Image2" Type="nvarchar" MaxLength="20" />
-          <Property Name="Image3" Type="nvarchar" MaxLength="20" />
-          <Property Name="Image4" Type="nvarchar" MaxLength="20" />
-          <Property Name="Image5" Type="nvarchar" MaxLength="20" />
+          <Property Name="Image1" Type="nvarchar(max)" />
+          <Property Name="Image2" Type="nvarchar(max)" />
+          <Property Name="Image3" Type="nvarchar(max)" />
+          <Property Name="Image4" Type="nvarchar(max)" />
+          <Property Name="Image5" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetCustomerLocation">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="ZipCode" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
@@ -279,6 +280,7 @@
           <Property Name="SmsID" Type="int" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" />
           <Property Name="WorkingID" Type="int" />
+          <Property Name="SocialID" Type="int" />
         </EntityType>
         <EntityType Name="AspNetCustomerSMS">
           <Key>
@@ -287,6 +289,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemID" Type="int" />
           <Property Name="RemainingSMS" Type="int" />
+          <Property Name="SmsPackageName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AspNetCustomerType">
           <Key>
@@ -294,8 +297,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
-          <Property Name="SingleorMulti" Type="nvarchar" MaxLength="10" />
+          <Property Name="SingleorMulti" Type="nvarchar(max)" />
           <Property Name="MultiNumber" Type="int" />
+          <Property Name="Status" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="AspNetEmailNotification">
           <Key>
@@ -494,17 +498,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="EmailConfirmed" Type="bit" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="PhoneNumberConfirmed" Type="bit" />
           <Property Name="TwoFactorEnabled" Type="bit" />
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" />
           <Property Name="AccessFailedCount" Type="int" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
@@ -522,6 +526,19 @@
           <Property Name="EndTime" Type="datetime" />
           <Property Name="LunchFrom" Type="datetime" />
           <Property Name="LunchToo" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AspNetWorkingWeekTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MondayID" Type="int" />
+          <Property Name="TuesdayID" Type="int" />
+          <Property Name="WednesdayID" Type="int" />
+          <Property Name="ThursdayID" Type="int" />
+          <Property Name="FridayID" Type="int" />
+          <Property Name="SaturdayID" Type="int" />
+          <Property Name="SundayID" Type="int" />
         </EntityType>
         <Association Name="FK_AspNetAgency_ToCustomer">
           <End Role="AspNetCustomers" Type="Self.AspNetCustomers" Multiplicity="0..1" />
@@ -691,6 +708,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetCustomers_ToSocial">
+          <End Role="AspNetSocial" Type="Self.AspNetSocial" Multiplicity="0..1" />
+          <End Role="AspNetCustomers" Type="Self.AspNetCustomers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetSocial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetCustomers">
+              <PropertyRef Name="SocialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AspNetCustomerSMS_ToItem">
           <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="0..1" />
           <End Role="AspNetCustomerSMS" Type="Self.AspNetCustomerSMS" Multiplicity="*" />
@@ -748,6 +777,90 @@
             </Principal>
             <Dependent Role="AspNetInvoiceOptions">
               <PropertyRef Name="TaxID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToFri">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="FridayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToMon">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="MondayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToSat">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="SaturdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToSun">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="SundayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToThus">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="ThursdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToTues">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="TuesdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToWed">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="WednesdayID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1016,10 +1129,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customers_Work">
-          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="0..1" />
           <End Role="AspNetCustomers" Type="Self.AspNetCustomers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetWorkingTime">
+            <Principal Role="AspNetWorkingWeekTime">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AspNetCustomers">
@@ -1213,6 +1326,7 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetWorkingTime" EntityType="Self.AspNetWorkingTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetWorkingWeekTime" EntityType="Self.AspNetWorkingWeekTime" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetAgency_ToCustomer" Association="Self.FK_AspNetAgency_ToCustomer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
             <End Role="AspNetAgency" EntitySet="AspNetAgency" />
@@ -1269,6 +1383,10 @@
             <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetail" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
           </AssociationSet>
+          <AssociationSet Name="FK_AspNetCustomers_ToSocial" Association="Self.FK_AspNetCustomers_ToSocial">
+            <End Role="AspNetSocial" EntitySet="AspNetSocial" />
+            <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
+          </AssociationSet>
           <AssociationSet Name="FK_AspNetCustomerSMS_ToItem" Association="Self.FK_AspNetCustomerSMS_ToItem">
             <End Role="AspNetItem" EntitySet="AspNetItem" />
             <End Role="AspNetCustomerSMS" EntitySet="AspNetCustomerSMS" />
@@ -1288,6 +1406,34 @@
           <AssociationSet Name="FK_AspNetInvoiceOptions_Tax" Association="Self.FK_AspNetInvoiceOptions_Tax">
             <End Role="AspNetTax" EntitySet="AspNetTax" />
             <End Role="AspNetInvoiceOptions" EntitySet="AspNetInvoiceOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToFri" Association="Self.FK_AspNetWorkingWeekTime_ToFri">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToMon" Association="Self.FK_AspNetWorkingWeekTime_ToMon">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToSat" Association="Self.FK_AspNetWorkingWeekTime_ToSat">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToSun" Association="Self.FK_AspNetWorkingWeekTime_ToSun">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToThus" Association="Self.FK_AspNetWorkingWeekTime_ToThus">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToTues" Association="Self.FK_AspNetWorkingWeekTime_ToTues">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToWed" Association="Self.FK_AspNetWorkingWeekTime_ToWed">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
           </AssociationSet>
           <AssociationSet Name="FK_BusinessSubCatageory_BusinessCatageory" Association="Self.FK_BusinessSubCatageory_BusinessCatageory">
             <End Role="AspNetBusinessCatageory" EntitySet="AspNetBusinessCatageory" />
@@ -1378,7 +1524,7 @@
             <End Role="AspNetAgency" EntitySet="AspNetAgency" />
           </AssociationSet>
           <AssociationSet Name="FK_Customers_Work" Association="Self.FK_Customers_Work">
-            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTime" />
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
           </AssociationSet>
           <AssociationSet Name="FK_Customers_WorkAgency" Association="Self.FK_Customers_WorkAgency">
@@ -1671,7 +1817,7 @@
           <Property Name="VatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="APE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerBusinessDetailAgency" FromRole="AspNetCustomerBusinessDetail" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerBusinessDetail" FromRole="AspNetCustomerBusinessDetail" ToRole="AspNetCustomers" />
         </EntityType>
@@ -1684,6 +1830,7 @@
           <Property Name="Telephone2" Type="Int32" />
           <Property Name="Fax" Type="Int32" />
           <Property Name="BussinessEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerContactAgency" FromRole="AspNetCustomerContact" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerContact" FromRole="AspNetCustomerContact" ToRole="AspNetCustomers" />
         </EntityType>
@@ -1706,11 +1853,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Image1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Image2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Image3" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Image4" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Image5" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerGalleryAgency" FromRole="AspNetCustomerGallery" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerGallery" FromRole="AspNetCustomerGallery" ToRole="AspNetCustomers" />
         </EntityType>
@@ -1718,7 +1865,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ZipCode" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1759,6 +1906,7 @@
           <Property Name="SmsID" Type="Int32" />
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="WorkingID" Type="Int32" />
+          <Property Name="SocialID" Type="Int32" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_AspNetAgency_ToCustomer" FromRole="AspNetCustomers" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomer_SubCatageory" Relationship="Self.FK_Customer_SubCatageory_Customer" FromRole="AspNetCustomers" ToRole="AspNetCustomer_SubCatageory" />
           <NavigationProperty Name="AspNetCustomerBusinessDetail" Relationship="Self.FK_Customers_CustomerBusinessDetail" FromRole="AspNetCustomers" ToRole="AspNetCustomerBusinessDetail" />
@@ -1767,10 +1915,11 @@
           <NavigationProperty Name="AspNetCustomerGallery" Relationship="Self.FK_Customers_CustomerGallery" FromRole="AspNetCustomers" ToRole="AspNetCustomerGallery" />
           <NavigationProperty Name="AspNetCustomerLocation" Relationship="Self.FK_Customers_CustomerLocation" FromRole="AspNetCustomers" ToRole="AspNetCustomerLocation" />
           <NavigationProperty Name="AspNetCustomerRegion" Relationship="Self.FK_Customers_CustomerRegion" FromRole="AspNetCustomers" ToRole="AspNetCustomerRegion" />
+          <NavigationProperty Name="AspNetSocial" Relationship="Self.FK_AspNetCustomers_ToSocial" FromRole="AspNetCustomers" ToRole="AspNetSocial" />
           <NavigationProperty Name="AspNetCustomerSM" Relationship="Self.FK_Customers_CustomerSMS" FromRole="AspNetCustomers" ToRole="AspNetCustomerSMS" />
           <NavigationProperty Name="AspNetCustomerType" Relationship="Self.FK_Customers_CustomerType" FromRole="AspNetCustomers" ToRole="AspNetCustomerType" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Customers_User" FromRole="AspNetCustomers" ToRole="AspNetUsers" />
-          <NavigationProperty Name="AspNetWorkingTime" Relationship="Self.FK_Customers_Work" FromRole="AspNetCustomers" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTime" Relationship="Self.FK_Customers_Work" FromRole="AspNetCustomers" ToRole="AspNetWorkingWeekTime" />
           <NavigationProperty Name="AspNetInvoices" Relationship="Self.FK_Invoice_Customer" FromRole="AspNetCustomers" ToRole="AspNetInvoice" />
         </EntityType>
         <EntityType Name="AspNetCustomerSM">
@@ -1780,6 +1929,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ItemID" Type="Int32" />
           <Property Name="RemainingSMS" Type="Int32" />
+          <Property Name="SmsPackageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerSMSAgency" FromRole="AspNetCustomerSMS" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerSMS" FromRole="AspNetCustomerSMS" ToRole="AspNetCustomers" />
           <NavigationProperty Name="AspNetItem" Relationship="Self.FK_AspNetCustomerSMS_ToItem" FromRole="AspNetCustomerSMS" ToRole="AspNetItem" />
@@ -1790,8 +1940,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SingleorMulti" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SingleorMulti" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MultiNumber" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerTypeAgency" FromRole="AspNetCustomerType" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerType" FromRole="AspNetCustomerType" ToRole="AspNetCustomers" />
         </EntityType>
@@ -1971,6 +2122,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Twitter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Facebook" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_AspNetCustomers_ToSocial" FromRole="AspNetSocial" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetTax">
           <Key>
@@ -2007,17 +2159,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumberConfirmed" Type="Boolean" />
           <Property Name="TwoFactorEnabled" Type="Boolean" />
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" />
           <Property Name="AccessFailedCount" Type="Int32" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2042,8 +2194,35 @@
           <Property Name="LunchFrom" Type="DateTime" Precision="3" />
           <Property Name="LunchToo" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_WorkAgency" FromRole="AspNetWorkingTime" ToRole="AspNetAgency" />
-          <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_Work" FromRole="AspNetWorkingTime" ToRole="AspNetCustomers" />
           <NavigationProperty Name="AspNetEmployees" Relationship="Self.FK_Employee_Working" FromRole="AspNetWorkingTime" ToRole="AspNetEmployee" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes" Relationship="Self.FK_AspNetWorkingWeekTime_ToFri" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes1" Relationship="Self.FK_AspNetWorkingWeekTime_ToMon" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes2" Relationship="Self.FK_AspNetWorkingWeekTime_ToSat" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes3" Relationship="Self.FK_AspNetWorkingWeekTime_ToSun" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes4" Relationship="Self.FK_AspNetWorkingWeekTime_ToThus" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes5" Relationship="Self.FK_AspNetWorkingWeekTime_ToTues" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetWorkingWeekTimes6" Relationship="Self.FK_AspNetWorkingWeekTime_ToWed" FromRole="AspNetWorkingTime" ToRole="AspNetWorkingWeekTime" />
+        </EntityType>
+        <EntityType Name="AspNetWorkingWeekTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MondayID" Type="Int32" />
+          <Property Name="TuesdayID" Type="Int32" />
+          <Property Name="WednesdayID" Type="Int32" />
+          <Property Name="ThursdayID" Type="Int32" />
+          <Property Name="FridayID" Type="Int32" />
+          <Property Name="SaturdayID" Type="Int32" />
+          <Property Name="SundayID" Type="Int32" />
+          <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_Work" FromRole="AspNetWorkingWeekTime" ToRole="AspNetCustomers" />
+          <NavigationProperty Name="AspNetWorkingTime" Relationship="Self.FK_AspNetWorkingWeekTime_ToFri" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingTime1" Relationship="Self.FK_AspNetWorkingWeekTime_ToMon" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingTime2" Relationship="Self.FK_AspNetWorkingWeekTime_ToSat" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingTime3" Relationship="Self.FK_AspNetWorkingWeekTime_ToSun" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingTime4" Relationship="Self.FK_AspNetWorkingWeekTime_ToThus" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingTime5" Relationship="Self.FK_AspNetWorkingWeekTime_ToTues" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
+          <NavigationProperty Name="AspNetWorkingTime6" Relationship="Self.FK_AspNetWorkingWeekTime_ToWed" FromRole="AspNetWorkingWeekTime" ToRole="AspNetWorkingTime" />
         </EntityType>
         <Association Name="FK_AspNetAgency_ToCustomer">
           <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="0..1" />
@@ -2477,6 +2656,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetCustomers_ToSocial">
+          <End Role="AspNetSocial" Type="Self.AspNetSocial" Multiplicity="0..1" />
+          <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetSocial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetCustomers">
+              <PropertyRef Name="SocialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customers_CustomerSMS">
           <End Role="AspNetCustomerSMS" Type="Self.AspNetCustomerSM" Multiplicity="0..1" />
           <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="*" />
@@ -2514,10 +2705,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customers_Work">
-          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="0..1" />
           <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetWorkingTime">
+            <Principal Role="AspNetWorkingWeekTime">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AspNetCustomers">
@@ -2661,6 +2852,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToFri">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="FridayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToMon">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="MondayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToSat">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="SaturdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToSun">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="SundayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToThus">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="ThursdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToTues">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="TuesdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetWorkingWeekTime_ToWed">
+          <End Role="AspNetWorkingTime" Type="Self.AspNetWorkingTime" Multiplicity="0..1" />
+          <End Role="AspNetWorkingWeekTime" Type="Self.AspNetWorkingWeekTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetWorkingTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetWorkingWeekTime">
+              <PropertyRef Name="WednesdayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -2710,6 +2985,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="AspNetWorkingTimes" EntityType="Self.AspNetWorkingTime" />
+          <EntitySet Name="AspNetWorkingWeekTimes" EntityType="Self.AspNetWorkingWeekTime" />
           <AssociationSet Name="FK_AspNetAgency_ToCustomer" Association="Self.FK_AspNetAgency_ToCustomer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
             <End Role="AspNetAgency" EntitySet="AspNetAgencies" />
@@ -2854,6 +3130,10 @@
             <End Role="AspNetCustomerRegion" EntitySet="AspNetCustomerRegions" />
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
           </AssociationSet>
+          <AssociationSet Name="FK_AspNetCustomers_ToSocial" Association="Self.FK_AspNetCustomers_ToSocial">
+            <End Role="AspNetSocial" EntitySet="AspNetSocials" />
+            <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customers_CustomerSMS" Association="Self.FK_Customers_CustomerSMS">
             <End Role="AspNetCustomerSMS" EntitySet="AspNetCustomerSMS" />
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
@@ -2867,7 +3147,7 @@
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
           </AssociationSet>
           <AssociationSet Name="FK_Customers_Work" Association="Self.FK_Customers_Work">
-            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
           </AssociationSet>
           <AssociationSet Name="FK_Invoice_Customer" Association="Self.FK_Invoice_Customer">
@@ -2913,6 +3193,34 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToFri" Association="Self.FK_AspNetWorkingWeekTime_ToFri">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToMon" Association="Self.FK_AspNetWorkingWeekTime_ToMon">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToSat" Association="Self.FK_AspNetWorkingWeekTime_ToSat">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToSun" Association="Self.FK_AspNetWorkingWeekTime_ToSun">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToThus" Association="Self.FK_AspNetWorkingWeekTime_ToThus">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToTues" Association="Self.FK_AspNetWorkingWeekTime_ToTues">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetWorkingWeekTime_ToWed" Association="Self.FK_AspNetWorkingWeekTime_ToWed">
+            <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTimes" />
+            <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -3151,6 +3459,7 @@
                 <ScalarProperty Name="Telephone2" ColumnName="Telephone2" />
                 <ScalarProperty Name="Fax" ColumnName="Fax" />
                 <ScalarProperty Name="BussinessEmail" ColumnName="BussinessEmail" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3219,6 +3528,7 @@
                 <ScalarProperty Name="SmsID" ColumnName="SmsID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="WorkingID" ColumnName="WorkingID" />
+                <ScalarProperty Name="SocialID" ColumnName="SocialID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3228,6 +3538,7 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="RemainingSMS" ColumnName="RemainingSMS" />
+                <ScalarProperty Name="SmsPackageName" ColumnName="SmsPackageName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3238,6 +3549,7 @@
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="SingleorMulti" ColumnName="SingleorMulti" />
                 <ScalarProperty Name="MultiNumber" ColumnName="MultiNumber" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3473,6 +3785,20 @@
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="LunchFrom" ColumnName="LunchFrom" />
                 <ScalarProperty Name="LunchToo" ColumnName="LunchToo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetWorkingWeekTimes">
+            <EntityTypeMapping TypeName="BookingModelModels.AspNetWorkingWeekTime">
+              <MappingFragment StoreEntitySet="AspNetWorkingWeekTime">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MondayID" ColumnName="MondayID" />
+                <ScalarProperty Name="TuesdayID" ColumnName="TuesdayID" />
+                <ScalarProperty Name="WednesdayID" ColumnName="WednesdayID" />
+                <ScalarProperty Name="ThursdayID" ColumnName="ThursdayID" />
+                <ScalarProperty Name="FridayID" ColumnName="FridayID" />
+                <ScalarProperty Name="SaturdayID" ColumnName="SaturdayID" />
+                <ScalarProperty Name="SundayID" ColumnName="SundayID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

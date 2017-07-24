@@ -1,7 +1,66 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetItem
 @{
     ViewBag.Title = "AddItem";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "0.00%",
+        Value = "0.00",
+        Selected = false
+    });
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "5.50%",
+        Value = "5.50",
+        Selected = false
+    });
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "20.00%",
+        Value = "20.00",
+        Selected = false
+    });
+
+
+    List<SelectListItem> listItems1 = new List<SelectListItem>();
+
+    listItems1.Add(new SelectListItem
+    {
+        Text = "Active",
+        Value = "Active",
+        Selected = true
+    });
+
+    listItems1.Add(new SelectListItem
+    {
+        Text = "In Active",
+        Value = "InActive",
+        Selected = false
+    });
+
+    List<SelectListItem> listItems2 = new List<SelectListItem>();
+
+    listItems2.Add(new SelectListItem
+    {
+        Text = "Sms",
+        Value = "sms",
+        Selected = false
+    });
+
+    listItems2.Add(new SelectListItem
+    {
+        Text = "Non Sms",
+        Value = "non sms",
+        Selected = false
+    });
+
+}
+
 }
 
  <!-- Required Plugin CSS -->
@@ -18,6 +77,60 @@
 
  <!-- AngularJS -->
 <script src="@Url.Content("~/assets/js/angular.min.js")"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")"></script>
+<script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+            var modalContent = $('#modal-content');
+
+            modalContent.on('click', '.holder-style', function (e) {
+                e.preventDefault();
+
+                modalContent.find('.holder-style').removeClass('holder-active');
+                $(this).addClass('holder-active');
+            });
+
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
+
+            // Form Skin Switcher
+            $('#animation-switcher button').on('click', function () {
+                $('#animation-switcher').find('button').removeClass('active-animation');
+                $(this).addClass('active-animation item-checked');
+
+                // Inline Admin-Form example
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: findActive()
+                    },
+                    // overflowY: 'hidden', //
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
+                            this.st.mainClass = Animation;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+
+            });
+
+        });
+</script>
+
+
 
 
 <section id="content_wrapper">
@@ -25,7 +138,8 @@
     <!-- Start: Topbar-Dropdown -->
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
-    <h1>HHHHHHHH</h1>
+   @*<div style="margin-bottom:auto;"></div>*@
+    <h3>hhhh</h3>
     <header id="topbar">
         <div class="topbar-left">
             <ol class="breadcrumb">
@@ -48,36 +162,37 @@
     <!-- Begin: Content -->
     <div class="panel">
         <div class="panel" id="spy3">
+@using (Html.BeginForm("AddItem", "SuperAdmin",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
             <div class="panel-body">
-
-
                 <div class="tab-pane">
                     <div class="row">
-                        <div class="row form-group required">
-                            <label class="col-md-2 col-xs-12 text-right control-label">Item ID:</label>
-                            <div class="col-md-8 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Enter the item ID" required="required">
-                            </div>
-                        </div>
+          
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-right control-label">Item Name:</label>
                             <div class="col-md-8 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Enter the item name" required="required">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the item name") } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
                         <div class="row form-group">
                             <label class="col-md-2 col-xs-12 text-right">Item Description:</label>
                             <div class="col-md-8 col-xs-12">
-                                <textarea class="form-control" rows="5" id="comment" style="resize: none;"></textarea>
+                               @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @style = "resize: none;", @rows = "5", @id = "comment" })
+                               @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
                         <div class="row form-group">
                             <label class="col-md-2 col-xs-12 text-right">Price w/o VAT:</label>
                             <div class="col-md-5 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon">&euro;</span>
-                                    <input id="w/ovat" type="number" class="form-control">
+                                    @Html.EditorFor(model => model.Price_W_O_Vat, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0", @class = "form-control", @id = "w/ovat" } })
+                                    @Html.ValidationMessageFor(model => model.Price_W_O_Vat, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -86,12 +201,8 @@
                         <div class="row form-group ">
                             <label class="col-md-2 col-xs-12 text-right control-label">VAT:</label>
                             <div class="col-md-2 col-xs-12">
-                                <select class="form-control" id="tax" style="margin-bottom: 3%;">
-                                    <option selected disabled value="0.00">-Taux-</option>
-                                    <option value="0.00">0,00%</option>
-                                    <option value="5.50">5,50%</option>
-                                    <option value="20.00">20,00%</option>
-                                </select>
+                                @Html.DropDownListFor(model => model.Vat, listItems, "-Taux-", new { @class = "form-control", @id = "tax", @style = "margin-bottom: 3%;" })
+                                @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                             </div>
 
 
@@ -108,25 +219,36 @@
                             <div class="col-md-5 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon">&euro;</span>
-                                    <input id="wvvat" type="number" class="form-control" disabled="">
+                                    @Html.EditorFor(model => model.Price_W__Vat, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0", @class = "form-control", @id = "wvvat", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.Price_W__Vat, "", new { @class = "text-danger" })
+
+
                                 </div>
                             </div>
                         </div>
                         <div class="row form-group ">
                             <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
                             <div class="col-md-3 col-xs-12">
-                                <select class="form-control">
-                                    <option selected>Active</option>
-                                    <option>In Active</option>
-
-                                </select>
+                                @Html.DropDownListFor(model => model.Status, listItems1, "-Taux-", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                           </div>
+                        </div>
+                        <div class="row form-group ">
+                            <label class="col-md-2 col-xs-12 text-right control-label">Category:</label>
+                            <div class="col-md-3 col-xs-12">
+                                @Html.DropDownListFor(model => model.IsSmsPackage, listItems2, "- Category -", new { @class = "form-control" ,@id="rem_drop"})
+                                @Html.ValidationMessageFor(model => model.IsSmsPackage, "", new { @class = "text-danger" })
                             </div>
-
-
                         </div>
 
-
-
+                        <div style="display: none;" id="rem_sms">
+                            <div class="col-md-2 col-xs-12 text-right control-label">
+                                <label>Remaining SMS:</label>
+                            </div>
+                            <div class="col-md-3 col-md-12">
+                               <input type="text" name="no_remaining_sms" class="form-control" placeholder="Remaining Sms" />
+                            </div>
+                        </div>
 
 
                     </div>
@@ -139,16 +261,14 @@
                     </div>
 
                     <div class="col-md-5 col-xs-12">
-                        <center>   <button type="button" class="btn btn-success">Save</button></center>
+                        <center>   <input type="submit" class="btn btn-success" value="Save" /></center>
                     </div>
-
-
                 </div>
 
 
 
             </div>
-
+}
 
             <br><br><br><br><br><br><br>
         </div>
@@ -187,6 +307,21 @@
 
 <script type="text/javascript">
 
+    $("#rem_drop").change(function () {
+
+        var ddl = document.getElementById("rem_drop");
+        var selectedValue = ddl.options[ddl.selectedIndex].value;
+        
+        if (selectedValue == "non sms") {
+            var label1 = document.getElementById("rem_sms");
+            label1.style.display = 'none';
+        }
+        if (selectedValue == "sms") {
+            var label3 = document.getElementById("rem_sms");
+            label3.style.display = 'block';
+        }
+    });
+
 
 $("#tax").change(function (){
     var wovat=document.getElementById("w/ovat").value;
@@ -198,9 +333,12 @@ $("#tax").change(function (){
     else
     {
         document.getElementById("multiplyyy").value =  (per/100)*wovat;
-        var final=(per/100)*wovat;
-        wovat=final+wovat;
-        document.getElementById("wvvat").value =  wovat;
+        var final = (per / 100) * wovat;
+        var f1 = parseFloat(final);
+        var f2 = parseFloat(wovat);
+        var f3 = f1 + f2;
+        $("#wvvat").val(f3);
+     //   document.getElementById("wvvat").value = f3;
 
 
     }
@@ -462,5 +600,4 @@ $("#tax").change(function (){
 
 });
 </script>
-
 

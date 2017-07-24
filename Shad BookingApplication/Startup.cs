@@ -10,6 +10,8 @@ namespace Shad_BookingApplication
 {
     public partial class Startup
     {
+        private BookingModelEntities db = new BookingModelEntities();
+
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
@@ -18,6 +20,10 @@ namespace Shad_BookingApplication
             CreateRolesandUsers();
 
         }
+
+
+
+
         private void createRolesandUsers()
         {
             ApplicationDbContext context = new ApplicationDbContext();

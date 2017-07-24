@@ -12,24 +12,31 @@ namespace Shad_BookingApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetCustomerSM
+    public partial class AspNetWorkingWeekTime
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetCustomerSM()
+        public AspNetWorkingWeekTime()
         {
-            this.AspNetAgencies = new HashSet<AspNetAgency>();
             this.AspNetCustomers = new HashSet<AspNetCustomer>();
         }
     
         public int Id { get; set; }
-        public Nullable<int> ItemID { get; set; }
-        public Nullable<int> RemainingSMS { get; set; }
-        public string SmsPackageName { get; set; }
+        public Nullable<int> MondayID { get; set; }
+        public Nullable<int> TuesdayID { get; set; }
+        public Nullable<int> WednesdayID { get; set; }
+        public Nullable<int> ThursdayID { get; set; }
+        public Nullable<int> FridayID { get; set; }
+        public Nullable<int> SaturdayID { get; set; }
+        public Nullable<int> SundayID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
-        public virtual AspNetItem AspNetItem { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime1 { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime2 { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime3 { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime4 { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime5 { get; set; }
+        public virtual AspNetWorkingTime AspNetWorkingTime6 { get; set; }
     }
 }
