@@ -214,8 +214,9 @@ namespace Shad_BookingApplication.Controllers
         public ActionResult EditCustomer()
         {
             AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
-            addCustomerViewModel.BusinessCatageory
-            return View();
+            addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
+            addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
+            return View(addCustomerViewModel);
         }
 
         public ActionResult AddCustomer()

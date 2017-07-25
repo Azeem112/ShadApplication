@@ -776,7 +776,6 @@
     <Content Include="Views\CompanyAdmin\InvoiceList.cshtml" />
     <Content Include="Views\CompanyAdmin\InvoiceOption.cshtml" />
     <Content Include="Views\CompanyAdmin\InvoiceTemplate.cshtml" />
-    <Content Include="Views\CompanyAdmin\ItemList.cshtml" />
     <Content Include="Views\CompanyAdmin\Login.cshtml" />
     <Content Include="Views\CompanyAdmin\LoginDetails.cshtml" />
     <Content Include="Views\CompanyAdmin\OptionsOk.cshtml" />
