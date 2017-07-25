@@ -213,6 +213,8 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult EditCustomer()
         {
+            AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
+            addCustomerViewModel.BusinessCatageory
             return View();
         }
 
