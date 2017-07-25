@@ -94,6 +94,7 @@ namespace Shad_BookingApplication.Controllers
         {
             if(ModelState.IsValid)
             {
+                AspNetGiftVoucher g_voucher = new AspNetGiftVoucher();
                 db.AspNetGiftVouchers.Add(voucher);
                 db.SaveChanges();
             }
