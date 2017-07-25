@@ -40,68 +40,49 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
+        public string Get_Role(string id)
+        {
+            var val = db.AspNetUsers.Where(x => x.Id == id).Select(x => x.AspNetRoles.Select(y => y.Name));
+           var ok=  db.AspNetUsers.Where(x => x.Id == id).Select(x => x.AspNetRoles.Select(y => y.Name).FirstOrDefault()).FirstOrDefault();
+                return ok;
+        }
+
+        public string Get_Company(string id)
+        {
+            var user_type_id = db.AspNetCustomers.Where(x => x.UserID == id).Select(y => y.TypeID).FirstOrDefault();
+            if (user_type_id != null)
+               return db.AspNetCustomerTypes.Where(x => x.Id == user_type_id).Select(y => y.CompanyName).FirstOrDefault();
+            else
+                return "-";
+        }
+
         public ActionResult UserList()
         {
-         /*   List<UserListViewModel> superadmin = new List<UserListViewModel>();
+            List<UserListViewModel> list_data = new List<UserListViewModel>();
+          
+            var users = db.AspNetUsers.ToList();                  //Name,email,phone_no
+            int i = 1;
+            foreach (var item in users)
+            {
+                var obj = new UserListViewModel();
+                obj.id = i;
+                i++;
+                obj.email = item.Email;
+                obj.mobile = item.PhoneNumber;
+                obj.name = item.UserName;
+                obj.status = item.Status;
+                obj.role = Get_Role(item.Id);
+                obj.company = Get_Company(item.Id);
 
-            //foreach (var item in db.AspNetUsers)
-            //{
-            //    var superadmin_item = new UserListViewModel();
-            //    superadmin_item.id = item.Id;
-
-
-            //    var companyname = db.AspNetCustomerDetails.Where(x => x.Id == Convert.ToInt32(item.Id)).Select(x => x.BussinessName).FirstOrDefault();
-            //    superadmin.Add(superadmin_item);
-            //}
-
-            //List<UserListViewModel> Companyadmin = new List<UserListViewModel>();
-            //foreach (var item in db.AspNetUsers)
-            //{
-            //    var Companyadmin_item = new UserListViewModel();
-            //    Companyadmin_item.id = item.Id;
-
-
-
-
-                Companyadmin.Add(Companyadmin_item);
+                list_data.Add(obj);
             }
-            */
+            return View(list_data);
 
-                //var user = db.AspNetUsers.Select(x => new {
-                //    x.LastName,
-                //    x.Id,
-                //    x.FirstName,
-                //    x.UserName,
-                //    x.Status
-
-                //}).ToList();
-
-                //List<string> Roles = new List<string>();
-
-                //for (int i=0;i< user.Count();i++)
-                //{
-                //    var item = user.ElementAt(i);
-                //    var role = db.AspNetUsers.Where(x=> x.Id == item.Id).Select(x => x.AspNetRoles.Select(y => y.Name)).FirstOrDefault().ToString();
-                //    Roles.Add(role);
-                //}
-                //List<string> Comp = new List<string>();
-                //for (int i = 0; i < user.Count(); i++)
-                //{
-                //    var item = user.ElementAt(i);
-                //    var comp = db.AspNetUsers.Where(x => x.Id == item.Id).Select(x => x.AspNetCustomerDetail.Select(y => y.Company)).FirstOrDefault().ToString();
-                //    Comp.Add(comp);
-                //}
-
-
-
-                //ViewBag.company = Comp;
-                //ViewBag.userdata = user;
-                //ViewBag.Roles = Roles;
-                return View();
+         
         }
         public ActionResult AddSuperAdmin()
         {
-            dynamic mymodel = new ExpandoObject(); 
+          //  dynamic mymodel = new ExpandoObject(); 
             return View();
         }
 
@@ -211,13 +192,13 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
-        public ActionResult EditCustomer()
-        {
-            AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
-            addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
-            addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
-            return View(addCustomerViewModel);
-        }
+        //public ActionResult EditCustomer()
+        //{
+        //    AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
+        //    addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
+        //    addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
+        //    return View(addCustomerViewModel);
+        //}
 
         public ActionResult AddCustomer()
         {
@@ -331,6 +312,11 @@ namespace Shad_BookingApplication.Controllers
                 BusinessDetail.Logo = "";
             }
 
+            BusinessDetail.Description = addCustomerViewModel.BusinessDetail.Description;
+            BusinessDetail.SRIET = addCustomerViewModel.BusinessDetail.SRIET;
+            BusinessDetail.VatNumber = addCustomerViewModel.BusinessDetail.VatNumber;
+            BusinessDetail.APE = addCustomerViewModel.BusinessDetail.APE;
+
             db.AspNetCustomerBusinessDetails.Add(BusinessDetail);
             db.SaveChanges();
 
@@ -355,7 +341,7 @@ namespace Shad_BookingApplication.Controllers
             db.SaveChanges();
 
             // Adding User
-            var user_id=AddCustomerAccount(addCustomerViewModel.User);
+            var user_id=AddCustomerAccount(addCustomerViewModel.User, addCustomerViewModel.Contact.Mobile);
 
 
             var customer = new AspNetCustomer();
@@ -387,8 +373,35 @@ namespace Shad_BookingApplication.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        public ActionResult EditCustomer(int? id)
+        {
+            var customer_list = db.AspNetCustomers.ToList();
+            var customer = customer_list.Where(x => x.Id == id).Select(x => x).FirstOrDefault();
 
-        public string AddCustomerAccount(AspNetUser aspNetUser)
+            var users = db.AspNetUsers.Where(x=>x.Id== customer.UserID).Select(x => x).FirstOrDefault();
+            var user_type = db.AspNetCustomerTypes.Where(x => x.Id == customer.TypeID).Select(x => x).FirstOrDefault();
+            var address = db.AspNetCustomerLocations.Where(x => x.Id == customer.LocationId).Select(x => x).FirstOrDefault();
+            var detail=db.AspNetCustomerDetails.Where(x=>x.Id==customer.DetailId).Select(x => x).FirstOrDefault();
+            var bus_detail=db.AspNetCustomerBusinessDetails.Where(x=>x.Id==customer.BussinessID).Select(x => x).FirstOrDefault();
+            var contact = db.AspNetCustomerContacts.Where(x => x.Id == customer.ContactId).Select(x => x).FirstOrDefault();
+            var social = db.AspNetSocials.Where(x => x.Id == customer.SocialID).Select(x => x).FirstOrDefault();
+
+
+
+            AddCustomerViewModel viewmodel = new AddCustomerViewModel();
+            viewmodel.User = users;
+            viewmodel.Location = address;
+            viewmodel.UserType = user_type;
+            viewmodel.Detail = detail;
+            viewmodel.BusinessDetail = bus_detail;
+            viewmodel.Contact = contact;
+            viewmodel.Social = social;
+
+            return View(viewmodel);
+        }
+
+
+        public string AddCustomerAccount(AspNetUser aspNetUser,string phone_no)
         {
             ApplicationDbContext context = new ApplicationDbContext();
 
@@ -412,6 +425,9 @@ namespace Shad_BookingApplication.Controllers
                         var result1 = UserManager.AddToRole(user.Id, "Company_Admin");
                         var temp_user = db.AspNetUsers.Where(m => m.Email == user.Email).Select(x => x).FirstOrDefault();
                         temp_user.Status = aspNetUser.Status;
+                        temp_user.FirstName = aspNetUser.FirstName;
+                        temp_user.LastName = aspNetUser.LastName;
+                        temp_user.PhoneNumber = phone_no;
                         db.SaveChanges();
                         return temp_user.Id;
                     }
@@ -836,8 +852,10 @@ namespace Shad_BookingApplication.Controllers
         
     
 
-    public ActionResult Create_Invoice()
+        public ActionResult Create_Invoice()
         {
+            var customer_list=db.AspNetCustomers.ToList();
+
             return View();
         }
         public ActionResult Create_Invoice2()

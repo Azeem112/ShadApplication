@@ -172,7 +172,7 @@
                     <div class="panel panel-visible" id="spy3">
                         <div class="panel-body pn">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
+                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="font-size:13px;">
                                     <thead>
                                         <tr role="row">
                                             <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
@@ -215,7 +215,9 @@
                                             <td><center>@item.address+@item.city+@item.state<br>@item.zipcode @item.country</center></td>
                                             <td><center>@item.rem_sms</center></td>
                                             <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">@item.status</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                            <td><center><div class="btn-group"><span class = "btn btn-default">@Html.ActionLink("View", "EditCustomer", new { id = item.customer_id })</span>  
+                                            <button type="button" class="btn btn-danger">Delete</button></div>
+                                            </center></td>
                                         </tr>
                                     }
                                     </tbody>

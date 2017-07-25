@@ -1,4 +1,4 @@
-﻿@model Shad_BookingApplication.Models.UserListViewModel
+﻿@model IEnumerable<Shad_BookingApplication.Models.UserListViewModel>
 
 @{
     ViewBag.Title = "UserList";
@@ -101,7 +101,7 @@
 
                     <div class="panel panel-visible" id="spy3">
                         <div class="panel-body pn">
-                            <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;">
+                            <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;font-size:13px;">
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
@@ -140,69 +140,38 @@
                                 </thead>
                                 <tbody>
                                    
-                                        @*@foreach (var item in Model.AspNetRol)
+                                        @foreach (var item in Model)
                                         {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.AspNetUsers.Id)
+                                                    @Html.DisplayFor(modelItem => item.id)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.AspNetUsers.FullName)
+                                                    @Html.DisplayFor(modelItem => item.name)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.AspNetRoles.Role)
+                                                    @Html.DisplayFor(modelItem => item.role)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.AspNetCustomerDetails.Company)
+                                                    @Html.DisplayFor(modelItem => item.company)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Email)
+                                                    @Html.DisplayFor(modelItem => item.email)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                                    @Html.DisplayFor(modelItem => item.mobile)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Status)
+                                                    <button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">@Html.DisplayFor(modelItem => item.status)</button>
                                                 </td>
+                                                <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
 
-                                                <td>
-                                                    @Html.ActionLink("Active", "Edit", "Edit", new { id = item.AspNetUsers.Id }, new { @class = "btn active btn-dark btn-sm", style = "background-color: rgb(97,144,126);" }) |
-                                                   
-                                                    @Html.ActionLink("View","Details", "Details", new { id = item.AspNetUsers.Id }, new { @class="btn btn-default" }) |
-                                                    @Html.ActionLink("Delete","Delete", "Delete", new { id = item.AspNetUsers.Id }, new { @class = "btn btn-danger" })
-                                                </td>
                                             </tr>
                                         
                                             
-                                    }*@
+                                    }
                                     
-                                    <tr role="row" class="even">
-                                        <td>0002</td>
-                                        <td>Sean Paul</td>
-                                        <td class="sorting_1">Super Admin</td>
-                                        <td>MNO</td>
-                                        <td><a>Sean@ahoo.com</a></td>
-                                        <td>+9245645641</td>
-                                        <td>
-                                            <button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Active</button>
-                                        </td>
-                                        <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                    </tr>
-                                    <tr role="row" class="even">
-                                        <td>0003</td>
-                                        <td>Jacob Oram</td>
-                                        <td class="sorting_1">Company Admin</td>
-                                        <td>XYZ</td>
-                                        <td><a>thirdone@ahoo.com</a></td>
-                                        <td>+9245645641</td>
-                                        <td>
-                                            <button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Active</button>
-                                        </td>
-                                        <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                    </tr>
-
-
-
+                                  
                                 </tbody>
                             </table>
                         </div>

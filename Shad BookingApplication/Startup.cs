@@ -24,67 +24,7 @@ namespace Shad_BookingApplication
 
 
 
-        private void createRolesandUsers()
-        {
-            ApplicationDbContext context = new ApplicationDbContext();
-
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
-
-            // In Startup iam creating first Admin Role and creating a default Admin User    
-            if (!roleManager.RoleExists("Super_Admin"))
-            {
-
-                // first we create Admin rool  
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Super_Admin";
-                roleManager.Create(role);
-
-                //Here we create a Admin super user who will maintain the website                  
-
-                var user = new ApplicationUser();
-                user.UserName = "Ahmad1";
-                user.Email = "Ahmad@gmail.com";
-
-                string userPWD = "Ahmad@1234";
-
-                var chkUser = UserManager.Create(user, userPWD);
-
-                //Add default User to Role Admin  
-                if (chkUser.Succeeded)
-                {
-                    var result1 = UserManager.AddToRole(user.Id, "Super_Admin");
-
-                }
-            }
-
-            // creating Creating Company_Admin role    
-            if (!roleManager.RoleExists("Company_Admin"))
-            {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Company_Admin";
-                roleManager.Create(role);
-
-            }
-            
-            // creating Creating Agency MAnager role    
-            if (!roleManager.RoleExists("Agency_Manager"))
-            {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Agency_Manager";
-                roleManager.Create(role);
-            }
-
-            if (!roleManager.RoleExists("Employee"))
-            {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Employee";
-                roleManager.Create(role);
-            }
-           
-        }
-
+      
         private void CreateRolesandUsers()
         {
             ApplicationDbContext context = new ApplicationDbContext();
