@@ -332,7 +332,8 @@ namespace Shad_BookingApplication.Controllers
             db.SaveChanges();
 
 
-                     // Adding user Types
+            // Adding user Types
+            addCustomerViewModel.UserType.CompanyName = addCustomerViewModel.Detail.BussinessName;
             db.AspNetCustomerTypes.Add(addCustomerViewModel.UserType);
             db.SaveChanges();
   
@@ -842,7 +843,57 @@ namespace Shad_BookingApplication.Controllers
         }
         public ActionResult CustomersList()
         {
-            return View();
+            var customer = db.AspNetCustomers.ToList();         // cus id
+            var users=db.AspNetUsers.ToList();                  //Name,email,phone_no
+            var user_type = db.AspNetCustomerTypes.ToList();    //CompanyName, Status
+            var sms = db.AspNetCustomerSMS.ToList();            // remaining sms
+            var address = db.AspNetCustomerLocations.ToList();  // Address
+
+            List<CustomerList_Data> list_data = new List<CustomerList_Data>();
+
+            foreach (var item in customer)
+            {
+                CustomerList_Data obj = new CustomerList_Data();
+
+                var customer_id = item.UserID;
+                obj.customer_id = item.Id;
+
+                var temp_user = users.Where(x => x.Id == customer_id).Select(x => x).FirstOrDefault();
+
+                obj.email = temp_user.Email;
+                obj.phone_num = temp_user.PhoneNumber;
+                obj.user_name = temp_user.UserName;
+
+                var user_type_id = item.TypeID;
+                var temp_user_type = user_type.Where(x => x.Id == user_type_id).Select(x => x).FirstOrDefault();
+
+                obj.company_name = temp_user_type.CompanyName;
+                obj.status = temp_user_type.Status;
+
+                var address_id = item.LocationId;
+                var temp_address = address.Where(x => x.Id == address_id).Select(x => x).FirstOrDefault();
+
+                obj.address = temp_address.Address;
+                obj.city = temp_address.City;
+                obj.zipcode =(int) temp_address.ZipCode;
+
+                obj.country = temp_address.CountryName;
+                obj.state = temp_address.State;
+
+
+                var sms_id = item.SmsID;
+                var temp_sms = sms.Where(x => x.Id == sms_id).Select(x => x).FirstOrDefault();
+
+                obj.rem_sms = (int) temp_sms.RemainingSMS;
+
+                list_data.Add(obj);
+            }
+
+
+
+
+
+            return View(list_data);
         }
         public ActionResult InvoiceList()
         {
