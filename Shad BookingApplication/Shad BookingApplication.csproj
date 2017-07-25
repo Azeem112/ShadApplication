@@ -329,6 +329,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookingModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerList_Data.cs" />
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
