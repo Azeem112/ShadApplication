@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.CustomerList_Data>
 @{
     ViewBag.Title = "CustomersList";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
@@ -206,27 +206,18 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myCustomers">
-
+                                    @foreach (var item in Model)
+                                    {
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>001</center></td>
-                                            <td><center>claude <br> <a>claude@gmail.com</a><br>+44314566778</center></td>
-                                            <td><center>XYZ</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
+                                            <td class="sorting_1"><center>@item.customer_id</center></td>
+                                            <td><center>@item.user_name<br> <a>@item.email</a><br>@item.phone_num</center></td>
+                                            <td><center>@item.company_name</center></td>
+                                            <td><center>@item.address+@item.city+@item.state<br>@item.zipcode @item.country</center></td>
+                                            <td><center>@item.rem_sms</center></td>
+                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">@item.status</button></center></td>
                                             <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
                                         </tr>
-
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>002</center></td>
-                                            <td><center>Jean <br> <a>Jean@gmail.com</a><br>++33314566778</center></td>
-                                            <td><center>XYZ</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
-
+                                    }
                                     </tbody>
                                 </table>
                             </div>
