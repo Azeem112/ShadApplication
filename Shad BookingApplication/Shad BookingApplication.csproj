@@ -336,6 +336,7 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditUserModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

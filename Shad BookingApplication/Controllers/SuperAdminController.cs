@@ -67,8 +67,12 @@ namespace Shad_BookingApplication.Controllers
         [HttpPost]
         public ActionResult EditUser(AspNetUser user)
         {
+            //var pass = db.AspNetUsers.Where(x => x.Id == user.Id).FirstOrDefault().PasswordHash;
+            //user.PasswordHash = pass;
+
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
+
             return RedirectToAction("UserList");
         }
 
