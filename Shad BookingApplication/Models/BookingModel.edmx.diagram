@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9bcd6c52acf746dcbb0f61b5f4532854" Name="Diagram1">
+      <Diagram DiagramId="34fcaf65217a430b9aa8b63ffbfb5fc3" Name="Diagram1">
         <EntityTypeShape EntityType="BookingModelModels.C__MigrationHistory" Width="1.5" PointX="12.75" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetAgency" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBooking" Width="1.5" PointX="7.5" PointY="24.75" IsExpanded="true" />

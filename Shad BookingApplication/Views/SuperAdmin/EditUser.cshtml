@@ -123,6 +123,15 @@
                     @Html.HiddenFor(model => model.FirstName)
                     @Html.HiddenFor(model => model.FullName)
                     @Html.HiddenFor(model => model.LastName)
+                    @Html.HiddenFor(model => model.SecurityStamp)
+                    @Html.HiddenFor(model => model.EmailConfirmed)
+                    @Html.HiddenFor(model => model.PhoneNumberConfirmed)
+                    @Html.HiddenFor(model => model.TwoFactorEnabled)
+                    @Html.HiddenFor(model => model.LockoutEnabled)
+                    @Html.HiddenFor(model => model.LockoutEndDateUtc)
+                    @Html.HiddenFor(model => model.AccessFailedCount)
+                    @Html.HiddenFor(model => model.Address)
+                   
                     <div class="row form-group">
                         <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
                         <div class="col-md-8 col-xs-12">
