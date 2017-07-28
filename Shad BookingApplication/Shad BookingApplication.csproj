@@ -546,6 +546,8 @@
     <Content Include="Models\BookingModel.edmx.diagram">
       <DependentUpon>BookingModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\businessappointment - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\businessappointment - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
