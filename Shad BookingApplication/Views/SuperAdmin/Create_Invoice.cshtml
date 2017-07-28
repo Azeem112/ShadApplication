@@ -1,7 +1,52 @@
-﻿
+﻿@model Shad_BookingApplication.Models.InvoiceViewModel
 @{
     ViewBag.Title = "Create_Invoice";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    List<SelectListItem> listItems1 = new List<SelectListItem>();
+    List<SelectListItem> listItems2 = new List<SelectListItem>();
+
+    if (ViewBag.customer_list != null)
+    {
+        foreach (var item in ViewBag.customer_list)
+        {
+            listItems.Add(new SelectListItem
+            {
+                Text = item.Key,
+                Value = item.Value,
+                Selected = false
+        });
+    }
+    }
+
+    if (ViewBag.discount_list != null)
+    {
+        foreach (var item in ViewBag.discount_list)
+        {
+            listItems1.Add(new SelectListItem
+            {
+
+                Value = item.Rate.ToString(),
+                Text = item.Name + "-" + item.Rate.ToString()+ "%",
+                Selected = false
+            });
+        }
+    }
+
+    if (ViewBag.item_list != null)
+    {
+        foreach (var item in ViewBag.item_list)
+        {
+            listItems2.Add(new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+                Selected = false
+            });
+        }
+    }
+
 }
 <!-- Start: Content-Wrapper -->
 
@@ -10,6 +55,7 @@
     <!-- Start: Topbar-Dropdown -->
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
+
     <header id="topbar">
         <div class="topbar-left">
             <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
@@ -22,8 +68,8 @@
             </ul>
         </div>
 
-        <!---------------- ----->
-        <!-- Modal -->
+
+       
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="display: block;padding-right: 17px;padding-top: 76px; z-index: 100000">
                 <div class="modal-content">
@@ -38,19 +84,18 @@
                             <div class="form-group">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>Choose discount</option>
-                                        <option>Discount 1</option>
-                                        <option>Discount 2</option>
-                                    </select>
+                                    @Html.DropDownList("Choose discount", listItems1, new { @class = "form-control", @id = "Choose_discount" })
+                                    @Html.ValidationMessage("", new { @class = "text-danger" })
+                                    <input type="hidden" id="dis_caller_id" />
                                 </div>
-                                <button type="button" class="btn btn-primary">+ Add new</button>
-
-                            </div>
+                                <span class="btn btn-primary text-success-light" style="color: #fff !important ;">@Html.ActionLink("+Add new", "AddDiscount") </span>
+                           </div>
 
                         </form>
                     </div>
+
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="Do_Discount()" data-dismiss="modal">&nbspSave</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i>&nbspCancel</button>
                     </div>
                 </div>
@@ -134,8 +179,12 @@
 
         </div>
     </header>
+    
     <!-- End: Topbar -->
     <!-- Begin: Content -->
+
+@using (Html.BeginForm("Create_Invoice", "SuperAdmin", FormMethod.Post))
+{
     <div class="panel">
         <div class="panel-body pn">
             <br><br>
@@ -145,11 +194,9 @@
 
                     <label class="col-md-12 col-xs-10 text-left">Invoice to</label>
                     <label class="col-md-12 col-xs-10">
-                        <select class="form-control" placeholder="search or create Customer">
-
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                        </select>
+                        @Html.DropDownListFor(model => model.invoice.CustomerID, listItems,"Select Customer", new { @class = "form-control",@onchange= "set_customer()",@id= "Customer_ID" })
+                        @Html.ValidationMessageFor(model => model.invoice.CustomerID, "", new { @class = "text-danger" })
+                        <input type="hidden" id="Customer_id1" name="Customer_Name"/>
                     </label>
                 </div>
 
@@ -157,8 +204,9 @@
 
                     <label class="col-md-12 col-xs-10 text-left">Invoice Date</label>
                     <label class="col-md-12 col-xs-10">
-
-                        <input type="Date" class="form-control" style="padding: 0; padding-left: 5px">
+                        <input type="Date" id="in_date"  onblur="set_Indate(1)" class="form-control" style="padding: 0; padding-left: 5px">
+                        <input type="hidden"  name="in_date_name"  id="in_date_id"  />
+                       
                     </label>
                 </div>
 
@@ -166,8 +214,9 @@
 
                     <label class="col-md-12 col-xs-10 text-left">Invoice Due</label>
                     <label class="col-md-12 col-xs-10">
-
-                        <input type="Date" class="form-control" style="padding: 0; padding-left: 5px">
+                        <input type="Date" id="due_date"  onblur="set_Indate(2)" class="form-control" style="padding: 0; padding-left: 5px">
+                        <input type="hidden" name="due_date_name" id="due_date_id" />
+                       
                     </label>
                 </div>
 
@@ -176,7 +225,7 @@
                     <label class="col-md-12 col-xs-10 text-left">Outstanding Balance</label>
                     <label class="col-md-12 col-xs-10">
 
-                        <p style="color: red">00.00 &euro;</p>
+                        <p id="out_bal_id" style="color: red">00.00 &euro;</p>
                     </label>
                 </div>
             </div>
@@ -187,13 +236,14 @@
 
             <div style="background-color: #eff0f2; height:2px; width:98%; margin-left: 1%;"> </div>
 
-            <div class=" row form-group">
+            <div class="row form-group">
                 <br>
-                <button id="adItmButt" class="btn btn-success col-xs-2 col-md-1" style="background-color: rgb(97,194,97); margin-left: 2%"><b>+ Items</b></button>
+                <span id="adItmButt" class="btn btn-success col-xs-2 col-md-1" style="background-color: rgb(97,194,97); margin-left: 2%"><b>+ Items</b></span>
+                <span id="cal_ammount"  onclick="Set_Totel()"  class="btn btn-success col-xs-2 col-md-1" style="background-color: rgb(97,194,97); margin-left: 2%"><b>Calculate</b></span>
 
-                <label class="col-md-2 col-md-offset-6 col-xs-offset-0 col-xs-4">Includes Tax of:</label>
+                <label id="totel_val_tax" class="col-md-2 col-md-offset-6 col-xs-offset-0 col-xs-4">Includes Tax of:</label>
                 <div class="col-md-2">
-                    <p>€0.00</p>
+                    @*<p>€0.00</p>*@
                 </div>
             </div>
             <div style="background-color: #eff0f2; height:2px; width:49%; margin-left: 50%;"> </div>
@@ -202,7 +252,8 @@
                 <br>
                 <label class="col-md-3 col-md-offset-6 col-xs-offset-0 col-xs-4" style="font-weight: bolder;">Total:</label>
                 <div class="col-md-2" style="margin-left: 2%">
-                    <p style="font-weight: bolder;">€50.00</p>
+                    <p  id="totel_ammount_final_id"style="font-weight: bolder;">€50.00</p>
+                    <input type="hidden"  id="totel_ammount_final_id2" name="totel_ammount_final_name" />
                 </div>
             </div>
             <div style="background-color: black; height:2px; width:49%; margin-left: 50%;"> </div>
@@ -221,10 +272,11 @@
                             style="border-radius:3px;">
                         Cancel
                     </button>
-                    <a href="create-invoice2.html" type="submit" class="btn btn-primary col-md-4 col-md-offset-1 col-xs-4"
-                       style="border-radius:3px;">
-                        Save
-                    </a>
+
+                    <input  type="submit" class="btn btn-primary col-md-4 col-md-offset-1 col-xs-4"
+                       style="border-radius:3px;" value="Save" />
+
+                 
                 </div>
             </div>
             <br><br>
@@ -234,6 +286,7 @@
         </div>
     </div>
 
+}  
     <!-- End: Content -->
     <!-- Begin: Page Footer -->
     <footer id="content-footer">
@@ -248,56 +301,253 @@
 </section>
 <!-- End: Content-Wrapper -->
 
+<!-- Jquery -->
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+<!-- Theme Javascript -->
+<script src="@Url.Content("~/assets/js/utility/utility.js")"></script>
+<script src="@Url.Content("~/assets/js/demo/demo.js")"></script>
+<script src="@Url.Content("~/assets/js/main.js")"></script>
+
 <!-- Screen Animation -->
-
 <script type="text/javascript">
-            jQuery(document).ready(function () {
 
-                "use strict";
+    var isdataLoaded = false;
+    var super_admin_data = null;
+    var item_data = null;
 
-                // Init Theme Core
-                Core.init();
+    var rowNum = 0;
+    $("#adItmButt").click(function ()
+    {
+        if (isdataLoaded == false) {
+           
+            //super_admin_data = null;
+            //item_data = null;
+            Load_Data();
+            Load_Data2();
 
-                // Init Demo JS
-                Demo.init();
+            var options = "";
+            for (var i = 0; i < super_admin_data.length; i++) {
+                var item = super_admin_data[i];
+                var val = item.id;
+                var text = item.name;
+                options = options + "<option value='" + val + "'>" + text + "</option>";
+            }
 
-                var modalContent = $('#modal-content');
+            var options1 = "";
+            for (var i = 0; i < item_data.length; i++) {
+                var item = item_data[i];
+                var val = item.id;
+                var text = item.name;
+                options1 = options1 + "<option value='" + val + "'>" + text + "</option>";
+            }
 
-                modalContent.on('click', '.holder-style', function (e) {
-                    e.preventDefault();
 
-                    modalContent.find('.holder-style').removeClass('holder-active');
-                    $(this).addClass('holder-active');
-                });
+            $("#rowProd").append('<div style="background-color: #eff0f2; height:2px; width:98%; margin-left: 1%;"></div><div id="rowNumber' + rowNum + '" class="row" style="margin-top: 1%"><div class="form-group col-md-3 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Item/Description</label> <label class="col-md-12 col-xs-10"><select id="item_' + rowNum + '"  onchange="get_tax(this)" class="form-control" placeholder="choose a service">"' + options1 + '" </select></label></div><div class="form-group col-md-2 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Staff</label> <label class="col-md-12 col-xs-10"> <select id="staff_' + rowNum + '"  class="form-control">"' + options + '"</select> </label></div><div class="form-group col-md-1 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Quantity</label> <label class="col-md-12 col-xs-10"><p>1</p></label></div> <div class="form-group col-md-2 col-xs-10 " style="margin-left:0%"><label class="col-md-12  col-xs-10 text-left" style="padding: 0px;">Unit Price</label><br><div class="input-group col-md-12 col-xs-12"><span class="input-group-addon">&euro;</span><input type="text" id="unit_' + rowNum + '" onblur="Calculate_Ammount()" class="form-control" placeholder="20" style="z-index: 0" /> </div></div> <div class="form-group col-md-1 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Tax</label> <label class="col-md-12 col-xs-10"><p id="tax_' + rowNum + '"  >N/A</p></label></div> <div class="form-group col-md-2 col-xs-8 " style="margin-left:0%"><label class="col-md-12  col-xs-10 text-left" style="padding: 0px;">Total</label><br><div class="input-group col-md-12 col-xs-12"><span class="input-group-addon">&nbsp; &euro;</span><input style="z-index: 0" id="totel_' + rowNum + '" type="text" class="form-control" placeholder="20" /> </div></div><br><div id="myrownumber+rowNum" class="form-group col-md-1 col-xs-3 " style="margin-left:0%; margin-top: 0.5%"><button type="button" onclick="get_discount(this)" id="discount_' + rowNum + '" class="btn btn-info light" style="padding: 5px" data-toggle="modal" data-target="#myModal"><i class="fa fa-cut"></i></button><button id=' + rowNum + ' onclick="createModal(this.id)" type="button" class="btn btn-default light" style="padding: 5px" data-toggle="modal" data-target="#myModal1"><i class="fa fa-trash"></i></button></div></div>');
 
-                function findActive() {
-                    var activeModal = modalContent.find('.holder-active').attr('href');
-                    return activeModal;
-                };
+            isdataLoaded = true;
 
-                // Form Skin Switcher
-                $('#animation-switcher button').on('click', function () {
-                    $('#animation-switcher').find('button').removeClass('active-animation');
-                    $(this).addClass('active-animation item-checked');
+        }
+        else
+        {
+            var options = "";
+            for (var i = 0; i < super_admin_data.length; i++)
+            {
+                var item = super_admin_data[i];
+                var val = item.id;
+                var text = item.name;
+                options = options+"<option value='" + val + "'>" + text + "</option>";
+            }
 
-                    // Inline Admin-Form example
-                    $.magnificPopup.open({
-                        removalDelay: 500, //delay removal by X to allow out-animation,
-                        items: {
-                            src: findActive()
-                        },
-                        // overflowY: 'hidden', //
-                        callbacks: {
-                            beforeOpen: function (e) {
-                                var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
-                                this.st.mainClass = Animation;
-                            }
-                        },
-                        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
-                    });
+            var options1 = "";
+            for (var i = 0; i < item_data.length; i++) {
+                var item = item_data[i];
+                var val = item.id;
+                var text = item.name;
+                options1 = options1 + "<option value='" + val + "'>" + text + "</option>";
+            }
 
-                });
 
-            });
+            $("#rowProd").append('<div style="background-color: #eff0f2; height:2px; width:98%; margin-left: 1%;"></div><div id="rowNumber' + rowNum + '" class="row" style="margin-top: 1%"><div class="form-group col-md-3 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Item/Description</label> <label class="col-md-12 col-xs-10"><select id="item_' + rowNum + '"  onchange="get_tax(this)" class="form-control" placeholder="choose a service">"' + options1 + '" </select></label></div><div class="form-group col-md-2 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Staff</label> <label class="col-md-12 col-xs-10"> <select id="staff_' + rowNum + '"  class="form-control">"' + options + '"</select> </label></div><div class="form-group col-md-1 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Quantity</label> <label class="col-md-12 col-xs-10"><p>1</p></label></div> <div class="form-group col-md-2 col-xs-10 " style="margin-left:0%"><label class="col-md-12  col-xs-10 text-left" style="padding: 0px;">Unit Price</label><br><div class="input-group col-md-12 col-xs-12"><span class="input-group-addon">&euro;</span><input type="text" id="unit_' + rowNum + '" onblur="Calculate_Ammount()" class="form-control" placeholder="20" style="z-index: 0" /> </div></div> <div class="form-group col-md-1 col-xs-10 " style="margin-left:0%"><label class="col-md-12 col-xs-10 text-left">Tax</label> <label class="col-md-12 col-xs-10"><p id="tax_' + rowNum + '"  >N/A</p></label></div> <div class="form-group col-md-2 col-xs-8 " style="margin-left:0%"><label class="col-md-12  col-xs-10 text-left" style="padding: 0px;">Total</label><br><div class="input-group col-md-12 col-xs-12"><span class="input-group-addon">&nbsp; &euro;</span><input style="z-index: 0" id="totel_' + rowNum + '" type="text" class="form-control" placeholder="20" /> </div></div><br><div id="myrownumber+rowNum" class="form-group col-md-1 col-xs-3 " style="margin-left:0%; margin-top: 0.5%"><button type="button" onclick="get_discount(this)" id="discount_' + rowNum + '" class="btn btn-info light" style="padding: 5px" data-toggle="modal" data-target="#myModal"><i class="fa fa-cut"></i></button><button id=' + rowNum + ' onclick="createModal(this.id)" type="button" class="btn btn-default light" style="padding: 5px" data-toggle="modal" data-target="#myModal1"><i class="fa fa-trash"></i></button></div></div>');
+
+        }
+        
+
+       
+        rowNum++;
+
+    });
+
+    function get_tax(item)
+    {
+        var id = $("#" + item.id).val();
+        var last_id = 0;
+
+        var temp = (item.id).split('_');
+        last_id = temp[1];
+        console.log(last_id);
+
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Get_tax",
+            contentType: "application/json; charset=utf-8",
+            data: { "item_id": id },
+            dataType: "json",
+            success: function (response)
+            {
+                console.log("#tax_" + last_id);
+                $("#tax_" + last_id).html(response);
+                console.log(last_id+"-"+response + "ok");
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+        
+
+    }
+    function Load_Data()
+    {
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Get_SuperAdminList",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                super_admin_data = response;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+    function Load_Data2() {
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Get_ItemList",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                item_data = response;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+    
+    function Calculate_Ammount()
+    {
+        for (var i = 0; i < rowNum; i++)
+        {
+            //$("#item_"+i).val()
+            //unit_0
+            var unit_price = $("#unit_" + i).val();
+            unit_price = parseFloat(unit_price);
+            var tax = $("#tax_" + i).html();
+            tax = parseFloat(tax);
+            var tax_ammount = (tax / 100) * unit_price;
+            tax_ammount = tax_ammount + unit_price;
+
+            if (!isNaN(tax_ammount))
+                $("#totel_" + i).val(tax_ammount);
+            
+         //   alert(tax_ammount);
+        }
+    }
+
+    function get_discount(item)
+    {
+        $("#dis_caller_id").val(item.id);
+       // alert($("#dis_caller_id").val());
+    }
+
+    function set_Indate(index)
+    {
+        if (index == 1)
+        {
+            var in_date = $("#in_date").val();
+            $("#in_date_id").val(in_date);
+
+        } else if (index == 2)
+        {
+            var due_date=$("#due_date").val();
+            $("#due_date_id").val(due_date);
+        }
+    }
+
+    function set_customer()
+    {
+        var val = $("#Customer_ID").val();
+        $("#Customer_id1").val(val);
+    }
+
+    function Do_Discount()
+    {
+        var val = $("#Choose_discount").val();
+        val = (parseFloat(val) / 100);
+        
+        var temp = $("#dis_caller_id").val().split('_');
+        last_id = temp[1];
+        
+
+        var totel = $("#totel_"+ last_id).val();
+        var parse_totel = parseFloat(totel);
+        var totel_dis = val * parse_totel;
+        parse_totel = parse_totel - totel_dis;
+        $("#totel_" + last_id).val(parse_totel);
+
+    }
+
+    function Set_Totel()
+    {
+        //totel_val_tax
+        var final_val = 0;
+        for (var i = 0; i < rowNum; i++)
+        {
+            var unit_price = $("#totel_" + i).val();
+            unit_price = parseFloat(unit_price);
+            final_val = final_val + unit_price;
+
+            //alert(final_val);
+            if (!isNaN(final_val))
+            {
+                $("#totel_val_tax").html("Includes Tax of:  €" + final_val);
+                $("#totel_ammount_final_id").html("€" + final_val);
+                $("#out_bal_id").html(final_val + "€");
+                $("#totel_ammount_final_id2").val(final_val);
+            }
+          
+        }
+    }
+
+    function createModal(element)
+    {
+        var generateHT = '<div class="modal-dialog" style="display: block;padding-right: 17px;padding-top: 76px;"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel2">Delete this line item?</h4></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i>&nbspCancel</button><button type="button" onclick="delrow('+element+')" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash"></i>&nbsp Delete</button></div></div></div>';
+        document.getElementById('myModal1').innerHTML = generateHT;
+    }
+
+    function delrow(id)
+    {
+        document.getElementById("rowNumber" + id).style.display = "none";
+        $("#rowNumber"+id).remove();
+        //rowNum--;
+    }
+
+    
+
+
 </script>
-

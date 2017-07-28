@@ -1,4 +1,4 @@
-﻿
+﻿@model Shad_BookingApplication.Models.InvoiceViewModel
 @{
     ViewBag.Title = "InvoiceList";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
@@ -88,7 +88,7 @@
                     <div class="panel panel-visible" id="spy3">
                         <div class="panel-body pn">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;">
+                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;font-size:13px;">
                                     <thead>
                                         <tr role="row">
                                             <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
@@ -128,23 +128,28 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myCustomers">
+                                    @for (int i = 0; i < Model.invoice_list.Count; i++)
+                                    {
+                                        var item = Model.invoice_list;
+                                        var item1 = Model.customer_list;
 
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><a><center>0001</center></a></td>
-                                            <td><center>Mane <br> <a>Mane@gmail.com</a><br>+33314566778</center></td>
-                                            <td><center><button type="button" class="btn active btn-success btn-sm">Paid</button></center></td>
+                                            <td class="sorting_1"><a><center>@item[i].Id</center></a></td>
+                                            <td><center>@item1[i].name <br> <a>@item1[i].email</a><br>@item1[i].phone_no</center></td>
+                                            <td><center><button type="button" class="btn active btn-success btn-sm">@item[i].Status</button></center></td>
                                             <td>
-                                                <label><center>Thus, 2 june 2017</center></label>
+                                                <label><center>@item[i].InvoiceDate</center></label>
 
                                             </td>
 
-                                            <td><label><center>Thus, 6 june 2017</center></label> </td>
+                                            <td><label><center>@item[i].DueDate</center></label> </td>
                                             <td><center>&nbsp  &nbsp  </center> </td>
-                                            <td><label><center>50.00€</center></label></td>
+                                            <td><label><center>@item[i].Ammount €</center></label></td>
 
                                             <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-print">&nbsp</span>Print</button></div></center></td>
 
                                         </tr>
+                                    }
                                         <tr role="row" class="odd">
                                             <td class="sorting_1"><a><center>0002</center></a></td>
                                             <td><center>Kim <br> <a>Kim@gmail.com</a><br>+44314566778</center></td>

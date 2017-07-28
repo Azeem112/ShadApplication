@@ -301,6 +301,14 @@
           <Property Name="MultiNumber" Type="int" />
           <Property Name="Status" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="AspNetDiscount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rate" Type="float" />
+        </EntityType>
         <EntityType Name="AspNetEmailNotification">
           <Key>
             <PropertyRef Name="Id" />
@@ -406,6 +414,7 @@
           <Property Name="Price_W/_Vat" Type="float" />
           <Property Name="Status" Type="nvarchar" MaxLength="20" />
           <Property Name="IsSmsPackage" Type="nvarchar(max)" />
+          <Property Name="DiscountID" Type="int" />
         </EntityType>
         <EntityType Name="AspNetRemainder">
           <Key>
@@ -777,6 +786,18 @@
             </Principal>
             <Dependent Role="AspNetInvoiceOptions">
               <PropertyRef Name="TaxID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetItem_ToTable">
+          <End Role="AspNetDiscount" Type="Self.AspNetDiscount" Multiplicity="0..1" />
+          <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetDiscount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetItem">
+              <PropertyRef Name="DiscountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1306,6 +1327,7 @@
           <EntitySet Name="AspNetCustomers" EntityType="Self.AspNetCustomers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCustomerSMS" EntityType="Self.AspNetCustomerSMS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetCustomerType" EntityType="Self.AspNetCustomerType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetDiscount" EntityType="Self.AspNetDiscount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetEmailNotification" EntityType="Self.AspNetEmailNotification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetEmailNotificationType" EntityType="Self.AspNetEmailNotificationType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetEmployee" EntityType="Self.AspNetEmployee" Schema="dbo" store:Type="Tables" />
@@ -1406,6 +1428,10 @@
           <AssociationSet Name="FK_AspNetInvoiceOptions_Tax" Association="Self.FK_AspNetInvoiceOptions_Tax">
             <End Role="AspNetTax" EntitySet="AspNetTax" />
             <End Role="AspNetInvoiceOptions" EntitySet="AspNetInvoiceOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetItem_ToTable" Association="Self.FK_AspNetItem_ToTable">
+            <End Role="AspNetDiscount" EntitySet="AspNetDiscount" />
+            <End Role="AspNetItem" EntitySet="AspNetItem" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetWorkingWeekTime_ToFri" Association="Self.FK_AspNetWorkingWeekTime_ToFri">
             <End Role="AspNetWorkingTime" EntitySet="AspNetWorkingTime" />
@@ -1946,6 +1972,15 @@
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerTypeAgency" FromRole="AspNetCustomerType" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerType" FromRole="AspNetCustomerType" ToRole="AspNetCustomers" />
         </EntityType>
+        <EntityType Name="AspNetDiscount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Double" />
+          <NavigationProperty Name="AspNetItems" Relationship="Self.FK_AspNetItem_ToTable" FromRole="AspNetDiscount" ToRole="AspNetItem" />
+        </EntityType>
         <EntityType Name="AspNetEmailNotification">
           <Key>
             <PropertyRef Name="Id" />
@@ -2063,7 +2098,9 @@
           <Property Name="Price_W__Vat" Type="Double" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsSmsPackage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DiscountID" Type="Int32" />
           <NavigationProperty Name="AspNetCustomerSMS" Relationship="Self.FK_AspNetCustomerSMS_ToItem" FromRole="AspNetItem" ToRole="AspNetCustomerSMS" />
+          <NavigationProperty Name="AspNetDiscount" Relationship="Self.FK_AspNetItem_ToTable" FromRole="AspNetItem" ToRole="AspNetDiscount" />
         </EntityType>
         <EntityType Name="AspNetRemainder">
           <Key>
@@ -2740,6 +2777,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetItem_ToTable">
+          <End Role="AspNetDiscount" Type="Self.AspNetDiscount" Multiplicity="0..1" />
+          <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetDiscount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetItem">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AspNetEmailNotification_type">
           <End Role="AspNetEmailNotificationType" Type="Self.AspNetEmailNotificationType" Multiplicity="0..1" />
           <End Role="AspNetEmailNotification" Type="Self.AspNetEmailNotification" Multiplicity="*" />
@@ -2966,6 +3015,7 @@
           <EntitySet Name="AspNetCustomers" EntityType="Self.AspNetCustomer" />
           <EntitySet Name="AspNetCustomerSMS" EntityType="Self.AspNetCustomerSM" />
           <EntitySet Name="AspNetCustomerTypes" EntityType="Self.AspNetCustomerType" />
+          <EntitySet Name="AspNetDiscounts" EntityType="Self.AspNetDiscount" />
           <EntitySet Name="AspNetEmailNotifications" EntityType="Self.AspNetEmailNotification" />
           <EntitySet Name="AspNetEmailNotificationTypes" EntityType="Self.AspNetEmailNotificationType" />
           <EntitySet Name="AspNetEmployees" EntityType="Self.AspNetEmployee" />
@@ -3157,6 +3207,10 @@
           <AssociationSet Name="FK_AspNetCustomerSMS_ToItem" Association="Self.FK_AspNetCustomerSMS_ToItem">
             <End Role="AspNetItem" EntitySet="AspNetItems" />
             <End Role="AspNetCustomerSMS" EntitySet="AspNetCustomerSMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetItem_ToTable" Association="Self.FK_AspNetItem_ToTable">
+            <End Role="AspNetDiscount" EntitySet="AspNetDiscounts" />
+            <End Role="AspNetItem" EntitySet="AspNetItems" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetEmailNotification_type" Association="Self.FK_AspNetEmailNotification_type">
             <End Role="AspNetEmailNotificationType" EntitySet="AspNetEmailNotificationTypes" />
@@ -3553,6 +3607,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetDiscounts">
+            <EntityTypeMapping TypeName="BookingModelModels.AspNetDiscount">
+              <MappingFragment StoreEntitySet="AspNetDiscount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AspNetEmailNotifications">
             <EntityTypeMapping TypeName="BookingModelModels.AspNetEmailNotification">
               <MappingFragment StoreEntitySet="AspNetEmailNotification">
@@ -3664,6 +3727,7 @@
                 <ScalarProperty Name="Price_W__Vat" ColumnName="Price_W/_Vat" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IsSmsPackage" ColumnName="IsSmsPackage" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

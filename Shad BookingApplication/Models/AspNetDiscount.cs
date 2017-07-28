@@ -12,26 +12,19 @@ namespace Shad_BookingApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetItem
+    public partial class AspNetDiscount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetItem()
+        public AspNetDiscount()
         {
-            this.AspNetCustomerSMS = new HashSet<AspNetCustomerSM>();
+            this.AspNetItems = new HashSet<AspNetItem>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<double> Vat { get; set; }
-        public Nullable<double> Price_W_O_Vat { get; set; }
-        public Nullable<double> Price_W__Vat { get; set; }
-        public string Status { get; set; }
-        public string IsSmsPackage { get; set; }
-        public Nullable<int> DiscountID { get; set; }
+        public Nullable<double> Rate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetCustomerSM> AspNetCustomerSMS { get; set; }
-        public virtual AspNetDiscount AspNetDiscount { get; set; }
+        public virtual ICollection<AspNetItem> AspNetItems { get; set; }
     }
 }

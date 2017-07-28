@@ -1,4 +1,4 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetInvoice
 @{
     ViewBag.Title = "Create_Invoice2";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
@@ -17,7 +17,7 @@
                     <a class="col-lg-12" aria-expanded="true" style="display: inline;" href="create-invoice.html">Create Invoices</a>
                 </li>
                 <li class="col-xs-5 col-lg-2 text-center" style="padding-right: 0; padding-left: 0">
-                    <a class="col-lg-12" aria-expanded="false" style="display: inline;" href="invoicelist.html">View Invoice</a>
+                    <a class="col-lg-12" aria-expanded="false" style="display: inline;" href="@Url.Action("InvoiceList")">View Invoice</a>
                 </li>
             </ul>
         </div>
@@ -36,7 +36,7 @@
 
                 <div class="form-group col-md-12 col-xs-12 " style=" margin-left:3%; padding-bottom: 2%; background-color: #E0EFD9">
 
-                    <h3 class="col-md-12 col-xs-12 text-left"><strong>Invoice #0004 created successfully</strong></h3>
+                    <h3 class="col-md-12 col-xs-12 text-left"><strong>Invoice #@Model.Id created successfully</strong></h3>
                     <br>
                     <a href="#" class="col-md-2 col-xs-2 text-left">
                         <span class="glyphicon glyphicon-edit"> View-Invoice</span>
@@ -52,7 +52,7 @@
                 <div style=" margin-left:3%; padding-bottom: 2%; background-color: black;">
                     <h3 class="col-md-12 col-xs-12 text-left"><strong>Apply a payment now:</strong></h3>
                     <br>
-                    <p class="col-md-12 col-xs-12 text-left">The invoice total is<strong> &euro; 50.00</strong> and the amount outstanding is <strong>&euro; 50.00</strong> </p>
+                    <p class="col-md-12 col-xs-12 text-left">The invoice total is<strong> &euro; @Model.Ammount</strong> and the amount outstanding is <strong>&euro; @Model.Ammount</strong> </p>
                     <br>
                     <h3 class="col-md-12 col-xs-12 text-left" style="padding-bottom: 3%; "><strong>Choose payment type</strong></h3>
                 </div>
@@ -190,6 +190,8 @@
                 </div>
             </div>
             <br><br><br><br><br><br>
+         </div>
+    </div>
             <!-- End: Content -->
             <!-- Begin: Page Footer -->
             <footer id="content-footer">

@@ -50,6 +50,7 @@ namespace Shad_BookingApplication.Models
         public virtual DbSet<AspNetCustomer> AspNetCustomers { get; set; }
         public virtual DbSet<AspNetCustomerSM> AspNetCustomerSMS { get; set; }
         public virtual DbSet<AspNetCustomerType> AspNetCustomerTypes { get; set; }
+        public virtual DbSet<AspNetDiscount> AspNetDiscounts { get; set; }
         public virtual DbSet<AspNetEmailNotification> AspNetEmailNotifications { get; set; }
         public virtual DbSet<AspNetEmailNotificationType> AspNetEmailNotificationTypes { get; set; }
         public virtual DbSet<AspNetEmployee> AspNetEmployees { get; set; }

@@ -192,13 +192,6 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
-        //public ActionResult EditCustomer()
-        //{
-        //    AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
-        //    addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
-        //    addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
-        //    return View(addCustomerViewModel);
-        //}
 
         public ActionResult AddCustomer()
         {
@@ -399,7 +392,6 @@ namespace Shad_BookingApplication.Controllers
 
             return View(viewmodel);
         }
-
 
         public string AddCustomerAccount(AspNetUser aspNetUser,string phone_no)
         {
@@ -849,18 +841,103 @@ namespace Shad_BookingApplication.Controllers
            
             return Json(ls ,JsonRequestBehavior.AllowGet);
         }
-        
-    
+
+
+        public SortedDictionary<string, string> Get_CustomerName()
+        {
+            var ls = db.AspNetCustomers.ToList();
+
+            SortedDictionary<string, string> customer_list = new SortedDictionary<string, string>();
+            foreach (var item in ls)
+            {
+                var id = item.UserID;
+                var name = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.UserName).FirstOrDefault();
+                customer_list.Add(name, item.Id.ToString());
+            }
+            return customer_list;
+        }
+
+        public JsonResult Get_SuperAdminList()
+        {
+            List< super_admin_struct > ls = new List<super_admin_struct>();
+            var super_admin_list = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name == "Super_Admin").FirstOrDefault()).ToList();
+            foreach (var item in super_admin_list)
+            {
+                var obj = new super_admin_struct();
+                obj.name = item.UserName;
+                obj.id = item.Id;
+
+                ls.Add(obj);
+            }
+            return Json(ls, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Get_tax(string item_id)
+        {
+            var id=Convert.ToInt16(item_id);
+            var tax = db.AspNetItems.Where(x => x.Id == id).Select(y => y.Vat).FirstOrDefault();
+            return Json(tax, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult Get_ItemList()
+        {
+            List<item_struct> ls = new List<item_struct>();
+            var item_list = db.AspNetItems.ToList();
+            foreach (var item in item_list)
+            {
+                var obj = new item_struct();
+                obj.name = item.Name;
+                obj.id = item.Id.ToString();
+                obj.tax = item.Vat.ToString();
+                ls.Add(obj);
+            }
+            return Json(ls, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Create_Invoice()
         {
             var customer_list=db.AspNetCustomers.ToList();
+            //var super_admin_list = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name == "Super_Admin").FirstOrDefault()).ToList();
+            //var item_list = db.AspNetItems.ToList();
+            var discount_list = db.AspNetDiscounts.ToList();
 
+ 
+            ViewBag.customer_list = Get_CustomerName();
+            ViewBag.discount_list = discount_list;
             return View();
+
+
         }
+
+        [HttpPost]
+        public ActionResult Create_Invoice(InvoiceViewModel invoiceViewModel)
+        {
+            var totel = Request.Form["totel_ammount_final_name"];
+            var in_date = Request.Form["in_date_name"];
+            var due_date = Request.Form["due_date_name"];
+            var Customer_key = Request.Form["Customer_Name"];
+
+            var invoice = new AspNetInvoice();
+            invoice.Status = "UnPaid";
+            invoice.CustomerID =Convert.ToInt16(Customer_key);
+            invoice.InvoiceDate = Convert.ToDateTime(in_date);
+            invoice.DueDate = Convert.ToDateTime(due_date);
+            invoice.Ammount = Convert.ToDouble(totel);
+            invoice.Tax = 0;
+
+            db.AspNetInvoices.Add(invoice);
+            db.SaveChanges();
+
+            return RedirectToAction("Create_Invoice2");
+        }
+
+
         public ActionResult Create_Invoice2()
         {
-            return View();
+            var max_id=db.AspNetInvoices.Max(x => x.Id);
+            var obj=db.AspNetInvoices.Where(x => x.Id == max_id).FirstOrDefault();
+            return View(obj);
         }
         public ActionResult CustomersList()
         {
@@ -916,9 +993,48 @@ namespace Shad_BookingApplication.Controllers
 
             return View(list_data);
         }
-        public ActionResult InvoiceList()
+
+        public ActionResult AddDiscount()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddDiscount(AspNetDiscount aspNetDiscount)
+        {
+            if (ModelState.IsValid)
+            {
+                db.AspNetDiscounts.Add(aspNetDiscount);
+                db.SaveChanges();
+            }
+            return View();
+        }
+
+        public List<customer_struct> Get_InvoiceCustomer()
+        {
+            List<customer_struct> cus_ls = new List<customer_struct>();
+            var ls= db.AspNetInvoices.ToList();
+            foreach (var item in ls)
+            {
+                var obj = new customer_struct();
+                var user_id = db.AspNetCustomers.Where(x => x.Id == item.CustomerID).FirstOrDefault().UserID;
+                var user = db.AspNetUsers.Where(x => x.Id == user_id).FirstOrDefault();
+
+                obj.email = user.Email;
+                obj.name = user.UserName;
+                obj.phone_no = user.PhoneNumber;
+
+                cus_ls.Add(obj);
+            }
+            return cus_ls;
+        }
+
+        public ActionResult InvoiceList()
+        {
+            InvoiceViewModel viewmodel = new InvoiceViewModel();
+            viewmodel.invoice_list = db.AspNetInvoices.ToList();
+            viewmodel.customer_list = Get_InvoiceCustomer();
+            return View(viewmodel);
         }
         public ActionResult InvoiceOption()
         {

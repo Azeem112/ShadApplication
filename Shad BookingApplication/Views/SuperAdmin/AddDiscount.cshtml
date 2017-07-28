@@ -1,12 +1,13 @@
-﻿@model Shad_BookingApplication.Models.AspNetBusinessCatageory
+﻿@model Shad_BookingApplication.Models.AspNetDiscount
+
 @{
-    ViewBag.Title = "AddBusinessCategory";
+    ViewBag.Title = "AddDiscount";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
 }
 
 <section id="content_wrapper">
     <!-- Start: Topbar-Dropdown -->
-    <div id="topbar-dropmenu">View
+    <div id="topbar-dropmenu">
         <div class="topbar-menu row">
             <div class="col-xs-4 col-sm-2">
                 <a href="#" class="metro-tile">
@@ -49,13 +50,13 @@
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
 
-    @using (Html.BeginForm("AddBusinessCategory", "SuperAdmin", FormMethod.Post))
+    @using (Html.BeginForm("AddDiscount", "SuperAdmin", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
         <header id="topbar">
             <div class="topbar-left">
                 <ol class="breadcrumb" style="text-align: center;">
-                    <h3>New Business Category</h3>
+                    <h3>Add Discount</h3>
                 </ol>
             </div>
             <div class="topbar-right">
@@ -70,17 +71,26 @@
             <div class="tab-pane">
                 <div class="row">
                     <div class="row form-group required">
-                        <label class="col-md-2 col-xs-12 text-right control-label">Business Category:</label>
+                        <label class="col-md-2 col-xs-12 text-right control-label">Discount Name:</label>
                         <div class="col-md-8 col-xs-12">
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Category  Here") } })
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Discount Name Here " } })
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
-                </div>
-            </div>
+                    </div>
+                    <div class="row form-group required">
+                        <label class="col-md-2 col-xs-12 text-right control-label">Discount Rate:</label>
+                        <div class="col-md-8 col-xs-12">
+                            @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @type = "number", @min = "0", @step = "0.1", @value = "0", @class = "form-control", @placeholder = "Enter Discount Here " } })
+                            @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                 </div>
+
+             </div>
+         </div>
             <br>
             <br>
-        </div>
-            </div>
+        
     }
     <!-- End: Content -->
     <!-- Begin: Page Footer -->
@@ -96,5 +106,3 @@
 
 </section>
 <!-- end: Content-Wrapper -->
-
-

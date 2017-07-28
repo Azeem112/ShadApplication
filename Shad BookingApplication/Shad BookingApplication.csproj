@@ -253,6 +253,9 @@
     <Compile Include="Models\AspNetCustomer_SubCatageory.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetDiscount.cs">
+      <DependentUpon>BookingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetEmailNotification.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
@@ -334,6 +337,7 @@
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -789,6 +793,7 @@
     <Content Include="Views\CompanyAdmin\ViewService.cshtml" />
     <Content Include="Views\CompanyAdmin\ViewServiceGroup.cshtml" />
     <Content Include="Views\CompanyAdmin\VoucherList.cshtml" />
+    <Content Include="Views\SuperAdmin\AddDiscount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
