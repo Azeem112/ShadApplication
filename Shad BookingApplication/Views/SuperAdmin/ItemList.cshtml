@@ -161,8 +161,20 @@
 														</center>
 													</td>
 													
-													<td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-													<td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>												</tr>
+													<td>
+                                                        <center>
+                                                            <button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button>
+                                                        </center>
+                                                    </td>
+													<td>
+                                                        <center>
+                                                            <div class="btn-group">
+                                                                <span class="btn btn-default">@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</span>
+                                                                <button type="button" class="btn btn-danger">Delete</button>
+                                                            </div>
+                                                        </center>
+                                                    </td>
+                                            </tr>
 
 											}
 										

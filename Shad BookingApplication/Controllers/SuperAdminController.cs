@@ -68,8 +68,8 @@ namespace Shad_BookingApplication.Controllers
         public ActionResult EditUser(AspNetUser user)
         {
             db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();          
-            return View();
+            db.SaveChanges();
+            return RedirectToAction("UserList");
         }
 
         public ActionResult UserList()
@@ -164,6 +164,22 @@ namespace Shad_BookingApplication.Controllers
             }
             
             return View();
+        }
+        //EditItem
+
+        public ActionResult EditItem(int ? id)
+        {
+            var item = db.AspNetItems.Where(x => x.Id == id).FirstOrDefault();
+            return View(item);
+        }
+
+        [HttpPost]
+        public ActionResult EditItem(AspNetItem aspNetItem)
+        {
+            db.Entry(aspNetItem).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("ItemList");
         }
 
         public ActionResult AddItem()
