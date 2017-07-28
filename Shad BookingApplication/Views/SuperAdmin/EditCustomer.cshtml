@@ -5,111 +5,155 @@
 
     List<SelectListItem> listItems = new List<SelectListItem>();
     List<SelectListItem> listItems0 = new List<SelectListItem>();
-    //if (Model.BusinessCatageory != null)
-    //{
-    //    foreach (var item in Model.BusinessCatageory)
-    //    {
-    //        listItems.Add(new SelectListItem
-    //        {
-    //            Text = item.Name,
-    //            Value = item.Id.ToString(),
-    //            Selected = false
-    //        });
-    //    }
-    //}
+    if (ViewBag.BusinessCatageory != null)
+    {
+        foreach (var item in ViewBag.BusinessCatageory)
+        {
+            bool flag = false;
+            if (item.Name == ViewBag.selected_BusinessCat)
+            {
+                flag = true;
+            }
+            else
+            {
+                flag = false;
+            }
+
+
+            listItems.Add(new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+                Selected = flag
+            });
+        }
+    }
+
+    if (ViewBag.selected_BusinessSubCat != null)
+    {
+        foreach (var item in ViewBag.selected_BusinessSubCat)
+        {
+            listItems0.Add(new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+                Selected = true
+            });
+        }
+    }
+
 
 
     List<SelectListItem> listItems4 = new List<SelectListItem>();
 
-    //foreach (var item in Model.SMS)
-    //{
-    //    listItems4.Add(new SelectListItem
-    //    {
-    //        Text = item.SmsPackageName,
-    //        Value = item.Id.ToString(),
-    //        Selected = false
-    //    });
-    //}
+    if (ViewBag.SMSPackage != null)
+    {
+        foreach (var item in ViewBag.SMSPackage)
+        {
+            bool flag1 = false;
 
-    //listItems4.Add(new SelectListItem
-    //{
-    //    Text = "No Sms Package",
-    //    Value = "0",
-    //    Selected = true
-    //});
+            if (ViewBag.sms_package_name == item.SmsPackageName)
+            {
+                flag1 = true;
+            }
+            else
+            {
+                flag1 = false;
+            }
+            listItems4.Add(new SelectListItem
+            {
+                Text = item.SmsPackageName,
+                Value = item.Id.ToString(),
+                Selected = flag1
+            });
+        }
+    }
 
     List<SelectListItem> listItems1 = new List<SelectListItem>();
 
-    ////listItems1.Add(new SelectListItem
-    ////{
-    ////    Text = "Single Site Company",
-    ////    Value = "Single Site Company",
-    ////    Selected = true
-    ////});
+    if (ViewBag.SingleorMulti != null)
+    {
+        bool flag1 = false;
 
-    ////listItems1.Add(new SelectListItem
-    ////{
-    ////    Text = "Multi Site Company",
-    ////    Value = "Multi Site Company",
-    ////    Selected = false
-    ////});
+        if (ViewBag.SingleorMulti == "Multi Site Company")
+        {
+            flag1 = true;
+        }
+        else {
+            flag1 = false;
+        }
+
+        listItems1.Add(new SelectListItem
+        {
+            Text = "Single Site Company",
+            Value = "Single Site Company",
+            Selected = flag1
+        });
+
+        listItems1.Add(new SelectListItem
+        {
+            Text = "Multi Site Company",
+            Value = "Multi Site Company",
+            Selected = flag1
+        });
+    }
+
+
 
     List<SelectListItem> listItems2 = new List<SelectListItem>();
 
-    ////listItems2.Add(new SelectListItem
-    ////{
-    ////    Text = "Active",
-    ////    Value = "Active",
-    ////    Selected = true
-    ////});
+    if (ViewBag.UserType_Status != null)
+    {
+        bool flag2 = false;
+        if (ViewBag.UserType_Status == "Active")
+        {
+            flag2 = true;
+        }
+        else {
+            flag2 = false;
+        }
 
-    //listItems2.Add(new SelectListItem
-    //{
-    //    Text = "Inactive",
-    //    Value = "Inactive",
-    //    Selected = false
-    //});
 
+        listItems2.Add(new SelectListItem
+        {
+            Text = "Active",
+            Value = "Active",
+            Selected = flag2
+        });
+
+        listItems2.Add(new SelectListItem
+        {
+            Text = "Inactive",
+            Value = "Inactive",
+            Selected = flag2
+        });
+    }
 
     List<SelectListItem> listItems3 = new List<SelectListItem>();
 
-    //listItems3.Add(new SelectListItem
-    //{
-    //    Text = "1",
-    //    Value = "1",
-    //    Selected = true
-    //});
+    if (ViewBag.MultiNumber != null)
+    {
+        bool flag3 = false;
 
-    //listItems3.Add(new SelectListItem
-    //{
-    //    Text = "2",
-    //    Value = "2",
-    //    Selected = false
-    //});
+        for (int i = 1; i < 6; i++)
+        {
+            if (ViewBag.MultiNumber == i)
+            {
+                flag3 = true;
+            }
+            else
+            {
+                flag3 = false;
+            }
 
-    //listItems3.Add(new SelectListItem
-    //{
-    //    Text = "3",
-    //    Value = "3",
-    //    Selected = false
-    //});
-
-    //listItems3.Add(new SelectListItem
-    //{
-    //    Text = "4",
-    //    Value = "4",
-    //    Selected = false
-    //});
-
-    //listItems3.Add(new SelectListItem
-    //{
-    //    Text = "5",
-    //    Value = "5",
-    //    Selected = false
-    //});
-
-
-
+            listItems3.Add(new SelectListItem
+            {
+                Text = i.ToString(),
+                Value = i.ToString(),
+                Selected = flag3
+            });
+        }
+    }
 
 }
 <!-- Required Plugin CSS -->
@@ -155,6 +199,23 @@
     <!-- Begin: Content -->
     @using (Html.BeginForm("EditCustomer", "SuperAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+
+
+        @Html.HiddenFor(model=>model.Contact.Id)
+        @Html.HiddenFor(model => model.Detail.Id)
+        @Html.HiddenFor(model => model.WorkingTime.Id)
+        @Html.HiddenFor(model => model.UserType.Id)
+        @Html.HiddenFor(model => model.Social.Id)
+        @Html.HiddenFor(model => model.SingleSms.Id)
+        @Html.HiddenFor(model => model.Gallery.Id)
+        @Html.HiddenFor(model => model.BusinessDetail.Id)
+        @Html.HiddenFor(model => model.Location.Id)
+        @Html.HiddenFor(model => model.User.Id)
+        @Html.HiddenFor(model => model.Region.Id)
+        @Html.HiddenFor(model => model.BusinessCatageorySingle.Id)
+        
+
+
         <div class="panel">
             <div class="panel" id="spy3">
 
@@ -705,7 +766,7 @@
                             <div class="row form-group">
                                 <label class="col-md-2 col-xs-12 text-right">Country:</label>
                                 <div class="col-md-3 col-xs-12">
-                                    <select class="form-control" name="region_country">
+                                    <select class="form-control" name="region_country" id="region_country_id">
                                         <option selected disabled>Choose the country</option>
                                         <option value="Afghanistan">Afghanistan</option>
                                         <option value="Albania">Albania</option>
@@ -953,7 +1014,7 @@
                                     <label>Currency:</label>
                                 </div>
                                 <div class="col-md-3 col-xs-12">
-                                    <select class="form-control" name="region_currency">
+                                    <select class="form-control" name="region_currency" id="region_currency_id">
                                         <option selected disabled>Choose the currency</option>
                                         <option>Euro</option>
                                         <option>USD</option>
@@ -966,7 +1027,7 @@
                                     Time Zone:
                                 </label>
                                 <div class="col-md-8 col-xs-12">
-                                    <select class="form-control" name="region_timezone">
+                                    <select class="form-control" name="region_timezone" id="region_timezone_id">
                                         <option selected disabled>Select the timezone</option>
                                         <option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</option>
                                         <option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</option>
@@ -1057,7 +1118,7 @@
                             <div class="row form-group">
                                 <label class="col-md-2 col-xs-12 text-right">Date Format:</label>
                                 <div class="col-md-3 col-xs-12">
-                                    <select class="form-control" name="region_dateformat">
+                                    <select class="form-control" name="region_dateformat" id="region_dateformat_id">
                                         <option selected disabled>Choose the date format</option>
                                         <option value="dd mm yyyy">dd mm yyyy</option>
                                         <option value="mm dd yyyy">mm dd yyyy</option>
@@ -1068,7 +1129,7 @@
                                     <label>Time Format:</label>
                                 </div>
                                 <div class="col-md-3 col-xs-12">
-                                    <select class="form-control" name="region_timeformat" jsFunction(this.value);">
+                                    <select class="form-control" id="region_timeformat_id" name="region_timeformat" jsFunction(this.value);">
                                         <option selected disabled value="">Choose the time format</option>
                                         <option value="12">AM:PM</option>
                                         <option value="24">24-Hour</option>
@@ -1631,6 +1692,61 @@
 <script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")"></script>
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+
+       
+
+    });
+
+    jQuery(window).load(function () {
+        
+        
+        var region_id = $("#Region_Id").val();
+        //setTimeout(function () {
+        //    var region_id = $("#Region_Id").val();
+        //    alert(region_id);
+        //}, 60000);
+
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Get_RegionData",
+            data: { "region_id": region_id },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                alert(response.CurrencyName);
+                $("#region_country_id").val(response.CountryName);
+                $("#region_timezone_id").val(response.CurrencyName);
+                $("#region_dateformat_id").val(response.DateFormate);
+                $("#region_timeformat_id").val(response.TimeFormate);
+                $("#region_currency_id").val(response.TimeZoneName);
+
+               
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+      
+    });
+
+
+    //var region_country = Request.Form["region_country"].ToString();
+    //var region_timezone = Request.Form["region_timezone"];
+    //var region_dateformat = Request.Form["region_dateformat"].ToString();
+    //var region_timeformat = Request.Form["region_timeformat"].ToString();
+    //var region_currency = Request.Form["region_currency"].ToString();
+
+    //function GetRecords()
+    //{
+    //    alert("msg");
+    //}
 
 	function populate_subbus_catg()
 	{

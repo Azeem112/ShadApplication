@@ -164,7 +164,14 @@
                                                 <td>
                                                     <button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">@Html.DisplayFor(modelItem => item.status)</button>
                                                 </td>
-                                                <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                <td>
+                                                    <center>
+                                                        <div class="btn-group">
+                                                            <span class="btn btn-default">@Html.ActionLink("Edit", "EditUser", new { id = item.user_id })</span>
+                                                            <button type="button" class="btn btn-danger">Delete</button>
+                                                        </div>
+                                                    </center>
+                                                </td>
 
                                             </tr>
                                         
