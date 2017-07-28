@@ -4,6 +4,7 @@ using Shad_BookingApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -56,6 +57,21 @@ namespace Shad_BookingApplication.Controllers
                 return "-";
         }
 
+
+        public ActionResult EditUser(string id)
+        {
+            var user=db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(AspNetUser user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();          
+            return View();
+        }
+
         public ActionResult UserList()
         {
             List<UserListViewModel> list_data = new List<UserListViewModel>();
@@ -73,6 +89,7 @@ namespace Shad_BookingApplication.Controllers
                 obj.status = item.Status;
                 obj.role = Get_Role(item.Id);
                 obj.company = Get_Company(item.Id);
+                obj.user_id = item.Id;
 
                 list_data.Add(obj);
             }
@@ -375,10 +392,49 @@ namespace Shad_BookingApplication.Controllers
             var user_type = db.AspNetCustomerTypes.Where(x => x.Id == customer.TypeID).Select(x => x).FirstOrDefault();
             var address = db.AspNetCustomerLocations.Where(x => x.Id == customer.LocationId).Select(x => x).FirstOrDefault();
             var detail=db.AspNetCustomerDetails.Where(x=>x.Id==customer.DetailId).Select(x => x).FirstOrDefault();
-            var bus_detail=db.AspNetCustomerBusinessDetails.Where(x=>x.Id==customer.BussinessID).Select(x => x).FirstOrDefault();
+
+            var bus_detail=db.AspNetCustomerBusinessDetails.Where(x=>x.Id==customer.BussinessID).Select(y => y).FirstOrDefault();
             var contact = db.AspNetCustomerContacts.Where(x => x.Id == customer.ContactId).Select(x => x).FirstOrDefault();
             var social = db.AspNetSocials.Where(x => x.Id == customer.SocialID).Select(x => x).FirstOrDefault();
 
+
+            //AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
+            //addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
+            //addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
+
+            
+            var detail_id = db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().DetailId;
+            var bus_cat_id = db.AspNetCustomerDetails.Where(x => x.Id == detail_id).FirstOrDefault().BusinessCatageoryId;
+            var bus_cat_name = db.AspNetBusinessCatageories.Where(x => x.Id == bus_cat_id).FirstOrDefault().Name;
+            var bus_subcat_list = db.AspNetBusinessSubCatageories.Where(x => x.BussinessCatageoryId == bus_cat_id).ToList();
+
+            var user_type_id=db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().TypeID;
+            var SingleorMulti = db.AspNetCustomerTypes.Where(x => x.Id == user_type_id).FirstOrDefault().SingleorMulti;
+            var MultiNumber = db.AspNetCustomerTypes.Where(x => x.Id == user_type_id).FirstOrDefault().MultiNumber;
+            var status = db.AspNetCustomerTypes.Where(x => x.Id == user_type_id).FirstOrDefault().Status;
+            var sms_id = db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().SmsID;
+            var sms_package_name = db.AspNetCustomerSMS.Where(x => x.Id == sms_id).FirstOrDefault().SmsPackageName;
+
+
+            var region_id = db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().RegionID;
+            var region_obj = db.AspNetCustomerRegions.Where(x => x.Id == region_id).FirstOrDefault();
+
+
+
+
+            if (MultiNumber != null && MultiNumber != 0)
+                ViewBag.MultiNumber = MultiNumber;
+            else
+                ViewBag.MultiNumber = 0;
+
+
+            ViewBag.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
+            ViewBag.selected_BusinessCat = bus_cat_name;
+            ViewBag.selected_BusinessSubCat = bus_subcat_list;
+            ViewBag.SingleorMulti = SingleorMulti;
+            ViewBag.UserType_Status = status;
+            ViewBag.SMSPackage= db.AspNetCustomerSMS.ToList();
+            ViewBag.sms_package_name = sms_package_name;
 
 
             AddCustomerViewModel viewmodel = new AddCustomerViewModel();
@@ -389,9 +445,46 @@ namespace Shad_BookingApplication.Controllers
             viewmodel.BusinessDetail = bus_detail;
             viewmodel.Contact = contact;
             viewmodel.Social = social;
+            viewmodel.Region = region_obj;
 
             return View(viewmodel);
         }
+
+        [HttpPost]
+        public ActionResult EditCustomer(AddCustomerViewModel addCustomerViewModel)
+        {
+            //if (ModelState.IsValid )
+            //{
+                try
+                {
+                    db.Entry(addCustomerViewModel.Location).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                //var loc_id=addCustomerViewModel.Location.Id;
+                //var user = db.AspNetCustomers.Where(x => x.LocationId == loc_id).FirstOrDefault();
+                //var cusomert_id=db.AspNetCustomers.Find(1);
+
+                //db.Entry(addCustomerViewModel.Location).State = EntityState.Modified;
+                //db.Entry(addCustomerViewModel.BusinessDetail).State = EntityState.Modified;
+                //db.Entry(addCustomerViewModel.Detail).State = EntityState.Modified;
+                //db.Entry(addCustomerViewModel.Contact).State = EntityState.Modified;
+                //// db.Entry(addCustomerViewModel.UserType).State = EntityState.Modified;
+                //db.Entry(addCustomerViewModel.Social).State = EntityState.Modified;
+                ////db.Entry(addCustomerViewModel.User).State = EntityState.Modified;
+                db.SaveChanges();
+                }
+                catch (OptimisticConcurrencyException ex)
+                {
+                   // db.Refresh(RefreshMode.ClientWins, db.Articles);
+                   // context.SaveChanges();
+                }
+                
+                
+                return RedirectToAction("UserList");
+            
+           // return View();
+        }
+
 
         public string AddCustomerAccount(AspNetUser aspNetUser,string phone_no)
         {
@@ -840,6 +933,22 @@ namespace Shad_BookingApplication.Controllers
             }
            
             return Json(ls ,JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Get_RegionData(string region_id)
+        {
+            var id = Convert.ToInt16(region_id);
+            var region_obj = db.AspNetCustomerRegions.Where(x => x.Id == id).FirstOrDefault();
+           
+            Region_Struct obj = new Region_Struct();
+            obj.CountryName = region_obj.CountryName;
+            obj.CurrencyName = region_obj.CurrencyName;
+            obj.DateFormate = region_obj.DateFormate;
+            obj.TimeFormate = region_obj.TimeFormate;
+            obj.TimeZoneName = region_obj.TimeZoneName;
+
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -215,7 +215,7 @@
                                             <td><center>@item.address+@item.city+@item.state<br>@item.zipcode @item.country</center></td>
                                             <td><center>@item.rem_sms</center></td>
                                             <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">@item.status</button></center></td>
-                                            <td><center><div class="btn-group"><span class = "btn btn-default">@Html.ActionLink("View", "EditCustomer", new { id = item.customer_id })</span>  
+                                            <td><center><div class="btn-group"> <span class = "btn btn-default">@Html.ActionLink("View", "EditCustomer", new { id = item.customer_id })</span>  
                                             <button type="button" class="btn btn-danger">Delete</button></div>
                                             </center></td>
                                         </tr>

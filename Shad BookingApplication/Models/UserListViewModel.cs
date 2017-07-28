@@ -15,6 +15,7 @@ namespace Shad_BookingApplication.Models
         public string email { get; set; }
         public string mobile { get; set; }
         public string status { get; set; }
+        public string user_id { get; set; }
 
     }
 }

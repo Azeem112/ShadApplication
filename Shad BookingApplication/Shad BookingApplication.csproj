@@ -794,6 +794,7 @@
     <Content Include="Views\CompanyAdmin\ViewServiceGroup.cshtml" />
     <Content Include="Views\CompanyAdmin\VoucherList.cshtml" />
     <Content Include="Views\SuperAdmin\AddDiscount.cshtml" />
+    <Content Include="Views\SuperAdmin\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

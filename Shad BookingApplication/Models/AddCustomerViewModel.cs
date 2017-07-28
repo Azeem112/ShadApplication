@@ -30,6 +30,16 @@ namespace Shad_BookingApplication.Models
         public string[] Customer_SubCatageory { get; set; }
         public HttpPostedFileBase[] files { get; set; }
 
-        //AspNetCustomer_SubCatageory
+    }
+
+    public class Region_Struct
+    {
+        public string CountryName { get; set; }
+        public string TimeZoneName { get; set; }
+        public string DateFormate { get; set; }
+
+        public string TimeFormate { get; set; }
+        public string CurrencyName { get; set; }
     }
 }
+

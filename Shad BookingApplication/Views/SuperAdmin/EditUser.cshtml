@@ -1,23 +1,42 @@
 ﻿@model Shad_BookingApplication.Models.AspNetUser
-
 @{
-    ViewBag.Title = "AddSuperAdmin";
+    ViewBag.Title = "EditUser";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
 
+
+
     List<SelectListItem> listItems = new List<SelectListItem>();
+
+    var flaq = false;
+    if (Model.Status == "Active")
+    {
+        flaq = true;
+    }
+    else {
+        flaq = false;
+    }
 
     listItems.Add(new SelectListItem
     {
         Text = "Active",
         Value = "Active",
-        Selected = true
+        Selected = flaq
     });
+
+    if (Model.Status == "InActive")
+    {
+        flaq = true;
+    }
+    else
+    {
+        flaq = false;
+    }
 
     listItems.Add(new SelectListItem
     {
         Text = "InActive",
         Value = "InActive",
-        Selected = true
+        Selected = flaq
     });
 }
 
@@ -66,69 +85,69 @@
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
 
-@using (Html.BeginForm("AddSuperAdmin", "SuperAdmin", FormMethod.Post))
-{
-    @Html.AntiForgeryToken();
-    <header id="topbar">
-        <div class="topbar-left">
-            <ol class="breadcrumb" style="text-align: center;">
-                <h3>New User</h3>
-            </ol>
-        </div>
-        <div class="topbar-right">
-             <input type="submit" class="btn btn-success" value="Save" />
-        </div>
-    </header>
+    @using (Html.BeginForm("EditUser", "SuperAdmin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        <header id="topbar">
+            <div class="topbar-left">
+                <ol class="breadcrumb" style="text-align: center;">
+                    <h3>Edit User</h3>
+                </ol>
+            </div>
+            <div class="topbar-right">
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </header>
     <!-- End: Topbar -->
 
 
-    <div style="width: 80%;margin-left: 10%">
-        <br><br>
-        <div class="tab-pane">
-            <div class="row">
-                <div class="row form-group required">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
-                    <div class="col-md-8 col-xs-12">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Email  Here") } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <div style="width: 80%;margin-left: 10%">
+            <br><br>
+            <div class="tab-pane">
+                <div class="row">
+                    <div class="row form-group required">
+                        <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
+                        <div class="col-md-8 col-xs-12">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Email  Here") } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row form-group required">
+                        <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
+                        <div class="col-md-8 col-xs-12">
+                            @Html.PasswordFor(model => model.PasswordHash, new { @class = "form-control", placeholder = @Html.DisplayName("Provide password") })
+                            @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
+                        <div class="col-md-8 col-xs-12">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Full name here") } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-md-2 col-xs-12 text-right">Phone:</label>
+                        <div class="col-md-8 col-xs-12">
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Phone Number name here") } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
+                        <div class="col-md-8 col-xs-12">
+                            @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-                <div class="row form-group required">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
-                    <div class="col-md-8 col-xs-12">
-                        @Html.PasswordFor(model => model.PasswordHash, new { @class = "form-control", placeholder = @Html.DisplayName("Provide password") })
-                        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
-                    <div class="col-md-8 col-xs-12">
-                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Full name here") } })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                       
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label class="col-md-2 col-xs-12 text-right">Phone:</label>
-                    <div class="col-md-8 col-xs-12">
-                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter Phone Number name here") } })
-                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row form-group ">
-                    <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
-                    <div class="col-md-8 col-xs-12">
-                        @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", new {  @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                </div>
+            </div>
+            <br>
+            <br>
         </div>
-        <br>
-        <br>
-    </div>
-}
-     <!-- End: Content -->
+    }
+    <!-- End: Content -->
     <!-- Begin: Page Footer -->
     <footer id="content-footer" class="affix">
         <div class="row">
@@ -459,5 +478,7 @@ window.onresize = function() {
 
 
 </script>
+
+
 
 
