@@ -40,6 +40,9 @@ namespace Shad_BookingApplication.Models
 
         public string TimeFormate { get; set; }
         public string CurrencyName { get; set; }
+        public string Location_CountryName { get; set; }
+
+        //LocCountryName
     }
 }
 

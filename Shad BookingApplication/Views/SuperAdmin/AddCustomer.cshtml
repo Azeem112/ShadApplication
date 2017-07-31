@@ -1126,9 +1126,9 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Description:</label>
 							<div class="col-md-8 col-xs-12">
-								<textarea name="editor1" class="form-control" rows="5" id="business-description"  ></textarea>
-								@*@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control", @name = "editor_id" })
-								@Html.ValidationMessageFor(model => model.BusinessDetail.Description, "", new { @class = "text-danger" })*@
+								@*<textarea name="editor1" class="form-control" rows="5" id="business-description"  ></textarea>*@
+								@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control" })
+								@Html.ValidationMessageFor(model => model.BusinessDetail.Description, "", new { @class = "text-danger" })
 
 
 							</div>
@@ -2164,13 +2164,21 @@ function changeTabFunc2(a){
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
 }
-function func1()
-{
-	document.getElementById('interventionZone').style.display="none";
+function func1() {
+    document.getElementById('interventionZone').style.display = "none";
+    $("#IntervensionZone_id").val("On_site");
+    alert($("#IntervensionZone_id").val());
+
 }
-function func2()
-{
-	document.getElementById('interventionZone').style.display="block";
+function func2() {
+    document.getElementById('interventionZone').style.display = "block";
+    $("#IntervensionZone_id").val("Home");
+
+}
+function func22() {
+    document.getElementById('interventionZone').style.display = "block";
+    $("#IntervensionZone_id").val("Both");
+
 }
  var map;
 	  function initMap() {
@@ -2202,7 +2210,7 @@ function func2()
 
 
 		// CKEditor
-		CKEDITOR.replace( 'editor1' );
+		CKEDITOR.replace('BusinessDetail.Description');
 
 		// Init Select2 - Basic Single
 		$(".select2-single").select2();

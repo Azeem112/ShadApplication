@@ -33,12 +33,24 @@
     {
         foreach (var item in ViewBag.selected_BusinessSubCat)
         {
+            bool flag = false;
+
+            if(ViewBag.selected_subCatlist_name != null)
+            {
+
+                if (ViewBag.selected_subCatlist_name.Contains(item.Name))
+                {
+                    flag = true;
+                }
+            }
+
             listItems0.Add(new SelectListItem
             {
                 Text = item.Name,
                 Value = item.Id.ToString(),
-                Selected = true
+                Selected = flag
             });
+
         }
     }
 
@@ -249,7 +261,20 @@
         @Html.HiddenFor(model => model.User.Id)
         @Html.HiddenFor(model => model.Region.Id)
         @Html.HiddenFor(model => model.BusinessCatageorySingle.Id)
-        
+
+
+        @Html.HiddenFor(model => model.User.PasswordHash)
+        @Html.HiddenFor(model => model.User.FullName)
+        @Html.HiddenFor(model => model.User.SecurityStamp)
+        @Html.HiddenFor(model => model.User.EmailConfirmed)
+        @Html.HiddenFor(model => model.User.PhoneNumberConfirmed)
+        @Html.HiddenFor(model => model.User.TwoFactorEnabled)
+        @Html.HiddenFor(model => model.User.LockoutEnabled)
+        @Html.HiddenFor(model => model.User.LockoutEndDateUtc)
+        @Html.HiddenFor(model => model.User.AccessFailedCount)
+        @Html.HiddenFor(model => model.User.Address)
+        @Html.HiddenFor(model => model.User.Status)
+
 
 
         <div class="panel">
@@ -335,7 +360,7 @@
                                 <div class="row form-group required">
                                     <label class="col-md-2 col-xs-12 text-right control-label">Business Category:</label>
                                     <div class="col-md-8 col-xs-12">
-                                        @Html.DropDownListFor(model => model.Detail.BusinessCatageoryId, listItems, "Select a category", new { @class = "form-control", @id = "Bus_CatageoryId", @onchange = "populate_subbus_catg()" })
+                                        @Html.DropDownListFor(model => model.Detail.BusinessCatageoryId, listItems, new { @class = "form-control", @id = "Bus_CatageoryId", @onchange = "populate_subbus_catg()" })
                                         @Html.ValidationMessageFor(model => model.Detail.BusinessCatageoryId, "", new { @class = "text-danger" })
 
                                     </div>
@@ -404,7 +429,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-3 col-xs-12">
-                                        <select class="form-control" name="LocCountryName">
+                                        <select class="form-control" name="LocCountryName" id="LocCountry_id" >
                                             <option disabled selected>Select the country</option>
                                             <option value="Afghanistan">Afghanistan</option>
                                             <option value="Albania">Albania</option>
@@ -763,7 +788,6 @@
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
                                         @Html.EditorFor(model => model.Contact.Mobile, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
-
 
                                     </div>
                                 </div>
@@ -1263,6 +1287,7 @@
                                                 @*<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" multiple />*@
                                                 @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple", @id = "fileToUpload", @accept = "image/*", @class = "inputfile" })
                                                 @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                                                @Html.HiddenFor(x => x.Gallery.Image1)
 
                                             </label>
                                         </div>
@@ -1751,12 +1776,14 @@
             dataType: "json",
             success: function (response)
             {
-                alert(response.CurrencyName);
+               // alert(response.CurrencyName);
                 $("#region_country_id").val(response.CountryName);
                 $("#region_timezone_id").val(response.TimeZoneName);
                 $("#region_dateformat_id").val(response.DateFormate);
                 $("#region_timeformat_id").val(response.TimeFormate);
-                $("#region_currency_id").val( response.CurrencyName);
+                $("#region_currency_id").val(response.CurrencyName);
+
+                $("#LocCountry_id").val(response.Location_CountryName);
 
                
             },
@@ -1774,7 +1801,7 @@
     jQuery(window).load(function ()
     {
         var region_id = $("#Region_Id").val();
-        alert(region_id);
+       // alert(region_id);
 
         $.ajax({
             type: "GET",
@@ -1846,7 +1873,7 @@
    
 	function populate_subbus_catg()
 	{
-		alert($("#Bus_CatageoryId").val());
+		//alert($("#Bus_CatageoryId").val());
 		var id = $("#Bus_CatageoryId").val();
 		$.ajax({
 			type: "GET",
@@ -1856,8 +1883,8 @@
 			dataType: "json",
 			success: function (response)
 			{
+			    $('#Bus_Sub_CatageoryId').empty();
 				var option = "";
-				alert(response);
 				var list = response.split(",");
 
 				for (var i = 0; i < list.length-1; i++)
@@ -1878,100 +1905,100 @@
 	}
 
     function custome_timepicker()
-{
-	var time_string = "";
-	var i=1
-	for(var k=0; k<7;k++)
-	{
-		if (i == 1)
-		{
-			var ckbox = $('#c1');
-			if (!ckbox.is(':checked'))
-			{
-				time_string = time_string + "Monday-";
-				for (var j = i ; j < 5 ; j++) {
-					var val = $("#i" + j).val();
-					time_string = time_string + val + ",";
-				}
-				time_string = time_string + "|";
-			}
-		}
-		else if(i == 5)
-		{
-			var ckbox = $('#c2');
-			if (!ckbox.is(':checked')) {
-				time_string = time_string + "Tuesday-";
-				for (var j = i ; j < 9 ; j++) {
-					time_string = time_string + $("#i" + j).val() + ",";
-				}
-				time_string = time_string + "|";
-			}
-		}
-		else if (i == 9)
-		{
-			var ckbox = $('#c3');
-			if (!ckbox.is(':checked')) {
-				time_string = time_string + "Wednesday-";
-				for (var j = i ; j < 13 ; j++) {
-					time_string = time_string + $("#i" + j).val() + ",";
-				}
-				time_string = time_string + "|";
-			}
-		}
-		else if (i == 13)
-		{
-			var ckbox = $('#c4');
-			if (!ckbox.is(':checked')) {
-				time_string = time_string + "Thursday-";
-				for (var j = i ; j < 17 ; j++) {
-					time_string = time_string + $("#i" + j).val() + ",";
-				}
-				time_string = time_string + "|";
-			}
-		}
-		else if (i == 17)
-		{
-			var ckbox = $('#c5');
-			if (!ckbox.is(':checked')) {
-				time_string = time_string + "Friday-";
-				for (var j = i ; j < 21 ; j++) {
-					time_string = time_string + $("#i" + j).val() + ",";
-				}
+    {
+	    var time_string = "";
+	    var i=1
+	    for(var k=0; k<7;k++)
+	    {
+		    if (i == 1)
+		    {
+			    var ckbox = $('#c1');
+			    if (!ckbox.is(':checked'))
+			    {
+				    time_string = time_string + "Monday-";
+				    for (var j = i ; j < 5 ; j++) {
+					    var val = $("#i" + j).val();
+					    time_string = time_string + val + ",";
+				    }
+				    time_string = time_string + "|";
+			    }
+		    }
+		    else if(i == 5)
+		    {
+			    var ckbox = $('#c2');
+			    if (!ckbox.is(':checked')) {
+				    time_string = time_string + "Tuesday-";
+				    for (var j = i ; j < 9 ; j++) {
+					    time_string = time_string + $("#i" + j).val() + ",";
+				    }
+				    time_string = time_string + "|";
+			    }
+		    }
+		    else if (i == 9)
+		    {
+			    var ckbox = $('#c3');
+			    if (!ckbox.is(':checked')) {
+				    time_string = time_string + "Wednesday-";
+				    for (var j = i ; j < 13 ; j++) {
+					    time_string = time_string + $("#i" + j).val() + ",";
+				    }
+				    time_string = time_string + "|";
+			    }
+		    }
+		    else if (i == 13)
+		    {
+			    var ckbox = $('#c4');
+			    if (!ckbox.is(':checked')) {
+				    time_string = time_string + "Thursday-";
+				    for (var j = i ; j < 17 ; j++) {
+					    time_string = time_string + $("#i" + j).val() + ",";
+				    }
+				    time_string = time_string + "|";
+			    }
+		    }
+		    else if (i == 17)
+		    {
+			    var ckbox = $('#c5');
+			    if (!ckbox.is(':checked')) {
+				    time_string = time_string + "Friday-";
+				    for (var j = i ; j < 21 ; j++) {
+					    time_string = time_string + $("#i" + j).val() + ",";
+				    }
 
-				time_string = time_string + "|";
-			}
-		}
-		else if (i == 21)
-		{
-			var ckbox = $('#c6');
-			if (!ckbox.is(':checked')) {
-				time_string = time_string + "Saturday-";
-				for (var j = i ; j < 25 ; j++) {
-					time_string = time_string + $("#i" + j).val() + ",";
-				}
-				time_string = time_string + "|";
-			}
-		}
-		else if (i == 25)
-		{
-			var ckbox = $('#c7');
-			if (!ckbox.is(':checked')) {
-				time_string = time_string + "Sunday-";
-				for (var j = i ; j < 29 ; j++) {
-					time_string = time_string + $("#i" + j).val() + ",";
-				}
-				time_string = time_string + "|";
-			}
-		}
-		i = i + 4;
+				    time_string = time_string + "|";
+			    }
+		    }
+		    else if (i == 21)
+		    {
+			    var ckbox = $('#c6');
+			    if (!ckbox.is(':checked')) {
+				    time_string = time_string + "Saturday-";
+				    for (var j = i ; j < 25 ; j++) {
+					    time_string = time_string + $("#i" + j).val() + ",";
+				    }
+				    time_string = time_string + "|";
+			    }
+		    }
+		    else if (i == 25)
+		    {
+			    var ckbox = $('#c7');
+			    if (!ckbox.is(':checked')) {
+				    time_string = time_string + "Sunday-";
+				    for (var j = i ; j < 29 ; j++) {
+					    time_string = time_string + $("#i" + j).val() + ",";
+				    }
+				    time_string = time_string + "|";
+			    }
+		    }
+		    i = i + 4;
 
 
-	}
+	    }
 
-	$("#custom_timepicker_id").val(time_string);
-	alert(time_string);
+	    $("#custom_timepicker_id").val(time_string);
+	    alert(time_string);
 
-}
+    }
 
 
     		jQuery(document).ready(function () {
@@ -2207,7 +2234,7 @@ $(function () {
 			});
 function checkboxDetect(num)
 {
-    alert(num);
+  //  alert(num);
 	if(document.getElementById("c"+num).checked == true)
 	{
 		document.getElementById("r"+num).style.backgroundColor = "lightgrey";
@@ -2320,7 +2347,8 @@ function changeTabFunc(a){
 		document.getElementById("optionSMS").className = "tab-pane";
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
-	if(a==9){
+	if (a == 9) {
+	    custome_timepicker();
 		document.getElementById("workingHours").className = "tab-pane";
 		document.getElementById("social").className = "tab-pane active";
 	}
@@ -2371,15 +2399,23 @@ function changeTabFunc2(a){
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
 }
-function func1()
-{
-	document.getElementById('interventionZone').style.display="none";
+function func1() {
+    document.getElementById('interventionZone').style.display = "none";
+    $("#IntervensionZone_id").val("On_site");
+    alert($("#IntervensionZone_id").val());
+
 }
-function func2()
-{
-	document.getElementById('interventionZone').style.display="block";
+function func2() {
+    document.getElementById('interventionZone').style.display = "block";
+    $("#IntervensionZone_id").val("Home");
+
 }
- var map;
+function func22() {
+    document.getElementById('interventionZone').style.display = "block";
+    $("#IntervensionZone_id").val("Both");
+
+}
+var map;
 	  function initMap() {
 		map = new google.maps.Map(document.getElementById('map'), {
 		  center: {lat: 30.397, lng: 64.644},
