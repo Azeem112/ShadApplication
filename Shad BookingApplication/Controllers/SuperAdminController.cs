@@ -1697,6 +1697,26 @@ namespace Shad_BookingApplication.Controllers
             return View(items);
         }
 
+        public JsonResult Insert_tax(string name, string rate)
+        {
+            var obj = new AspNetTax();
+
+            try
+            {
+                obj.Name = name;
+                obj.Rate = Convert.ToDouble(rate);
+                db.AspNetTaxes.Add(obj);
+                db.SaveChanges();
+                var id=obj.Id.ToString();
+                return Json(id, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.InnerException.ToString(), JsonRequestBehavior.AllowGet);
+            }
+            
+        }
+
    
 
     }

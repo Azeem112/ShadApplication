@@ -1,7 +1,51 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetInvoiceOption
 @{
     ViewBag.Title = "InvoiceOption";
     Layout = "~/Views/Shared/_SuperAdminNavigationBar.cshtml";
+
+
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+
+
+    listItems.Add(new SelectListItem
+    {
+        Text = " Immediately",
+        Value = " Immediately",
+        Selected = true
+    });
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "Option1",
+        Value = "Option1",
+        Selected = false
+    });
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "Option2",
+        Value = "Option2",
+        Selected = false
+    });
+
+    List<SelectListItem> listItems1 = new List<SelectListItem>();
+
+
+    listItems1.Add(new SelectListItem
+    {
+        Text = " PDF",
+        Value = " PDF",
+        Selected = true
+    });
+
+    listItems1.Add(new SelectListItem
+    {
+        Text = "Thermal Receipt",
+        Value = "Thermal Receipt",
+        Selected = false
+    });
+
 }
 
     <!-- Start: Content-Wrapper -->
@@ -52,11 +96,10 @@
                         <div class="row form-group">
 
                             <label class="col-md-8 col-xs-10">
-                                <select class="form-control" style="margin-left:3%">
-                                    <option> Immediately</option>
-                                    <option>Option 2</option>
-                                    <option>Option 3</option>
-                                </select>
+                                @Html.DropDownListFor(model => model.PaymentTerms, listItems, new { @class = "form-control", @style = "margin-left:3%" })
+                                @Html.ValidationMessageFor(model => model.PaymentTerms, "", new { @class = "text-danger" })
+
+
                             </label>
                         </div>
 
@@ -64,18 +107,28 @@
                         <div class="row form-group">
 
                             <label class="col-md-8 col-xs-10">
-                                <input type="text" id="inputStandard" class="form-control" style="margin-left:3% " placeholder="Type Here...">
+                               
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @style = "margin-left:3% ", @id = "inputStandard", @placeholder = "Type Here..." } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+
                             </label>
                         </div>
                         <div class="col-md-8 col-xs-10" style="padding: 0px; margin:0px;">
                             <div class="col-md-6 col-xs-12" style=" float: left">
 
-                                <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;">Siret</label>
+                                <label class="col-md-12 col-xs-10  text-left" style="padding-left: 3px; margin:0px;">Siret</label>
                                 <div class="row form-group">
 
                                     <label class="col-md-12 col-xs-10">
 
-                                        <input type="text" id="inputStandard" class="form-control" style="margin-left:2% " placeholder="Type Here...">
+                                        @*<input type="text" id="inputStandard" class="form-control" style="margin-left:2% " placeholder="Type Here...">*@
+
+                                        @Html.EditorFor(model => model.Siret, new { htmlAttributes = new { @class = "form-control", @style = "margin-left:2% ", @id = "inputStandard", @placeholder = "Type Here..." } })
+                                        @Html.ValidationMessageFor(model => model.Siret, "", new { @class = "text-danger" })
+
+
+
 
                                     </label>
                                 </div>
@@ -89,7 +142,14 @@
 
                                     <label class="col-md-12 col-xs-10">
 
-                                        <input type="text" id="inputStandard" class="form-control" style="margin-left:2% " placeholder="Type Here...">
+                                        @*<input type="text" id="inputStandard" class="form-control" style="margin-left:2% " placeholder="Type Here...">*@
+
+                                        @Html.EditorFor(model => model.APE, new { htmlAttributes = new { @class = "form-control", @style = "margin-left:2% ", @id = "inputStandard", @placeholder = "Type Here..." } })
+                                        @Html.ValidationMessageFor(model => model.APE, "", new { @class = "text-danger" })
+
+
+
+
 
                                     </label>
                                 </div>
@@ -103,7 +163,13 @@
                         <div class="row form-group">
 
                             <label class="col-md-6 col-xs-10">
-                                <input type="text" id="inputStandard" class="form-control" style="margin-left:5% " placeholder="Type Here...">
+                               
+
+                                @Html.EditorFor(model => model.VatNo, new { htmlAttributes = new { @class = "form-control", @style = "margin-left:5% ", @id = "inputStandard", @placeholder = "Type Here..." } })
+                                @Html.ValidationMessageFor(model => model.VatNo, "", new { @class = "text-danger" })
+
+
+
                             </label>
                         </div>
 
@@ -111,7 +177,11 @@
                         <div class="row form-group">
 
                             <label class="col-md-9 col-xs-10">
-                                <textarea class="form-control" rows="5" id="comment" style="margin-left:3%;  resize: none;"></textarea>
+                              
+                                @Html.TextAreaFor(model => model.PaymentInstructiones, new { @rows = "5", @id = "comment", @class = "form-control", @style = "margin-left:3%;resize: none;" })
+                                @Html.ValidationMessageFor(model => model.PaymentInstructiones, "", new { @class = "text-danger" })
+
+
                             </label>
                         </div>
 
@@ -119,7 +189,12 @@
                         <div class="row form-group">
 
                             <label class="col-md-6 col-xs-10">
-                                <input type="text" id="inputStandard" class="form-control" style="margin-left:5% " placeholder="1">
+                                @*<input type="text" id="inputStandard" class="form-control" style="margin-left:5% " placeholder="1">*@
+                                @Html.EditorFor(model => model.NextNumber, new { htmlAttributes = new { @class = "form-control", @style = "margin-left:5% ", @id = "inputStandard", @placeholder = "1" } })
+                                @Html.ValidationMessageFor(model => model.NextNumber, "", new { @class = "text-danger" })
+
+
+
                             </label>
                         </div>
 
@@ -127,11 +202,14 @@
                             <label class="col-md-6 col-xs-10" style="margin-left:3%;">
                                 <div class="checkbox-custom mb5">
                                     <input type="checkbox" checked="" id="checkboxDefault3">
+                                   
                                     <label for="checkboxDefault3">Hide business name, adress and logo</label>
                                 </div>
                             </label>
-
                         </div>
+                        @Html.HiddenFor(model => model.HideName, new { @id = "HideName_id" })
+
+
                         <div class="row form-group">
                             <label class="col-md-6 col-xs-10" style="margin-left:3%;">
                                 <div class="checkbox-custom mb5">
@@ -139,15 +217,8 @@
                                     <label for="checkboxDefault4">Hide payment history on invoices</label>
                                 </div>
                             </label>
-
                         </div>
-
-
-
-
-
-
-
+                        @Html.HiddenFor(model => model.HidePaymentHistory, new { @id = "HidePaymentHistory_id" })
 
                     </div>
                 </div>
@@ -185,13 +256,8 @@
                                 <div class="row form-group">
 
                                     <label class="col-md-12 col-xs-10">
-
-                                        <select class="form-control" style="margin-left:3%">
-
-                                            <option>PDF</option>
-                                            <option>Thermal Receipt</option>
-                                        </select>
-
+                                        @Html.DropDownListFor(model => model.PrintFormate, listItems1, new { @class = "form-control", @style = "margin-left:3%" })
+                                        @Html.ValidationMessageFor(model => model.PrintFormate, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
 
@@ -228,7 +294,7 @@
 
                                     <div class="input-group col-md-9 col-xs-9">
 
-                                        <input type="text" style="margin-left: 8%" class="form-control" />
+                                        <input type="text" id="tax_name_id" style="margin-left: 8%" class="form-control" />
                                     </div>
                                 </div>
 
@@ -248,7 +314,7 @@
 
                                     <div class="input-group col-md-9 col-xs-12">
 
-                                        <input type="text" style="margin-left:8%" class="form-control" placeholder="20" /> <span class="input-group-addon">
+                                        <input type="text" style="margin-left:8%" id="tax_rate_id" class="form-control" placeholder="20" /> <span class="input-group-addon">
                                             &nbsp; %
                                         </span>
                                     </div>
@@ -259,7 +325,6 @@
                             </div>
 
                         </div>
-
                         <div class="col-md-3 col-xs-3">
 
                             <div class="row form-group" style="padding: 0px; margin: 0px;">
@@ -277,12 +342,10 @@
 
                         </div>
                         <div class="col-md-1 col-xs-1" style="margin-top: 2%">
-                            <button type="button" style="" class="btn btn-success">+</button>
+                            <button type="button" style="" id="AddTax_btn" class="btn btn-success">+</button>
                         </div>
-
-                    </div>
-
-
+                   
+                     </div>
                 </div>
 
 
@@ -296,11 +359,9 @@
                             <label class="col-md-12 text-left" style="margin-left:3% "><h3>Payment Types</h3></label><br>
 
                             <label class="col-md-12 text-left" style="margin-left:3% ">Create payment types to apply to invoice </label>
-
-
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-8">
+                    <div id="main_payment_section" class="col-md-6 col-xs-8">
 
                         <label class="col-md-12" style="margin-left: 4%"><h5>Payment Types</h5></label>
                         <div class="row form-group">
@@ -342,7 +403,6 @@
                 </div>
             </div>
 
-
             <br><br><br><br>
         </div>
     </div>
@@ -364,6 +424,67 @@
     <!-- End: Page Footer -->
 
 </section>
+
+<!-- Jquery -->
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        //HideName_id
+
+        $("#AddTax_btn").click(function () {
+
+            var name= $("#tax_name_id").val();
+            var rate= $("#tax_rate_id").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/SuperAdmin/Insert_tax",
+                data: { "name": name,"rate":rate },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response);
+                    $("#tax_name_id").val("");
+                    $("#tax_rate_id").val("");
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+        $("#checkboxDefault3").click(function () {
+            if ($(this).prop("checked") == true)
+            {
+                $("#HideName_id").val(true);
+            }
+            else if ($(this).prop("checked") == false) {
+                $("#HideName_id").val(false);
+            }
+        });
+
+        $("#checkboxDefault4").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#HidePaymentHistory_id").val(true);
+            }
+            else if ($(this).prop("checked") == false) {
+                $("#HidePaymentHistory_id").val(false);
+            }
+        });
+
+
+    });
+
+</script>
 <!-- End: Content-Wrapper -->
 
 
