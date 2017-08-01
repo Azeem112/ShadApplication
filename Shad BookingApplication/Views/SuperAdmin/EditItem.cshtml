@@ -5,26 +5,18 @@
 
     List<SelectListItem> listItems = new List<SelectListItem>();
 
-    listItems.Add(new SelectListItem
+    if (ViewBag.tax_list != null)
     {
-        Text = "0.00%",
-        Value = "0.00",
-        Selected = false
-    });
-
-    listItems.Add(new SelectListItem
-    {
-        Text = "5.50%",
-        Value = "5.50",
-        Selected = false
-    });
-
-    listItems.Add(new SelectListItem
-    {
-        Text = "20.00%",
-        Value = "20.00",
-        Selected = false
-    });
+        foreach (var item in ViewBag.tax_list)
+        {
+            listItems.Add(new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+                Selected = false
+            });
+        }
+    }
 
 
     List<SelectListItem> listItems1 = new List<SelectListItem>();
@@ -323,27 +315,45 @@
     });
 
 
-$("#tax").change(function (){
-    var wovat=document.getElementById("w/ovat").value;
-    var per=document.getElementById("tax").value;
-    if(wovat=="")
-    {
-        alert("Fill out Price W/O VAT");
-    }
-    else
-    {
-        document.getElementById("multiplyyy").value =  (per/100)*wovat;
-        var final = (per / 100) * wovat;
-        var f1 = parseFloat(final);
-        var f2 = parseFloat(wovat);
-        var f3 = f1 + f2;
-        $("#wvvat").val(f3);
-     //   document.getElementById("wvvat").value = f3;
+    $("#tax").change(function () {
+        var wovat = document.getElementById("w/ovat").value;
+        var id = document.getElementById("tax").value;
+        if (id != "") {
+            $.ajax({
+                type: "GET",
+                url: "/SuperAdmin/Get_TaxRate",
+                contentType: "application/json; charset=utf-8",
+                data: { "item_id": id },
+                dataType: "json",
+                success: function (response) {
+                    alert(response);
+
+                    var per = parseFloat(response);
+
+                    if (wovat == "") {
+                        alert("Fill out Price W/O VAT");
+                    }
+                    else {
+                        document.getElementById("multiplyyy").value = (per / 100) * wovat;
+                        var final = (per / 100) * wovat;
+                        var f1 = parseFloat(final);
+                        var f2 = parseFloat(wovat);
+                        var f3 = f1 + f2;
+                        $("#wvvat").val(f3);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
 
 
+        }
     }
-}
-);
+    );
 
     jQuery(document).ready(function () {
 

@@ -5,26 +5,19 @@
 
     List<SelectListItem> listItems = new List<SelectListItem>();
 
-    listItems.Add(new SelectListItem
+    if (ViewBag.tax_list != null)
     {
-        Text = "0.00%",
-        Value = "0.00",
-        Selected = false
-    });
+        foreach (var item in ViewBag.tax_list)
+        {
+            listItems.Add(new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+                Selected = false
+            });
+        }
+    }
 
-    listItems.Add(new SelectListItem
-    {
-        Text = "5.50%",
-        Value = "5.50",
-        Selected = false
-    });
-
-    listItems.Add(new SelectListItem
-    {
-        Text = "20.00%",
-        Value = "20.00",
-        Selected = false
-    });
 
 
     List<SelectListItem> listItems1 = new List<SelectListItem>();
@@ -325,25 +318,87 @@
 
 $("#tax").change(function (){
     var wovat=document.getElementById("w/ovat").value;
-    var per=document.getElementById("tax").value;
-    if(wovat=="")
+    var id = document.getElementById("tax").value;
+    if (id != "")
     {
-        alert("Fill out Price W/O VAT");
-    }
-    else
-    {
-        document.getElementById("multiplyyy").value =  (per/100)*wovat;
-        var final = (per / 100) * wovat;
-        var f1 = parseFloat(final);
-        var f2 = parseFloat(wovat);
-        var f3 = f1 + f2;
-        $("#wvvat").val(f3);
-     //   document.getElementById("wvvat").value = f3;
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Get_TaxRate",
+            contentType: "application/json; charset=utf-8",
+            data: { "item_id": id },
+            dataType: "json",
+            success: function (response) {
+                var per = parseFloat(response);
+
+                if (wovat == "") {
+                    alert("Fill out Price W/O VAT");
+                }
+                else {
+                    document.getElementById("multiplyyy").value = (per / 100) * wovat;
+                    var final = (per / 100) * wovat;
+                    var f1 = parseFloat(final);
+                    var f2 = parseFloat(wovat);
+                    var f3 = f1 + f2;
+                    $("#wvvat").val(f3);
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
 
 
     }
+
+   
+
+  
+    
 }
 );
+
+
+
+
+
+function get_tax(item) {
+    var id = $("#" + item.id).val();
+    var last_id = 0;
+
+    var temp = (item.id).split('_');
+    last_id = temp[1];
+    console.log(last_id);
+
+    $.ajax({
+        type: "GET",
+        url: "/SuperAdmin/Get_tax",
+        contentType: "application/json; charset=utf-8",
+        data: { "item_id": id },
+        dataType: "json",
+        success: function (response) {
+            console.log("#tax_" + last_id);
+            $("#tax_" + last_id).html(response);
+            console.log(last_id + "-" + response + "ok");
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+
+
+}
+
+
+
+
+
+
 
     jQuery(document).ready(function () {
 

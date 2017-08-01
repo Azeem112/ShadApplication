@@ -17,7 +17,7 @@ namespace Shad_BookingApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetTax()
         {
-            this.AspNetInvoiceOptions = new HashSet<AspNetInvoiceOption>();
+            this.AspNetItems = new HashSet<AspNetItem>();
         }
     
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace Shad_BookingApplication.Models
         public Nullable<double> Rate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetInvoiceOption> AspNetInvoiceOptions { get; set; }
+        public virtual ICollection<AspNetItem> AspNetItems { get; set; }
     }
 }

@@ -54,6 +54,8 @@
     <!-- Start: Topbar-Dropdown -->
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
+@using (Html.BeginForm("InvoiceOption", "SuperAdmin", FormMethod.Post))
+{
     <header id="topbar">
         <div class="topbar-left">
             <ol class="breadcrumb">
@@ -69,7 +71,7 @@
             </ol>
         </div>
         <div class="topbar-right">
-
+            <input type="submit" class="btn btn-success" value="Save" />
         </div>
     </header>
     <!-- End: Topbar -->
@@ -78,6 +80,8 @@
         <div class="panel" id="spy3">
 
             <div class="panel-body pn">
+
+
                 <div class="row">
                     <div class="col-md-4 col-xs-12">
 
@@ -201,7 +205,7 @@
                         <div class="row form-group">
                             <label class="col-md-6 col-xs-10" style="margin-left:3%;">
                                 <div class="checkbox-custom mb5">
-                                    <input type="checkbox" checked="" id="checkboxDefault3">
+                                    <input type="checkbox"  id="checkboxDefault3">
                                    
                                     <label for="checkboxDefault3">Hide business name, adress and logo</label>
                                 </div>
@@ -213,7 +217,7 @@
                         <div class="row form-group">
                             <label class="col-md-6 col-xs-10" style="margin-left:3%;">
                                 <div class="checkbox-custom mb5">
-                                    <input type="checkbox" checked="" id="checkboxDefault4">
+                                    <input type="checkbox"  id="checkboxDefault4">
                                     <label for="checkboxDefault4">Hide payment history on invoices</label>
                                 </div>
                             </label>
@@ -268,110 +272,57 @@
                         </div>
                     </div>
                 </div>
+
+                
+
+
+
+
+
                 <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%;"> </div>
-                <div class="row">
-                    <div class="col-md-3 col-xs-10">
 
-                        <div class="row form-group">
-                            <label class="col-md-12 col-xs-10 text-left" style="margin-left:3% "><h3>Taxes</h3></label><br>
+                @* Dynamic rows of tax Added Here *@
 
-                            <label class="col-md-12 col-xs-10 text-left" style="margin-left:3% ">Set up taxes that can applied to services and products </label>
+                <div id="dynamic_tax_rows_id">
+                    <div class="row">
 
+                        <div class="col-md-3 col-xs-5">
+                            <div class="row form-group">
+                                <label class="col-md-12 col-xs-10 text-left" style="margin-left:3% "><h3>Taxes</h3></label><br>
+                                <label class="col-md-12 col-xs-10 text-left" style="margin-left:3% ">Set up taxes that can applied to services and products </label>
+                            </div>
+                        </div>
 
+                        <div class="col-md-6 col-xs-5">
+                                    
+                       </div>
+       
+                        <div class="col-md-1 col-xs-1" style="margin-top: 2%">
+                            <button type="button"  id="AddTax_btn" style="" class="btn btn-success">+</button>
                         </div>
                     </div>
 
-                    <div class="col-md-9 col-xs-12">
-
-                        <div class="col-md-3 col-xs-4">
-
-                            <div class="row form-group" style="padding: 0px; margin: 0px;">
-                                <br>
-                                <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Tax Name</strong></label><br>
-
-                                <div class="row form-group">
+                    
 
 
-                                    <div class="input-group col-md-9 col-xs-9">
-
-                                        <input type="text" id="tax_name_id" style="margin-left: 8%" class="form-control" />
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-                        </div>
-                        <div class="col-md-2 col-xs-3">
-
-                            <div class="row form-group" style="padding: 0px; margin: 0px;">
-                                <br>
-                                <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Rate</strong></label><br>
-
-                                <div class="row form-group">
-
-
-                                    <div class="input-group col-md-9 col-xs-12">
-
-                                        <input type="text" style="margin-left:8%" id="tax_rate_id" class="form-control" placeholder="20" /> <span class="input-group-addon">
-                                            &nbsp; %
-                                        </span>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-                        </div>
-                        <div class="col-md-3 col-xs-3">
-
-                            <div class="row form-group" style="padding: 0px; margin: 0px;">
-                                <br>
-                                <label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px; margin-bottom: 8%"><strong>Usage</strong></label><br>
-
-                                <div class="row form-group">
-
-                                    <label class="col-md-6  col-xs-5 text-left" style="margin-left:1%">0 items</label><span>&nbsp;</span><span class="glyphicon glyphicon-trash"></span><br>
-                                </div>
-
-
-
-                            </div>
-
-                        </div>
-                        <div class="col-md-1 col-xs-1" style="margin-top: 2%">
-                            <button type="button" style="" id="AddTax_btn" class="btn btn-success">+</button>
-                        </div>
-                   
-                     </div>
-                </div>
-
+               </div>           <!-- End div dynamic tax rows  -->
 
                 <br>
 
                 <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%;"> </div>
                 <div class="row">
                     <div class="col-md-3 col-xs-12">
-
                         <div class="row form-group">
                             <label class="col-md-12 text-left" style="margin-left:3% "><h3>Payment Types</h3></label><br>
-
                             <label class="col-md-12 text-left" style="margin-left:3% ">Create payment types to apply to invoice </label>
                         </div>
                     </div>
                     <div id="main_payment_section" class="col-md-6 col-xs-8">
-
                         <label class="col-md-12" style="margin-left: 4%"><h5>Payment Types</h5></label>
                         <div class="row form-group">
-
                             <div class="input-group col-md-10 col-xs-11 col-xs-offset-1">
-
                                 <input type="text" class="form-control" placeholder="On Account" />
                             </div>
-
-
                         </div>
 
                         <div class="row form-group">
@@ -395,9 +346,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 col-xs-1" style="margin-top: 2%">
-
                         <button type="button" style="" class="btn btn-success">+</button>
-
                     </div>
                     <br>
                 </div>
@@ -406,6 +355,8 @@
             <br><br><br><br>
         </div>
     </div>
+
+}    
     <!-- End: Content -->
     <!-- Begin: Page Footer -->
     <footer id="content-footer">
@@ -432,34 +383,17 @@
 
 <script type="text/javascript">
 
+    var tax_row = 0;
+
 
     $(document).ready(function () {
-
-        //HideName_id
+        Load_TaxData();
+       
 
         $("#AddTax_btn").click(function () {
 
-            var name= $("#tax_name_id").val();
-            var rate= $("#tax_rate_id").val();
-
-            $.ajax({
-                type: "GET",
-                url: "/SuperAdmin/Insert_tax",
-                data: { "name": name,"rate":rate },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    alert(response);
-                    $("#tax_name_id").val("");
-                    $("#tax_rate_id").val("");
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
+            $("#dynamic_tax_rows_id").append('<div id=taxrow_' + tax_row + ' class="row"> <input type="hidden" value="0" id="hidden_taxId_' + tax_row + '"/>  <div class="col-md-3 col-xs-10"></div><div class="col-md-9 col-xs-12"><div class="col-md-3 col-xs-4">	<div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Tax Name</strong></label><br><div class="row form-group"><div class="input-group col-md-9 col-xs-9"><input type="text" id="tax_name_id_' + tax_row + '" style="margin-left: 8%" class="form-control" /></div></div></div></div><div class="col-md-2 col-xs-3"><div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Rate</strong></label><br><div class="row form-group"><div class="input-group col-md-9 col-xs-12"><input type="text" id="tax_rate_id_' + tax_row + '" style="margin-left:8%" class="form-control" placeholder="20" /> <span class="input-group-addon">&nbsp; %</span></div></div></div></div><div class="col-md-3 col-xs-3"><div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px; margin-bottom: 8%"><strong>Usage</strong></label><br><div class="row form-group"><label class="col-md-6  col-xs-5 text-left" style="margin-left:1%">0 items</label><span>&nbsp;</span><span onclick="delTaxRow(' + tax_row + ')" class="glyphicon glyphicon-trash"></span><br></div></div></div><div class="col-md-1 col-xs-12" style="margin-top: 2%"><button  id="Savetax_btn_Id_' + tax_row + '" onclick="Insert_Tax(' + tax_row + ')" type="button" style="" class="btn btn-success">Save</button></div></div></div>');
+            tax_row = tax_row + 1;
         });
 
         $("#checkboxDefault3").click(function () {
@@ -481,8 +415,147 @@
             }
         });
 
-
+       
     });
+    
+    function delTaxRow(index)
+    {
+        var id = $("#hidden_taxId_" + index).val();
+        if (id != "0")
+        {
+            $.ajax({
+                type: "GET",
+                url: "/SuperAdmin/Delete_tax",
+                data: { "id": id },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("deleted");
+
+                    document.getElementById("taxrow_" + index).style.display = "none";
+                    $("#taxrow_" + index).remove();
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+        else {
+            document.getElementById("taxrow_" + index).style.display = "none";
+            $("#taxrow_" + index).remove();
+        }
+
+    }
+
+    function UpdateTaxRow(index)
+    {
+        var id = $("#hidden_taxId_" + index).val();
+        var name = $("#tax_name_id_" + index).val();
+        var rate = $("#tax_rate_id_" + index).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Update_tax",
+            data: { "id": id, "name": name, "rate": rate },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert("Updated");
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+
+    }
+
+    function Load_TaxData()
+    {
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/GetTax_ForInvoiceOptions",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                for (var i = 0; i < response.length; i++)
+                {
+                    var item = response[i];
+                    var id = item.id;
+                    var name = item.name;
+                    var rate = item.rate;
+                    $("#dynamic_tax_rows_id").append('<div id=taxrow_' + tax_row + ' class="row"> <input type="hidden" value="' + id + '" id="hidden_taxId_' + tax_row + '"/> <div class="col-md-3 col-xs-10"></div><div class="col-md-9 col-xs-12"><div class="col-md-3 col-xs-4">	<div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Tax Name</strong></label><br><div class="row form-group"><div class="input-group col-md-9 col-xs-9"><input type="text" id="tax_name_id_' + tax_row + '" style="margin-left: 8%" class="form-control" value="' + name + '" /></div></div></div></div><div class="col-md-2 col-xs-3"><div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Rate</strong></label><br><div class="row form-group"><div class="input-group col-md-9 col-xs-12"><input type="text" id="tax_rate_id_' + tax_row + '" style="margin-left:8%" class="form-control"  value="' + rate + '"  /> <span class="input-group-addon">&nbsp; %</span></div></div></div></div><div class="col-md-3 col-xs-3"><div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px; margin-bottom: 8%"><strong>Usage</strong></label><br><div class="row form-group"><label class="col-md-6  col-xs-5 text-left" style="margin-left:1%">0 items</label><span>&nbsp;</span><span onclick="delTaxRow(' + tax_row + ')" class="glyphicon glyphicon-trash"></span><br></div></div></div><div class="col-md-1 col-xs-12" style="margin-top: 2%"><button onclick="UpdateTaxRow(' + tax_row + ')" type="button" style="" class="btn btn-danger">Update</button></div></div></div>');
+
+                    tax_row = tax_row + 1;
+                }
+               
+
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+    function Insert_Tax(index)
+    {
+        var name = $("#tax_name_id_"+index).val();
+        var rate = $("#tax_rate_id_" + index).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Insert_tax",
+            data: { "name": name,"rate":rate },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                $("#hidden_taxId_" + index).val(response);
+                $("#Savetax_btn_Id_" + index).addClass("btn btn-danger").text("Update");
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
+
+
+    function Calculate_Ammount()
+    {
+        for (var i = 0; i < rowNum; i++)
+        {
+            var unit_price = $("#unit_" + i).val();
+            unit_price = parseFloat(unit_price);
+            var tax = $("#tax_" + i).html();
+            tax = parseFloat(tax);
+            var tax_ammount = (tax / 100) * unit_price;
+            tax_ammount = tax_ammount + unit_price;
+
+            if (!isNaN(tax_ammount))
+                $("#totel_" + i).val(tax_ammount);
+
+            //   alert(tax_ammount);
+        }
+    }
+
+
+
 
 </script>
 <!-- End: Content-Wrapper -->

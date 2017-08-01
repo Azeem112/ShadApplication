@@ -338,6 +338,7 @@
     </Compile>
     <Compile Include="Models\EditUserModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserListViewModel.cs" />

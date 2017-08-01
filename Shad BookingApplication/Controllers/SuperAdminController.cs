@@ -173,6 +173,9 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult EditItem(int ? id)
         {
+            var ls = db.AspNetTaxes.ToList();
+            ViewBag.tax_list = ls;
+
             var item = db.AspNetItems.Where(x => x.Id == id).FirstOrDefault();
             return View(item);
         }
@@ -188,6 +191,9 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult AddItem()
         {
+            var ls = db.AspNetTaxes.ToList();
+            ViewBag.tax_list = ls;
+         
             return View();
         }
 
@@ -197,6 +203,7 @@ namespace Shad_BookingApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 db.AspNetItems.Add(aspNetItem);
                 db.SaveChanges();
 
@@ -1524,6 +1531,13 @@ namespace Shad_BookingApplication.Controllers
             return Json(tax, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult Get_TaxRate(string item_id)
+        {
+            var id = Convert.ToInt16(item_id);
+            var tax = db.AspNetTaxes.Where(x => x.Id == id).Select(y => y.Rate).FirstOrDefault().ToString();
+            return Json(tax, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult Get_ItemList()
         {
@@ -1717,7 +1731,63 @@ namespace Shad_BookingApplication.Controllers
             
         }
 
-   
+        public JsonResult GetTax_ForInvoiceOptions()
+        {
+            List<tax_struct> ls = new List<tax_struct>();
+            var list_taxes=db.AspNetTaxes.ToList();
+            
+            foreach (var item in list_taxes)
+            {
+                var obj = new tax_struct();
+                obj.id = item.Id.ToString();
+                obj.name = item.Name;
+                obj.rate = item.Rate.ToString();
+
+                ls.Add(obj);
+
+            }
+            return Json(ls, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Delete_tax(string id)
+        {
+            var tax_id = Convert.ToInt16(id);
+            var tax_obj = db.AspNetTaxes.Where(x=>x.Id == tax_id).FirstOrDefault();
+            db.AspNetTaxes.Remove(tax_obj);
+            db.SaveChanges();
+
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Update_tax(string id,string name,string rate)
+        {
+            var tax_id = Convert.ToInt16(id);
+            var tax_rate = Convert.ToDouble(rate);
+
+            var obj = new AspNetTax();
+            obj.Id = tax_id;
+            obj.Name = name;
+            obj.Rate = tax_rate;
+
+            db.Entry(obj).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Json("Updated", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult InvoiceOption(AspNetInvoiceOption aspNetInvoiceOption)
+        {
+            if (aspNetInvoiceOption.HideName == null)
+                aspNetInvoiceOption.HideName = false;
+
+            if (aspNetInvoiceOption.HidePaymentHistory == null)
+                aspNetInvoiceOption.HidePaymentHistory = false;
+
+            db.AspNetInvoiceOptions.Add(aspNetInvoiceOption);
+            db.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
 
     }
 }
