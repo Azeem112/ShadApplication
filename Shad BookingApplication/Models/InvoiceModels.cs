@@ -14,7 +14,13 @@ namespace Shad_BookingApplication.Models
         public string id { get; set; }
         public string rate { get; set; }
         public string name { get; set; }
-    } 
+    }
+
+    public class payment_struct
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+    }
 
 
 }

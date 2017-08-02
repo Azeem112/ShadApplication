@@ -273,12 +273,6 @@
                     </div>
                 </div>
 
-                
-
-
-
-
-
                 <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%;"> </div>
 
                 @* Dynamic rows of tax Added Here *@
@@ -301,55 +295,37 @@
                             <button type="button"  id="AddTax_btn" style="" class="btn btn-success">+</button>
                         </div>
                     </div>
-
-                    
-
-
                </div>           <!-- End div dynamic tax rows  -->
 
                 <br>
 
                 <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%;"> </div>
-                <div class="row">
-                    <div class="col-md-3 col-xs-12">
-                        <div class="row form-group">
-                            <label class="col-md-12 text-left" style="margin-left:3% "><h3>Payment Types</h3></label><br>
-                            <label class="col-md-12 text-left" style="margin-left:3% ">Create payment types to apply to invoice </label>
-                        </div>
-                    </div>
-                    <div id="main_payment_section" class="col-md-6 col-xs-8">
-                        <label class="col-md-12" style="margin-left: 4%"><h5>Payment Types</h5></label>
-                        <div class="row form-group">
-                            <div class="input-group col-md-10 col-xs-11 col-xs-offset-1">
-                                <input type="text" class="form-control" placeholder="On Account" />
+
+                @* Dynamic rows of payment Added Here *@
+
+                <div id="dynamic_payment_rows_id">
+                   
+                
+                    <div class="row">
+                        <div class="col-md-3 col-xs-5">
+                            <div class="row form-group">
+                                <label class="col-md-12 col-xs-10 text-left" style="margin-left:3% "><h3>Payment Types</h3></label><br>
+                                <label class="col-md-12 col-xs-10 text-left" style="margin-left:3% ">Create payment types to apply to invoice </label>
                             </div>
                         </div>
 
-                        <div class="row form-group">
-
-                            <div class="input-group col-md-10 col-xs-11 col-xs-offset-1">
-
-                                <input type="text" class="form-control" placeholder="Credit Card" />
-                            </div>
-
+                        <div class="col-md-6 col-xs-5">
 
                         </div>
 
-                        <div class="row form-group">
-
-                            <div class="input-group col-md-10 col-xs-11 col-xs-offset-1">
-
-                                <input type="text" class="form-control" placeholder="Cash" />
-                            </div>
-
-
+                        <div class="col-md-1 col-xs-1" style="margin-top: 2%">
+                            <button type="button" id="paymentAddbtn_Id" style="" class="btn btn-success">+</button>
                         </div>
                     </div>
-                    <div class="col-md-1 col-xs-1" style="margin-top: 2%">
-                        <button type="button" style="" class="btn btn-success">+</button>
-                    </div>
-                    <br>
-                </div>
+
+               </div>
+
+ 
             </div>
 
             <br><br><br><br>
@@ -384,16 +360,26 @@
 <script type="text/javascript">
 
     var tax_row = 0;
-
+    var payment_row = 0;
+    var pre_payment = 0;
 
     $(document).ready(function () {
         Load_TaxData();
+        Load_PaymentData();
        
 
         $("#AddTax_btn").click(function () {
 
             $("#dynamic_tax_rows_id").append('<div id=taxrow_' + tax_row + ' class="row"> <input type="hidden" value="0" id="hidden_taxId_' + tax_row + '"/>  <div class="col-md-3 col-xs-10"></div><div class="col-md-9 col-xs-12"><div class="col-md-3 col-xs-4">	<div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Tax Name</strong></label><br><div class="row form-group"><div class="input-group col-md-9 col-xs-9"><input type="text" id="tax_name_id_' + tax_row + '" style="margin-left: 8%" class="form-control" /></div></div></div></div><div class="col-md-2 col-xs-3"><div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px;"><strong>Rate</strong></label><br><div class="row form-group"><div class="input-group col-md-9 col-xs-12"><input type="text" id="tax_rate_id_' + tax_row + '" style="margin-left:8%" class="form-control" placeholder="20" /> <span class="input-group-addon">&nbsp; %</span></div></div></div></div><div class="col-md-3 col-xs-3"><div class="row form-group" style="padding: 0px; margin: 0px;"><br><label class="col-md-12  col-xs-10 text-left" style="padding: 0px; margin: 0px; margin-bottom: 8%"><strong>Usage</strong></label><br><div class="row form-group"><label class="col-md-6  col-xs-5 text-left" style="margin-left:1%">0 items</label><span>&nbsp;</span><span onclick="delTaxRow(' + tax_row + ')" class="glyphicon glyphicon-trash"></span><br></div></div></div><div class="col-md-1 col-xs-12" style="margin-top: 2%"><button  id="Savetax_btn_Id_' + tax_row + '" onclick="Insert_Tax(' + tax_row + ')" type="button" style="" class="btn btn-success">Save</button></div></div></div>');
             tax_row = tax_row + 1;
+        });
+
+        $("#paymentAddbtn_Id").click(function () {
+
+            $("#dynamic_payment_rows_id").append('<div  id=paymentrow_' + payment_row + ' class="row"><div class="col-md-3 col-xs-5"></div><input type="hidden" value="0" id="payment_hidden_Id_' + payment_row + '"/><div class="col-md-9 col-xs-12"><div class="col-md-6 col-xs-8"><div class="row form-group" style="padding: 0px; margin: 0px;"><br /><div class="row form-group"><div class="input-group col-md-10 col-xs-11"><input id="paymenttype_name_id_' + payment_row + '" type="text" style="margin-left: 8%" class="form-control" placeholder="Type Here..." /></div></div></div></div><div class="col-md-1 col-xs-3"><label class="col-md-1  col-xs-3 text-left" style="margin-left:0%;margin-top:25%;"><span>&nbsp;</span><span onclick="Delete_Payment_Row(' + payment_row + ')" class="glyphicon glyphicon-trash"></span></label></div><div class="col-md-3 col-xs-5 "><br /><button id="Savepayment_btn_Id_' + payment_row + '" onclick="Insert_Payment(' + payment_row + ')"  type="button" style="" class="btn btn-success">Save</button> <button id="Editpayment_btn_Id_' + payment_row + '" onclick="Edit_Payment(' + payment_row + ')"  type="button" class="btn btn-success">Edit</button> <button id="Updatepayment_btn_Id_' + payment_row + '" onclick="Update_Payment(' + payment_row + ')"  type="button" class="btn btn-danger">Update</button></div></div></div>')
+            $("#Editpayment_btn_Id_" + payment_row).hide();
+            $("#Updatepayment_btn_Id_" + payment_row).hide();
+            payment_row = payment_row + 1;
         });
 
         $("#checkboxDefault3").click(function () {
@@ -415,7 +401,7 @@
             }
         });
 
-       
+        //paymentAddbtn_Id
     });
     
     function delTaxRow(index)
@@ -472,7 +458,6 @@
                 alert(response.responseText);
             }
         });
-
 
     }
 
@@ -535,6 +520,137 @@
     }
 
 
+    function Insert_Payment(index) {
+        var name = $("#paymenttype_name_id_" + index).val();
+
+        pre_payment = index;
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Insert_Payment",
+            data: { "name": name, },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                $("#payment_hidden_Id_" + index).val(response);
+                
+                $("#Editpayment_btn_Id_" + index).show();
+                $("#Savepayment_btn_Id_" + index).hide();
+
+               // $("#Savepayment_btn_Id_" + index).addClass("btn btn-danger").text("Edit");
+
+
+                $("#paymenttype_name_id_" + index).prop('disabled', true);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+        
+   }
+
+    function Edit_Payment(index)
+    {
+        $("#Editpayment_btn_Id_" + index).hide();
+        $("#Updatepayment_btn_Id_" + index).show();
+        $("#paymenttype_name_id_" + index).prop('disabled', false);
+
+    }
+
+    function Update_Payment(index)
+    {
+        var id = $("#payment_hidden_Id_" + index).val();
+        var name = $("#paymenttype_name_id_" + index).val();
+        alert(id);
+
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/Update_Payment",
+            data: { "id": id, "name": name},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $("#Editpayment_btn_Id_" + index).show();
+                $("#Updatepayment_btn_Id_" + index).hide();
+                $("#paymenttype_name_id_" + index).prop('disabled', true);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+    function Load_PaymentData() {
+        $.ajax({
+            type: "GET",
+            url: "/SuperAdmin/GetPayment_ForInvoiceOptions",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var item = response[i];
+                    var id = item.id;
+                    var name = item.name;
+                    $("#dynamic_payment_rows_id").append('<div  id=paymentrow_' + payment_row + ' class="row"><div class="col-md-3 col-xs-5"></div><input type="hidden" value="' + id + '" id="payment_hidden_Id_' + payment_row + '"/><div class="col-md-9 col-xs-12"><div class="col-md-6 col-xs-8"><div class="row form-group" style="padding: 0px; margin: 0px;"><br /><div class="row form-group"><div class="input-group col-md-10 col-xs-11"><input id="paymenttype_name_id_' + payment_row + '" type="text" value="' + name + '" style="margin-left: 8%" class="form-control" placeholder="Type Here..." /></div></div></div></div><div class="col-md-1 col-xs-3"><label class="col-md-1  col-xs-3 text-left" style="margin-left:0%;margin-top:25%;"><span>&nbsp;</span><span onclick="Delete_Payment_Row(' + payment_row + ')" class="glyphicon glyphicon-trash"></span></label></div><div class="col-md-3 col-xs-5 "><br /><button id="Savepayment_btn_Id_' + payment_row + '" onclick="Insert_Payment(' + payment_row + ')"  type="button" style="" class="btn btn-success">Save</button> <button id="Editpayment_btn_Id_' + payment_row + '" onclick="Edit_Payment(' + payment_row + ')"  type="button" class="btn btn-success">Edit</button> <button id="Updatepayment_btn_Id_' + payment_row + '" onclick="Update_Payment(' + payment_row + ')"  type="button" class="btn btn-danger">Update</button></div></div></div>')
+                  
+                    $("#paymenttype_name_id_" + payment_row).prop('disabled', true);
+                    $("#Editpayment_btn_Id_" + payment_row).show();
+                    $("#Updatepayment_btn_Id_" + payment_row).hide();
+                    $("#Savepayment_btn_Id_" + payment_row).hide();
+                   
+                    payment_row = payment_row + 1;
+                }
+
+
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+
+    function Delete_Payment_Row(index)
+    {
+        var id = $("#payment_hidden_Id_" + index).val();
+        if (id != "0") {
+            $.ajax({
+                type: "GET",
+                url: "/SuperAdmin/Delete_Payment",
+                data: { "id": id },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("deleted");
+
+                    document.getElementById("paymentrow_" + index).style.display = "none";
+                    $("#paymentrow_" + index).remove();
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+        else {
+            document.getElementById("paymentrow_" + index).style.display = "none";
+            $("#paymentrow_" + index).remove();
+        }
+    }
 
     function Calculate_Ammount()
     {

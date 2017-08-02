@@ -1789,5 +1789,65 @@ namespace Shad_BookingApplication.Controllers
             return RedirectToAction("Dashboard");
         }
 
+        public JsonResult Insert_Payment(string name)
+        {
+            var obj = new AspNetBookingPaymentType();
+
+            try
+            {
+                obj.Name = name;
+                db.AspNetBookingPaymentTypes.Add(obj);
+                db.SaveChanges();
+                var id = obj.Id.ToString();
+                return Json(id, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.InnerException.ToString(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public JsonResult Update_Payment(string id, string name)
+        {
+            var tax_id = Convert.ToInt16(id);
+            
+            var obj = new AspNetBookingPaymentType();
+            obj.Id = tax_id;
+            obj.Name = name;
+
+            db.Entry(obj).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Json("Updated", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetPayment_ForInvoiceOptions()
+        {
+            List<payment_struct> ls = new List<payment_struct>();
+            var list_taxes = db.AspNetBookingPaymentTypes.ToList();
+
+            foreach (var item in list_taxes)
+            {
+                var obj = new payment_struct();
+                obj.id = item.Id.ToString();
+                obj.name = item.Name;
+
+                ls.Add(obj);
+
+            }
+            return Json(ls, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Delete_Payment(string id)
+        {
+            var pay_id = Convert.ToInt16(id);
+            var pay_obj = db.AspNetBookingPaymentTypes.Where(x => x.Id == pay_id).FirstOrDefault();
+            db.AspNetBookingPaymentTypes.Remove(pay_obj);
+            db.SaveChanges();
+
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
+        }
+        //Delete_Payment
     }
 }
