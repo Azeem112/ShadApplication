@@ -98,7 +98,7 @@ namespace Shad_BookingApplication.Controllers
                     else if (UserManager.IsInRole(userID, "Company_Admin"))
                     {
                         System.Web.HttpContext.Current.Session["Company_AdminID"] = userID;
-                        return RedirectToAction("Dashboard", "Student_Dashboard");
+                        return RedirectToAction("AddServiceGroup", "CompanyAdmin");
                     }
                     else if (UserManager.IsInRole(userID, "Employee"))
                     {

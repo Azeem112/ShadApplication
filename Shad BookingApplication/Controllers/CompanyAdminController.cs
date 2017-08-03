@@ -76,6 +76,17 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult AddService()
         {
+            var ls = db.AspNetTaxes.ToList();
+            ViewBag.tax_list = ls;
+            ViewBag.service_group__list = db.AspNetServiceGroups.ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddService(AspNetService aspNetService)
+        {
+
             return View();
         }
 

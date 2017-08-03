@@ -18,6 +18,7 @@ namespace Shad_BookingApplication.Models
         public AspNetTax()
         {
             this.AspNetItems = new HashSet<AspNetItem>();
+            this.AspNetServices = new HashSet<AspNetService>();
         }
     
         public int Id { get; set; }
@@ -26,5 +27,7 @@ namespace Shad_BookingApplication.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetItem> AspNetItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetService> AspNetServices { get; set; }
     }
 }

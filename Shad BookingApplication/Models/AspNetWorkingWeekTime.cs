@@ -17,6 +17,7 @@ namespace Shad_BookingApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetWorkingWeekTime()
         {
+            this.AspNetAgencies = new HashSet<AspNetAgency>();
             this.AspNetCustomers = new HashSet<AspNetCustomer>();
         }
     
@@ -29,6 +30,8 @@ namespace Shad_BookingApplication.Models
         public Nullable<int> SaturdayID { get; set; }
         public Nullable<int> SundayID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
         public virtual AspNetWorkingTime AspNetWorkingTime { get; set; }

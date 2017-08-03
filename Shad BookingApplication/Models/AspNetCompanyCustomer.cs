@@ -31,7 +31,9 @@ namespace Shad_BookingApplication.Models
         public string RefferedBy { get; set; }
         public string Contradiction { get; set; }
         public Nullable<int> CompanyNotificationId { get; set; }
+        public Nullable<int> AgencyId { get; set; }
     
+        public virtual AspNetAgency AspNetAgency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetBooking> AspNetBookings { get; set; }
         public virtual AspNetCompanyNotifination AspNetCompanyNotifination { get; set; }

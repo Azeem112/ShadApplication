@@ -42,6 +42,7 @@ namespace Shad_BookingApplication.Models
         public string FullName { get; set; }
         public string Status { get; set; }
         public string Address { get; set; }
+        public string HeadId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
