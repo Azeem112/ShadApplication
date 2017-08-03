@@ -67,8 +67,12 @@ namespace Shad_BookingApplication.Controllers
         [HttpPost]
         public ActionResult EditUser(AspNetUser user)
         {
+            //var pass = db.AspNetUsers.Where(x => x.Id == user.Id).FirstOrDefault().PasswordHash;
+            //user.PasswordHash = pass;
+
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
+
             return RedirectToAction("UserList");
         }
 
@@ -110,7 +114,7 @@ namespace Shad_BookingApplication.Controllers
         {
             db.AspNetBusinessCatageories.Add(aspNetBusinessCatageory);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Dashboard");
         }
 
         [HttpPost]
@@ -119,7 +123,7 @@ namespace Shad_BookingApplication.Controllers
         {
             db.AspNetBusinessSubCatageories.Add(aspNetBusinessSubCatageory);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Dashboard");
         }
 
 
@@ -155,7 +159,7 @@ namespace Shad_BookingApplication.Controllers
                     }
 
 
-                    return RedirectToAction("AddSuperAdmin");
+                    return RedirectToAction("UserList");
                 }
             }
             catch(Exception ex)
@@ -163,12 +167,15 @@ namespace Shad_BookingApplication.Controllers
 
             }
             
-            return View();
+            return RedirectToAction("UserList");
         }
         //EditItem
 
         public ActionResult EditItem(int ? id)
         {
+            var ls = db.AspNetTaxes.ToList();
+            ViewBag.tax_list = ls;
+
             var item = db.AspNetItems.Where(x => x.Id == id).FirstOrDefault();
             return View(item);
         }
@@ -184,6 +191,9 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult AddItem()
         {
+            var ls = db.AspNetTaxes.ToList();
+            ViewBag.tax_list = ls;
+         
             return View();
         }
 
@@ -193,6 +203,7 @@ namespace Shad_BookingApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 db.AspNetItems.Add(aspNetItem);
                 db.SaveChanges();
 
@@ -209,10 +220,10 @@ namespace Shad_BookingApplication.Controllers
                     db.AspNetCustomerSMS.Add(smspackage);
                     db.SaveChanges();
                 }
-                return RedirectToAction("AddItem");
+                return RedirectToAction("ItemList");
             }
 
-            return View(aspNetItem);
+            return View();
         }
 
         public ActionResult LoginDetails()
@@ -234,49 +245,51 @@ namespace Shad_BookingApplication.Controllers
             return View(addCustomerViewModel);
         }
 
+        
+
         [HttpPost]
         public ActionResult AddCustomer(AddCustomerViewModel addCustomerViewModel, HttpPostedFileBase[] files)
         {
-                            // Adding Details
-                 var list_of_subcat_ids=Get_SubCat_Id(addCustomerViewModel.Customer_SubCatageory);
-                 addCustomerViewModel.Detail.SubCatageoryNo = list_of_subcat_ids.Count();
+            // Adding Details
+            var list_of_subcat_ids = Get_SubCat_Id(addCustomerViewModel.Customer_SubCatageory);
+            addCustomerViewModel.Detail.SubCatageoryNo = list_of_subcat_ids.Count();
 
-                 db.AspNetCustomerDetails.Add(addCustomerViewModel.Detail);
-                 db.SaveChanges();
+            db.AspNetCustomerDetails.Add(addCustomerViewModel.Detail);
+            db.SaveChanges();
 
-                             // Adding Location 
-                 var loc_country_name = Request.Form["LocCountryName"].ToString();
-                 addCustomerViewModel.Location.CountryName = loc_country_name;
+            // Adding Location 
+            var loc_country_name = Request.Form["LocCountryName"].ToString();
+            addCustomerViewModel.Location.CountryName = loc_country_name;
 
-                 db.AspNetCustomerLocations.Add(addCustomerViewModel.Location);
-                 db.SaveChanges();
+            db.AspNetCustomerLocations.Add(addCustomerViewModel.Location);
+            db.SaveChanges();
 
-                             // Adding Contact
-                 db.AspNetCustomerContacts.Add(addCustomerViewModel.Contact);
-                 db.SaveChanges();
+            // Adding Contact
+            db.AspNetCustomerContacts.Add(addCustomerViewModel.Contact);
+            db.SaveChanges();
 
-                             // Adding Region
+            // Adding Region
 
-                 var region_country = Request.Form["region_country"].ToString();
-                 var region_timezone = Request.Form["region_timezone"];
-                 var region_dateformat = Request.Form["region_dateformat"].ToString();
-                 var region_timeformat = Request.Form["region_timeformat"].ToString();
-                 var region_currency = Request.Form["region_currency"].ToString();
-
-
-                 var region = new AspNetCustomerRegion();
-
-                 region.CountryName = region_country;
-                 region.TimeZoneName = region_timezone;
-                 region.DateFormate = region_dateformat;
-                 region.TimeFormate = region_timeformat;
-                 region.CurrencyName = region_currency;
-
-                 db.AspNetCustomerRegions.Add(region);
-                 db.SaveChanges();
+            var region_country = Request.Form["region_country"].ToString();
+            var region_timezone = Request.Form["region_timezone"];
+            var region_dateformat = Request.Form["region_dateformat"].ToString();
+            var region_timeformat = Request.Form["region_timeformat"].ToString();
+            var region_currency = Request.Form["region_currency"].ToString();
 
 
-     
+            var region = new AspNetCustomerRegion();
+
+            region.CountryName = region_country;
+            region.TimeZoneName = region_timezone;
+            region.DateFormate = region_dateformat;
+            region.TimeFormate = region_timeformat;
+            region.CurrencyName = region_currency;
+
+            db.AspNetCustomerRegions.Add(region);
+            db.SaveChanges();
+
+
+
             // Adding Gallery 
             var gallary = new AspNetCustomerGallery();
             int i = 1;
@@ -322,7 +335,7 @@ namespace Shad_BookingApplication.Controllers
             db.AspNetCustomerGalleries.Add(gallary);
             db.SaveChanges();
 
-                    // Adding Business Details
+            // Adding Business Details
             var BusinessDetail = new AspNetCustomerBusinessDetail();
             HttpPostedFileBase file = Request.Files["business_logo_img"];
             if (file.ContentLength > 0)
@@ -331,7 +344,7 @@ namespace Shad_BookingApplication.Controllers
                 var path = Path.Combine(Server.MapPath("~/ServerFiles"), fileName);
                 file.SaveAs(path);
                 BusinessDetail.Logo = path;
-                
+
             }
             else
             {
@@ -351,18 +364,18 @@ namespace Shad_BookingApplication.Controllers
             addCustomerViewModel.UserType.CompanyName = addCustomerViewModel.Detail.BussinessName;
             db.AspNetCustomerTypes.Add(addCustomerViewModel.UserType);
             db.SaveChanges();
-  
-                    // Getting SMS ID
+
+            // Getting SMS ID
             var sms_package_id = addCustomerViewModel.SingleSms.ItemID;
 
 
-                    // Adding Working time
+            // Adding Working time
             var time = Request.Form["custom_timepicker_name"].ToString();
             var id = time_string_parse(time);
 
             //  var businessDetails_textarea = Request.Form["editor1"];
 
-                    // Adding Social
+            // Adding Social
             db.AspNetSocials.Add(addCustomerViewModel.Social);
             db.SaveChanges();
 
@@ -396,7 +409,7 @@ namespace Shad_BookingApplication.Controllers
                 db.AspNetCustomer_SubCatageory.Add(obj);
                 db.SaveChanges();
             }
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("CustomersList");
         }
 
         public ActionResult EditCustomer(int? id)
@@ -412,13 +425,7 @@ namespace Shad_BookingApplication.Controllers
             var bus_detail=db.AspNetCustomerBusinessDetails.Where(x=>x.Id==customer.BussinessID).Select(y => y).FirstOrDefault();
             var contact = db.AspNetCustomerContacts.Where(x => x.Id == customer.ContactId).Select(x => x).FirstOrDefault();
             var social = db.AspNetSocials.Where(x => x.Id == customer.SocialID).Select(x => x).FirstOrDefault();
-
-
-            //AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
-            //addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
-            //addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
-
-            
+                                              
             var detail_id = db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().DetailId;
             var bus_cat_id = db.AspNetCustomerDetails.Where(x => x.Id == detail_id).FirstOrDefault().BusinessCatageoryId;
             var bus_cat_name = db.AspNetBusinessCatageories.Where(x => x.Id == bus_cat_id).FirstOrDefault().Name;
@@ -430,6 +437,17 @@ namespace Shad_BookingApplication.Controllers
             var status = db.AspNetCustomerTypes.Where(x => x.Id == user_type_id).FirstOrDefault().Status;
             var sms_id = db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().SmsID;
             var sms_package_name = db.AspNetCustomerSMS.Where(x => x.Id == sms_id).FirstOrDefault().SmsPackageName;
+
+
+            // Getting bus Sub cat id's and then convert in to name
+
+            var selected_subCatlist = db.AspNetCustomer_SubCatageory.Where(x => x.CustomerID == id).ToList();
+            List<string> selected_subCatlist_name = new List<string>();
+            foreach (var item in selected_subCatlist)
+            {
+                var name=db.AspNetBusinessSubCatageories.Where(x => x.Id == item.SubCatageoryId).FirstOrDefault().Name;
+                selected_subCatlist_name.Add(name);
+            }
 
 
             var region_id = db.AspNetCustomers.Where(x => x.Id == id).FirstOrDefault().RegionID;
@@ -451,7 +469,12 @@ namespace Shad_BookingApplication.Controllers
             ViewBag.UserType_Status = status;
             ViewBag.SMSPackage= db.AspNetCustomerSMS.ToList();
             ViewBag.sms_package_name = sms_package_name;
+            ViewBag.selected_CurrencyName = region_obj.CurrencyName;
+            ViewBag.selected_subCatlist_name = selected_subCatlist_name;
 
+
+
+         
 
             AddCustomerViewModel viewmodel = new AddCustomerViewModel();
             viewmodel.User = users;
@@ -466,41 +489,130 @@ namespace Shad_BookingApplication.Controllers
             return View(viewmodel);
         }
 
+
+        public void Update_SubCatagory(List<int> sub_CatIdlist, int region_id)
+        {
+            var cus_id = db.AspNetCustomers.Where(x => x.RegionID == region_id).FirstOrDefault().Id;
+            var ls_subCat = db.AspNetCustomer_SubCatageory.Where(x => x.CustomerID == cus_id).ToList();
+
+            // db.AspNetCustomer_SubCatageor
+
+
+            //ctx.Entry(employer).State = EntityState.Deleted;
+            //ctx.SaveChanges();
+
+            foreach (var item in ls_subCat)
+            {
+                var obj = db.AspNetCustomer_SubCatageory.Where(x => x.SubCatageoryId == item.SubCatageoryId && x.CustomerID == cus_id).FirstOrDefault();
+                db.Entry(obj).State = EntityState.Deleted;
+                db.SaveChanges();
+            }
+
+            foreach (var item in sub_CatIdlist)
+            {
+                var obj = new AspNetCustomer_SubCatageory();
+                obj.SubCatageoryId = item;
+                obj.CustomerID = cus_id;
+                db.AspNetCustomer_SubCatageory.Add(obj);
+                db.SaveChanges();
+            }
+        }
+
         [HttpPost]
         public ActionResult EditCustomer(AddCustomerViewModel addCustomerViewModel)
         {
-            //if (ModelState.IsValid )
-            //{
-                try
+
+            var list_of_subcat_ids = new List<int>();
+            foreach (var item in addCustomerViewModel.Customer_SubCatageory)            // Converting string => int 
+            {
+                var value= Convert.ToInt16(item);
+                list_of_subcat_ids.Add(value);
+            }
+
+            addCustomerViewModel.Detail.SubCatageoryNo = list_of_subcat_ids.Count();
+
+            Update_SubCatagory(list_of_subcat_ids, addCustomerViewModel.Region.Id);
+
+           // addCustomerViewModel.Detail.BusinessCatageoryId
+
+
+            // adding location missing value from models
+            addCustomerViewModel.Location.CountryName= Request.Form["LocCountryName"].ToString();
+
+            //Contact.Mobile
+            addCustomerViewModel.User.PhoneNumber = addCustomerViewModel.Contact.Mobile;
+
+            //company name
+            addCustomerViewModel.UserType.CompanyName= addCustomerViewModel.Detail.BussinessName;
+
+
+            var region_country = Request.Form["region_country"].ToString();
+            var region_timezone = Request.Form["region_timezone"];
+            var region_dateformat = Request.Form["region_dateformat"].ToString();
+            var region_timeformat = Request.Form["region_timeformat"].ToString();
+            var region_currency = Request.Form["region_currency"].ToString();
+
+
+            var region = new AspNetCustomerRegion();
+
+            region.Id = addCustomerViewModel.Region.Id;
+            region.CountryName = region_country;
+            region.TimeZoneName = region_timezone;
+            region.DateFormate = region_dateformat;
+            region.TimeFormate = region_timeformat;
+            region.CurrencyName = region_currency;
+
+
+            // updating time week
+            var time = Request.Form["custom_timepicker_name"].ToString();
+            var work_id =(int) db.AspNetCustomers.Where(x => x.RegionID == addCustomerViewModel.Region.Id).FirstOrDefault().WorkingID;
+            time_string_parse(time, work_id);
+
+
+          //  var bb=db.AspNetCustomer_SubCatageory.Where()
+
+
+            try
                 {
-                    db.Entry(addCustomerViewModel.Location).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                //var loc_id=addCustomerViewModel.Location.Id;
-                //var user = db.AspNetCustomers.Where(x => x.LocationId == loc_id).FirstOrDefault();
-                //var cusomert_id=db.AspNetCustomers.Find(1);
-
-                //db.Entry(addCustomerViewModel.Location).State = EntityState.Modified;
-                //db.Entry(addCustomerViewModel.BusinessDetail).State = EntityState.Modified;
-                //db.Entry(addCustomerViewModel.Detail).State = EntityState.Modified;
-                //db.Entry(addCustomerViewModel.Contact).State = EntityState.Modified;
-                //// db.Entry(addCustomerViewModel.UserType).State = EntityState.Modified;
-                //db.Entry(addCustomerViewModel.Social).State = EntityState.Modified;
-                ////db.Entry(addCustomerViewModel.User).State = EntityState.Modified;
+                db.Entry(addCustomerViewModel.Location).State = EntityState.Modified;
                 db.SaveChanges();
+
+                db.Entry(region).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //db.Entry(addCustomerViewModel.Gallery).State = EntityState.Modified;
+                //db.SaveChanges();
+
+                db.Entry(addCustomerViewModel.BusinessDetail).State = EntityState.Modified;
+                db.SaveChanges();
+
+                db.Entry(addCustomerViewModel.Detail).State = EntityState.Modified;
+                db.SaveChanges();
+
+                db.Entry(addCustomerViewModel.Contact).State = EntityState.Modified;
+                db.SaveChanges();
+
+                db.Entry(addCustomerViewModel.UserType).State = EntityState.Modified;
+                db.SaveChanges();
+
+                db.Entry(addCustomerViewModel.Social).State = EntityState.Modified;
+                db.SaveChanges();
+
+                db.Entry(addCustomerViewModel.User).State = EntityState.Modified;
+                db.SaveChanges();
+
                 }
-                catch (OptimisticConcurrencyException ex)
+                catch (Exception ex)
                 {
                    // db.Refresh(RefreshMode.ClientWins, db.Articles);
                    // context.SaveChanges();
                 }
                 
                 
-                return RedirectToAction("UserList");
+                return RedirectToAction("CustomersList");
             
            // return View();
         }
-
 
         public string AddCustomerAccount(AspNetUser aspNetUser,string phone_no)
         {
@@ -936,6 +1048,372 @@ namespace Shad_BookingApplication.Controllers
 
         }
 
+
+        private void time_string_parse(string time,int work_id)
+        {
+            var mon_obj = new AspNetWorkingTime();
+            var tue_obj = new AspNetWorkingTime();
+            var wed_obj = new AspNetWorkingTime();
+            var thus_obj = new AspNetWorkingTime();
+            var fri_obj = new AspNetWorkingTime();
+            var sat_obj = new AspNetWorkingTime();
+            var sun_obj = new AspNetWorkingTime();
+
+            var a =(int) db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().MondayID;
+            var b = (int)db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().TuesdayID;
+            var c = (int)db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().WednesdayID;
+            var d = (int)db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().ThursdayID;
+            var e = (int)db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().FridayID;
+            var f = (int)db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().SaturdayID;
+            var g = (int)db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().SundayID;
+
+            mon_obj.Id = a;
+            tue_obj.Id = b;
+            wed_obj.Id = c;
+            thus_obj.Id = d;
+            fri_obj.Id = e;
+            sat_obj.Id = f;
+            sun_obj.Id = g;
+
+
+            mon_obj.isoff = true;
+            tue_obj.isoff = true;
+            wed_obj.isoff = true;
+            thus_obj.isoff = true;
+
+            fri_obj.isoff = true;
+            sat_obj.isoff = true;
+            sun_obj.isoff = true;
+
+
+            db.Entry(mon_obj).State = EntityState.Modified;
+            db.Entry(tue_obj).State = EntityState.Modified;
+            db.Entry(wed_obj).State = EntityState.Modified;
+            db.Entry(thus_obj).State = EntityState.Modified;
+            db.Entry(fri_obj).State = EntityState.Modified;
+            db.Entry(sat_obj).State = EntityState.Modified;
+            db.Entry(sun_obj).State = EntityState.Modified;
+
+            db.SaveChanges();
+
+
+            var time_arr = time.Split('|');
+            foreach (var item in time_arr)
+            {
+                if (item.Equals(""))
+                    continue;
+                if (item.Contains("Monday"))
+                {
+                    mon_obj.Day = "Monday";
+                    mon_obj.isoff = false;
+
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            mon_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            mon_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            mon_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            mon_obj.LunchToo = date_val;
+                        }
+
+                    }
+
+                    var monid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().MondayID;
+                    mon_obj.Id =(int) monid;
+                    db.Entry(mon_obj).State= EntityState.Modified;
+                    db.SaveChanges();
+
+                } //end if mon
+                else if (item.Contains("Tuesday"))
+                {
+                    tue_obj.Day = "Tuesday";
+                    tue_obj.isoff = false;
+
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            tue_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            tue_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            tue_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            tue_obj.LunchToo = date_val;
+                        }
+
+                    }
+                    var tueid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().TuesdayID;
+                    tue_obj.Id = (int)tueid;
+                    db.Entry(tue_obj).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    
+                }// end if tue
+                else if (item.Contains("Wednesday"))
+                {
+                    wed_obj.Day = "Wednesday";
+                    wed_obj.isoff = false;
+
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            wed_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            wed_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            wed_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            wed_obj.LunchToo = date_val;
+                        }
+
+                    }
+                    var wedid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().WednesdayID;
+                    wed_obj.Id = (int)wedid;
+                    db.Entry(wed_obj).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }// end if Wed
+                else if (item.Contains("Thursday"))
+                {
+                    thus_obj.Day = "Thursday";
+                    thus_obj.isoff = false;
+
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            thus_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            thus_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            thus_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            thus_obj.LunchToo = date_val;
+                        }
+
+                    }
+
+                    var thusid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().ThursdayID;
+                    thus_obj.Id = (int)thusid;
+                    db.Entry(thus_obj).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    
+                }// end if thus
+                else if (item.Contains("Friday"))
+                {
+                    fri_obj.Day = "Friday";
+                    fri_obj.isoff = false;
+
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            fri_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            fri_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            fri_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            fri_obj.LunchToo = date_val;
+                        }
+
+                    }
+
+                    var friid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().FridayID;
+                    fri_obj.Id = (int)friid;
+                    db.Entry(fri_obj).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                   
+                }// end if fri
+                else if (item.Contains("Saturday"))
+                {
+                    sat_obj.Day = "Saturday";
+                    sat_obj.isoff = false;
+
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sat_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sat_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sat_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sat_obj.LunchToo = date_val;
+                        }
+
+                    }
+
+                    var satid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().SaturdayID;
+                    sat_obj.Id = (int)satid;
+                    db.Entry(sat_obj).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                   
+                }// end if sat
+                else if (item.Contains("Sunday"))
+                {
+                    sun_obj.Day = "Sunday";
+                    sun_obj.isoff = false;
+                    int index = item.IndexOf('-');
+                    var str = item.Substring(index);
+                    str = str.Replace('-', ' ').TrimStart(' ');
+                    var str_arr = str.Split(',');
+                    for (int i = 0; i < 4; i++)
+                    {
+                        var date_str = str_arr.ElementAt(i);
+                        if (date_str.Equals(""))
+                            continue;
+
+                        if (i == 0)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sun_obj.StartTime = date_val;
+                        }
+                        else if (i == 1)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sun_obj.EndTime = date_val;
+                        }
+                        else if (i == 2)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sun_obj.LunchFrom = date_val;
+                        }
+                        else if (i == 3)
+                        {
+                            var date_val = Convert.ToDateTime(date_str);
+                            sun_obj.LunchToo = date_val;
+                        }
+
+                    }
+                    var sunid = db.AspNetWorkingWeekTimes.Where(x => x.Id == work_id).FirstOrDefault().SundayID;
+                    sun_obj.Id = (int)sunid;
+                    db.Entry(sun_obj).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }// end if sat
+
+            }// end foreach
+        }
+
         public JsonResult Get_BusinessSubCatg(string id)
         {
             String ls = "";
@@ -963,9 +1441,58 @@ namespace Shad_BookingApplication.Controllers
             obj.TimeFormate = region_obj.TimeFormate;
             obj.TimeZoneName = region_obj.TimeZoneName;
 
+            var location_id = db.AspNetCustomers.Where(x => x.RegionID == id).FirstOrDefault().LocationId;
+            var loc = db.AspNetCustomerLocations.Where(x => x.Id == location_id).FirstOrDefault().CountryName;
+            obj.Location_CountryName = loc;
+
 
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
+
+
+        public JsonResult Get_WorkingTime(string region_id)
+        {
+            var id = Convert.ToInt16(region_id);
+
+            var working_id = db.AspNetCustomers.Where(x => x.RegionID==id).FirstOrDefault().WorkingID;
+            var obj = db.AspNetWorkingWeekTimes.Where(x => x.Id == working_id).FirstOrDefault();
+            List<AspNetWorkingTime> list_time = new List<AspNetWorkingTime>();
+
+
+            var mon = db.AspNetWorkingTimes.Where(x => x.Id == obj.MondayID).FirstOrDefault();
+            var tues = db.AspNetWorkingTimes.Where(x => x.Id == obj.TuesdayID).FirstOrDefault();
+            var wed = db.AspNetWorkingTimes.Where(x => x.Id == obj.WednesdayID).FirstOrDefault();
+            var thus = db.AspNetWorkingTimes.Where(x => x.Id == obj.ThursdayID).FirstOrDefault();
+            var fri = db.AspNetWorkingTimes.Where(x => x.Id == obj.FridayID).FirstOrDefault();
+            var sat = db.AspNetWorkingTimes.Where(x => x.Id == obj.SaturdayID).FirstOrDefault();
+            var sun = db.AspNetWorkingTimes.Where(x => x.Id == obj.SundayID).FirstOrDefault();
+            
+            list_time.Add(mon);
+            list_time.Add(tues);
+            list_time.Add(wed);
+            list_time.Add(thus);
+            list_time.Add(fri);
+            list_time.Add(sat);
+            list_time.Add(sun);
+
+
+            List<WorkingTimeViewModel> list_WorkingTimeViewModel = new List<WorkingTimeViewModel>();
+            foreach (var item in list_time)
+            {
+                var temp = new WorkingTimeViewModel();
+                temp.Day = item.Day;
+                temp.StartTime = item.StartTime.ToString();
+                temp.EndTime = item.EndTime.ToString();
+                temp.LunchToo = item.LunchToo.ToString();
+                temp.LunchFrom = item.LunchFrom.ToString();
+                temp.isoff = item.isoff.ToString();
+
+                list_WorkingTimeViewModel.Add(temp);
+            }
+
+            return Json(list_WorkingTimeViewModel, JsonRequestBehavior.AllowGet);
+        }
+
 
 
         public SortedDictionary<string, string> Get_CustomerName()
@@ -1001,6 +1528,13 @@ namespace Shad_BookingApplication.Controllers
         {
             var id=Convert.ToInt16(item_id);
             var tax = db.AspNetItems.Where(x => x.Id == id).Select(y => y.Vat).FirstOrDefault();
+            return Json(tax, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Get_TaxRate(string item_id)
+        {
+            var id = Convert.ToInt16(item_id);
+            var tax = db.AspNetTaxes.Where(x => x.Id == id).Select(y => y.Rate).FirstOrDefault().ToString();
             return Json(tax, JsonRequestBehavior.AllowGet);
         }
 
@@ -1177,7 +1711,143 @@ namespace Shad_BookingApplication.Controllers
             return View(items);
         }
 
-   
+        public JsonResult Insert_tax(string name, string rate)
+        {
+            var obj = new AspNetTax();
 
+            try
+            {
+                obj.Name = name;
+                obj.Rate = Convert.ToDouble(rate);
+                db.AspNetTaxes.Add(obj);
+                db.SaveChanges();
+                var id=obj.Id.ToString();
+                return Json(id, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.InnerException.ToString(), JsonRequestBehavior.AllowGet);
+            }
+            
+        }
+
+        public JsonResult GetTax_ForInvoiceOptions()
+        {
+            List<tax_struct> ls = new List<tax_struct>();
+            var list_taxes=db.AspNetTaxes.ToList();
+            
+            foreach (var item in list_taxes)
+            {
+                var obj = new tax_struct();
+                obj.id = item.Id.ToString();
+                obj.name = item.Name;
+                obj.rate = item.Rate.ToString();
+
+                ls.Add(obj);
+
+            }
+            return Json(ls, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Delete_tax(string id)
+        {
+            var tax_id = Convert.ToInt16(id);
+            var tax_obj = db.AspNetTaxes.Where(x=>x.Id == tax_id).FirstOrDefault();
+            db.AspNetTaxes.Remove(tax_obj);
+            db.SaveChanges();
+
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Update_tax(string id,string name,string rate)
+        {
+            var tax_id = Convert.ToInt16(id);
+            var tax_rate = Convert.ToDouble(rate);
+
+            var obj = new AspNetTax();
+            obj.Id = tax_id;
+            obj.Name = name;
+            obj.Rate = tax_rate;
+
+            db.Entry(obj).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Json("Updated", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult InvoiceOption(AspNetInvoiceOption aspNetInvoiceOption)
+        {
+            if (aspNetInvoiceOption.HideName == null)
+                aspNetInvoiceOption.HideName = false;
+
+            if (aspNetInvoiceOption.HidePaymentHistory == null)
+                aspNetInvoiceOption.HidePaymentHistory = false;
+
+            db.AspNetInvoiceOptions.Add(aspNetInvoiceOption);
+            db.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
+
+        public JsonResult Insert_Payment(string name)
+        {
+            var obj = new AspNetBookingPaymentType();
+
+            try
+            {
+                obj.Name = name;
+                db.AspNetBookingPaymentTypes.Add(obj);
+                db.SaveChanges();
+                var id = obj.Id.ToString();
+                return Json(id, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.InnerException.ToString(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public JsonResult Update_Payment(string id, string name)
+        {
+            var tax_id = Convert.ToInt16(id);
+            
+            var obj = new AspNetBookingPaymentType();
+            obj.Id = tax_id;
+            obj.Name = name;
+
+            db.Entry(obj).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Json("Updated", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetPayment_ForInvoiceOptions()
+        {
+            List<payment_struct> ls = new List<payment_struct>();
+            var list_taxes = db.AspNetBookingPaymentTypes.ToList();
+
+            foreach (var item in list_taxes)
+            {
+                var obj = new payment_struct();
+                obj.id = item.Id.ToString();
+                obj.name = item.Name;
+
+                ls.Add(obj);
+
+            }
+            return Json(ls, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Delete_Payment(string id)
+        {
+            var pay_id = Convert.ToInt16(id);
+            var pay_obj = db.AspNetBookingPaymentTypes.Where(x => x.Id == pay_id).FirstOrDefault();
+            db.AspNetBookingPaymentTypes.Remove(pay_obj);
+            db.SaveChanges();
+
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
+        }
+        //Delete_Payment
     }
 }

@@ -1127,7 +1127,7 @@
 							<label class="col-md-2 col-xs-12 text-right">Description:</label>
 							<div class="col-md-8 col-xs-12">
 								<textarea name="editor1" class="form-control" rows="5" id="business-description"  ></textarea>
-								@*@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control", @name = "editor_id" })
+								@*@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control" })
 								@Html.ValidationMessageFor(model => model.BusinessDetail.Description, "", new { @class = "text-danger" })*@
 
 
@@ -1762,6 +1762,7 @@
 
 
 	}
+	alert(time_string);
 
 	$("#custom_timepicker_id").val(time_string);
 
@@ -2113,7 +2114,9 @@ function changeTabFunc(a){
 		document.getElementById("optionSMS").className = "tab-pane";
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
-	if(a==9){
+	if (a == 9)
+	{
+	    custome_timepicker();
 		document.getElementById("workingHours").className = "tab-pane";
 		document.getElementById("social").className = "tab-pane active";
 	}
@@ -2164,13 +2167,21 @@ function changeTabFunc2(a){
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
 }
-function func1()
-{
-	document.getElementById('interventionZone').style.display="none";
+function func1() {
+    document.getElementById('interventionZone').style.display = "none";
+    $("#IntervensionZone_id").val("On_site");
+    alert($("#IntervensionZone_id").val());
+
 }
-function func2()
-{
-	document.getElementById('interventionZone').style.display="block";
+function func2() {
+    document.getElementById('interventionZone').style.display = "block";
+    $("#IntervensionZone_id").val("Home");
+
+}
+function func22() {
+    document.getElementById('interventionZone').style.display = "block";
+    $("#IntervensionZone_id").val("Both");
+
 }
  var map;
 	  function initMap() {
@@ -2202,7 +2213,7 @@ function func2()
 
 
 		// CKEditor
-		CKEDITOR.replace( 'editor1' );
+		CKEDITOR.replace('editor1');
 
 		// Init Select2 - Basic Single
 		$(".select2-single").select2();

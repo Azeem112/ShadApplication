@@ -112,13 +112,26 @@
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="row form-group required">
+                    @*<div class="row form-group required">
                         <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
                         <div class="col-md-8 col-xs-12">
                             @Html.PasswordFor(model => model.PasswordHash, new { @class = "form-control", placeholder = @Html.DisplayName("Provide password") })
                             @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
                         </div>
-                    </div>
+                    </div>*@
+                    @Html.HiddenFor(model => model.PasswordHash)
+                    @Html.HiddenFor(model => model.FirstName)
+                    @Html.HiddenFor(model => model.FullName)
+                    @Html.HiddenFor(model => model.LastName)
+                    @Html.HiddenFor(model => model.SecurityStamp)
+                    @Html.HiddenFor(model => model.EmailConfirmed)
+                    @Html.HiddenFor(model => model.PhoneNumberConfirmed)
+                    @Html.HiddenFor(model => model.TwoFactorEnabled)
+                    @Html.HiddenFor(model => model.LockoutEnabled)
+                    @Html.HiddenFor(model => model.LockoutEndDateUtc)
+                    @Html.HiddenFor(model => model.AccessFailedCount)
+                    @Html.HiddenFor(model => model.Address)
+                   
                     <div class="row form-group">
                         <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
                         <div class="col-md-8 col-xs-12">

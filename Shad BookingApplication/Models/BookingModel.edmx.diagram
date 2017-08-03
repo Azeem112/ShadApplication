@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9bcd6c52acf746dcbb0f61b5f4532854" Name="Diagram1">
-        <EntityTypeShape EntityType="BookingModelModels.C__MigrationHistory" Width="1.5" PointX="12.75" PointY="14" IsExpanded="true" />
+      <Diagram DiagramId="ed200f7822cc4970a7da5c9c10493955" Name="Diagram1">
+        <EntityTypeShape EntityType="BookingModelModels.C__MigrationHistory" Width="1.5" PointX="12.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetAgency" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBooking" Width="1.5" PointX="7.5" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBookingCancelation" Width="1.5" PointX="10" PointY="6.75" IsExpanded="true" />
@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="BookingModelModels.AspNetBookingItem" Width="1.5" PointX="5.25" PointY="22.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBookingOptione" Width="1.5" PointX="12.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBookingPayment" Width="1.5" PointX="10" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetBookingPaymentType" Width="1.5" PointX="12.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetBookingPaymentType" Width="1.5" PointX="12.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBookingService" Width="1.5" PointX="9.75" PointY="26.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBookingTerm" Width="1.5" PointX="10" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetBusinessCatageory" Width="1.5" PointX="0.75" PointY="26.25" IsExpanded="true" />
@@ -28,27 +28,27 @@
         <EntityTypeShape EntityType="BookingModelModels.AspNetCustomerLocation" Width="1.5" PointX="3" PointY="32.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetCustomerRegion" Width="1.5" PointX="3" PointY="36.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetCustomer" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetCustomerSM" Width="1.5" PointX="3" PointY="40.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetCustomerType" Width="1.5" PointX="3" PointY="47.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetDiscount" Width="1.5" PointX="1.5" PointY="44.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetCustomerSM" Width="1.5" PointX="3" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetCustomerType" Width="1.5" PointX="3" PointY="47.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetDiscount" Width="1.5" PointX="12.75" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetEmailNotification" Width="1.5" PointX="10" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetEmailNotificationType" Width="1.5" PointX="7.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetEmployee" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetExpire" Width="1.5" PointX="3" PointY="60.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetGiftVoucher" Width="1.5" PointX="5.25" PointY="60" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetInvoice" Width="1.5" PointX="7.5" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetInvoiceOption" Width="1.5" PointX="15" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetInvoiceOption" Width="1.5" PointX="14.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetItem" Width="1.5" PointX="0.75" PointY="40" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetRemainder" Width="1.5" PointX="10" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetRole" Width="1.5" PointX="0.75" PointY="55.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetRole" Width="1.5" PointX="0.75" PointY="55.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetService" Width="1.5" PointX="7.5" PointY="21.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetService_Group" Width="1.5" PointX="12.75" PointY="21.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetServiceGroup" Width="1.5" PointX="10.5" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetSocial" Width="1.5" PointX="3" PointY="51" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetTax" Width="1.5" PointX="12.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="54" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="56.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingModelModels.AspNetUser" Width="1.5" PointX="3" PointY="53.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetSocial" Width="1.5" PointX="3" PointY="50.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetTax" Width="1.5" PointX="1.5" PointY="44.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="56.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingModelModels.AspNetUser" Width="1.5" PointX="3" PointY="53.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetWorkingTime" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingModelModels.AspNetWorkingWeekTime" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
         <AssociationConnector Association="BookingModelModels.FK_AspNetAgency_ToCustomer" ManuallyRouted="false" />
@@ -73,7 +73,6 @@
         <AssociationConnector Association="BookingModelModels.FK_AspNetBookingOptiones_Payment" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_AspNetBookingOptiones_Remainder" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_AspNetBookingOptiones_Terms" ManuallyRouted="false" />
-        <AssociationConnector Association="BookingModelModels.FK_AspNetInvoiceOptions_PaymentType" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_AspNetBookingServices_Services" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_BusinessSubCatageory_BusinessCatageory" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_CustomerDetail_BusinessCatageory" ManuallyRouted="false" />
@@ -94,12 +93,11 @@
         <AssociationConnector Association="BookingModelModels.FK_Customers_Work" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_Invoice_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_AspNetCustomerSMS_ToItem" ManuallyRouted="false" />
-        <AssociationConnector Association="BookingModelModels.FK_AspNetItem_ToTable" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_AspNetEmailNotification_type" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_Employee_User" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_Employee_Working" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_GiftVoucher_Expire" ManuallyRouted="false" />
-        <AssociationConnector Association="BookingModelModels.FK_AspNetInvoiceOptions_Tax" ManuallyRouted="false" />
+        <AssociationConnector Association="BookingModelModels.FK_AspNetItem_ToAspNetTax" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_Service_Group_Service" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_Service_Group_ServiceGroup" ManuallyRouted="false" />
         <AssociationConnector Association="BookingModelModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />

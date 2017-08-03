@@ -125,7 +125,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AspNetBookingServices">
@@ -389,18 +389,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PaymentTerms" Type="nchar" MaxLength="10" />
-          <Property Name="Title" Type="nchar" MaxLength="10" />
-          <Property Name="Siret" Type="nchar" MaxLength="10" />
-          <Property Name="APE" Type="nchar" MaxLength="10" />
-          <Property Name="VatNo" Type="nchar" MaxLength="10" />
-          <Property Name="PaymentInstructiones" Type="nchar" MaxLength="10" />
+          <Property Name="PaymentTerms" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Siret" Type="nvarchar" MaxLength="50" />
+          <Property Name="APE" Type="nvarchar" MaxLength="50" />
+          <Property Name="VatNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentInstructiones" Type="nvarchar(max)" />
           <Property Name="NextNumber" Type="int" />
           <Property Name="HideName" Type="bit" />
           <Property Name="HidePaymentHistory" Type="bit" />
           <Property Name="PrintFormate" Type="nvarchar" MaxLength="50" />
-          <Property Name="TaxID" Type="int" />
-          <Property Name="PaymentTypeID" Type="int" />
         </EntityType>
         <EntityType Name="AspNetItem">
           <Key>
@@ -409,12 +407,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="Vat" Type="float" />
+          <Property Name="Vat" Type="int" />
           <Property Name="Price_W/O_Vat" Type="float" />
           <Property Name="Price_W/_Vat" Type="float" />
           <Property Name="Status" Type="nvarchar" MaxLength="20" />
           <Property Name="IsSmsPackage" Type="nvarchar(max)" />
-          <Property Name="DiscountID" Type="int" />
         </EntityType>
         <EntityType Name="AspNetRemainder">
           <Key>
@@ -471,7 +468,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Rate" Type="float" />
         </EntityType>
@@ -765,39 +762,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetInvoiceOptions_PaymentType">
-          <End Role="AspNetBookingPaymentType" Type="Self.AspNetBookingPaymentType" Multiplicity="0..1" />
-          <End Role="AspNetInvoiceOptions" Type="Self.AspNetInvoiceOptions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetBookingPaymentType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetInvoiceOptions">
-              <PropertyRef Name="PaymentTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetInvoiceOptions_Tax">
+        <Association Name="FK_AspNetItem_ToAspNetTax">
           <End Role="AspNetTax" Type="Self.AspNetTax" Multiplicity="0..1" />
-          <End Role="AspNetInvoiceOptions" Type="Self.AspNetInvoiceOptions" Multiplicity="*" />
+          <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetTax">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetInvoiceOptions">
-              <PropertyRef Name="TaxID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetItem_ToTable">
-          <End Role="AspNetDiscount" Type="Self.AspNetDiscount" Multiplicity="0..1" />
-          <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetDiscount">
-              <PropertyRef Name="Id" />
-            </Principal>
             <Dependent Role="AspNetItem">
-              <PropertyRef Name="DiscountID" />
+              <PropertyRef Name="Vat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1421,16 +1394,8 @@
             <End Role="AspNetAgency" EntitySet="AspNetAgency" />
             <End Role="AspNetEmployee" EntitySet="AspNetEmployee" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetInvoiceOptions_PaymentType" Association="Self.FK_AspNetInvoiceOptions_PaymentType">
-            <End Role="AspNetBookingPaymentType" EntitySet="AspNetBookingPaymentType" />
-            <End Role="AspNetInvoiceOptions" EntitySet="AspNetInvoiceOptions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetInvoiceOptions_Tax" Association="Self.FK_AspNetInvoiceOptions_Tax">
+          <AssociationSet Name="FK_AspNetItem_ToAspNetTax" Association="Self.FK_AspNetItem_ToAspNetTax">
             <End Role="AspNetTax" EntitySet="AspNetTax" />
-            <End Role="AspNetInvoiceOptions" EntitySet="AspNetInvoiceOptions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetItem_ToTable" Association="Self.FK_AspNetItem_ToTable">
-            <End Role="AspNetDiscount" EntitySet="AspNetDiscount" />
             <End Role="AspNetItem" EntitySet="AspNetItem" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetWorkingWeekTime_ToFri" Association="Self.FK_AspNetWorkingWeekTime_ToFri">
@@ -1749,9 +1714,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetInvoiceOptions" Relationship="Self.FK_AspNetInvoiceOptions_PaymentType" FromRole="AspNetBookingPaymentType" ToRole="AspNetInvoiceOptions" />
         </EntityType>
         <EntityType Name="AspNetBookingService">
           <Key>
@@ -1979,7 +1943,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Rate" Type="Double" />
-          <NavigationProperty Name="AspNetItems" Relationship="Self.FK_AspNetItem_ToTable" FromRole="AspNetDiscount" ToRole="AspNetItem" />
         </EntityType>
         <EntityType Name="AspNetEmailNotification">
           <Key>
@@ -2071,20 +2034,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PaymentTerms" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Siret" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="APE" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="VatNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="PaymentInstructiones" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PaymentTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Siret" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VatNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentInstructiones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NextNumber" Type="Int32" />
           <Property Name="HideName" Type="Boolean" />
           <Property Name="HidePaymentHistory" Type="Boolean" />
           <Property Name="PrintFormate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TaxID" Type="Int32" />
-          <Property Name="PaymentTypeID" Type="Int32" />
-          <NavigationProperty Name="AspNetBookingPaymentType" Relationship="Self.FK_AspNetInvoiceOptions_PaymentType" FromRole="AspNetInvoiceOptions" ToRole="AspNetBookingPaymentType" />
-          <NavigationProperty Name="AspNetTax" Relationship="Self.FK_AspNetInvoiceOptions_Tax" FromRole="AspNetInvoiceOptions" ToRole="AspNetTax" />
         </EntityType>
         <EntityType Name="AspNetItem">
           <Key>
@@ -2093,14 +2052,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Vat" Type="Double" />
+          <Property Name="Vat" Type="Int32" />
           <Property Name="Price_W_O_Vat" Type="Double" />
           <Property Name="Price_W__Vat" Type="Double" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsSmsPackage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DiscountID" Type="Int32" />
           <NavigationProperty Name="AspNetCustomerSMS" Relationship="Self.FK_AspNetCustomerSMS_ToItem" FromRole="AspNetItem" ToRole="AspNetCustomerSMS" />
-          <NavigationProperty Name="AspNetDiscount" Relationship="Self.FK_AspNetItem_ToTable" FromRole="AspNetItem" ToRole="AspNetDiscount" />
+          <NavigationProperty Name="AspNetTax" Relationship="Self.FK_AspNetItem_ToAspNetTax" FromRole="AspNetItem" ToRole="AspNetTax" />
         </EntityType>
         <EntityType Name="AspNetRemainder">
           <Key>
@@ -2165,10 +2123,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Rate" Type="Double" />
-          <NavigationProperty Name="AspNetInvoiceOptions" Relationship="Self.FK_AspNetInvoiceOptions_Tax" FromRole="AspNetTax" ToRole="AspNetInvoiceOptions" />
+          <NavigationProperty Name="AspNetItems" Relationship="Self.FK_AspNetItem_ToAspNetTax" FromRole="AspNetTax" ToRole="AspNetItem" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -2525,18 +2483,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetInvoiceOptions_PaymentType">
-          <End Role="AspNetBookingPaymentType" Type="Self.AspNetBookingPaymentType" Multiplicity="0..1" />
-          <End Role="AspNetInvoiceOptions" Type="Self.AspNetInvoiceOption" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetBookingPaymentType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetInvoiceOptions">
-              <PropertyRef Name="PaymentTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetBookingServices_Services">
           <End Role="AspNetService" Type="Self.AspNetService" Multiplicity="0..1" />
           <End Role="AspNetBookingServices" Type="Self.AspNetBookingService" Multiplicity="*" />
@@ -2777,18 +2723,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetItem_ToTable">
-          <End Role="AspNetDiscount" Type="Self.AspNetDiscount" Multiplicity="0..1" />
-          <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetDiscount">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetItem">
-              <PropertyRef Name="DiscountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetEmailNotification_type">
           <End Role="AspNetEmailNotificationType" Type="Self.AspNetEmailNotificationType" Multiplicity="0..1" />
           <End Role="AspNetEmailNotification" Type="Self.AspNetEmailNotification" Multiplicity="*" />
@@ -2837,15 +2771,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetInvoiceOptions_Tax">
+        <Association Name="FK_AspNetItem_ToAspNetTax">
           <End Role="AspNetTax" Type="Self.AspNetTax" Multiplicity="0..1" />
-          <End Role="AspNetInvoiceOptions" Type="Self.AspNetInvoiceOption" Multiplicity="*" />
+          <End Role="AspNetItem" Type="Self.AspNetItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetTax">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetInvoiceOptions">
-              <PropertyRef Name="TaxID" />
+            <Dependent Role="AspNetItem">
+              <PropertyRef Name="Vat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3124,10 +3058,6 @@
             <End Role="AspNetBookingTerms" EntitySet="AspNetBookingTerms" />
             <End Role="AspNetBookingOptiones" EntitySet="AspNetBookingOptiones" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetInvoiceOptions_PaymentType" Association="Self.FK_AspNetInvoiceOptions_PaymentType">
-            <End Role="AspNetBookingPaymentType" EntitySet="AspNetBookingPaymentTypes" />
-            <End Role="AspNetInvoiceOptions" EntitySet="AspNetInvoiceOptions" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetBookingServices_Services" Association="Self.FK_AspNetBookingServices_Services">
             <End Role="AspNetService" EntitySet="AspNetServices" />
             <End Role="AspNetBookingServices" EntitySet="AspNetBookingServices" />
@@ -3208,10 +3138,6 @@
             <End Role="AspNetItem" EntitySet="AspNetItems" />
             <End Role="AspNetCustomerSMS" EntitySet="AspNetCustomerSMS" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetItem_ToTable" Association="Self.FK_AspNetItem_ToTable">
-            <End Role="AspNetDiscount" EntitySet="AspNetDiscounts" />
-            <End Role="AspNetItem" EntitySet="AspNetItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetEmailNotification_type" Association="Self.FK_AspNetEmailNotification_type">
             <End Role="AspNetEmailNotificationType" EntitySet="AspNetEmailNotificationTypes" />
             <End Role="AspNetEmailNotification" EntitySet="AspNetEmailNotifications" />
@@ -3228,9 +3154,9 @@
             <End Role="AspNetExpire" EntitySet="AspNetExpires" />
             <End Role="AspNetGiftVoucher" EntitySet="AspNetGiftVouchers" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetInvoiceOptions_Tax" Association="Self.FK_AspNetInvoiceOptions_Tax">
+          <AssociationSet Name="FK_AspNetItem_ToAspNetTax" Association="Self.FK_AspNetItem_ToAspNetTax">
             <End Role="AspNetTax" EntitySet="AspNetTaxes" />
-            <End Role="AspNetInvoiceOptions" EntitySet="AspNetInvoiceOptions" />
+            <End Role="AspNetItem" EntitySet="AspNetItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Service_Group_Service" Association="Self.FK_Service_Group_Service">
             <End Role="AspNetService" EntitySet="AspNetServices" />
@@ -3711,8 +3637,6 @@
                 <ScalarProperty Name="HideName" ColumnName="HideName" />
                 <ScalarProperty Name="HidePaymentHistory" ColumnName="HidePaymentHistory" />
                 <ScalarProperty Name="PrintFormate" ColumnName="PrintFormate" />
-                <ScalarProperty Name="TaxID" ColumnName="TaxID" />
-                <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3727,7 +3651,6 @@
                 <ScalarProperty Name="Price_W__Vat" ColumnName="Price_W/_Vat" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IsSmsPackage" ColumnName="IsSmsPackage" />
-                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

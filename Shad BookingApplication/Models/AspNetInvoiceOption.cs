@@ -25,10 +25,5 @@ namespace Shad_BookingApplication.Models
         public Nullable<bool> HideName { get; set; }
         public Nullable<bool> HidePaymentHistory { get; set; }
         public string PrintFormate { get; set; }
-        public Nullable<int> TaxID { get; set; }
-        public Nullable<int> PaymentTypeID { get; set; }
-    
-        public virtual AspNetBookingPaymentType AspNetBookingPaymentType { get; set; }
-        public virtual AspNetTax AspNetTax { get; set; }
     }
 }
