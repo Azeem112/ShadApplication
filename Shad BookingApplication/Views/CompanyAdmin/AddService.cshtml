@@ -30,7 +30,7 @@
             {
                 Text = item.Name,
                 Value = item.Id.ToString(),
-                Selected = false
+                Selected = true
             });
         }
     }
@@ -221,20 +221,9 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Service Group:</label>
                             <div class="col-md-7 col-xs-8">
-                                @Html.DropDownList("None",listItems3, new { @class = "form-control", @required = "required" })
-                               
-
-
-                            @*</div>
-                            <% using(Html.BeginForm("AddServiceGroup", "CompanyAdmin")) { %>
-                            <input type="submit" class="btn btn-danger col-md-1 col-xs-3"  style="border-radius:3px; margin-left: -10px" value="+" />
-                            <% } %>*@
-
-                               
-
-                           @*<button class="btn btn-danger col-md-1 col-xs-3"  style="border-radius:3px; margin-left: -10px">+@("AddServiceGroup")</button>
-                            <span class="btn btn-danger col-md-1 col-xs-3"  style="border-radius:3px; margin-left: -10px">@Html.ActionLink("+", "AddServiceGroup")</span>*@
-
+                                @Html.DropDownList("service_group_name", listItems3, new {@class = "form-control" , @required = "required" })
+                            </div>
+                            <a href="addServiceGroup.html" type="submit" class="btn btn-danger col-md-1 col-xs-3" style="border-radius:3px; margin-left: -10px">+</a>
                         </div>
                         <div class="row form-group">
                             <label class="col-md-2 col-xs-12 text-center">Description:</label>
@@ -256,34 +245,29 @@
 
                     <div class="row">
                         <div class="row form-group">
-                            <label class="col-md-2 col-xs-12 text-center">Price:</label>
-                            <div class="col-md-3 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">&euro;</span>
-                                   
-                                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0", @class = "form-control", @required = "required" } })
-                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                                </div>
-                                </div>
-                            </div>
-                            <label class="col-md-1 col-md-offset-1 col-xs-12 text-center control-label">Tax:</label>
-                            <div class="col-md-3 col-xs-12">
-                                 @Html.DropDownListFor(model => model.TaxId, listItems0, "-Taux-", new { @class = "form-control", @required = "required", @id = "tax", @style = "margin-bottom: 3%;" })
-                                @Html.ValidationMessageFor(model => model.TaxId, "", new { @class = "text-danger" })
-                                
+                        <label class="col-md-2 col-xs-12 text-center">Price:</label>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">&euro;</span>
+                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0", @id = "priceee", @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <label class="col-md-1 col-md-offset-1 col-xs-12 text-center control-label">Tax:</label>
+                        <div class="col-md-3 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaxId, listItems0, "-Taux-", new { @class = "form-control", @required = "required", @id = "tax", @style = "margin-bottom: 3%;" })
+                            @Html.ValidationMessageFor(model => model.TaxId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
                         <div class="row form-group">
                             <label class="col-md-2 col-xs-12 text-center">Duration:</label>
                             <div class="col-md-8 col-xs-8">
                                 @Html.DropDownListFor(model => model.Duration, listItems, "--Minutes--", new { @class = "form-control", @required = "required" })
                                 @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
-
-
-
-
                             </div>
                         </div>
+
                     </div>
                     <div style="background-color: #eff0f2; height:2px; width:96%; margin-left: 2%; margin-bottom: 2%;"> </div>
                     <div class="row">

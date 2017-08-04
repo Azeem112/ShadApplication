@@ -19,6 +19,7 @@ namespace Shad_BookingApplication.Models
         {
             this.AspNetAgencies = new HashSet<AspNetAgency>();
             this.AspNetCustomers = new HashSet<AspNetCustomer>();
+            this.AspNetEmployees = new HashSet<AspNetEmployee>();
         }
     
         public int Id { get; set; }
@@ -34,6 +35,8 @@ namespace Shad_BookingApplication.Models
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomer> AspNetCustomers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetEmployee> AspNetEmployees { get; set; }
         public virtual AspNetWorkingTime AspNetWorkingTime { get; set; }
         public virtual AspNetWorkingTime AspNetWorkingTime1 { get; set; }
         public virtual AspNetWorkingTime AspNetWorkingTime2 { get; set; }

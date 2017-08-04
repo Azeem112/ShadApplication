@@ -76,47 +76,52 @@ namespace Shad_BookingApplication.Controllers
             var user = await UserManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
 
+                var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+
+                switch (result)
+                {
+                    case SignInStatus.Success:
+
+                        var userID = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
+
+                        if (UserManager.IsInRole(userID, "Super_Admin"))
+                        {
+                            System.Web.HttpContext.Current.Session["Super_AdminID"] = userID;
+                            return RedirectToAction("UserList", "SuperAdmin");
+                        }
+                        else if (UserManager.IsInRole(userID, "Company_Admin"))
+                        {
+                            System.Web.HttpContext.Current.Session["Company_AdminID"] = userID;
+                            return RedirectToAction("AddServiceGroup", "CompanyAdmin");
+                        }
+                        else if (UserManager.IsInRole(userID, "Employee"))
+                        {
+                            System.Web.HttpContext.Current.Session["AdminID"] = userID;
+                            return RedirectToAction("Dashboard", "Admin_Dashboard");
+                        }
+
+                        return RedirectToLocal(returnUrl);
+
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
             
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
-
-            switch (result)
-            {
-                case SignInStatus.Success:
-
-                    var userID = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
-
-                    if (UserManager.IsInRole(userID, "Super_Admin"))
-                    {
-                        System.Web.HttpContext.Current.Session["Super_AdminID"] = userID;
-                        return RedirectToAction("UserList", "SuperAdmin");
-                    }
-                    else if (UserManager.IsInRole(userID, "Company_Admin"))
-                    {
-                        System.Web.HttpContext.Current.Session["Company_AdminID"] = userID;
-                        return RedirectToAction("AddServiceGroup", "CompanyAdmin");
-                    }
-                    else if (UserManager.IsInRole(userID, "Employee"))
-                    {
-                        System.Web.HttpContext.Current.Session["AdminID"] = userID;
-                        return RedirectToAction("Dashboard", "Admin_Dashboard");
-                    }
-
-                    return RedirectToLocal(returnUrl);
-
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            
         }
 
 

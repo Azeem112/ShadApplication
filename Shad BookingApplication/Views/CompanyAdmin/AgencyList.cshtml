@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.AspNetAgency>
 @{
     ViewBag.Title = "AgencyList";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -128,26 +128,26 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myCustomers">
+                                        @{
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>001</center></td>
-                                            <td><center>XYZ</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>Thierry<br> <a>Thierry@gmail.com</a><br>+923222</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
+                                        int val = 1;
+                                        foreach (var item in Model)
+                                        {
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>002</center></td>
-                                            <td><center>XYZ</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>gaetan<br> <a>gaetan@gmail.com</a><br>+035456</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
+                                            <tr role="row" class="odd">
 
+                                                <td class="sorting_1"><center>@val</center></td>
+                                                <td><center>@item.AspNetCustomerDetail.BussinessName</center></td>
+                                                <td><center>@item.AspNetCustomerLocation.Address</center></td>
+                                                <td><center>@item.AspNetUser.UserName<br> <a>@item.AspNetUser.Email</a><br>@item.AspNetUser.PhoneNumber</center></td>
+                                                <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
+                                                <td><center><div class="btn-group"><button type="button" class="btn btn-primary" onclick=""><a href="@Url.Action("EditAgency", "CompanyAdmin", new { id = item.Id })"><span style="color:white">Edit</span></a></button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                            </tr>
+                                            val++;
+                                        }
+                                        }
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

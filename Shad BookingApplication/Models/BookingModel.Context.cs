@@ -54,6 +54,7 @@ namespace Shad_BookingApplication.Models
         public virtual DbSet<AspNetEmailNotification> AspNetEmailNotifications { get; set; }
         public virtual DbSet<AspNetEmailNotificationType> AspNetEmailNotificationTypes { get; set; }
         public virtual DbSet<AspNetEmployee> AspNetEmployees { get; set; }
+        public virtual DbSet<AspNetEmployee_Services> AspNetEmployee_Services { get; set; }
         public virtual DbSet<AspNetExpire> AspNetExpires { get; set; }
         public virtual DbSet<AspNetGiftVoucher> AspNetGiftVouchers { get; set; }
         public virtual DbSet<AspNetInvoice> AspNetInvoices { get; set; }

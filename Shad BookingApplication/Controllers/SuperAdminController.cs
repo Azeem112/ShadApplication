@@ -203,21 +203,16 @@ namespace Shad_BookingApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-               
-                db.AspNetItems.Add(aspNetItem);
-                db.SaveChanges();
-
                 if (aspNetItem.IsSmsPackage.Equals("sms"))
                 {
-                    //var obj=db.AspNetItems.Single(x=>x== aspNetItem);
-                    var smspackage = new AspNetCustomerSM();
-
-                    smspackage.ItemID = aspNetItem.Id;
-                    var no_sms_package= Request.Form["no_remaining_sms"];
-                    smspackage.RemainingSMS = Convert.ToInt16(no_sms_package);
-                    smspackage.SmsPackageName = aspNetItem.Name;
-
-                    db.AspNetCustomerSMS.Add(smspackage);
+                    var no_sms_package = Request.Form["no_remaining_sms"];
+                    aspNetItem.RemainingSMS = Convert.ToInt16(no_sms_package);
+                    db.AspNetItems.Add(aspNetItem);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.AspNetItems.Add(aspNetItem);
                     db.SaveChanges();
                 }
                 return RedirectToAction("ItemList");
@@ -241,7 +236,8 @@ namespace Shad_BookingApplication.Controllers
         {
             AddCustomerViewModel addCustomerViewModel = new AddCustomerViewModel();
             addCustomerViewModel.BusinessCatageory = db.AspNetBusinessCatageories.ToList();
-            addCustomerViewModel.SMS = db.AspNetCustomerSMS.ToList();
+            var sms = db.AspNetItems.Where(x => x.IsSmsPackage == "sms").ToList();
+            addCustomerViewModel.sms_items = sms;
             return View(addCustomerViewModel);
         }
 
@@ -367,6 +363,16 @@ namespace Shad_BookingApplication.Controllers
 
             // Getting SMS ID
             var sms_package_id = addCustomerViewModel.SingleSms.ItemID;
+            var sms_package = new AspNetCustomerSM();
+
+            // Saving Customer SMS Package
+            var item = db.AspNetItems.Where(x => x.Id == sms_package_id).FirstOrDefault();
+            sms_package.ItemID = sms_package_id;
+            sms_package.SmsPackageName = item.Name;
+            sms_package.RemainingSMS = item.RemainingSMS;
+
+            db.AspNetCustomerSMS.Add(sms_package);
+            db.SaveChanges();
 
 
             // Adding Working time
@@ -387,7 +393,7 @@ namespace Shad_BookingApplication.Controllers
             customer.BussinessID = BusinessDetail.Id;
             customer.RegionID = region.Id;
             customer.LocationId = addCustomerViewModel.Location.Id;
-            customer.SmsID = sms_package_id;
+            customer.SmsID = sms_package.Id;
             customer.TypeID = addCustomerViewModel.UserType.Id;
             customer.ContactId = addCustomerViewModel.Contact.Id;
             customer.DetailId = addCustomerViewModel.Detail.Id;
@@ -399,11 +405,11 @@ namespace Shad_BookingApplication.Controllers
             db.AspNetCustomers.Add(customer);
             db.SaveChanges();
 
-            foreach (var item in list_of_subcat_ids)
+            foreach (var item1 in list_of_subcat_ids)
             {
                 var obj = new AspNetCustomer_SubCatageory();
                 obj.CustomerID = customer.Id;
-                obj.SubCatageoryId = item;
+                obj.SubCatageoryId = item1;
 
 
                 db.AspNetCustomer_SubCatageory.Add(obj);

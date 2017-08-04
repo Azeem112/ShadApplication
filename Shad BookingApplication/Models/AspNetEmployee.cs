@@ -18,21 +18,22 @@ namespace Shad_BookingApplication.Models
         public string NickName { get; set; }
         public string Notes { get; set; }
         public Nullable<int> SMSNumber { get; set; }
-        public Nullable<bool> BookingSMS { get; set; }
-        public Nullable<bool> BookingMail { get; set; }
-        public Nullable<bool> ThaiMessage { get; set; }
-        public Nullable<bool> CalliforniaMessage { get; set; }
+        public Nullable<bool> SendBookingSMS { get; set; }
+        public Nullable<bool> SendBookingMail { get; set; }
         public string WorkingPlace { get; set; }
-        public Nullable<bool> AgencyCheck1 { get; set; }
-        public Nullable<bool> AgencyCheck2 { get; set; }
         public Nullable<int> WorkingId { get; set; }
         public Nullable<bool> CelenderSync { get; set; }
         public string Status { get; set; }
         public string UserId { get; set; }
         public Nullable<int> AgencyId { get; set; }
+        public string Photo { get; set; }
+        public Nullable<int> ServiceGroupId { get; set; }
+        public Nullable<int> EmployeeServiceId { get; set; }
     
         public virtual AspNetAgency AspNetAgency { get; set; }
+        public virtual AspNetEmployee_Services AspNetEmployee_Services { get; set; }
+        public virtual AspNetServiceGroup AspNetServiceGroup { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetWorkingTime AspNetWorkingTime { get; set; }
+        public virtual AspNetWorkingWeekTime AspNetWorkingWeekTime { get; set; }
     }
 }

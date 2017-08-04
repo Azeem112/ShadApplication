@@ -180,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddAgencyViewModel.cs" />
     <Compile Include="Models\AddCustomerViewModel.cs" />
     <Compile Include="Models\AspNetAgency.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
@@ -265,6 +266,9 @@
     <Compile Include="Models\AspNetEmployee.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetEmployee_Services.cs">
+      <DependentUpon>BookingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetExpire.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
@@ -341,7 +345,10 @@
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RegionViewModel.cs" />
+    <Compile Include="Models\userdata.cs" />
     <Compile Include="Models\UserListViewModel.cs" />
+    <Compile Include="Models\UserListViewModel_1.cs" />
     <Compile Include="Models\WorkingTimeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -801,6 +808,7 @@
     <Content Include="Views\SuperAdmin\AddDiscount.cshtml" />
     <Content Include="Views\SuperAdmin\EditUser.cshtml" />
     <Content Include="Views\SuperAdmin\EditItem.cshtml" />
+    <Content Include="Views\CompanyAdmin\EditAgency.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

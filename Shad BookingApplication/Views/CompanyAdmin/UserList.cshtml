@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.UserListViewModel_1>
 @{
 	ViewBag.Title = "UserList";
 	Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -68,8 +68,8 @@
 			</ol>
 		</div>
 
-		<div class="topbar-right">
-			<a href="addSuperAdmin.html" class="btn btn-primary" style="height:35px; padding:5px; border-radius:5px;">+ Add User</a>
+		<div class="topbar-right"  >
+			<a  id="addUser" class="btn btn-primary" style="height:35px; padding:5px; border-radius:5px;">+ Add User</a>
 		</div>
 	</header>
 	<!-- End: Topbar -->
@@ -90,7 +90,7 @@
 
 					<div class="panel panel-visible" id="spy3">
 						<div class="panel-body pn">
-							<table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;">
+							<table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%" style="text-align: center;font-size:13px;">
 								<thead>
 									<tr role="row">
 										<th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
@@ -127,7 +127,28 @@
 										</th>
 									</tr>
 								</thead>
-								<tbody id="listing"></tbody>
+								<tbody id="listing">
+									@{ 
+											int val = 1;
+											foreach (var item in Model)
+											{
+												<tr role="row" class="odd">
+													<td class="sorting_1"><center><span>@val</span></center></td>
+													<td><center><span>@item.Name</span></center></td>
+													<td><center><span>@item.Role</span></center></td>
+													<td><center><span>@item.Agency_Name</span></center></td>
+													<td><center><span>@item.emial</span></center></td>
+													<td><center><span>@item.mobile</span></center></td>
+													<td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
+													<td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button></div></center></td>
+												</tr>
+											val++;
+										}
+
+									  }
+
+
+								</tbody>
 							</table>
 						</div>
 
@@ -152,4 +173,3 @@
 </section>
 <!-- end: Content-Wrapper -->
 <!-- Jquery -->
-

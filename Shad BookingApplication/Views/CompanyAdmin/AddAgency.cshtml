@@ -1,7 +1,115 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AddAgencyViewModel
 @{
 	ViewBag.Title = "AddAgency";
 	Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+	List<SelectListItem> listItems = new List<SelectListItem>();
+	List<SelectListItem> listItems0 = new List<SelectListItem>();
+	List<SelectListItem> listItems6 = new List<SelectListItem>();
+	if (Model.BusinessSubCatageory != null)
+	{
+		foreach (var item in Model.BusinessSubCatageory)
+		{
+			listItems.Add(new SelectListItem
+			{
+				Text = item.Name,
+				Value = item.Id.ToString(),
+				Selected = false
+			});
+		}
+	}
+	
+
+	List<SelectListItem> listItems4 = new List<SelectListItem>();
+
+	foreach (var item in Model.SMS)
+	{
+		listItems4.Add(new SelectListItem
+		{
+			Text = item.SmsPackageName,
+			Value = item.Id.ToString(),
+			Selected = false
+		});
+	}
+
+	listItems4.Add(new SelectListItem
+	{
+		Text = "No Sms Package",
+		Value = "0",
+		Selected = true
+	});
+
+	List<SelectListItem> listItems1 = new List<SelectListItem>();
+
+	listItems1.Add(new SelectListItem
+	{
+		Text = "Single Site Company",
+		Value = "Single Site Company",
+		Selected = true
+	});
+
+	listItems1.Add(new SelectListItem
+	{
+		Text = "Multi Site Company",
+		Value = "Multi Site Company",
+		Selected = false
+	});
+
+	List<SelectListItem> listItems2 = new List<SelectListItem>();
+
+	listItems2.Add(new SelectListItem
+	{
+		Text = "Active",
+		Value = "Active",
+		Selected = true
+	});
+
+	listItems2.Add(new SelectListItem
+	{
+		Text = "Inactive",
+		Value = "Inactive",
+		Selected = false
+	});
+
+
+	List<SelectListItem> listItems3 = new List<SelectListItem>();
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "1",
+		Value = "1",
+		Selected = true
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "2",
+		Value = "2",
+		Selected = false
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "3",
+		Value = "3",
+		Selected = false
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "4",
+		Value = "4",
+		Selected = false
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "5",
+		Value = "5",
+		Selected = false
+	});
+
+
+
 }
 
 <section id="content_wrapper">
@@ -29,6 +137,8 @@
 	</header>
 	<!-- End: Topbar -->
 	<!-- Begin: Content -->
+@using (Html.BeginForm("AddAgency", "CompanyAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
 	<div class="panel">
 		<div class="panel" id="spy3">
 
@@ -74,18 +184,19 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Agency Admin:</label>
 								<div class="col-md-8 col-xs-10">
-									<select id="newDrop" class="form-control">
-										<option value="1">Admin 1</option>
-										<option value="2">Admin 2</option>
-									</select>
+									@Html.DropDownList("AgencyAdmin", null,  new  { @class = "form-control",@onChange= "user_data();" })
+									@*@Html.ValidationMessageFor(, "", new { @class = "text-danger" })*@
 								</div>
-								<button class="col-md-1 col-xs-1 btn btn-success light" id='rowNum' type="button" style="width: 5%">+</button>
+								<button class="col-md-1 col-xs-1 btn btn-success light" id='addUser' type="button" style="width: 5%">+</button>
 							</div>
 
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Business Name:</label>
 								<div class="col-md-8 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the business name" required="required">
+									@Html.EditorFor(model => model.Detail.BussinessName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the Business name") } })
+									@Html.ValidationMessageFor(model => model.Detail.BussinessName, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 							<div class="row form-group">
@@ -93,28 +204,34 @@
 								<div class="col-md-8 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon" id="http-addon">http://</span>
-										<input type="text" class="form-control" placeholder="www.example.com">
+										@Html.EditorFor(model => model.Detail.BussinessWebsite, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName(" www.example.com") } })
+										@Html.ValidationMessageFor(model => model.Detail.BussinessWebsite, "", new { @class = "text-danger" })
+
+
 									</div>
 								</div>
 							</div>
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
-								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the first name" required="required">
+								<div class="col-md-3 col-xs-12" id="FirstName">
+									@Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the first name") } })
+									@Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
 								</div>
 								<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
-								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the last name">
+								<div class="col-md-3 col-xs-12" id="LastName">
+									@Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the last name") } })
+									@Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Sub-category:</label>
 								<div class="col-md-8 col-xs-12">
-									<select class="form-control selectpicker show-tick">
-										<option selected disabled>Select a sub-category</option>
-										<option>Option 1</option>
-										<option>Option 2</option>
-									</select>
+									@Html.DropDownListFor(model => model.Detail.SubCatageoryNo, listItems, "Select a category", new { @class = "form-control", @id = "Bus_CatageoryId", @onchange = "populate_subbus_catg()" })
+									@Html.ValidationMessageFor(model => model.Detail.SubCatageoryNo, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -128,15 +245,18 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Address:</label>
 								<div class="col-md-8 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the address" required="required">
-									<input type="text" class="form-control mt10" placeholder="">
+									@Html.EditorFor(model => model.Location.Address, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the address") } })
+									@Html.ValidationMessageFor(model => model.Location.Address, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label" name="city">City:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the city" name="city" required="required">
+									@Html.EditorFor(model => model.Location.City, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the City") } })
+									@Html.ValidationMessageFor(model => model.Location.City, "", new { @class = "text-danger" })
 								</div>
 								<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
 									<label class="control-label">
@@ -144,7 +264,8 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="12345" required="required">
+									@Html.EditorFor(model => model.Location.ZipCode, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("12345") } })
+									@Html.ValidationMessageFor(model => model.Location.ZipCode, "", new { @class = "text-danger" })
 								</div>
 							</div>
 
@@ -152,7 +273,10 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">State:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="Enter the state">
+									@Html.EditorFor(model => model.Location.State, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the state") } })
+									@Html.ValidationMessageFor(model => model.Location.State, "", new { @class = "text-danger" })
+
+
 								</div>
 								<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
 									<label class="text-right control-label">
@@ -160,7 +284,7 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<select class="form-control">
+									<select class="form-control" name="LocCountryName">
 										<option disabled selected>Select the country</option>
 										<option value="Afghanistan">Afghanistan</option>
 										<option value="Albania">Albania</option>
@@ -402,6 +526,7 @@
 										<option value="Zambia">Zambia</option>
 										<option value="Zimbabwe">Zimbabwe</option>
 									</select>
+									@Html.ValidationMessageFor(model=>model.Location.CountryName,"",new { @class = "text-danger" })
 								</div>
 							</div>
 
@@ -416,7 +541,10 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Latitude:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="" required="required">
+									@Html.EditorFor(model => model.Location.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Location.Latitude, "", new { @class = "text-danger" })
+
+
 								</div>
 								<div class="col-md-2 col-xs-12 text-right">
 									<label class="text-right control-label">
@@ -424,28 +552,37 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" placeholder="">
+									@Html.EditorFor(model => model.Location.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Location.Longitude, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
-							<div class="row form-group">
-								<h3 class="col-md-2" style="margin-left: 1%; margin-top: 1%">Intervension Zone:</h3>
-								<div class="radio col-md-1 col-xs-12 text-right">
-									<label>
-										<input type="radio" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Home
-									</label>
-								</div>
-								<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
-									<label>
-										<input type="radio" name="workingPlaceRadio" onchange="func1()" value="1">On site
-									</label>
-								</div>
-								<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
-									<label>
-										<input type="radio" name="workingPlaceRadio" onchange="func2()" value="3">Both
-									</label>
-								</div>
-							</div>
+                            <div class="row form-group">
+                                <h3 class="col-md-2" style="margin-left: 1%; margin-top: 1%">Intervension Zone:</h3>
+                                <div class="radio col-md-1 col-xs-12 text-right">
+                                    <label>
+                                        <input type="radio" id="Home_id" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Home
+                                    </label>
+                                </div>
+                                <div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
+                                    <label>
+                                        <input type="radio" id="onsite_id" name="workingPlaceRadio" onchange="func1()" value="1">On site
+                                        @Html.HiddenFor(model => model.Location.IntervensionZone, new { @id = "IntervensionZone_id" })
+                                    </label>
+                                </div>
+                                <div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
+                                    <label>
+                                        <input type="radio" id="both_id" name="workingPlaceRadio" onchange="func22()" value="3">Both
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+
+
 
 						</div>
 						<div id="interventionZone">
@@ -453,7 +590,11 @@
 							<div class="row form-group">
 								<label class="col-md-2 col-xs-12 text-right" style="margin-top: 1%">Radius of intervention:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="number" class="form-control" placeholder="Distance in KM" required="required">
+
+									@Html.EditorFor(model => model.Location.Radius, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0", @class = "form-control", @placeholder = "Distance in KM" } })
+									@Html.ValidationMessageFor(model => model.Location.Radius, "", new { @class = "text-danger" })
+
+
 								</div>
 								<br>
 								<br>
@@ -474,21 +615,29 @@
 					<div id="contactDetails" class="tab-pane">
 
 						<div class="row form-group">
-							<label class="col-md-2 col-xs-12 text-right">Telephone:</label>
+							<label class="col-md-2 col-xs-12 text-right">Telephone 1:</label>
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+
+									@Html.EditorFor(model => model.Contact.Telephone1, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Contact.Telephone1, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
 							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
-								<label>Telephone:</label>
+								<label>Telephone 2:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+
+									@Html.EditorFor(model => model.Contact.Telephone2, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Contact.Telephone2, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -498,7 +647,10 @@
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+									@Html.EditorFor(model => model.Contact.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 
@@ -508,7 +660,11 @@
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-									<input type="text" class="form-control" placeholder="">
+
+									@Html.EditorFor(model => model.Contact.Fax, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Contact.Fax, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -516,9 +672,13 @@
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
 							<div class="col-md-8 col-xs-12">
-								<input type="email" class="form-control" placeholder="">
+								@Html.EditorFor(model => model.Contact.BussinessEmail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Business Email Address" } })
+								@Html.ValidationMessageFor(model => model.Contact.BussinessEmail, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
+
 						<center>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(3)"><span><strong><</strong></span> Back</button>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc(3)">Next <span><strong>></strong></span></button>
@@ -529,7 +689,7 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Country:</label>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_country">
 									<option selected disabled>Choose the country</option>
 									<option value="Afghanistan">Afghanistan</option>
 									<option value="Albania">Albania</option>
@@ -777,7 +937,7 @@
 								<label>Currency:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_currency">
 									<option selected disabled>Choose the currency</option>
 									<option>Euro</option>
 									<option>USD</option>
@@ -790,7 +950,7 @@
 								Time Zone:
 							</label>
 							<div class="col-md-8 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_timezone">
 									<option selected disabled>Select the timezone</option>
 									<option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</option>
 									<option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</option>
@@ -881,10 +1041,10 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Date Format:</label>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
+								<select class="form-control" name="region_dateformat">
 									<option selected disabled>Choose the date format</option>
-									<option>dd mm yyyy</option>
-									<option>mm dd yyyy</option>
+									<option value="dd mm yyyy">dd mm yyyy</option>
+									<option value="mm dd yyyy">mm dd yyyy</option>
 								</select>
 							</div>
 
@@ -892,14 +1052,13 @@
 								<label>Time Format:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control" onchange="jsFunction(this.value);">
+								<select class="form-control" name="region_timeformat" jsFunction(this.value);">
 									<option selected disabled value="">Choose the time format</option>
 									<option value="12">AM:PM</option>
 									<option value="24">24-Hour</option>
 								</select>
 							</div>
-						</div>
-						<center>
+						</div>						<center>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(4)"><span><strong><</strong></span> Back</button>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc(4)">Next <span><strong>></strong></span></button>
 						</center>
@@ -909,27 +1068,45 @@
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">SIRET:</label>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+
+
+								@Html.EditorFor(model => model.BusinessDetail.SRIET, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.BusinessDetail.SRIET, "", new { @class = "text-danger" })
+
+
 							</div>
 
 							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right">
 								<label class="control-label">APE:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+
+								@Html.EditorFor(model => model.BusinessDetail.APE, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.BusinessDetail.APE, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">VAT Number:</label>
 							<div class="col-md-8 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+
+
+								@Html.EditorFor(model => model.BusinessDetail.VatNumber, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.BusinessDetail.VatNumber, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Description:</label>
 							<div class="col-md-8 col-xs-12">
 								<textarea name="editor1" class="form-control" rows="5" id="business-description"></textarea>
+								@*@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control", @name = "editor_id" })
+									@Html.ValidationMessageFor(model => model.BusinessDetail.Description, "", new { @class = "text-danger" })*@
+
+
 							</div>
 						</div>
 
@@ -943,7 +1120,7 @@
 								<div ng-controller="upload">
 									<div class="col-md-2 col-xs-12">
 										<label class="btn btn-default btn-system btn-file btn-block">
-											Upload Image <input type="file" fileinput="file" filepreview="filepreview" />
+											Upload Image <input type="file" fileinput="file" filepreview="filepreview" name="business_logo_img" />
 										</label>
 									</div>
 									<div class="col-md-2 col-xs-12">
@@ -958,8 +1135,6 @@
 						</center>
 					</div>
 
-
-
 					<div id="photoGallery" class="tab-pane">
 						<div class="row form-group">
 
@@ -968,16 +1143,21 @@
 								<div ng-controller="upload">
 									<div class="col-md-2 col-xs-12">
 										<label id="upImage" class="btn btn-default btn-system btn-file btn-block">
-											Upload Image <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" />
+											Upload Image
+											@*<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" multiple />*@
+											@Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple", @id = "fileToUpload", @accept = "image/*", @class = "inputfile" })
+											@Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+
 										</label>
 									</div>
-									<img id="dispImage1" width="200" height="200" src="@Url.Content("~/img/avatar1.png")"; class="img-responsive col-md-1 col-xs-12">
-									<img id="dispImage2" width="200" height="200" src="@Url.Content("~/img/avatar1.png")"; class="img-responsive col-md-1 col-xs-12" style="display: none">
-									<img id="dispImage3" width="200" height="200" src="@Url.Content("~/img/avatar1.png")"; class="img-responsive col-md-1 col-xs-12" style="display: none">
-									<img id="dispImage4" width="200" height="200" src="@Url.Content("~/img/avatar1.png")"; class="img-responsive col-md-1 col-xs-12" style="display: none">
-									<img id="dispImage5" width="200" height="200" src="@Url.Content("~/img/avatar1.png")"; class="img-responsive col-md-1 col-xs-12" style="display: none">
+									<img id="dispImage1" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12">
+									<img id="dispImage2" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12" style="display: none">
+									<img id="dispImage3" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12" style="display: none">
+									<img id="dispImage4" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12" style="display: none">
+									<img id="dispImage5" width="200" height="200" src="@Url.Content("~/img/avatar1.png")" class="img-responsive col-md-1 col-xs-12" style="display: none">
 								</div>
 							</div>
+
 						</div>
 						<center>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(6)"><span><strong><</strong></span> Back</button>
@@ -991,7 +1171,11 @@
 							<div class="col-md-8 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon">@@</span>
-									<input type="email" class="form-control" placeholder="Enter user email address">
+
+									@Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter user email address") } })
+									@Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -1000,33 +1184,37 @@
 							<div class="col-md-8 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control" placeholder="Enter user password">
+
+									@Html.PasswordFor(m => m.User.PasswordHash, new { @class = "form-control", @placeholder = "Enter user password" })
+									@Html.ValidationMessageFor(m => m.User.PasswordHash, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Name:</label>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" name="user-name" placeholder="Enter user name">
+
+								@Html.EditorFor(model => model.User.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter user name") } })
+								@Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+
+
 							</div>
 
 							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right control-label">
 								<label>Status:</label>
 							</div>
 							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
-									<option>Active</option>
-									<option>Inactive</option>
-								</select>
+								@Html.DropDownListFor(model => model.UserType.Status, listItems2, new { @class = "form-control" })
+								@Html.ValidationMessageFor(model => model.UserType.Status, "", new { @class = "text-danger" })
+
+
 							</div>
 						</div>
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Company Type:</label>
 							<div class="col-md-3 col-xs-12">
-								<select id="drop" class="form-control">
-									<option value="1">Single Site Company</option>
-									<option value="2">Multi Site Company</option>
-								</select>
+								@Html.DropDownListFor(model => model.UserType.SingleorMulti, listItems1, new { @class = "form-control", @id = "drop" })
+								@Html.ValidationMessageFor(model => model.UserType.SingleorMulti, "", new { @class = "text-danger" })
 							</div>
 
 							<div style="display: none;" id="agencyyy">
@@ -1034,13 +1222,8 @@
 									<label>Total Agency:</label>
 								</div>
 								<div class="col-md-3 col-md-12">
-									<select class="form-control">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
+									@Html.DropDownListFor(model => model.UserType.MultiNumber, listItems3, new { @class = "form-control" })
+									@Html.ValidationMessageFor(model => model.UserType.MultiNumber, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
@@ -1049,6 +1232,7 @@
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc(7)">Next <span><strong>></strong></span></button>
 						</center>
 					</div>
+
 
 
 					<div id="workingHours" class="tab-pane">
@@ -1332,8 +1516,9 @@
 						</div>
 						<center>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(9)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(9)">Next <span><strong>></strong></span></button>
+							<button type="button" class="btn btn-primary" onclick="changeTabFunc(9);custome_timepicker()">Next <span><strong>></strong></span></button>
 						</center>
+						<input type="hidden" id="custom_timepicker_id" name="custom_timepicker_name" />
 					</div>
 
 					<div id="social" class="tab-pane">
@@ -1341,8 +1526,11 @@
 							<label class="col-md-2 col-md-offset-2 col-xs-12 text-right">Twitter:</label>
 							<div class="col-md-5 col-xs-12">
 								<div class="input-group">
-									<span class="input-group-addon">@@</span>
-									<input type="text" class="form-control" placeholder="">
+									<span class="input-group-addon">@@ </span>
+									@Html.EditorFor(model => model.Social.Twitter, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Social.Twitter, "", new { @class = "text-danger" })
+
+
 								</div>
 							</div>
 						</div>
@@ -1351,12 +1539,14 @@
 							<div class="col-md-5 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon">http://</span>
-									<input type="text" name="facebookPage" class="form-control">
+									@Html.EditorFor(model => model.Social.Facebook, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Social.Facebook, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
 						<center>
-							<button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>
+							@*<button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>*@
+							<input type="submit" class="btn btn-success" style="width: 15%; border-radius: 10px" value="Save" onclick="custome_timepicker()" />
 						</center>
 						<br><br>
 						<center>
@@ -1369,11 +1559,9 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Option SMS</label>
 							<div class="col-md-8 col-xs-12">
-								<select class="form-control">
-									<option selected>No SMS Package</option>
-									<option>Package 1</option>
-									<option>Package 2</option>
-								</select>
+
+								@Html.DropDownListFor(model => model.SingleSms.ItemID, listItems4, new { @class = "form-control" })
+								@Html.ValidationMessageFor(model => model.SingleSms.ItemID, "", new { @class = "text-danger" })
 							</div>
 						</div>
 						<center>
@@ -1381,6 +1569,7 @@
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc(8)">Next <span><strong>></strong></span></button>
 						</center>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -1388,6 +1577,7 @@
 
 		<br><br><br><br><br><br><br>
 	</div>
+	}
 	<!-- End: Content -->
 	<!-- Begin: Page Footer -->
 	<footer id="content-footer">
@@ -1417,7 +1607,92 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBmEGlcXeTARjjrdz52tbUp5ugBIlbVwY&callback=initMap" async defer></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
+
+	function user_data() {
+		var agencyAdmin_id = $("#AgencyAdmin").val();
+	
+		$.ajax({
+			type: "GET",
+			url: "/CompanyAdmin/Get_UserData",
+			data: { "agencyAdmin_id": agencyAdmin_id },
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+			
+
+
+				$("#User_FirstName").val(response[0].FirstName);
+				$("#User_LastName").val(response[0].LastName);
+
+				$("#User_Email").val(response[0].Email);
+				//document.getElementById("User_PasswordHash").disabled = true;
+				$("#User_UserName").val(response[0].UserName);
+
+				document.getElementById("User_LastName").disabled = true;
+
+				document.getElementById("User_Email").disabled = true;
+				document.getElementById("User_PasswordHash").disabled = true;
+				document.getElementById("User_UserName").disabled = true;
+				document.getElementById("User_FirstName").disabled = true;
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+	jQuery(window).load(function () {
+	    user_data();
+	   
+
+	});
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $(function () {
 				$('#ii1').datetimepicker({
 					format: 'LT',
@@ -1760,13 +2035,21 @@ function changeTabFunc2(a){
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
 }
-function func1()
-{
-	document.getElementById('interventionZone').style.display="none";
+function func1() {
+	document.getElementById('interventionZone').style.display = "none";
+	$("#IntervensionZone_id").val("On_site");
+	alert($("#IntervensionZone_id").val());
+
 }
-function func2()
-{
-	document.getElementById('interventionZone').style.display="block";
+function func2() {
+	document.getElementById('interventionZone').style.display = "block";
+	$("#IntervensionZone_id").val("Home");
+
+}
+function func22() {
+	document.getElementById('interventionZone').style.display = "block";
+	$("#IntervensionZone_id").val("Both");
+
 }
  var map;
 	  function initMap() {
@@ -1786,5 +2069,99 @@ function func2()
 				google.maps.event.trigger(map, 'resize');
 			});
 		}
+
+
+
+
+
+
+
+
+		function custome_timepicker() {
+			var time_string = "";
+			var i = 1
+			for (var k = 0; k < 7; k++) {
+				if (i == 1) {
+					var ckbox = $('#c1');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Monday-";
+						for (var j = i ; j < 5 ; j++) {
+							var val = $("#i" + j).val();
+							time_string = time_string + val + ",";
+						}
+						time_string = time_string + "|";
+					}
+				}
+				else if (i == 5) {
+					var ckbox = $('#c2');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Tuesday-";
+						for (var j = i ; j < 9 ; j++) {
+							time_string = time_string + $("#i" + j).val() + ",";
+						}
+						time_string = time_string + "|";
+					}
+				}
+				else if (i == 9) {
+					var ckbox = $('#c3');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Wednesday-";
+						for (var j = i ; j < 13 ; j++) {
+							time_string = time_string + $("#i" + j).val() + ",";
+						}
+						time_string = time_string + "|";
+					}
+				}
+				else if (i == 13) {
+					var ckbox = $('#c4');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Thursday-";
+						for (var j = i ; j < 17 ; j++) {
+							time_string = time_string + $("#i" + j).val() + ",";
+						}
+						time_string = time_string + "|";
+					}
+				}
+				else if (i == 17) {
+					var ckbox = $('#c5');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Friday-";
+						for (var j = i ; j < 21 ; j++) {
+							time_string = time_string + $("#i" + j).val() + ",";
+						} time_string = time_string + "|";
+					}
+				}
+				else if (i == 21) {
+					var ckbox = $('#c6');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Saturday-";
+						for (var j = i ; j < 25 ; j++) {
+							time_string = time_string + $("#i" + j).val() + ",";
+						}
+						time_string = time_string + "|";
+					}
+				}
+				else if (i == 25) {
+					var ckbox = $('#c7');
+					if (!ckbox.is(':checked')) {
+						time_string = time_string + "Sunday-";
+						for (var j = i ; j < 29 ; j++) {
+							time_string = time_string + $("#i" + j).val() + ",";
+						}
+						time_string = time_string + "|";
+					}
+				}
+				i = i + 4;
+			} $("#custom_timepicker_id").val(time_string);
+		}
+
+
+
+		$('#addUser').click(function () {
+			document.location = '@Url.Action("AddUser","CompanyAdmin")';
+		});
+
+
+
    </script>
 <!-- END: PAGE SCRIPTS -->

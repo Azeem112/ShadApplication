@@ -21,11 +21,11 @@
 
 	List<SelectListItem> listItems4 = new List<SelectListItem>();
 
-	foreach (var item in Model.SMS)
+	foreach (var item in Model.sms_items)
 	{
 		listItems4.Add(new SelectListItem
 		{
-			Text = item.SmsPackageName,
+			Text = item.Name,
 			Value = item.Id.ToString(),
 			Selected = false
 		});

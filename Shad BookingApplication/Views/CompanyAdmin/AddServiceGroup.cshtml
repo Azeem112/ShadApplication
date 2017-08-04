@@ -1,4 +1,4 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetServiceGroup
 @{
     ViewBag.Title = "AddServiceGroup";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -77,6 +77,8 @@
     </header>
     <!-- End: Topbar -->
     <!-- Begin: Content -->
+@using (Html.BeginForm("AddServiceGroup", "CompanyAdmin", FormMethod.Post))
+{
     <section id="content" class="table-layout">
         <!-- Start: Header -->
         <!-- End: Header -->
@@ -92,13 +94,21 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Group Name</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="" required="required">
+                               
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                         <div class="row form-group">
                             <label class="col-md-2 col-xs-12 text-center">Description:</label>
                             <div class="col-md-8 col-xs-11">
-                                <textarea type="text" class="form-control" placeholder="" style="resize: none;"></textarea>
+                                @*<textarea type="text" class="form-control" placeholder="" style="resize: none;"></textarea>*@
+                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "", style = "resize: none;", @type = "text", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                     </div>
@@ -110,34 +120,34 @@
                             <a href="addService.html" type="submit" class="btn btn-primary col-md-offset-6 col-md-2 col-xs-4" style="border-radius:3px;">Create Service</a>
 
                         </div>
-                        <div class="row form-group ">
-                            <div class="checkbox" style="margin-left: 6%">
-                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Massage</label>
-                            </div>
-                        </div>
-                        <div class="row form-group ">
-                            <div class="checkbox" style="margin-left: 6%">
-                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Haircut</label>
-                            </div>
-                        </div>
 
-                        <div class="row form-group ">
-                            <div class="checkbox" style="margin-left: 6%">
-                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Makeup</label>
-                            </div>
+                        <div id="service_list_id">
+                            @if (ViewBag.service_list != null)
+                            {
+                                foreach (var item in ViewBag.service_list)
+                                {
+                                    <div class="row form-group ">
+                                        <div class="checkbox" style="margin-left: 6%">
+                                            <label class="col-md-8 col-xs-12"><input id="@item.Id" checked="checked" type="checkbox" value="">@item.Name</label>
+                                        </div>
+                                    </div>
+                                }
+                            }
                         </div>
+                       
+                       <input type="hidden" name="selected_services_name" id="selected_services_id" value="" />
+                       
                     </div>
                     <a type="submit" class="btn btn-default col-md-2 col-xs-4 col-md-offset-7 col-xs-offset-2" style="border-radius:3px;">
                         Cancel
                     </a>
-                    <a href="serviceGroupList.html" type="submit" class="btn btn-primary col-md-2 col-xs-4" style="border-radius:3px; margin-left: 1%">
-                        Save
-                    </a>
+                    <input type="submit" class="btn btn-primary col-md-2 col-xs-4" style="border-radius:3px; margin-left: 1%" onclick="foo()" value="Save"/>
                 </div>
             </div>
 
     </section>
-    <!-- End: Content -->
+}   
+     <!-- End: Content -->
     <!-- Begin: Page Footer -->
     <footer id="content-footer" class="affix">
         <div class="row">
@@ -152,3 +162,29 @@
 
 </section>
 <!-- end: Content-Wrapper -->
+
+<!-- Jquery -->
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript" >
+
+    $(document).ready(function () {
+       
+
+    });
+
+    function foo()
+    {
+        var selected = [];
+        $('#service_list_id input:checked').each(function () {
+            selected.push($(this).attr('id'));
+        });
+        $("#selected_services_id").val(selected);
+    }
+   
+
+
+</script>

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Shad_BookingApplication.Models
 {
-    public class AddCustomerViewModel
+    public class AddAgencyViewModel
     {
         public AspNetCustomerDetail Detail { get; set; }
         public AspNetCustomerLocation Location { get; set; }
@@ -27,24 +27,9 @@ namespace Shad_BookingApplication.Models
         public IEnumerable<AspNetBusinessCatageory> BusinessCatageory { get; set; }
         public IEnumerable<AspNetBusinessSubCatageory> BusinessSubCatageory { get; set; }
 
-        public List<AspNetItem> sms_items { get; set; }
-
         public string[] Customer_SubCatageory { get; set; }
         public HttpPostedFileBase[] files { get; set; }
-
-    }
-
-    public class Region_Struct
-    {
-        public string CountryName { get; set; }
-        public string TimeZoneName { get; set; }
-        public string DateFormate { get; set; }
-
-        public string TimeFormate { get; set; }
-        public string CurrencyName { get; set; }
-        public string Location_CountryName { get; set; }
-
-        //LocCountryName
+        
+        
     }
 }
-

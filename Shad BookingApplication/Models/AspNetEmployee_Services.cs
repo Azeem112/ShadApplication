@@ -12,22 +12,19 @@ namespace Shad_BookingApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetExpire
+    public partial class AspNetEmployee_Services
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetExpire()
+        public AspNetEmployee_Services()
         {
-            this.AspNetGiftVouchers = new HashSet<AspNetGiftVoucher>();
+            this.AspNetEmployees = new HashSet<AspNetEmployee>();
         }
     
         public int Id { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<System.DateTime> From { get; set; }
-        public Nullable<System.DateTime> To { get; set; }
-        public string Every { get; set; }
-        public string Name { get; set; }
+        public Nullable<int> EmployeeId { get; set; }
+        public Nullable<int> ServiceId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetGiftVoucher> AspNetGiftVouchers { get; set; }
+        public virtual ICollection<AspNetEmployee> AspNetEmployees { get; set; }
     }
 }

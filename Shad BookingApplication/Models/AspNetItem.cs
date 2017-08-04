@@ -28,6 +28,7 @@ namespace Shad_BookingApplication.Models
         public Nullable<double> Price_W__Vat { get; set; }
         public string Status { get; set; }
         public string IsSmsPackage { get; set; }
+        public Nullable<int> RemainingSMS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomerSM> AspNetCustomerSMS { get; set; }
