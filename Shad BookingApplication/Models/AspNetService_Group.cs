@@ -14,10 +14,18 @@ namespace Shad_BookingApplication.Models
     
     public partial class AspNetService_Group
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AspNetService_Group()
+        {
+            this.AspNetComanyServices = new HashSet<AspNetComanyService>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> ServiceID { get; set; }
         public Nullable<int> GroupID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetComanyService> AspNetComanyServices { get; set; }
         public virtual AspNetService AspNetService { get; set; }
         public virtual AspNetServiceGroup AspNetServiceGroup { get; set; }
     }

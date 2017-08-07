@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.AspNetGiftVoucher> 
 @{
     ViewBag.Title = "VoucherList";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -133,30 +133,17 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myCustomers">
-
+                                        @foreach( var item in Model)
+                                        { 
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>CPKTNWT</center></td>
-                                            <td><center>20.00</center></td>
-                                            <td><center>amount</center></td>
-                                            <td><center>period</center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary">Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                            <td class="sorting_1"><center><span>@item.Name</span></center></td>
+                                            <td><center><span>@item.Discount</span></center></td>
+                                            <td><center><span>@item.Type</span></center></td>
+                                            <td><center><span>@item.AspNetExpire.Name</span></center></td>
+                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary" >Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
                                         </tr>
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>BAGUVIX</center></td>
-                                            <td><center>15.00</center></td>
-                                            <td><center>percent</center></td>
-                                            <td><center>recurring</center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary">Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
-
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>CAINEMVHZC</center></td>
-                                            <td><center>20.00</center></td>
-                                            <td><center>percent</center></td>
-                                            <td><center>fixed</center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary">Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
+                                        }
 
                                     </tbody>
                                 </table>

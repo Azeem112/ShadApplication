@@ -35,17 +35,55 @@ namespace Shad_BookingApplication.Controllers
         [HttpPost]
         public ActionResult AddService(AspNetService aspNetService)
         {
-            db.AspNetServices.Add(aspNetService);
-            db.SaveChanges();
+            var login_user_id=User.Identity.GetUserId();
 
-            var group = Request.Form["service_group_name"];
+            var head_id=db.AspNetUsers.Where(x => x.Id == login_user_id).FirstOrDefault().HeadId;
+            if (head_id == null)
+            {
+                var customer_id = db.AspNetCustomers.Where(x => x.UserID == login_user_id).FirstOrDefault().Id;
 
-            var obj = new AspNetService_Group();
-            obj.ServiceID = aspNetService.Id;
-            obj.GroupID = Convert.ToInt16(group);
+                db.AspNetServices.Add(aspNetService);
+                db.SaveChanges();
 
-            db.AspNetService_Group.Add(obj);
-            db.SaveChanges();
+                var group_name = Request.Form["service_group_name"];
+
+                var servicegroup = new AspNetService_Group();
+                servicegroup.ServiceID = aspNetService.Id;
+                servicegroup.GroupID = Convert.ToInt16(servicegroup);
+
+                db.AspNetService_Group.Add(servicegroup);
+                db.SaveChanges();
+
+                var customer_service_group = new AspNetComanyService();
+                customer_service_group.Service_GroupId = servicegroup.Id;
+                customer_service_group.CustomerId = customer_id;
+
+                db.AspNetComanyServices.Add(customer_service_group);
+                db.SaveChanges();
+
+            }
+            else
+            {
+                var user_id = db.AspNetUsers.Where(x => x.HeadId == head_id).FirstOrDefault().Id;
+
+                var customer_id = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault().Id;
+
+                db.AspNetServices.Add(aspNetService);
+                db.SaveChanges();
+
+                var group_name = Request.Form["service_group_name"];
+
+                var servicegroup = new AspNetService_Group();
+                servicegroup.ServiceID = aspNetService.Id;
+                servicegroup.GroupID = Convert.ToInt16(servicegroup);
+
+                db.AspNetService_Group.Add(servicegroup);
+                db.SaveChanges();
+
+                var customer_service_group = new AspNetComanyService();
+                customer_service_group.Service_GroupId=servicegroup.Id;
+                customer_service_group.CustomerId = customer_id;
+            }
 
             return RedirectToAction("ServiceGroupList");
         }
@@ -146,12 +184,21 @@ namespace Shad_BookingApplication.Controllers
 
             AddAgencyViewModel addAgencyViewModel = new AddAgencyViewModel();
             addAgencyViewModel.BusinessSubCatageory = db.AspNetBusinessSubCatageories.ToList();
-            ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")), "Id", "UserName");
+            var id = User.Identity.GetUserId();
+            var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
+            var cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
+            if (cus_data != null)
+            {
+                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") && x.HeadId == cus_data.UserID), "Id", "UserName");
+            }
 
             addAgencyViewModel.SMS = db.AspNetCustomerSMS.ToList();
             return View(addAgencyViewModel);
-
         }
+
+
+
+
         [HttpPost]
         public ActionResult AddAgency(AddAgencyViewModel addAgencyViewModel, HttpPostedFileBase[] files)
         {
@@ -1234,7 +1281,7 @@ namespace Shad_BookingApplication.Controllers
             {
                 exp.From = Convert.ToDateTime(Request.Form["Recuring_From"]);
                 exp.To = Convert.ToDateTime(Request.Form["Recuring_To"]);
-                exp.Every = null;
+                exp.Every = Request.Form["Recuring_Every"].ToString();
                 exp.Name = Request.Form["ExpireId"];
                 exp.Date = null;
 
@@ -1253,7 +1300,7 @@ namespace Shad_BookingApplication.Controllers
 
             db.AspNetExpires.Add(exp);
             db.SaveChanges();
-            //select id from table 
+            //select id from table
             voucher.ExpireId = db.AspNetExpires.Select(x => x.Id).Max();
 
             if (true)
@@ -1400,12 +1447,14 @@ namespace Shad_BookingApplication.Controllers
         public ActionResult UserList()
         {
             var id = User.Identity.GetUserId();
+            var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
+            var cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
             List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
-            var user = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") && x.HeadId == id);
+            var user = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") && x.HeadId == cus_data.UserID);
             foreach (var item in user)
             {
                 var user_id = item.Id;
-                var agency_data = db.AspNetAgencies.Where(x => x.UserID == user_id).FirstOrDefault();
+                var agency_data = db.AspNetAgencies.Where(x => x.UserID == user_id && x.HeadId == cus_data.Id).FirstOrDefault();
                 if (agency_data != null)
                 {
                     var list = new UserListViewModel_1();
@@ -1436,6 +1485,9 @@ namespace Shad_BookingApplication.Controllers
 
                 }
             }
+
+
+
             return View(obj);
         }
 
