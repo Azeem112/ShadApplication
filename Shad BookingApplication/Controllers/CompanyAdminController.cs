@@ -206,7 +206,7 @@ namespace Shad_BookingApplication.Controllers
             }
             if (cus_data != null)
             {
-                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x =>( x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && x.HeadId == cus_data.UserID), "Id", "UserName");
+                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x =>( x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && ((x.HeadId == cus_data.UserID) || x.Id == cus_data.UserID)), "Id", "UserName");
             }
 
             addAgencyViewModel.SMS = db.AspNetCustomerSMS.ToList();
@@ -1232,16 +1232,17 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult AddCustomer()
         {
-
-            return View();
+            AddCompanyCustomerViewModel obj = new AddCompanyCustomerViewModel();
+            return View(obj);
         }
 
         [HttpPost]
-        public ActionResult AddCustomer()
+        public ActionResult AddCustomer(AddCompanyCustomerViewModel customer)
         {
 
             return View();
         }
+
         public ActionResult AddEmployee()
         {
             return View();
@@ -1472,7 +1473,7 @@ namespace Shad_BookingApplication.Controllers
             var id = User.Identity.GetUserId();
             var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
             var cus_data = new AspNetCustomer();
-
+            List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
             if (h_id == null)
 
             {
@@ -1488,8 +1489,8 @@ namespace Shad_BookingApplication.Controllers
                 cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
 
             }
-            List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
-            var user = db.AspNetUsers.Where(x => (x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") )&& x.HeadId == cus_data.UserID);
+            
+            var user = db.AspNetUsers.Where(x => (x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") )&& (( x.HeadId == cus_data.UserID)||x.Id==cus_data.UserID));
             if (user != null)
             {
                 foreach (var item in user)

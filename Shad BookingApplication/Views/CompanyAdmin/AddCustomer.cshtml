@@ -1,4 +1,4 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AddCompanyCustomerViewModel
 @{
 	ViewBag.Title = "AddCustomer";
 	Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -51,40 +51,48 @@
 						<a href="#businessDetails" data-toggle="tab" aria-expanded="true">Photo</a>
 					</li>
 				</ul>
+				@using (Html.BeginForm("AddCustomer", "CompanyAdmin", FormMethod.Post))
+				{
 				<div class="tab-content br-n pn">
 					<div id="Details" class="tab-pane active">
 						<div class="row">
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control">
+									@Html.EditorFor(model => model.Customer.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.FirstName, "", new { @class = "text-danger" })
 								</div>
 								<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control">
+									@Html.EditorFor(model => model.Customer.LastName, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.LastName, "", new { @class = "text-danger" })
 								</div>
 							</div>
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Telephone:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="number" class="form-control">
+									@Html.EditorFor(model => model.Customer.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.Telephone, "", new { @class = "text-danger" })
 								</div>
 								<label class="col-md-2 col-xs-12 text-right control-label">SMS Number:</label>
 								<div class="col-md-3 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon" style="color: black">+33</span>
-										<input type="number" class="form-control">
+										@Html.EditorFor(model => model.Customer.SmsNumber, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.Customer.SmsNumber, "", new { @class = "text-danger" })
 									</div>
 								</div>
 							</div>
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Email</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control">
+									@Html.EditorFor(model => model.Customer.Email, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.Email, "", new { @class = "text-danger" })
 								</div>
 								<label class="col-md-2 col-xs-12 text-right control-label">Occupation</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control">
+									@Html.EditorFor(model => model.Customer.Occupation, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.Occupation, "", new { @class = "text-danger" })
 								</div>
 							</div>
 
@@ -99,8 +107,8 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Address:</label>
 								<div class="col-md-8 col-xs-12">
-									<input type="text" class="form-control" required="required">
-									<input type="text" class="form-control mt10" placeholder="">
+									@Html.EditorFor(model => model.Customer.Adress, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.Adress, "", new { @class = "text-danger" })
 								</div>
 							</div>
 
@@ -111,11 +119,14 @@
 									</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" required="required">
+									@Html.EditorFor(model => model.Customer.PostCode, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.PostCode, "", new { @class = "text-danger" })
 								</div>
 								<label class="col-md-2 col-xs-12 text-right control-label" name="city">City:</label>
 								<div class="col-md-3 col-xs-12">
-									<input type="text" class="form-control" name="city" required="required">
+									@Html.EditorFor(model => model.Customer.City, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.City, "", new { @class = "text-danger" })
+
 								</div>
 
 							</div>
@@ -146,7 +157,8 @@
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="input-group">
-									<input type="date" class="form-control" placeholder="">
+									@Html.EditorFor(model => model.Customer.BateofBirth, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Customer.BateofBirth, "", new { @class = "text-danger" })
 								</div>
 							</div>
 						</div>
@@ -154,14 +166,16 @@
 						<div class="row form-group">
 							<label class="col-md-2 col-xs-12 text-right">Reffered By:</label>
 							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" placeholder="">
+								@Html.EditorFor(model => model.Customer.RefferedBy, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.Customer.RefferedBy, "", new { @class = "text-danger" })
 							</div>
 						</div>
 
 						<div class="row form-group required">
 							<label class="col-md-2 col-xs-12 text-right control-label">Alerts/Contradictions:</label>
 							<div class="col-md-8 col-xs-12">
-								<textarea class="form-control" style="resize: none;"></textarea>
+								@Html.TextAreaFor(model => model.Customer.Contradiction, 5, 105, new { @style = "resize: none;" })
+								@Html.ValidationMessageFor(model => model.Customer.Contradiction)
 							</div>
 						</div>
 						<div class="row form-group">
@@ -341,438 +355,23 @@
 							</div>
 						</div>
 						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(5)"><span><strong><</strong></span> Back</button>
-						</center>
-					</div>
 
 
-
-					<div id="photoGallery" class="tab-pane">
-						<div class="row form-group">
-
-							<label class="col-md-2 col-xs-12 text-right">Upload Images:</label>
-							<div ng-app="fileUpload" class="container">
-								<div ng-controller="upload">
-									<div class="col-md-2 col-xs-12">
-										<label id="upImage" class="btn btn-default btn-system btn-file btn-block">
-											Upload Image <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" class="inputfile" />
-										</label>
-									</div>
-									<img id="dispImage1" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12">
-									<img id="dispImage2" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
-									<img id="dispImage3" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
-									<img id="dispImage4" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
-									<img id="dispImage5" width="200" height="200" src="img/avatar1.png" class="img-responsive col-md-1 col-xs-12" style="display: none">
-								</div>
-							</div>
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(6)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(6)">Next <span><strong>></strong></span></button>
-						</center>
-					</div>
-
-					<div id="userAndAccountType" class="tab-pane">
-						<div class="row form-group required">
-							<label class="col-md-2 col-xs-12 text-right  control-label">Email:</label>
-							<div class="col-md-8 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon">@@</span>
-									<input type="email" class="form-control" placeholder="Enter user email address">
-								</div>
-							</div>
-						</div>
-						<div class="row form-group required">
-							<label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
-							<div class="col-md-8 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control" placeholder="Enter user password">
-								</div>
-							</div>
-						</div>
-						<div class="row form-group required">
-							<label class="col-md-2 col-xs-12 text-right control-label">Name:</label>
-							<div class="col-md-3 col-xs-12">
-								<input type="text" class="form-control" name="user-name" placeholder="Enter user name">
-							</div>
-
-							<div class="col-md-1 col-md-offset-1 col-xs-12 text-right control-label">
-								<label>Status:</label>
-							</div>
-							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
-									<option>Active</option>
-									<option>Inactive</option>
-								</select>
-							</div>
-						</div>
-						<div class="row form-group required">
-							<label class="col-md-2 col-xs-12 text-right control-label">Company Type:</label>
-							<div class="col-md-3 col-xs-12">
-								<select id="drop" class="form-control">
-									<option value="1">Single Site Company</option>
-									<option value="2">Multi Site Company</option>
-								</select>
-							</div>
-
-							<div style="display: none;" id="agencyyy">
-								<div class="col-md-2 col-xs-12 text-right control-label">
-									<label>Total Agency:</label>
-								</div>
-								<div class="col-md-3 col-md-12">
-									<select class="form-control">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(7)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(7)">Next <span><strong>></strong></span></button>
-						</center>
-					</div>
-
-
-					<div id="workingHours" class="tab-pane">
-						<div class="row">
-							<div class="row form-group">
-								<div class="col-md-8 col-md-offset-2 col-xs-12">
-									<div class="table-responsive">
-										<table class="table">
-											<tr>
-												<th>Day of Week</th>
-												<th>Is Day Off</th>
-												<th>Start Time</th>
-												<th>End Time</th>
-												<th>Lunch From</th>
-												<th>Lunch To</th>
-											</tr>
-											<tr id="r1">
-												<td>Monday</td>
-												<td><div class="checkbo ml20"><input id="c1" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(1)"></div></td>
-												<td>
-													<div class='input-group date' id='ii1'>
-														<input id="i1" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii2'>
-														<input id="i2" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii3'>
-														<input id="i3" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii4'>
-														<input id="i4" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-											</tr>
-											<tr id="r2">
-												<td>Tuesday</td>
-												<td><div class="checkbo ml20"><input id="c2" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(2)"></div></td>
-												<td>
-													<div class='input-group date' id='ii5'>
-														<input id="i5" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii6'>
-														<input id="i6" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii7'>
-														<input id="i7" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii8'>
-														<input id="i8" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-											</tr>
-											<tr id="r3">
-												<td>Wednesday</td>
-												<td><div class="checkbo ml20"><input id="c3" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(3)"></div></td>
-												<td>
-													<div class='input-group date' id='ii9'>
-														<input id="i9" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii10'>
-														<input id="i10" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-t4me"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii11'>
-														<input id="i11" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii12'>
-														<input id="i12" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-											</tr>
-											<tr id="r4">
-												<td>Thursday</td>
-												<td><div class="checkbo ml20"><input id="c4" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(4)"></div></td>
-												<td>
-													<div class='input-group date' id='ii13'>
-														<input id="i13" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii14'>
-														<input id="i14" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii15'>
-														<input id="i15" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii16'>
-														<input id="i16" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-
-											</tr>
-											<tr id="r5">
-												<td>Friday</td>
-												<td><div class="checkbo ml20"><input id="c5" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(5)"></div></td>
-												<td>
-													<div class='input-group date' id='ii17'>
-														<input id="i17" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii18'>
-														<input id="i18" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii19'>
-														<input id="i19" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii20'>
-														<input id="i20" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-
-											</tr>
-											<tr id="r6">
-												<td>Saturday</td>
-												<td><div class="checkbo ml20"><input id="c6" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(6)"></div></td>
-												<td>
-													<div class='input-group date' id='ii21'>
-														<input id="i21" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii22'>
-														<input id="i22" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii23'>
-														<input id="i23" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii24'>
-														<input id="i24" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-											</tr>
-											<tr id="r7">
-												<td>Sunday</td>
-												<td><div class="checkbo ml20"><input id="c7" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(7)"></div></td>
-												<td>
-													<div class='input-group date' id='ii25'>
-														<input id="i25" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-
-												<td>
-													<div class='input-group date' id='ii26'>
-														<input id="i26" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii27'>
-														<input id="i27" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-												<td>
-													<div class='input-group date' id='ii28'>
-														<input id="i28" type='text' class="form-control" placeholder="23:59" />
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-time"></span>
-														</span>
-													</div>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-8 col-md-offset-2 col-xs-12">
-									<input type="checkbox" name="wh-checkbox">  Update the default working time for all the employees
-								</div>
-							</div>
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(9)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(9)">Next <span><strong>></strong></span></button>
-						</center>
-					</div>
-
-					<div id="social" class="tab-pane">
-						<div class="row form-group">
-							<label class="col-md-2 col-md-offset-2 col-xs-12 text-right">Twitter:</label>
-							<div class="col-md-5 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon">@@</span>
-									<input type="text" class="form-control" placeholder="">
-								</div>
-							</div>
-						</div>
-						<div class="row form-group">
-							<label class="col-md-2  col-md-offset-2 col-xs-12 text-right">Facebook Page:</label>
-							<div class="col-md-5 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon">http://</span>
-									<input type="text" name="facebookPage" class="form-control">
-								</div>
-							</div>
-						</div>
-						<center>
-							<button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>
-						</center>
-						<br><br>
-						<center>
 							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(10)"><span><strong><</strong></span> Back</button>
-						</center>
-
-					</div>
-
-					<div id="optionSMS" class="tab-pane">
-						<div class="row form-group">
-							<label class="col-md-2 col-xs-12 text-right">Option SMS</label>
-							<div class="col-md-8 col-xs-12">
-								<select class="form-control">
-									<option selected>No SMS Package</option>
-									<option>Package 1</option>
-									<option>Package 2</option>
-								</select>
-							</div>
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(8)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(8)">Next <span><strong>></strong></span></button>
+							<input type="submit" class="btn btn-success"value="Save">
+							
 						</center>
 					</div>
+
+
+
+
+
+
 				</div>
-			</div>
-		</div>
+		
 
-
+				}
 		<br><br><br><br><br><br><br>
 	</div>
 	<!-- End: Content -->
@@ -811,3 +410,96 @@
 		display: none !important;
 	}
 </style>
+<script type="text/javascript">
+	
+	
+	function changeTabFunc(a){
+		document.getElementById("dynamicItem"+a).className = "";
+		document.getElementById("dynamicItem"+(a+1)).className = "active";
+		if(a==1){
+			document.getElementById("Details").className = "tab-pane";
+			document.getElementById("locationDetails").className = "tab-pane active";
+		}
+		if(a==2){
+			document.getElementById("locationDetails").className = "tab-pane";
+			document.getElementById("contactDetails").className = "tab-pane active";
+		}
+		if(a==3){
+			document.getElementById("contactDetails").className = "tab-pane";
+			document.getElementById("regionalSettings").className = "tab-pane active";
+		}
+		if(a==4){
+			document.getElementById("regionalSettings").className = "tab-pane";
+			document.getElementById("businessDetails").className = "tab-pane active";
+		}
+		if(a==5){
+			document.getElementById("businessDetails").className = "tab-pane";
+			document.getElementById("photoGallery").className = "tab-pane active";
+		}
+		if(a==6){
+			document.getElementById("photoGallery").className = "tab-pane";
+			document.getElementById("userAndAccountType").className = "tab-pane active";
+		}
+		if(a==7){
+			document.getElementById("userAndAccountType").className = "tab-pane";
+			document.getElementById("optionSMS").className = "tab-pane active";
+		}
+		if(a==8){
+			document.getElementById("optionSMS").className = "tab-pane";
+			document.getElementById("workingHours").className = "tab-pane active";
+		}
+		if (a == 9)
+		{
+			custome_timepicker();
+			document.getElementById("workingHours").className = "tab-pane";
+			document.getElementById("social").className = "tab-pane active";
+		}
+	}
+	function changeTabFunc2(a){
+		document.getElementById("dynamicItem"+a).className = "";
+		document.getElementById("dynamicItem"+(a-1)).className = "active";
+		if(a==2){
+
+			document.getElementById("locationDetails").className = "tab-pane";
+			document.getElementById("Details").className = "tab-pane active";
+		}
+		if(a==3){
+
+			document.getElementById("contactDetails").className = "tab-pane";
+			document.getElementById("locationDetails").className = "tab-pane active";
+		}
+		if(a==4){
+
+			document.getElementById("regionalSettings").className = "tab-pane";
+			document.getElementById("contactDetails").className = "tab-pane active";
+		}
+		if(a==5){
+
+			document.getElementById("businessDetails").className = "tab-pane";
+			document.getElementById("regionalSettings").className = "tab-pane active";
+		}
+		if(a==6){
+
+			document.getElementById("photoGallery").className = "tab-pane";
+			document.getElementById("businessDetails").className = "tab-pane active";
+		}
+		if(a==7){
+
+			document.getElementById("userAndAccountType").className = "tab-pane";
+			document.getElementById("photoGallery").className = "tab-pane active";
+		}
+		if(a==8){
+			document.getElementById("optionSMS").className = "tab-pane";
+			document.getElementById("userAndAccountType").className = "tab-pane active";
+		}
+		if(a==9){
+			document.getElementById("workingHours").className = "tab-pane";
+			document.getElementById("optionSMS").className = "tab-pane active";
+		}
+		if(a==10){
+			document.getElementById("social").className = "tab-pane";
+			document.getElementById("workingHours").className = "tab-pane active";
+		}
+	}
+
+</script>
