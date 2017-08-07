@@ -1,20 +1,34 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetUser
+
 @{
     ViewBag.Title = "LoginDetails";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
 }
-<!-- Start: Content-Wrapper -->
+
+
+
+<!-- Summernote CSS  -->
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/vendor/plugins/summernote/summernote.css")">
+
+<!-- X-editable CSS -->
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/vendor/plugins/xeditable/css/bootstrap-editable.css")">
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/vendor/plugins/xeditable/inputs/address/address.css")">
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/vendor/plugins/xeditable/inputs/typeaheadjs/lib/typeahead.js-bootstrap.css")">
+
+
 <section id="content_wrapper">
 
     <!-- Start: Topbar-Dropdown -->
     <!-- End: Topbar-Dropdown -->
     <!-- Start: Topbar -->
+
+    <h1>HHHHHHHH</h1>
     <header id="topbar">
 
         <div class="topbar-left">
             <ol class="breadcrumb">
                 <li class="crumb-active">
-                    <a href="dashboard.html">Login Details</a>
+                    <a href="dashboard.html">Your Profile</a>
                 </li>
                 <li class="crumb-icon">
                     <a href="dashboard.html">
@@ -99,7 +113,13 @@
                         <h4 class="modal-title" id="myModalLabel">Change Password</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form" style="margin-left:10px">
+                        @*<form class="form-horizontal" role="form" style="margin-left:10px" name="formpasswordchange" id="formpasswordchange">
+
+
+                            </form>*@
+
+                        @using (Html.BeginForm("ChangePassword", "CompanyAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", style = "margin-left:10px", name = "formpasswordchange", id = "formpasswordchange" }))
+                        {
                             <div class="alert alert-info">
                                 <span class="glyphicon glyphicon-info-sign" style="font-size: 16px; top: 3px"></span>
                                 <b id="desccc">Password must be 8 characters long</b>
@@ -111,7 +131,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key"></i>
                                     </span>
-                                    <input class="form-control" type="password" placeholder="Old Password">
+                                    <input class="form-control" type="password" placeholder="Old Password" name="oldPassword">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -120,7 +140,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key"></i>
                                     </span>
-                                    <input class="form-control" type="password" placeholder="New Password">
+                                    <input class="form-control" type="password" placeholder="New Password" name="newPassword">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -129,15 +149,15 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-key"></i>
                                     </span>
-                                    <input class="form-control" type="password" placeholder="Verify Password">
+                                    <input class="form-control" type="password" placeholder="Verify Password" name="verifyPassword">
                                 </div>
                             </div>
-
-                        </form>
+                        }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary" onclick="changePassword()">Save</button>
+                        
                     </div>
                 </div>
             </div>
@@ -158,15 +178,20 @@
     <div class="panel">
         <div class="panel-body pn">
 
-            <form class="form-horizontal" role="form" style="margin-left:10px">
+            @*<form class="form-horizontal" role="form" style="margin-left:10px">
 
+
+                </form>*@
+
+            @using (Html.BeginForm("EditUser", "CompanyAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", style = "margin-left:10px" }))
+            {
                 <div class=" row form-group" style="margin-left:25px">
                     <br>
 
 
                     <label class="col-md-12"> <h3>Account owner</h3></label>
 
-                    <label class="col-md-4">Logged in As: <span style="font-size:16px">user@gmail.com</span></label>
+                    <label class="col-md-4">Logged in As: <span style="font-size:16px">@Model.Email</span></label>
                     <label class="col-md-2 col-md-offset-1"><a data-toggle="modal" data-target="#myModal1">Change Password</a></label>
 
                 </div>
@@ -184,36 +209,48 @@
                             <br><br><br>
                             <div class="row">
                                 <div class="row form-group required">
-                                    <label class="col-md-2 col-xs-12 text-right control-label">Email:</label>
+                                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-xs-12 text-right control-label" })
                                     <div class="col-md-8 col-xs-11 col-xs-offset-1 col-md-offset-0">
-                                        <input type="email" class="form-control" placeholder="Enter Email here" required="required">
+                                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email here", required = "required" } })
+
                                     </div>
                                 </div>
                                 <div class="row form-group required">
                                     <label class="col-md-2 col-xs-12 text-right control-label">Password:</label>
                                     <div class="col-md-8 col-xs-11 col-xs-offset-1 col-md-offset-0">
-                                        <input type="password" class="form-control" placeholder="Provide password" required="required">
+                                        <input type="password" class="form-control" placeholder="Provide password" required="required" disabled>
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-md-2 col-xs-12 text-right">Full Name:</label>
+                                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 col-xs-12 text-right control-label" })
                                     <div class="col-md-8 col-xs-11 col-xs-offset-1 col-md-offset-0">
-                                        <input type="text" class="form-control" placeholder="Enter Full name here">
+                                        @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Full Name here" } })
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-md-2 col-xs-12 text-right">Phone:</label>
+                                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 col-xs-12 text-right control-label" })
                                     <div class="col-md-8 col-xs-11 col-xs-offset-1 col-md-offset-0">
-                                        <input type="text" class="form-control" placeholder="Enter Phone Number name here">
+                                        @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter phone number here" } })
                                     </div>
                                 </div>
                                 <div class="row form-group ">
                                     <label class="col-md-2 col-xs-12 text-right control-label">Status:</label>
                                     <div class="col-md-8 col-xs-11 col-xs-offset-1 col-md-offset-0">
                                         <select class="form-control" onchange="calculate()" id="tax" style="margin-bottom: 3%;">
-                                            <option selected disabled value="0.00">-Select Status-</option>
-                                            <option value="">Active</option>
-                                            <option value="">Inactive</option>
+                                            @if (ViewBag.HasStatus)
+                                            {
+                                                string val = ((string)ViewBag.UserStatus).ToLower();
+                                                <option value="@val" selected>@ViewBag.UserStatus</option>
+                                                <option value="@(val.Equals("active") ? "inactive" : "active")">
+                                                    @(val.Equals("active") ? "Inactive" : "Active")
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                            }
+
                                         </select>
                                     </div>
                                 </div>
@@ -223,18 +260,11 @@
                         <br>
                         <br>
 
-                        <button type="button" class="btn btn-success col-md-2 col-md-offset-2 col-xs-offset-5" style=" border-radius: 5px">Save</button>
+                        <input type="submit" class="btn btn-success col-md-2 col-md-offset-2 col-xs-offset-5" style=" border-radius:5px" value="Save" />
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-            </form><br><br><br><br><br>
+            }
+            <br><br><br><br><br>
 
         </div>
     </div>
@@ -254,6 +284,59 @@
         </div>
     </footer>
     <!-- End: Page Footer -->
+    <script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+    <script>
+        function changePassword() {
+            var old = $('[name="oldPassword"]').val();
+            var updated = $('[name="newPassword"]').val();
+            var verify = $('[name="verifyPassword"]').val();
+
+            if (updated !== verify) {
+                $('#desccc').html("Password and verify password don't match.");
+                return;
+            }
+            //var address = '../SuperAdmin/ChangePassword/?oldPassword=' + oldPassword + "&newPassword=" + newPassword;
+            //console.log('Address: ' + address);
+
+            //$.ajax({
+            //    url: '/SuperAdmin/ChangePassword',
+            //    type: 'POST',
+            //    contentType: 'application/json; charset=utf-8',
+            //    dataType: 'text',
+            //    data: {
+            //        'oldPassword': old,
+            //        'newPassword': updated
+            //    }
+            //})
+            //    .done(function (result) {
+            //        console.log("Inside done: " + result);
+            //    })
+            //    .fail(function (xhr, status, errorThrown) {
+            //        console.log("Inside fail");
+            //        console.log("xhr: " + xhr);
+            //        console.log("status: " + status);
+            //        console.log("errorThrown: " + errorThrown);
+            //    })
+            $.ajax({
+                type: "GET",
+                url: "/CompanyAdmin/ChangePassword",
+                data: { 'oldPassword': old, 'newPassword': updated },
+
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    </script>
 
 </section>
-<!-- End: Content-Wrapper -->
