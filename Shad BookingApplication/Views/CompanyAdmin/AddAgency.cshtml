@@ -559,25 +559,25 @@
 								</div>
 							</div>
 
-                            <div class="row form-group">
-                                <h3 class="col-md-2" style="margin-left: 1%; margin-top: 1%">Intervension Zone:</h3>
-                                <div class="radio col-md-1 col-xs-12 text-right">
-                                    <label>
-                                        <input type="radio" id="Home_id" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Home
-                                    </label>
-                                </div>
-                                <div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
-                                    <label>
-                                        <input type="radio" id="onsite_id" name="workingPlaceRadio" onchange="func1()" value="1">On site
-                                        @Html.HiddenFor(model => model.Location.IntervensionZone, new { @id = "IntervensionZone_id" })
-                                    </label>
-                                </div>
-                                <div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
-                                    <label>
-                                        <input type="radio" id="both_id" name="workingPlaceRadio" onchange="func22()" value="3">Both
-                                    </label>
-                                </div>
-                            </div>
+							<div class="row form-group">
+								<h3 class="col-md-2" style="margin-left: 1%; margin-top: 1%">Intervension Zone:</h3>
+								<div class="radio col-md-1 col-xs-12 text-right">
+									<label>
+										<input type="radio" id="Home_id" name="workingPlaceRadio" onchange="func2()" value="2" checked="">Home
+									</label>
+								</div>
+								<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
+									<label>
+										<input type="radio" id="onsite_id" name="workingPlaceRadio" onchange="func1()" value="1">On site
+										@Html.HiddenFor(model => model.Location.IntervensionZone, new { @id = "IntervensionZone_id" })
+									</label>
+								</div>
+								<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
+									<label>
+										<input type="radio" id="both_id" name="workingPlaceRadio" onchange="func22()" value="3">Both
+									</label>
+								</div>
+							</div>
 
 
 
@@ -1665,7 +1665,7 @@
 		});
 	}
 	jQuery(window).load(function () {
-	    user_data();
+		user_data();
 	   
 
 	});

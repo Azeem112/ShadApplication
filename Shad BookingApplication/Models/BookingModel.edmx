@@ -184,6 +184,13 @@
           <Property Name="Contradiction" Type="nvarchar(max)" />
           <Property Name="CompanyNotificationId" Type="int" />
           <Property Name="AgencyId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telephone" Type="int" />
+          <Property Name="SmsNumber" Type="nchar" MaxLength="10" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="Occupation" Type="nvarchar" MaxLength="256" />
+          <Property Name="Image" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetCompanyNotifination">
           <Key>
@@ -1911,6 +1918,13 @@
           <Property Name="Contradiction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CompanyNotificationId" Type="Int32" />
           <Property Name="AgencyId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="Int32" />
+          <Property Name="SmsNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Occupation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgency" Relationship="Self.FK_AspNetCompanyCustomer_ToAgency" FromRole="AspNetCompanyCustomer" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetBookings" Relationship="Self.FK_AspNetBooking_ToCustomer" FromRole="AspNetCompanyCustomer" ToRole="AspNetBooking" />
           <NavigationProperty Name="AspNetCompanyNotifination" Relationship="Self.FK_AspNetCompanyCustomer_CompanyNotification" FromRole="AspNetCompanyCustomer" ToRole="AspNetCompanyNotifination" />
@@ -3672,6 +3686,13 @@
                 <ScalarProperty Name="Contradiction" ColumnName="Contradiction" />
                 <ScalarProperty Name="CompanyNotificationId" ColumnName="CompanyNotificationId" />
                 <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="SmsNumber" ColumnName="SmsNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

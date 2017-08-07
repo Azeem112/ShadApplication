@@ -153,6 +153,7 @@ namespace Shad_BookingApplication.Controllers
                     db.SaveChanges();
                 }
                 var id = User.Identity.GetUserId();
+                
                 var head = db.AspNetUsers.Where(y => y.Id == id).Select(x => x.HeadId).SingleOrDefault();
 
                 if (head != null && head != "")
@@ -186,10 +187,26 @@ namespace Shad_BookingApplication.Controllers
             addAgencyViewModel.BusinessSubCatageory = db.AspNetBusinessSubCatageories.ToList();
             var id = User.Identity.GetUserId();
             var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
-            var cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
+            var cus_data = new AspNetCustomer();
+
+            if (h_id == null)
+
+            {
+
+                cus_data = db.AspNetCustomers.Where(x => x.UserID == id).SingleOrDefault();
+
+            }
+
+            else
+
+            {
+
+                cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
+
+            }
             if (cus_data != null)
             {
-                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") && x.HeadId == cus_data.UserID), "Id", "UserName");
+                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x =>( x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && x.HeadId == cus_data.UserID), "Id", "UserName");
             }
 
             addAgencyViewModel.SMS = db.AspNetCustomerSMS.ToList();
@@ -1219,6 +1236,12 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddCustomer()
+        {
+
+            return View();
+        }
         public ActionResult AddEmployee()
         {
             return View();
@@ -1448,44 +1471,62 @@ namespace Shad_BookingApplication.Controllers
         {
             var id = User.Identity.GetUserId();
             var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
-            var cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
-            List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
-            var user = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") && x.HeadId == cus_data.UserID);
-            foreach (var item in user)
+            var cus_data = new AspNetCustomer();
+
+            if (h_id == null)
+
             {
-                var user_id = item.Id;
-                var agency_data = db.AspNetAgencies.Where(x => x.UserID == user_id && x.HeadId == cus_data.Id).FirstOrDefault();
-                if (agency_data != null)
-                {
-                    var list = new UserListViewModel_1();
-                    list.Name = item.UserName;
 
-                    list.Agency_Name = agency_data.AspNetCustomerDetail.BussinessName;
-                    list.emial = item.Email;
-                    var val = db.AspNetUsers.Where(x => x.Id == user_id).Select(x => x.AspNetRoles.Select(y => y.Name));
-                    var ok = db.AspNetUsers.Where(x => x.Id == user_id).Select(x => x.AspNetRoles.Select(y => y.Name).FirstOrDefault()).FirstOrDefault();
-                    list.Role = ok;
-                    list.status = item.Status;
-                    list.mobile = item.PhoneNumber;
-                    obj.Add(list);
-                }
-                else
-                {
-                    var list = new UserListViewModel_1();
-                    list.Name = item.UserName;
+                cus_data = db.AspNetCustomers.Where(x => x.UserID == id).SingleOrDefault();
 
-                    list.Agency_Name = "---";
-                    list.emial = item.Email;
-                    var ok = db.AspNetUsers.Where(x => x.Id == user_id).Select(x => x.AspNetRoles.Select(y => y.Name).FirstOrDefault()).FirstOrDefault();
-                    list.Role = ok;
-                    list.status = item.Status;
-                    list.mobile = item.PhoneNumber;
-                    obj.Add(list);
-
-
-                }
             }
 
+            else
+
+            {
+
+                cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
+
+            }
+            List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
+            var user = db.AspNetUsers.Where(x => (x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") )&& x.HeadId == cus_data.UserID);
+            if (user != null)
+            {
+                foreach (var item in user)
+                {
+                    var user_id = item.Id;
+                    var agency_data = db.AspNetAgencies.Where(x => x.UserID == user_id && x.HeadId == cus_data.Id).FirstOrDefault();
+                    if (agency_data != null)
+                    {
+                        var list = new UserListViewModel_1();
+                        list.Name = item.UserName;
+
+                        list.Agency_Name = agency_data.AspNetCustomerDetail.BussinessName;
+                        list.emial = item.Email;
+                        var val = db.AspNetUsers.Where(x => x.Id == user_id).Select(x => x.AspNetRoles.Select(y => y.Name));
+                        var ok = db.AspNetUsers.Where(x => x.Id == user_id).Select(x => x.AspNetRoles.Select(y => y.Name).FirstOrDefault()).FirstOrDefault();
+                        list.Role = ok;
+                        list.status = item.Status;
+                        list.mobile = item.PhoneNumber;
+                        obj.Add(list);
+                    }
+                    else
+                    {
+                        var list = new UserListViewModel_1();
+                        list.Name = item.UserName;
+
+                        list.Agency_Name = "---";
+                        list.emial = item.Email;
+                        var ok = db.AspNetUsers.Where(x => x.Id == user_id).Select(x => x.AspNetRoles.Select(y => y.Name).FirstOrDefault()).FirstOrDefault();
+                        list.Role = ok;
+                        list.status = item.Status;
+                        list.mobile = item.PhoneNumber;
+                        obj.Add(list);
+
+
+                    }
+                }
+            }
 
 
             return View(obj);
@@ -1548,16 +1589,22 @@ namespace Shad_BookingApplication.Controllers
         {
             List<AspNetUser> user = new List<AspNetUser>();
             var user1 = db.AspNetUsers.Where(x => x.Id == agencyAdmin_id).SingleOrDefault();
-            user.Add(user1);
-            List<userdata> data = new List<userdata>();
-            foreach (var item in user)
+            if (user1 != null)
             {
-                var temp = new userdata();
-                temp.FirstName = item.FirstName;
-                temp.LastName = item.LastName;
-                temp.UserName = item.UserName;
-                temp.Email = item.Email;
-                data.Add(temp);
+                user.Add(user1);
+            }
+            List<userdata> data = new List<userdata>();
+            if (user!=null)
+            {
+                foreach (var item in user)
+                {
+                    var temp = new userdata();
+                    temp.FirstName = item.FirstName;
+                    temp.LastName = item.LastName;
+                    temp.UserName = item.UserName;
+                    temp.Email = item.Email;
+                    data.Add(temp);
+                }
             }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
