@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddAgencyViewModel.cs" />
+    <Compile Include="Models\AddCompanyCustomerViewModel.cs" />
     <Compile Include="Models\AddCustomerViewModel.cs" />
     <Compile Include="Models\AddEmployeeViewModel.cs" />
     <Compile Include="Models\AspNetAgency.cs">

@@ -123,11 +123,11 @@
 	<!-- Select2 Plugin CSS  -->
 	<link rel="stylesheet" type="text/css" href="@Url.Content("~/vendor/plugins/select2/css/core.css")" media="screen">
 
-        <!-- CKEditor -->
-    <script src="@Url.Content("https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js")"></script>
+		<!-- CKEditor -->
+	<script src="@Url.Content("https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js")"></script>
 
-    <!-- AngularJS -->
-    <script src="@Url.Content("~/assets/js/angular.min.js")"></script>
+	<!-- AngularJS -->
+	<script src="@Url.Content("~/assets/js/angular.min.js")"></script>
 
 <h1>hhhhhh</h1>
 <section id="content_wrapper">
@@ -1672,7 +1672,7 @@
 		});
 	}
 
-    function custome_timepicker()
+	function custome_timepicker()
 {
 	var time_string = "";
 	var i=1
@@ -1769,7 +1769,7 @@
 }
 
 
-    		jQuery(document).ready(function () {
+			jQuery(document).ready(function () {
 
 			"use strict";
 
@@ -2022,17 +2022,17 @@ function checkboxDetect(num)
 
 $("#drop").change(function () {
 
-     var ddl = document.getElementById("drop");
-     var selectedValue = ddl.options[ddl.selectedIndex].value;
+	 var ddl = document.getElementById("drop");
+	 var selectedValue = ddl.options[ddl.selectedIndex].value;
 
-     if (selectedValue == "Single Site Company") {
-         var label1 = document.getElementById("agencyyy");
-         label1.style.display = 'none';
-     }
-     if (selectedValue == "Multi Site Company") {
-         var label3 = document.getElementById("agencyyy");
-         label3.style.display = 'block';
-     }
+	 if (selectedValue == "Single Site Company") {
+		 var label1 = document.getElementById("agencyyy");
+		 label1.style.display = 'none';
+	 }
+	 if (selectedValue == "Multi Site Company") {
+		 var label3 = document.getElementById("agencyyy");
+		 label3.style.display = 'block';
+	 }
 });
 
 var image_counter = 1;
@@ -2116,7 +2116,7 @@ function changeTabFunc(a){
 	}
 	if (a == 9)
 	{
-	    custome_timepicker();
+		custome_timepicker();
 		document.getElementById("workingHours").className = "tab-pane";
 		document.getElementById("social").className = "tab-pane active";
 	}
@@ -2168,19 +2168,19 @@ function changeTabFunc2(a){
 	}
 }
 function func1() {
-    document.getElementById('interventionZone').style.display = "none";
-    $("#IntervensionZone_id").val("On_site");
-    alert($("#IntervensionZone_id").val());
+	document.getElementById('interventionZone').style.display = "none";
+	$("#IntervensionZone_id").val("On_site");
+	alert($("#IntervensionZone_id").val());
 
 }
 function func2() {
-    document.getElementById('interventionZone').style.display = "block";
-    $("#IntervensionZone_id").val("Home");
+	document.getElementById('interventionZone').style.display = "block";
+	$("#IntervensionZone_id").val("Home");
 
 }
 function func22() {
-    document.getElementById('interventionZone').style.display = "block";
-    $("#IntervensionZone_id").val("Both");
+	document.getElementById('interventionZone').style.display = "block";
+	$("#IntervensionZone_id").val("Both");
 
 }
  var map;

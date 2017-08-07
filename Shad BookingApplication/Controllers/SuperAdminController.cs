@@ -70,6 +70,8 @@ namespace Shad_BookingApplication.Controllers
             //var pass = db.AspNetUsers.Where(x => x.Id == user.Id).FirstOrDefault().PasswordHash;
             //user.PasswordHash = pass;
 
+            user.Id = User.Identity.GetUserId();
+
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -221,9 +223,22 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
+
         public ActionResult LoginDetails()
         {
-            return View();
+            // Get user id of currently logged in user
+            var loggedInUserId = User.Identity.GetUserId();
+            // Find the user from the db set
+            var loggedInUser = db.AspNetUsers.Find(loggedInUserId);
+            // Check if the user has a status
+            bool hasStatus = false;
+            if(loggedInUser.Status != null)
+            {
+                hasStatus = true;
+                ViewBag.UserStatus = loggedInUser.Status;
+            }
+            ViewBag.HasStatus = hasStatus;
+            return View(loggedInUser);
         }
 
         public ActionResult OptionsOk()
@@ -1845,6 +1860,7 @@ namespace Shad_BookingApplication.Controllers
             return Json(ls, JsonRequestBehavior.AllowGet);
         }
 
+        //Delete_Payment
         public JsonResult Delete_Payment(string id)
         {
             var pay_id = Convert.ToInt16(id);
@@ -1854,6 +1870,27 @@ namespace Shad_BookingApplication.Controllers
 
             return Json("Deleted", JsonRequestBehavior.AllowGet);
         }
-        //Delete_Payment
+        
+        public ActionResult ChangePassword(string oldPassword, string newPassword)
+        {
+            var loggedInUser = db.AspNetUsers.Find(User.Identity.GetUserId());
+            // Get the password hash for the logged in user
+            string hash = loggedInUser.PasswordHash;
+            // now verify the password using hasher
+            PasswordHasher hasher = new PasswordHasher();
+            PasswordVerificationResult result = hasher.VerifyHashedPassword(hash, oldPassword);
+            if(result == PasswordVerificationResult.Success)
+            {
+                string newHash = hasher.HashPassword(newPassword);
+                loggedInUser.PasswordHash = newHash;
+                db.Entry(loggedInUser).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content("Password has been changed successfully.");
+            }
+            else
+            {
+                throw new Exception("Illegal password entered");
+            }
+        }
     }
 }

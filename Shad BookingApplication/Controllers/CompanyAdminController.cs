@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
+using System.Data.Entity;
 
 namespace Shad_BookingApplication.Controllers
 {
@@ -246,7 +247,7 @@ namespace Shad_BookingApplication.Controllers
             }
             if (cus_data != null)
             {
-                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x =>( x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && x.HeadId == cus_data.UserID), "Id", "UserName");
+                ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x =>( x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && ((x.HeadId == cus_data.UserID) || x.Id == cus_data.UserID)), "Id", "UserName");
             }
 
             addAgencyViewModel.SMS = db.AspNetCustomerSMS.ToList();
@@ -1272,8 +1273,8 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult AddCustomer()
         {
-
-            return View();
+            AddCompanyCustomerViewModel obj = new AddCompanyCustomerViewModel();
+            return View(obj);
         }
 
         public List<service_struct> Get_GroupServices(int group_id)
@@ -1519,7 +1520,19 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult LoginDetails()
         {
-            return View();
+            // Get user id of currently logged in user
+            var loggedInUserId = User.Identity.GetUserId();
+            // Find the user from the db set
+            var loggedInUser = db.AspNetUsers.Find(loggedInUserId);
+            // Check if the user has a status
+            bool hasStatus = false;
+            if (loggedInUser.Status != null)
+            {
+                hasStatus = true;
+                ViewBag.UserStatus = loggedInUser.Status;
+            }
+            ViewBag.HasStatus = hasStatus;
+            return View(loggedInUser);
         }
 
 
@@ -1622,7 +1635,7 @@ namespace Shad_BookingApplication.Controllers
             var id = User.Identity.GetUserId();
             var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
             var cus_data = new AspNetCustomer();
-
+            List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
             if (h_id == null)
 
             {
@@ -1638,8 +1651,8 @@ namespace Shad_BookingApplication.Controllers
                 cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
 
             }
-            List<UserListViewModel_1> obj = new List<UserListViewModel_1>();
-            var user = db.AspNetUsers.Where(x => (x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") )&& x.HeadId == cus_data.UserID);
+            
+            var user = db.AspNetUsers.Where(x => (x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager") || x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") )&& (( x.HeadId == cus_data.UserID)||x.Id==cus_data.UserID));
             if (user != null)
             {
                 foreach (var item in user)
@@ -1761,6 +1774,49 @@ namespace Shad_BookingApplication.Controllers
                 }
             }
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChangePassword(string oldPassword, string newPassword)
+        {
+            var loggedInUser = db.AspNetUsers.Find(User.Identity.GetUserId());
+            // Get the password hash for the logged in user
+            string hash = loggedInUser.PasswordHash;
+            // now verify the password using hasher
+            PasswordHasher hasher = new PasswordHasher();
+            PasswordVerificationResult result = hasher.VerifyHashedPassword(hash, oldPassword);
+            if (result == PasswordVerificationResult.Success)
+            {
+                string newHash = hasher.HashPassword(newPassword);
+                loggedInUser.PasswordHash = newHash;
+                db.Entry(loggedInUser).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content("Password has been changed successfully.");
+            }
+            else
+            {
+                throw new Exception("Illegal password entered");
+            }
+        }
+
+
+        public ActionResult EditUser(string id)
+        {
+            var user = db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(AspNetUser user)
+        {
+            //var pass = db.AspNetUsers.Where(x => x.Id == user.Id).FirstOrDefault().PasswordHash;
+            //user.PasswordHash = pass;
+
+            user.Id = User.Identity.GetUserId();
+
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("UserList");
         }
 
 
