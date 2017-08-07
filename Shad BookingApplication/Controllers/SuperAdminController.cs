@@ -21,6 +21,7 @@ namespace Shad_BookingApplication.Controllers
         // GET: SuperAdmin
         public ActionResult Index()
         {
+            // test
             return View();
         }
 
