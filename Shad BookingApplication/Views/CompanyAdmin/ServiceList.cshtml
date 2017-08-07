@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.AspNetService>
 @{
     ViewBag.Title = "ServiceList";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -88,10 +88,10 @@
                                                 aria-label="Position: activate to sort column ascending" style="width: 15%; text-align: center;">
                                                 <center> Service Name</center>
                                             </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            @*<th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
                                                 aria-label="Office: activate to sort column ascending" style="width: 10%; text-align: center;">
                                                 <center>  Employees</center>
-                                            </th>
+                                            </th>*@
                                             <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
                                                 aria-label="Office: activate to sort column ascending" style="width: 10%; text-align: center;">
                                                 <center> Price</center>
@@ -104,10 +104,10 @@
                                                 aria-label="Age: activate to sort column ascending" style="width: 10%; text-align: center;">
                                                 <center>  Total (minutes)</center>
                                             </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                            @*<th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
                                                 aria-label="Age: activate to sort column ascending" style="width: 15%; text-align: center;">
                                                 <center>  Intervention Zone</center>
-                                            </th>
+                                            </th>*@
                                             <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
                                                 aria-label="Age: activate to sort column ascending" style="width: 10%; text-align: center;">
                                                 <center>  Status</center>
@@ -117,31 +117,22 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody id="myCustomers">
-
+                                    <tbody id="myCustomers" style="font-size:13px;">
+                                   @foreach (var item in Model)
+                                   {
+                                       
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>Cutting</center></td>
-                                            <td><center>1</center></td>
-                                            <td><center>30.00 &euro;</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center>60</center></td>
-                                            <td style="color: #e9573f"><center>At site</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Active</button></center></td>
+                                            <td class="sorting_1"><center>@item.Name</center></td>
+                                            @*<td><center>1</center></td>*@
+                                            <td><center>@item.Price &euro;</center></td>
+                                            <td><center>@item.Duration</center></td>
+                                            <td><center>@item.TotalMinutes</center></td>
+                                            @*<td style="color: #e9573f"><center></center></td>*@
+                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">@item.Status</button></center></td>
                                             <td><center><div class="btn-group"><a type="button" href="viewService.html" class="btn btn-success">View</a><a type="button" class="btn btn-primary" href="editService.html">Edit</a><a type="button" class="btn btn-danger">Delete</a></div></center></td>
 
                                         </tr>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>Aromatherapy</center></td>
-                                            <td><center>1</center></td>
-                                            <td><center>60.00 &euro;</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center>60</center></td>
-                                            <td style="color: #4a89dc"><center>At home</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm">In Active</button></center></td>
-                                            <td><center><div class="btn-group"><a type="button" class="btn btn-success" href="viewService.html">View</a><a type="button" class="btn btn-primary" href="editService.html">Edit</a><a type="button" class="btn btn-danger">Delete</a></div></center></td>
-
-                                        </tr>
-
+                                    }  
 
                                     </tbody>
                                 </table>
