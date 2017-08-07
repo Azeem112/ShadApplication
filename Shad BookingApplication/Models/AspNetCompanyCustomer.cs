@@ -32,6 +32,13 @@ namespace Shad_BookingApplication.Models
         public string Contradiction { get; set; }
         public Nullable<int> CompanyNotificationId { get; set; }
         public Nullable<int> AgencyId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<int> Telephone { get; set; }
+        public string SmsNumber { get; set; }
+        public string Email { get; set; }
+        public string Occupation { get; set; }
+        public string Image { get; set; }
     
         public virtual AspNetAgency AspNetAgency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
