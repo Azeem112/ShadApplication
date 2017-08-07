@@ -1,4 +1,4 @@
-﻿
+﻿@model Shad_BookingApplication.Models.AspNetEmployee
 @{
     ViewBag.Title = "AddEmployee";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -99,6 +99,10 @@
                             <label class="col-md-2 col-xs-12 text-center control-label">Pseudo</label>
                             <div class="col-md-8 col-xs-11">
                                 <input type="text" class="form-control" placeholder="Your Nick name or actual name" required="required">
+                                @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name" ,@required = "required" } })
+                                @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
 

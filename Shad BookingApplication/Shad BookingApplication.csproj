@@ -218,6 +218,9 @@
     <Compile Include="Models\AspNetBusinessSubCatageory.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetComanyService.cs">
+      <DependentUpon>BookingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetCompanyCustomer.cs">
       <DependentUpon>BookingModel.tt</DependentUpon>
     </Compile>

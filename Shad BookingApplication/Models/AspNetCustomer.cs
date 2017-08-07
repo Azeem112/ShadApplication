@@ -18,6 +18,7 @@ namespace Shad_BookingApplication.Models
         public AspNetCustomer()
         {
             this.AspNetAgencies = new HashSet<AspNetAgency>();
+            this.AspNetComanyServices = new HashSet<AspNetComanyService>();
             this.AspNetCustomer_SubCatageory = new HashSet<AspNetCustomer_SubCatageory>();
             this.AspNetInvoices = new HashSet<AspNetInvoice>();
         }
@@ -37,6 +38,8 @@ namespace Shad_BookingApplication.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetAgency> AspNetAgencies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetComanyService> AspNetComanyServices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetCustomer_SubCatageory> AspNetCustomer_SubCatageory { get; set; }
         public virtual AspNetCustomerBusinessDetail AspNetCustomerBusinessDetail { get; set; }
