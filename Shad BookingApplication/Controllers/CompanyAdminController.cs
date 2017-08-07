@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Shad_BookingApplication.Controllers
 {
-    [Authorize(Roles = "Company_Admin")]
+    [Authorize(Roles = "Company_Admin,Agency_Manager")]
 
     public class CompanyAdminController : Controller
     {
@@ -1293,15 +1293,18 @@ namespace Shad_BookingApplication.Controllers
             return services_ls;
         }
 
-
-        public ActionResult AddEmployee()
+        public List<group_struct> Get_CompanyServicesOfLoginUser()
         {
-            AddEmployeeViewModel employeeViewModel = new AddEmployeeViewModel();
-
             var user_id = User.Identity.GetUserId();
-            var customer_id = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault().Id;
+            var customer = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault();
 
-            var company_services=db.AspNetComanyServices.Where(x => x.CustomerId == customer_id).ToList();
+            if (customer == null)
+            {
+                var head_id = db.AspNetUsers.Where(x => x.Id == user_id).FirstOrDefault().HeadId;
+                customer = db.AspNetCustomers.Where(x => x.UserID == head_id).FirstOrDefault();
+            }
+
+            var company_services = db.AspNetComanyServices.Where(x => x.CustomerId == customer.Id).ToList();
 
             List<group_struct> group_ls = new List<group_struct>();
             List<string> temp_group_ids = new List<string>();
@@ -1323,7 +1326,14 @@ namespace Shad_BookingApplication.Controllers
                 }
             }
 
-            employeeViewModel.GroupServicesList = group_ls;
+            return group_ls;
+        }
+
+        public ActionResult AddEmployee()
+        {
+            AddEmployeeViewModel employeeViewModel = new AddEmployeeViewModel();
+
+            employeeViewModel.GroupServicesList = Get_CompanyServicesOfLoginUser();
 
             return View(employeeViewModel);
         }
@@ -1539,26 +1549,18 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult ServiceGroupList()
         {
-            return View();
-        }
-
-
-        public ActionResult ServiceList()
-        {
             var user_id = User.Identity.GetUserId();
-            int customer_id = 0;
-            customer_id= db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault().Id;
+            var customer = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault();
 
-            if (customer_id == 0)
+            if (customer == null)
             {
-
+                var head_id = db.AspNetUsers.Where(x => x.Id == user_id).FirstOrDefault().HeadId;
+                customer = db.AspNetCustomers.Where(x => x.UserID == head_id).FirstOrDefault();
             }
 
+            var company_services = db.AspNetComanyServices.Where(x => x.CustomerId == customer.Id).ToList();
+            List<AspNetServiceGroup> ser = new List<AspNetServiceGroup>();
 
-
-            var company_services = db.AspNetComanyServices.Where(x => x.CustomerId == customer_id).ToList();
-
-            List<group_struct> group_ls = new List<group_struct>();
             List<string> temp_group_ids = new List<string>();
 
             foreach (var item in company_services)
@@ -1566,20 +1568,52 @@ namespace Shad_BookingApplication.Controllers
                 var service_group = db.AspNetService_Group.Where(x => x.Id == item.Service_GroupId).FirstOrDefault();
                 var group = db.AspNetServiceGroups.Where(x => x.Id == service_group.GroupID).FirstOrDefault();
 
-                group_struct group_obj = new group_struct();
-                group_obj.group_id = group.Id;
-                group_obj.group_name = group.Name;
+                if (!temp_group_ids.Contains(group.Name))
+                {
+                    ser.Add(group);
+                    temp_group_ids.Add(group.Name);
+                }
+            }
+            return View(ser);
+        }
+
+
+        public ActionResult ServiceList()
+        {
+            var user_id = User.Identity.GetUserId();
+            var customer = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault();
+
+            if (customer==null)
+            {
+                var head_id= db.AspNetUsers.Where(x => x.Id == user_id).FirstOrDefault().HeadId;
+                customer= db.AspNetCustomers.Where(x => x.UserID == head_id).FirstOrDefault();
+            }
+
+            var company_services = db.AspNetComanyServices.Where(x => x.CustomerId == customer.Id).ToList();
+            List<AspNetService> ser = new List<AspNetService>();
+           
+            List<string> temp_group_ids = new List<string>();
+
+            foreach (var item in company_services)
+            {
+                var service_group = db.AspNetService_Group.Where(x => x.Id == item.Service_GroupId).FirstOrDefault();
+                var group = db.AspNetServiceGroups.Where(x => x.Id == service_group.GroupID).FirstOrDefault();
 
                 if (!temp_group_ids.Contains(group.Name))
                 {
-                    group_obj.service_grouplist = Get_GroupServices(group.Id);
+                    var services_list = db.AspNetService_Group.Where(x => x.GroupID == group.Id).Select(y => y.ServiceID).ToList();
+                   
+
+                    foreach (var item1 in services_list)
+                    {
+                        service_struct temp = new service_struct();
+                        var service_obj = db.AspNetServices.Where(x => x.Id == item1).FirstOrDefault();
+                        ser.Add(service_obj);
+                    }
+
                     temp_group_ids.Add(group.Name);
-                    group_ls.Add(group_obj);
                 }
             }
-
-            var ser = db.AspNetServices.ToList();
-
             return View(ser);
         }
 
@@ -1625,6 +1659,9 @@ namespace Shad_BookingApplication.Controllers
                         list.status = item.Status;
                         list.mobile = item.PhoneNumber;
                         obj.Add(list);
+
+
+                      
                     }
                     else
                     {
