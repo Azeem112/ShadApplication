@@ -1,4 +1,7 @@
-﻿<html>
+﻿@using Microsoft.AspNet.Identity
+@using Shad_BookingApplication.Models
+
+<html>
 <head>
 	<!-- Meta, title, CSS, favicons, etc. -->
 	<meta charset="utf-8">
@@ -208,7 +211,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-						<img src="@Url.Content("~/assets/img/avatars/1.jpg")" alt="avatar" class="mw30 br64 mr15"> Laurent
+						<img src="@Url.Content("~/assets/img/avatars/1.jpg")" alt="avatar" class="mw30 br64 mr15"> @User.Identity.GetUserName()
 						<span class="caret caret-tp hidden-xs"></span>
 					</a>
 					<ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
@@ -217,13 +220,21 @@
 								<span class="fa fa-user"></span> Profile
 							</a>
 						</li>
+                        @{
+                            BookingModelEntities db = new BookingModelEntities();
+                            var id = User.Identity.GetUserId();
+                            var users = db.AspNetUsers.Where(x => x.Id == id);
+                            var role = users.Select(y => y.AspNetRoles).FirstOrDefault().FirstOrDefault().Name;
+                            var controllerName = role.ToLower().Equals("super_admin") ? "SuperAdmin" : "CompanyAdmin";
+                        }
 						<li class="list-group-item">
-							<a href="logindetails.html" class="animated animated-short fadeInUp">
+							<a href="@Url.Action("LoginDetails", controllerName)" class="animated animated-short fadeInUp">
 								<span class="fa fa-gear"></span> Login Details
 							</a>
+                           
 						</li>
 						<li class="dropdown-footer">
-							<a href="#" class="">
+							<a href="@Url.Action("LogOff", "Account")" class="">
 								<span class="fa fa-power-off pr5"></span> Logout
 							</a>
 						</li>
@@ -235,7 +246,7 @@
 		<!-- End: Header -->
 		
 
-			@RenderBody();
+			@RenderBody(); 
 
 				<!-- Jquery -->
 
