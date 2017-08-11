@@ -1,4 +1,4 @@
-﻿@model Shad_BookingApplication.Models.AspNetEmployee
+﻿@model Shad_BookingApplication.Models.AddEmployeeViewModel
 @{
     ViewBag.Title = "AddEmployee";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -98,9 +98,9 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Pseudo</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="Your Nick name or actual name" required="required">
-                                @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name" ,@required = "required" } })
-                                @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
+                                @*<input type="text" class="form-control" placeholder="Your Nick name or actual name" required="required">*@
+                                @Html.EditorFor(model => model.Employee.NickName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name" ,@required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Employee.NickName, "", new { @class = "text-danger" })
 
 
                             </div>
@@ -109,44 +109,66 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Firstname</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="" required="required">
+                                @*<input type="text" class="form-control" placeholder="" required="required">*@
+                                @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control",@required = "required" } })
+                                @Html.ValidationMessageFor(model => model.user.FirstName, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
 
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Last Name:</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="" required="required">
+                                @Html.EditorFor(model => model.user.LastName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.user.LastName, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Notes:</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="" required="required">
+                                @Html.EditorFor(model => model.Employee.Notes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Employee.Notes, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Telephone:</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="" required="required">
+                                @Html.EditorFor(model => model.user.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.user.PhoneNumber, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">SMS Number:</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="text" class="form-control" placeholder="" required="required">
+                                @Html.EditorFor(model => model.Employee.SMSNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Employee.SMSNumber, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Email:</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="email" class="form-control" placeholder="" required="required">
+                                @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
+
+
                             </div>
                         </div>
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Password:</label>
                             <div class="col-md-8 col-xs-11">
-                                <input type="email" class="form-control" placeholder="" required="required">
+                                @Html.EditorFor(model => model.user.PasswordHash, new { htmlAttributes = new {@type= "password", @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.user.PasswordHash, "", new { @class = "text-danger" })
+                               
+
                             </div>
                         </div>
 
@@ -194,6 +216,10 @@
                         <div class="row form-group">
                             <h4 class="col-md-3 col-xs-12 text-left">Services</h4>
                         </div>
+
+                        @foreach (var item in Model.GroupServicesList)
+                        {
+
                         <div class="row form-group ">
                             <div class="col-md-8 col-xs-10" style="padding: 0px; margin:0px; margin-left: 6%">
                                 <div class="col-md-6 col-xs-12" style=" float: left">
@@ -202,25 +228,22 @@
                                     <div class="row form-group">
 
                                         <div class="checkbox" style="margin-left: 6%">
-                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Massage</label>
+                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="@item.group_id">@item.group_name</label>
                                         </div>
 
                                     </div>
-
-
                                 </div>
                                 <div class="col-md-6 col-xs-12" style=" float: right">
 
                                     <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;">Sub Category</label>
                                     <div class="row form-group">
+                                        @foreach (var item2 in item.service_grouplist)
+                                        {
 
-                                        <div class="checkbox" style="margin-left: 6%">
-                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Thai Massage</label>
-                                        </div>
-                                        <div class="checkbox" style="margin-left: 6%">
-                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="">California Massage</label>
-                                        </div>
-
+                                            <div class="checkbox" style="margin-left: 6%">
+                                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">@item2.service_name</label>
+                                            </div>
+                                        }
                                     </div>
 
 
@@ -231,7 +254,7 @@
 
 
                         </div>
-
+                        }
                     </div>
                     <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
                     <div class="row">
@@ -255,7 +278,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="row form-group">
+                        @*<div class="row form-group">
                             <div class="radio col-md-1 col-md-offset-1 col-xs-12 text-right">
                                 <label>
                                     <strong>  Location</strong>
@@ -273,7 +296,7 @@
                                 <label class="col-md-4 col-md-offset-1 col-xs-12 text-left"><input type="checkbox" value="">Agency ZUIDP,VCUGE-RUE-----62000Arras</label>
                             </div>
 
-                        </div>
+                        </div>*@
 
 
 

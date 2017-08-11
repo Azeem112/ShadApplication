@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.AspNetServiceGroup>
 @{
     ViewBag.Title = "ServiceGroupList";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -102,20 +102,17 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody id="myCustomers">
-
+                                    <tbody id="myCustomers" style="font-size:13px;">
+                                    @foreach (var item in Model)
+                                    {
+                                    
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>Cutting</center></td>
+                                            <td class="sorting_1"><center>@item.Name</center></td>
                                             <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Active</button></center></td>
                                             <td><center><div class="btn-group"><a type="button" href="viewServiceGroup.html" class="btn btn-success">View</a><a type="button" class="btn btn-primary" href="editServiceGroup.html">Edit</a><a type="button" class="btn btn-danger">Delete</a></div></center></td>
 
                                         </tr>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>Aromatherapy</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm">In Active</button></center></td>
-                                            <td><center><div class="btn-group"><a type="button" href="viewServiceGroup.html" class="btn btn-success">View</a><a type="button" class="btn btn-primary" href="editServiceGroup.html">Edit</a><a type="button" class="btn btn-danger">Delete</a></div></center></td>
-
-                                        </tr>
+                                    }  
 
 
                                     </tbody>

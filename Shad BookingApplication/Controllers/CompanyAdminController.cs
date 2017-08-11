@@ -32,6 +32,16 @@ namespace Shad_BookingApplication.Controllers
             return View();
         }
 
+        public void Bind_ServiceToCompany(int customer_id, int servicegroup_Id)
+        {
+            var customer_service_group = new AspNetComanyService();
+            customer_service_group.Service_GroupId = servicegroup_Id;
+            customer_service_group.CustomerId = customer_id;
+
+            db.AspNetComanyServices.Add(customer_service_group);
+            db.SaveChanges();
+        }
+
         [HttpPost]
         public ActionResult AddService(AspNetService aspNetService)
         {
@@ -40,8 +50,6 @@ namespace Shad_BookingApplication.Controllers
             var head_id=db.AspNetUsers.Where(x => x.Id == login_user_id).FirstOrDefault().HeadId;
             if (head_id == null)
             {
-                var customer_id = db.AspNetCustomers.Where(x => x.UserID == login_user_id).FirstOrDefault().Id;
-
                 db.AspNetServices.Add(aspNetService);
                 db.SaveChanges();
 
@@ -49,24 +57,17 @@ namespace Shad_BookingApplication.Controllers
 
                 var servicegroup = new AspNetService_Group();
                 servicegroup.ServiceID = aspNetService.Id;
-                servicegroup.GroupID = Convert.ToInt16(servicegroup);
+                servicegroup.GroupID = Convert.ToInt16(group_name);
 
                 db.AspNetService_Group.Add(servicegroup);
                 db.SaveChanges();
 
-                var customer_service_group = new AspNetComanyService();
-                customer_service_group.Service_GroupId = servicegroup.Id;
-                customer_service_group.CustomerId = customer_id;
-
-                db.AspNetComanyServices.Add(customer_service_group);
-                db.SaveChanges();
-
+                var customer_id = db.AspNetCustomers.Where(x => x.UserID == login_user_id).FirstOrDefault().Id;
+                Bind_ServiceToCompany(customer_id, servicegroup.Id);
             }
             else
             {
-                var user_id = db.AspNetUsers.Where(x => x.HeadId == head_id).FirstOrDefault().Id;
-
-                var customer_id = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault().Id;
+               
 
                 db.AspNetServices.Add(aspNetService);
                 db.SaveChanges();
@@ -80,9 +81,10 @@ namespace Shad_BookingApplication.Controllers
                 db.AspNetService_Group.Add(servicegroup);
                 db.SaveChanges();
 
-                var customer_service_group = new AspNetComanyService();
-                customer_service_group.Service_GroupId=servicegroup.Id;
-                customer_service_group.CustomerId = customer_id;
+                var user_id = db.AspNetUsers.Where(x => x.HeadId == head_id).FirstOrDefault().Id;
+                var customer_id = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault().Id;
+                Bind_ServiceToCompany(customer_id, servicegroup.Id);
+
             }
 
             return RedirectToAction("ServiceGroupList");
@@ -98,23 +100,61 @@ namespace Shad_BookingApplication.Controllers
         [HttpPost]
         public ActionResult AddServiceGroup(AspNetServiceGroup aspNetServiceGroup)
         {
-            db.AspNetServiceGroups.Add(aspNetServiceGroup);
-            db.SaveChanges();
+            var login_user_id = User.Identity.GetUserId();
 
-            var list = Request.Form["selected_services_name"].ToString();
-            var selected_services = list.Split(',').ToList();
-
-            foreach (var item in selected_services)
+            var head_id = db.AspNetUsers.Where(x => x.Id == login_user_id).FirstOrDefault().HeadId;
+            if (head_id == null)
             {
-                if (item == "")
-                    continue;
-
-                var obj = new AspNetService_Group();
-                obj.ServiceID = Convert.ToInt16(item);
-                obj.GroupID = aspNetServiceGroup.Id;
-
-                db.AspNetService_Group.Add(obj);
+                db.AspNetServiceGroups.Add(aspNetServiceGroup);
                 db.SaveChanges();
+
+                var list = Request.Form["selected_services_name"].ToString();
+                var selected_services = list.Split(',').ToList();
+
+                foreach (var item in selected_services)
+                {
+                    if (item == "")
+                        continue;
+
+                    var obj = new AspNetService_Group();
+                    obj.ServiceID = Convert.ToInt16(item);
+                    obj.GroupID = aspNetServiceGroup.Id;
+
+                    db.AspNetService_Group.Add(obj);
+                    db.SaveChanges();
+
+                    var customer_id = db.AspNetCustomers.Where(x => x.UserID == login_user_id).FirstOrDefault().Id;
+                    Bind_ServiceToCompany(customer_id, obj.Id);
+                }
+
+               
+            }
+            else
+            {
+
+                db.AspNetServiceGroups.Add(aspNetServiceGroup);
+                db.SaveChanges();
+
+                var list = Request.Form["selected_services_name"].ToString();
+                var selected_services = list.Split(',').ToList();
+
+                foreach (var item in selected_services)
+                {
+                    if (item == "")
+                        continue;
+
+                    var obj = new AspNetService_Group();
+                    obj.ServiceID = Convert.ToInt16(item);
+                    obj.GroupID = aspNetServiceGroup.Id;
+
+                    db.AspNetService_Group.Add(obj);
+                    db.SaveChanges();
+                }
+
+                var user_id = db.AspNetUsers.Where(x => x.HeadId == head_id).FirstOrDefault().Id;
+                var customer_id = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault().Id;
+                Bind_ServiceToCompany(customer_id, aspNetServiceGroup.Id);
+
             }
 
             return RedirectToAction("ServiceGroupList");
@@ -1383,9 +1423,16 @@ namespace Shad_BookingApplication.Controllers
             return RedirectToAction("CustomerList");
         }
 
+            return group_ls;
+        }
+
         public ActionResult AddEmployee()
         {
-            return View();
+            AddEmployeeViewModel employeeViewModel = new AddEmployeeViewModel();
+
+            employeeViewModel.GroupServicesList = Get_CompanyServicesOfLoginUser();
+
+            return View(employeeViewModel);
         }
 
         public ActionResult AddItem()
@@ -1856,13 +1903,72 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult ServiceGroupList()
         {
-            return View();
+            var user_id = User.Identity.GetUserId();
+            var customer = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault();
+
+            if (customer == null)
+            {
+                var head_id = db.AspNetUsers.Where(x => x.Id == user_id).FirstOrDefault().HeadId;
+                customer = db.AspNetCustomers.Where(x => x.UserID == head_id).FirstOrDefault();
+            }
+
+            var company_services = db.AspNetComanyServices.Where(x => x.CustomerId == customer.Id).ToList();
+            List<AspNetServiceGroup> ser = new List<AspNetServiceGroup>();
+
+            List<string> temp_group_ids = new List<string>();
+
+            foreach (var item in company_services)
+            {
+                var service_group = db.AspNetService_Group.Where(x => x.Id == item.Service_GroupId).FirstOrDefault();
+                var group = db.AspNetServiceGroups.Where(x => x.Id == service_group.GroupID).FirstOrDefault();
+
+                if (!temp_group_ids.Contains(group.Name))
+                {
+                    ser.Add(group);
+                    temp_group_ids.Add(group.Name);
+                }
+            }
+            return View(ser);
         }
 
 
         public ActionResult ServiceList()
         {
-            return View();
+            var user_id = User.Identity.GetUserId();
+            var customer = db.AspNetCustomers.Where(x => x.UserID == user_id).FirstOrDefault();
+
+            if (customer==null)
+            {
+                var head_id= db.AspNetUsers.Where(x => x.Id == user_id).FirstOrDefault().HeadId;
+                customer= db.AspNetCustomers.Where(x => x.UserID == head_id).FirstOrDefault();
+            }
+
+            var company_services = db.AspNetComanyServices.Where(x => x.CustomerId == customer.Id).ToList();
+            List<AspNetService> ser = new List<AspNetService>();
+           
+            List<string> temp_group_ids = new List<string>();
+
+            foreach (var item in company_services)
+            {
+                var service_group = db.AspNetService_Group.Where(x => x.Id == item.Service_GroupId).FirstOrDefault();
+                var group = db.AspNetServiceGroups.Where(x => x.Id == service_group.GroupID).FirstOrDefault();
+
+                if (!temp_group_ids.Contains(group.Name))
+                {
+                    var services_list = db.AspNetService_Group.Where(x => x.GroupID == group.Id).Select(y => y.ServiceID).ToList();
+                   
+
+                    foreach (var item1 in services_list)
+                    {
+                        service_struct temp = new service_struct();
+                        var service_obj = db.AspNetServices.Where(x => x.Id == item1).FirstOrDefault();
+                        ser.Add(service_obj);
+                    }
+
+                    temp_group_ids.Add(group.Name);
+                }
+            }
+            return View(ser);
         }
 
         public ActionResult UserList()
@@ -1907,6 +2013,9 @@ namespace Shad_BookingApplication.Controllers
                         list.status = item.Status;
                         list.mobile = item.PhoneNumber;
                         obj.Add(list);
+
+
+                      
                     }
                     else
                     {
@@ -1933,7 +2042,8 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult ViewService()
         {
-            return View();
+            var ser = db.AspNetServices.ToList();
+            return View(ser);
         }
 
 
