@@ -173,7 +173,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DetailId" Type="int" />
           <Property Name="Adress" Type="nvarchar(max)" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
@@ -186,8 +185,8 @@
           <Property Name="AgencyId" Type="int" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Telephone" Type="int" />
-          <Property Name="SmsNumber" Type="nchar" MaxLength="10" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="14" />
+          <Property Name="SmsNumber" Type="nvarchar" MaxLength="14" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Occupation" Type="nvarchar" MaxLength="256" />
           <Property Name="Image" Type="nvarchar(max)" />
@@ -760,18 +759,6 @@
             </Principal>
             <Dependent Role="AspNetCompanyCustomer">
               <PropertyRef Name="CompanyNotificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetCompanyCustomer_CustomerDetail">
-          <End Role="AspNetCustomerDetail" Type="Self.AspNetCustomerDetail" Multiplicity="0..1" />
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCustomerDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCompanyCustomer">
-              <PropertyRef Name="DetailId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1493,10 +1480,6 @@
             <End Role="AspNetCompanyNotifination" EntitySet="AspNetCompanyNotifination" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetCompanyCustomer_CustomerDetail" Association="Self.FK_AspNetCompanyCustomer_CustomerDetail">
-            <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetail" />
-            <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetCompanyCustomer_ToAgency" Association="Self.FK_AspNetCompanyCustomer_ToAgency">
             <End Role="AspNetAgency" EntitySet="AspNetAgency" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
@@ -1907,7 +1890,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DetailId" Type="Int32" />
           <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1920,15 +1902,14 @@
           <Property Name="AgencyId" Type="Int32" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telephone" Type="Int32" />
-          <Property Name="SmsNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="SmsNumber" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Occupation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgency" Relationship="Self.FK_AspNetCompanyCustomer_ToAgency" FromRole="AspNetCompanyCustomer" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetBookings" Relationship="Self.FK_AspNetBooking_ToCustomer" FromRole="AspNetCompanyCustomer" ToRole="AspNetBooking" />
           <NavigationProperty Name="AspNetCompanyNotifination" Relationship="Self.FK_AspNetCompanyCustomer_CompanyNotification" FromRole="AspNetCompanyCustomer" ToRole="AspNetCompanyNotifination" />
-          <NavigationProperty Name="AspNetCustomerDetail" Relationship="Self.FK_AspNetCompanyCustomer_CustomerDetail" FromRole="AspNetCompanyCustomer" ToRole="AspNetCustomerDetail" />
         </EntityType>
         <EntityType Name="AspNetCompanyNotifination">
           <Key>
@@ -1991,7 +1972,6 @@
           <Property Name="SubCatageoryNo" Type="Int32" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerDetailAgency" FromRole="AspNetCustomerDetail" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetBusinessCatageory" Relationship="Self.FK_CustomerDetail_BusinessCatageory" FromRole="AspNetCustomerDetail" ToRole="AspNetBusinessCatageory" />
-          <NavigationProperty Name="AspNetCompanyCustomers" Relationship="Self.FK_AspNetCompanyCustomer_CustomerDetail" FromRole="AspNetCustomerDetail" ToRole="AspNetCompanyCustomer" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerDetail" FromRole="AspNetCustomerDetail" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetCustomerGallery">
@@ -2763,18 +2743,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetCompanyCustomer_CustomerDetail">
-          <End Role="AspNetCustomerDetail" Type="Self.AspNetCustomerDetail" Multiplicity="0..1" />
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCustomerDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCompanyCustomer">
-              <PropertyRef Name="DetailId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Customer_SubCatageory_Customer">
           <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="0..1" />
           <End Role="AspNetCustomer_SubCatageory" Type="Self.AspNetCustomer_SubCatageory" Multiplicity="*" />
@@ -3348,10 +3316,6 @@
             <End Role="AspNetCompanyNotifination" EntitySet="AspNetCompanyNotifinations" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetCompanyCustomer_CustomerDetail" Association="Self.FK_AspNetCompanyCustomer_CustomerDetail">
-            <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetails" />
-            <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Customer_SubCatageory_Customer" Association="Self.FK_Customer_SubCatageory_Customer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
             <End Role="AspNetCustomer_SubCatageory" EntitySet="AspNetCustomer_SubCatageory" />
@@ -3675,7 +3639,6 @@
             <EntityTypeMapping TypeName="BookingModelModels.AspNetCompanyCustomer">
               <MappingFragment StoreEntitySet="AspNetCompanyCustomer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="PostCode" ColumnName="PostCode" />

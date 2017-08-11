@@ -141,7 +141,7 @@
                                                 <td><center>@item.AspNetCustomerLocation.Address</center></td>
                                                 <td><center>@item.AspNetUser.UserName<br> <a>@item.AspNetUser.Email</a><br>@item.AspNetUser.PhoneNumber</center></td>
                                                 <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                                <td><center><div class="btn-group"><button type="button" class="btn btn-primary" onclick=""><a href="@Url.Action("EditAgency", "CompanyAdmin", new { id = item.Id })"><span style="color:white">Edit</span></a></button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                                <td><center><div class="btn-group"><a href="@Url.Action("EditAgency", "CompanyAdmin", new { id = item.Id })"><button type="button" class="btn btn-primary" onclick="">Edit</button></a><button type="button" class="btn btn-danger">Delete</button></div></center></td>
                                             </tr>
                                             val++;
                                         }

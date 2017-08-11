@@ -51,345 +51,347 @@
 						<a href="#businessDetails" data-toggle="tab" aria-expanded="true">Photo</a>
 					</li>
 				</ul>
-				@using (Html.BeginForm("AddCustomer", "CompanyAdmin", FormMethod.Post))
+				@using (Html.BeginForm("AddCustomer", "CompanyAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 				{
-				<div class="tab-content br-n pn">
-					<div id="Details" class="tab-pane active">
-						<div class="row">
-							<div class="row form-group required">
-								<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.FirstName, "", new { @class = "text-danger" })
-								</div>
-								<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.LastName, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.LastName, "", new { @class = "text-danger" })
-								</div>
-							</div>
-							<div class="row form-group required">
-								<label class="col-md-2 col-xs-12 text-right control-label">Telephone:</label>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.Telephone, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.Telephone, "", new { @class = "text-danger" })
-								</div>
-								<label class="col-md-2 col-xs-12 text-right control-label">SMS Number:</label>
-								<div class="col-md-3 col-xs-12">
-									<div class="input-group">
-										<span class="input-group-addon" style="color: black">+33</span>
-										@Html.EditorFor(model => model.Customer.SmsNumber, new { htmlAttributes = new { @class = "form-control" } })
-										@Html.ValidationMessageFor(model => model.Customer.SmsNumber, "", new { @class = "text-danger" })
+					@Html.AntiForgeryToken();
+					<div class="tab-content br-n pn">
+						<div id="Details" class="tab-pane active">
+							<div class="row">
+								<div class="row form-group required">
+									<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
+									<div class="col-md-3 col-xs-12">
+										@Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+									</div>
+									<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
+									<div class="col-md-3 col-xs-12">
+										@Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 									</div>
 								</div>
-							</div>
-							<div class="row form-group required">
-								<label class="col-md-2 col-xs-12 text-right control-label">Email</label>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.Email, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.Email, "", new { @class = "text-danger" })
+								<div class="row form-group required">
+									<label class="col-md-2 col-xs-12 text-right control-label">Telephone:</label>
+									<div class="col-md-3 col-xs-12">
+									   
+										@Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" ,@Placeholder="Enter Phone Number" } })
+										@Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+									</div>
+									<label class="col-md-2 col-xs-12 text-right control-label">SMS Number:</label>
+									<div class="col-md-3 col-xs-12">
+										<div class="input-group">
+											<span class="input-group-addon" style="color: black">+33</span>
+											@Html.EditorFor(model => model.SmsNumber, new { htmlAttributes = new { @class = "form-control" } })
+											@Html.ValidationMessageFor(model => model.SmsNumber, "", new { @class = "text-danger" })
+										</div>
+									</div>
 								</div>
-								<label class="col-md-2 col-xs-12 text-right control-label">Occupation</label>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.Occupation, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.Occupation, "", new { @class = "text-danger" })
-								</div>
-							</div>
-
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(1)">Next <span><strong>></strong></span></button>
-						</center>
-					</div>
-
-					<div id="locationDetails" class="tab-pane">
-						<div class="row">
-							<div class="row form-group required">
-								<label class="col-md-2 col-xs-12 text-right control-label">Address:</label>
-								<div class="col-md-8 col-xs-12">
-									@Html.EditorFor(model => model.Customer.Adress, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.Adress, "", new { @class = "text-danger" })
-								</div>
-							</div>
-
-							<div class="row form-group required">
-								<div class="col-md-2 col-xs-12 text-right">
-									<label class="control-label">
-										Post Code:
-									</label>
-								</div>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.PostCode, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.PostCode, "", new { @class = "text-danger" })
-								</div>
-								<label class="col-md-2 col-xs-12 text-right control-label" name="city">City:</label>
-								<div class="col-md-3 col-xs-12">
-									@Html.EditorFor(model => model.Customer.City, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.City, "", new { @class = "text-danger" })
-
+								<div class="row form-group required">
+									<label class="col-md-2 col-xs-12 text-right control-label">Email</label>
+									<div class="col-md-3 col-xs-12">
+										@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+									</div>
+									<label class="col-md-2 col-xs-12 text-right control-label">Occupation</label>
+									<div class="col-md-3 col-xs-12">
+										@Html.EditorFor(model => model.Occupation, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.Occupation, "", new { @class = "text-danger" })
+									</div>
 								</div>
 
 							</div>
-
-
-
+							<center>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc(1)">Next <span><strong>></strong></span></button>
+							</center>
 						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(2)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(2)">Next <span><strong>></strong></span></button>
-						</center>
 
-					</div>
-
-					<div id="contactDetails" class="tab-pane">
-
-						<div class="row form-group required">
-							<label class="col-md-2 col-xs-12 text-right control-label">Gender:</label>
-							<div class="col-md-3 col-xs-12">
-								<select class="form-control">
-									<option value="1">Male</option>
-									<option value="2">Female</option>
-								</select>
-							</div>
-
-							<div class="col-md-2 col-xs-12 text-right control-label">
-								<label>Date of Birth:</label>
-							</div>
-							<div class="col-md-3 col-xs-12">
-								<div class="input-group">
-									@Html.EditorFor(model => model.Customer.BateofBirth, new { htmlAttributes = new { @class = "form-control" } })
-									@Html.ValidationMessageFor(model => model.Customer.BateofBirth, "", new { @class = "text-danger" })
+						<div id="locationDetails" class="tab-pane">
+							<div class="row">
+								<div class="row form-group required">
+									<label class="col-md-2 col-xs-12 text-right control-label">Address:</label>
+									<div class="col-md-8 col-xs-12">
+										@Html.EditorFor(model => model.Adress, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+									</div>
 								</div>
-							</div>
-						</div>
 
-						<div class="row form-group">
-							<label class="col-md-2 col-xs-12 text-right">Reffered By:</label>
-							<div class="col-md-3 col-xs-12">
-								@Html.EditorFor(model => model.Customer.RefferedBy, new { htmlAttributes = new { @class = "form-control" } })
-								@Html.ValidationMessageFor(model => model.Customer.RefferedBy, "", new { @class = "text-danger" })
-							</div>
-						</div>
-
-						<div class="row form-group required">
-							<label class="col-md-2 col-xs-12 text-right control-label">Alerts/Contradictions:</label>
-							<div class="col-md-8 col-xs-12">
-								@Html.TextAreaFor(model => model.Customer.Contradiction, 5, 105, new { @style = "resize: none;" })
-								@Html.ValidationMessageFor(model => model.Customer.Contradiction)
-							</div>
-						</div>
-						<div class="row form-group">
-							<label class="col-md-2 col-xs-12 text-right">
-								Time Zone:
-							</label>
-							<div class="col-md-8 col-xs-12">
-								<select class="form-control">
-									<option selected disabled>Select the timezone</option>
-									<option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</option>
-									<option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</option>
-									<option timeZoneId="3" gmtAdjustment="GMT-10:00" useDaylightTime="0" value="-10">(GMT-10:00) Hawaii</option>
-									<option timeZoneId="4" gmtAdjustment="GMT-09:00" useDaylightTime="1" value="-9">(GMT-09:00) Alaska</option>
-									<option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US and Canada)</option>
-									<option timeZoneId="6" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Tijuana, Baja California</option>
-									<option timeZoneId="7" gmtAdjustment="GMT-07:00" useDaylightTime="0" value="-7">(GMT-07:00) Arizona</option>
-									<option timeZoneId="8" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
-									<option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
-									<option timeZoneId="10" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Central America</option>
-									<option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US and Canada)</option>
-									<option timeZoneId="12" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
-									<option timeZoneId="13" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Saskatchewan</option>
-									<option timeZoneId="14" gmtAdjustment="GMT-05:00" useDaylightTime="0" value="-5">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
-									<option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Eastern Time (US and Canada)</option>
-									<option timeZoneId="16" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Indiana (East)</option>
-									<option timeZoneId="17" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Atlantic Time (Canada)</option>
-									<option timeZoneId="18" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Caracas, La Paz</option>
-									<option timeZoneId="19" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Manaus</option>
-									<option timeZoneId="20" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Santiago</option>
-									<option timeZoneId="21" gmtAdjustment="GMT-03:30" useDaylightTime="1" value="-3.5">(GMT-03:30) Newfoundland</option>
-									<option timeZoneId="22" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Brasilia</option>
-									<option timeZoneId="23" gmtAdjustment="GMT-03:00" useDaylightTime="0" value="-3">(GMT-03:00) Buenos Aires, Georgetown</option>
-									<option timeZoneId="24" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Greenland</option>
-									<option timeZoneId="25" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Montevideo</option>
-									<option timeZoneId="26" gmtAdjustment="GMT-02:00" useDaylightTime="1" value="-2">(GMT-02:00) Mid-Atlantic</option>
-									<option timeZoneId="27" gmtAdjustment="GMT-01:00" useDaylightTime="0" value="-1">(GMT-01:00) Cape Verde Is.</option>
-									<option timeZoneId="28" gmtAdjustment="GMT-01:00" useDaylightTime="1" value="-1">(GMT-01:00) Azores</option>
-									<option timeZoneId="29" gmtAdjustment="GMT+00:00" useDaylightTime="0" value="0">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
-									<option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
-									<option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
-									<option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
-									<option timeZoneId="33" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
-									<option timeZoneId="34" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
-									<option timeZoneId="35" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) West Central Africa</option>
-									<option timeZoneId="36" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Amman</option>
-									<option timeZoneId="37" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Athens, Bucharest, Istanbul</option>
-									<option timeZoneId="38" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Beirut</option>
-									<option timeZoneId="39" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Cairo</option>
-									<option timeZoneId="40" gmtAdjustment="GMT+02:00" useDaylightTime="0" value="2">(GMT+02:00) Harare, Pretoria</option>
-									<option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
-									<option timeZoneId="42" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Jerusalem</option>
-									<option timeZoneId="43" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Minsk</option>
-									<option timeZoneId="44" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Windhoek</option>
-									<option timeZoneId="45" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Kuwait, Riyadh, Baghdad</option>
-									<option timeZoneId="46" gmtAdjustment="GMT+03:00" useDaylightTime="1" value="3">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
-									<option timeZoneId="47" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Nairobi</option>
-									<option timeZoneId="48" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Tbilisi</option>
-									<option timeZoneId="49" gmtAdjustment="GMT+03:30" useDaylightTime="1" value="3.5">(GMT+03:30) Tehran</option>
-									<option timeZoneId="50" gmtAdjustment="GMT+04:00" useDaylightTime="0" value="4">(GMT+04:00) Abu Dhabi, Muscat</option>
-									<option timeZoneId="51" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Baku</option>
-									<option timeZoneId="52" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Yerevan</option>
-									<option timeZoneId="53" gmtAdjustment="GMT+04:30" useDaylightTime="0" value="4.5">(GMT+04:30) Kabul</option>
-									<option timeZoneId="54" gmtAdjustment="GMT+05:00" useDaylightTime="1" value="5">(GMT+05:00) Yekaterinburg</option>
-									<option timeZoneId="55" gmtAdjustment="GMT+05:00" useDaylightTime="0" value="5">(GMT+05:00) Islamabad, Karachi, Tashkent</option>
-									<option timeZoneId="56" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Sri Jayawardenapura</option>
-									<option timeZoneId="57" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
-									<option timeZoneId="58" gmtAdjustment="GMT+05:45" useDaylightTime="0" value="5.75">(GMT+05:45) Kathmandu</option>
-									<option timeZoneId="59" gmtAdjustment="GMT+06:00" useDaylightTime="1" value="6">(GMT+06:00) Almaty, Novosibirsk</option>
-									<option timeZoneId="60" gmtAdjustment="GMT+06:00" useDaylightTime="0" value="6">(GMT+06:00) Astana, Dhaka</option>
-									<option timeZoneId="61" gmtAdjustment="GMT+06:30" useDaylightTime="0" value="6.5">(GMT+06:30) Yangon (Rangoon)</option>
-									<option timeZoneId="62" gmtAdjustment="GMT+07:00" useDaylightTime="0" value="7">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
-									<option timeZoneId="63" gmtAdjustment="GMT+07:00" useDaylightTime="1" value="7">(GMT+07:00) Krasnoyarsk</option>
-									<option timeZoneId="64" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
-									<option timeZoneId="65" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Kuala Lumpur, Singapore</option>
-									<option timeZoneId="66" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
-									<option timeZoneId="67" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Perth</option>
-									<option timeZoneId="68" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Taipei</option>
-									<option timeZoneId="69" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
-									<option timeZoneId="70" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Seoul</option>
-									<option timeZoneId="71" gmtAdjustment="GMT+09:00" useDaylightTime="1" value="9">(GMT+09:00) Yakutsk</option>
-									<option timeZoneId="72" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Adelaide</option>
-									<option timeZoneId="73" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Darwin</option>
-									<option timeZoneId="74" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Brisbane</option>
-									<option timeZoneId="75" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Canberra, Melbourne, Sydney</option>
-									<option timeZoneId="76" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Hobart</option>
-									<option timeZoneId="77" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Guam, Port Moresby</option>
-									<option timeZoneId="78" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Vladivostok</option>
-									<option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
-									<option timeZoneId="80" gmtAdjustment="GMT+12:00" useDaylightTime="1" value="12">(GMT+12:00) Auckland, Wellington</option>
-									<option timeZoneId="81" gmtAdjustment="GMT+12:00" useDaylightTime="0" value="12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
-									<option timeZoneId="82" gmtAdjustment="GMT+13:00" useDaylightTime="0" value="13">(GMT+13:00) Nuku'alofa</option>
-								</select>
-							</div>
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(3)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(3)">Next <span><strong>></strong></span></button>
-						</center>
-					</div>
-
-					<div id="regionalSettings" class="tab-pane">
-						<h3>Appointment Notifications</h3>
-						<label class="row" style="width: 100%">
-							<input type="checkbox" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Send this customer email messages about their appointments?</p>
-						</label>
-
-						<h3>Appointment Reminders</h3>
-						<label class="row" style="width: 100%">
-							<input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use the default email reminder setting of <span style="font-weight: bolder">48 hours</span> before the customer arrives</p>
-							<input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use a different interval for this customer</p>
-						</label>
-
-
-						<div class="row form-group">
-							<div class="col-md-3 col-xs-6">
-								<select class="form-control">
-									<option selected="" disabled="">--Never--</option>
-									<option value="2">2 hours</option>
-									<option value="3">3 hours</option>
-									<option value="6">6 hours</option>
-									<option value="12">12 hours</option>
-									<option value="24">24 hours</option>
-									<option value="48">48 hours</option>
-									<option value="72">72 hours</option>
-									<option value="1w">1 Week</option>
-								</select>
-							</div>
-							<p class="form-control" style="border: none;">before the customer arrives</p>
-						</div>
-
-						<label class="row" style="width: 100%">
-							<input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use the default SMS reminder setting of <span style="font-weight: bolder">24 hours</span> before the customer arrives</p>
-							<input type="radio" style="float: left; margin-left: 3%"> <p style=" font-weight: normal;padding-left: 5%">Use a different interval for this customer</p>
-						</label>
-
-
-						<div class="row form-group">
-							<div class="col-md-3 col-xs-6">
-								<select class="form-control">
-									<option selected="" disabled="">--Never--</option>
-									<option value="2">2 hours</option>
-									<option value="3">3 hours</option>
-									<option value="6">6 hours</option>
-									<option value="12">12 hours</option>
-									<option value="24">24 hours</option>
-									<option value="48">48 hours</option>
-									<option value="72">72 hours</option>
-									<option value="1w">1 Week</option>
-								</select>
-							</div>
-							<p class="form-control" style="border: none;">before the customer arrives</p>
-						</div>
-						<center>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(4)"><span><strong><</strong></span> Back</button>
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc(4)">Next <span><strong>></strong></span></button>
-						</center>
-					</div>
-
-					<div id="businessDetails" class="tab-pane">
-
-
-						<div class="row form-group">
-
-							<label class="col-md-2 col-xs-12 text-right">Your Photo:</label>
-
-							<div ng-app="fileUpload" class="container">
-								<div ng-controller="upload">
-									<div class="col-md-2 col-xs-12">
-										<label class="btn btn-default btn-system btn-file btn-block">
-											Upload Image <input type="file" fileinput="file" accept="image/*" filepreview="filepreview" />
+								<div class="row form-group required">
+									<div class="col-md-2 col-xs-12 text-right">
+										<label class="control-label">
+											Post Code:
 										</label>
 									</div>
-									<div class="col-md-2 col-xs-6">
-										<img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview" />
+									<div class="col-md-3 col-xs-12">
+										@Html.EditorFor(model => model.PostCode, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.PostCode, "", new { @class = "text-danger" })
+									</div>
+									<label class="col-md-2 col-xs-12 text-right control-label" name="city">City:</label>
+									<div class="col-md-3 col-xs-12">
+										@Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+
+									</div>
+
+								</div>
+
+
+
+							</div>
+							<center>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(2)"><span><strong><</strong></span> Back</button>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc(2)">Next <span><strong>></strong></span></button>
+							</center>
+
+						</div>
+
+						<div id="contactDetails" class="tab-pane">
+
+							<div class="row form-group required">
+								<label class="col-md-2 col-xs-12 text-right control-label">Gender:</label>
+								<div class="col-md-3 col-xs-12">
+									<select class="form-control" name="Gender">
+										<option value="Male">Male</option>
+										<option value="Female">Female</option>
+									</select>
+								</div>
+
+								<div class="col-md-2 col-xs-12 text-right control-label">
+									<label>Date of Birth:</label>
+								</div>
+								<div class="col-md-3 col-xs-12">
+									<div class="input-group">
+										@Html.EditorFor(model => model.BateofBirth, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.BateofBirth, "", new { @class = "text-danger" })
 									</div>
 								</div>
 							</div>
+
+							<div class="row form-group">
+								<label class="col-md-2 col-xs-12 text-right">Reffered By:</label>
+								<div class="col-md-3 col-xs-12">
+									@Html.EditorFor(model => model.RefferedBy, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.RefferedBy, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="row form-group required">
+								<label class="col-md-2 col-xs-12 text-right control-label">Alerts/Contradictions:</label>
+								<div class="col-md-8 col-xs-12">
+									@Html.TextAreaFor(model => model.Contradiction, 5, 105, new { @style = "resize: none;" })
+									@Html.ValidationMessageFor(model => model.Contradiction)
+								</div>
+							</div>
+							<div class="row form-group">
+								<label class="col-md-2 col-xs-12 text-right">
+									Time Zone:
+								</label>
+								<div class="col-md-8 col-xs-12">
+									<select class="form-control" name="timezone">
+										<option selected disabled>Select the timezone</option>
+										<option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</option>
+										<option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</option>
+										<option timeZoneId="3" gmtAdjustment="GMT-10:00" useDaylightTime="0" value="-10">(GMT-10:00) Hawaii</option>
+										<option timeZoneId="4" gmtAdjustment="GMT-09:00" useDaylightTime="1" value="-9">(GMT-09:00) Alaska</option>
+										<option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US and Canada)</option>
+										<option timeZoneId="6" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Tijuana, Baja California</option>
+										<option timeZoneId="7" gmtAdjustment="GMT-07:00" useDaylightTime="0" value="-7">(GMT-07:00) Arizona</option>
+										<option timeZoneId="8" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
+										<option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
+										<option timeZoneId="10" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Central America</option>
+										<option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US and Canada)</option>
+										<option timeZoneId="12" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
+										<option timeZoneId="13" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Saskatchewan</option>
+										<option timeZoneId="14" gmtAdjustment="GMT-05:00" useDaylightTime="0" value="-5">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
+										<option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Eastern Time (US and Canada)</option>
+										<option timeZoneId="16" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Indiana (East)</option>
+										<option timeZoneId="17" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Atlantic Time (Canada)</option>
+										<option timeZoneId="18" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Caracas, La Paz</option>
+										<option timeZoneId="19" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Manaus</option>
+										<option timeZoneId="20" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Santiago</option>
+										<option timeZoneId="21" gmtAdjustment="GMT-03:30" useDaylightTime="1" value="-3.5">(GMT-03:30) Newfoundland</option>
+										<option timeZoneId="22" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Brasilia</option>
+										<option timeZoneId="23" gmtAdjustment="GMT-03:00" useDaylightTime="0" value="-3">(GMT-03:00) Buenos Aires, Georgetown</option>
+										<option timeZoneId="24" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Greenland</option>
+										<option timeZoneId="25" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Montevideo</option>
+										<option timeZoneId="26" gmtAdjustment="GMT-02:00" useDaylightTime="1" value="-2">(GMT-02:00) Mid-Atlantic</option>
+										<option timeZoneId="27" gmtAdjustment="GMT-01:00" useDaylightTime="0" value="-1">(GMT-01:00) Cape Verde Is.</option>
+										<option timeZoneId="28" gmtAdjustment="GMT-01:00" useDaylightTime="1" value="-1">(GMT-01:00) Azores</option>
+										<option timeZoneId="29" gmtAdjustment="GMT+00:00" useDaylightTime="0" value="0">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
+										<option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
+										<option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+										<option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+										<option timeZoneId="33" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
+										<option timeZoneId="34" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
+										<option timeZoneId="35" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) West Central Africa</option>
+										<option timeZoneId="36" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Amman</option>
+										<option timeZoneId="37" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Athens, Bucharest, Istanbul</option>
+										<option timeZoneId="38" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Beirut</option>
+										<option timeZoneId="39" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Cairo</option>
+										<option timeZoneId="40" gmtAdjustment="GMT+02:00" useDaylightTime="0" value="2">(GMT+02:00) Harare, Pretoria</option>
+										<option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+										<option timeZoneId="42" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Jerusalem</option>
+										<option timeZoneId="43" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Minsk</option>
+										<option timeZoneId="44" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Windhoek</option>
+										<option timeZoneId="45" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Kuwait, Riyadh, Baghdad</option>
+										<option timeZoneId="46" gmtAdjustment="GMT+03:00" useDaylightTime="1" value="3">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
+										<option timeZoneId="47" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Nairobi</option>
+										<option timeZoneId="48" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Tbilisi</option>
+										<option timeZoneId="49" gmtAdjustment="GMT+03:30" useDaylightTime="1" value="3.5">(GMT+03:30) Tehran</option>
+										<option timeZoneId="50" gmtAdjustment="GMT+04:00" useDaylightTime="0" value="4">(GMT+04:00) Abu Dhabi, Muscat</option>
+										<option timeZoneId="51" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Baku</option>
+										<option timeZoneId="52" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Yerevan</option>
+										<option timeZoneId="53" gmtAdjustment="GMT+04:30" useDaylightTime="0" value="4.5">(GMT+04:30) Kabul</option>
+										<option timeZoneId="54" gmtAdjustment="GMT+05:00" useDaylightTime="1" value="5">(GMT+05:00) Yekaterinburg</option>
+										<option timeZoneId="55" gmtAdjustment="GMT+05:00" useDaylightTime="0" value="5">(GMT+05:00) Islamabad, Karachi, Tashkent</option>
+										<option timeZoneId="56" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Sri Jayawardenapura</option>
+										<option timeZoneId="57" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+										<option timeZoneId="58" gmtAdjustment="GMT+05:45" useDaylightTime="0" value="5.75">(GMT+05:45) Kathmandu</option>
+										<option timeZoneId="59" gmtAdjustment="GMT+06:00" useDaylightTime="1" value="6">(GMT+06:00) Almaty, Novosibirsk</option>
+										<option timeZoneId="60" gmtAdjustment="GMT+06:00" useDaylightTime="0" value="6">(GMT+06:00) Astana, Dhaka</option>
+										<option timeZoneId="61" gmtAdjustment="GMT+06:30" useDaylightTime="0" value="6.5">(GMT+06:30) Yangon (Rangoon)</option>
+										<option timeZoneId="62" gmtAdjustment="GMT+07:00" useDaylightTime="0" value="7">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+										<option timeZoneId="63" gmtAdjustment="GMT+07:00" useDaylightTime="1" value="7">(GMT+07:00) Krasnoyarsk</option>
+										<option timeZoneId="64" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
+										<option timeZoneId="65" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Kuala Lumpur, Singapore</option>
+										<option timeZoneId="66" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
+										<option timeZoneId="67" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Perth</option>
+										<option timeZoneId="68" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Taipei</option>
+										<option timeZoneId="69" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
+										<option timeZoneId="70" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Seoul</option>
+										<option timeZoneId="71" gmtAdjustment="GMT+09:00" useDaylightTime="1" value="9">(GMT+09:00) Yakutsk</option>
+										<option timeZoneId="72" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Adelaide</option>
+										<option timeZoneId="73" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Darwin</option>
+										<option timeZoneId="74" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Brisbane</option>
+										<option timeZoneId="75" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Canberra, Melbourne, Sydney</option>
+										<option timeZoneId="76" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Hobart</option>
+										<option timeZoneId="77" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Guam, Port Moresby</option>
+										<option timeZoneId="78" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Vladivostok</option>
+										<option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
+										<option timeZoneId="80" gmtAdjustment="GMT+12:00" useDaylightTime="1" value="12">(GMT+12:00) Auckland, Wellington</option>
+										<option timeZoneId="81" gmtAdjustment="GMT+12:00" useDaylightTime="0" value="12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
+										<option timeZoneId="82" gmtAdjustment="GMT+13:00" useDaylightTime="0" value="13">(GMT+13:00) Nuku'alofa</option>
+									</select>
+								</div>
+							</div>
+							<center>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(3)"><span><strong><</strong></span> Back</button>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc(3)">Next <span><strong>></strong></span></button>
+							</center>
 						</div>
-						<center>
+
+						<div id="regionalSettings" class="tab-pane">
+							<h3>Appointment Notifications</h3>
+							<label class="row" style="width: 100%">
+								<input type="checkbox" style="float: left; margin-left: 3%" name="appointment_message"> <p style=" font-weight: normal;padding-left: 5%">Send this customer email messages about their appointments?</p>
+							</label>
+
+							<h3>Appointment Reminders</h3>
+							<label class="row" style="width: 100%">
+								<input type="radio" style="float: left; margin-left: 3%" name="default_email_reminder"> <p style=" font-weight: normal;padding-left: 5%">Use the default email reminder setting of <span style="font-weight: bolder">48 hours</span> before the customer arrives</p>
+								<input type="radio" style="float: left; margin-left: 3%" name="email_interval"> <p style=" font-weight: normal;padding-left: 5%">Use a different interval for this customer</p>
+							</label>
 
 
-							<button type="button" class="btn btn-primary" onclick="changeTabFunc2(10)"><span><strong><</strong></span> Back</button>
-							<input type="submit" class="btn btn-success"value="Save">
-							
-						</center>
+							<div class="row form-group">
+								<div class="col-md-3 col-xs-6">
+									<select class="form-control" name="before_arrive">
+										<option selected="" disabled="">--Never--</option>
+										<option value="2">2 hours</option>
+										<option value="3">3 hours</option>
+										<option value="6">6 hours</option>
+										<option value="12">12 hours</option>
+										<option value="24">24 hours</option>
+										<option value="48">48 hours</option>
+										<option value="72">72 hours</option>
+										<option value="1w">1 Week</option>
+									</select>
+								</div>
+								<p class="form-control" style="border: none;">before the customer arrives</p>
+							</div>
+
+							<label class="row" style="width: 100%">
+								<input type="radio" style="float: left; margin-left: 3%" name="default_sms_reminder"> <p style=" font-weight: normal;padding-left: 5%">Use the default SMS reminder setting of <span style="font-weight: bolder">24 hours</span> before the customer arrives</p>
+								<input type="radio" style="float: left; margin-left: 3%" name="use_different_sms_interval"> <p style=" font-weight: normal;padding-left: 5%">Use a different interval for this customer</p>
+							</label>
+
+
+							<div class="row form-group">
+								<div class="col-md-3 col-xs-6">
+									<select class="form-control" name="sms_before_arrive">
+										<option selected="" disabled="">--Never--</option>
+										<option value="2">2 hours</option>
+										<option value="3">3 hours</option>
+										<option value="6">6 hours</option>
+										<option value="12">12 hours</option>
+										<option value="24">24 hours</option>
+										<option value="48">48 hours</option>
+										<option value="72">72 hours</option>
+										<option value="1w">1 Week</option>
+									</select>
+								</div>
+								<p class="form-control" style="border: none;">before the customer arrives</p>
+							</div>
+							<center>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(4)"><span><strong><</strong></span> Back</button>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc(4)">Next <span><strong>></strong></span></button>
+							</center>
+						</div>
+
+						<div id="businessDetails" class="tab-pane">
+
+
+							<div class="row form-group">
+
+								<label class="col-md-2 col-xs-12 text-right">Your Photo:</label>
+
+								<div ng-app="fileUpload" class="container">
+									<div ng-controller="upload">
+										<div class="col-md-2 col-xs-12">
+											<label class="btn btn-default btn-system btn-file btn-block">
+												Upload Image <input type="file" fileinput="file" accept="image/*" filepreview="filepreview" name="upload"/>
+											</label>
+										</div>
+										<div class="col-md-2 col-xs-6">
+											<img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<center>
+
+
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(10)"><span><strong><</strong></span> Back</button>
+								<input type="submit" class="btn btn-success" value="Save">
+
+							</center>
+						</div>
+
+
+
+
+
+
 					</div>
 
 
-
-
-
-
-				</div>
-		
-
 				}
-		<br><br><br><br><br><br><br>
-	</div>
-	<!-- End: Content -->
-	<!-- Begin: Page Footer -->
-	<footer id="content-footer">
-		<div class="row">
-			<div class="col-md-6">
-				<span class="footer-legal">© 2017 PlateformeRDV</span>
+				<br><br><br><br><br><br><br>
 			</div>
-			<div class="col-md-6 text-right">
-				<span class="footer-meta"></span>
-				<a href="#content" class="footer-return-top">
-					<span class="fa fa-arrow-up"></span>
-				</a>
-			</div>
-		</div>
-	</footer>
-	<!-- End: Page Footer -->
+			<!-- End: Content -->
+			<!-- Begin: Page Footer -->
+			<footer id="content-footer">
+				<div class="row">
+					<div class="col-md-6">
+						<span class="footer-legal">© 2017 PlateformeRDV</span>
+					</div>
+					<div class="col-md-6 text-right">
+						<span class="footer-meta"></span>
+						<a href="#content" class="footer-return-top">
+							<span class="fa fa-arrow-up"></span>
+						</a>
+					</div>
+				</div>
+			</footer>
+			<!-- End: Page Footer -->
 
 </section>
 <!-- End: Content-Wrapper -->

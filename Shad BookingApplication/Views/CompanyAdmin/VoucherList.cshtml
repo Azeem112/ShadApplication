@@ -140,7 +140,7 @@
                                             <td><center><span>@item.Discount</span></center></td>
                                             <td><center><span>@item.Type</span></center></td>
                                             <td><center><span>@item.AspNetExpire.Name</span></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-primary" >Edit</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
+                                            <td><center><div class="btn-group"><a><button type="button" class="btn btn-default">View</button></a><a href="@Url.Action("EditVoucher", "CompanyAdmin", new { id = item.Id })"><button type="button" class="btn btn-primary">Edit</button></a><a><button type="button" class="btn btn-danger">Delete</button></a></div></center></td>
                                         </tr>
 
                                         }

@@ -5,9 +5,9 @@
 	List<SelectListItem> listItems = new List<SelectListItem>();
 	List<SelectListItem> listItems0 = new List<SelectListItem>();
 	List<SelectListItem> listItems6 = new List<SelectListItem>();
-	if (Model.BusinessSubCatageory != null)
+	if (ViewBag.BusinessSubCatageory != null)
 	{
-		foreach (var item in Model.BusinessSubCatageory)
+		foreach (var item in ViewBag.BusinessSubCatageory)
 		{
 			listItems.Add(new SelectListItem
 			{
@@ -1893,12 +1893,12 @@ function checkboxDetect(num)
  $("#drop").change(function () {
 var ddl = document.getElementById("drop");
   var selectedValue = ddl.options[ddl.selectedIndex].value;
-  if (selectedValue == "1")
+  if (selectedValue == "Single Site Company")
   {
 	var label1 = document.getElementById("agencyyy");
 	label1.style.display = 'none';
   }
-  if (selectedValue == "2")
+  if (selectedValue == "Multi Site Company")
   {
 	var label3 = document.getElementById("agencyyy");
 	label3.style.display = 'block';

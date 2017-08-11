@@ -97,10 +97,10 @@ namespace Shad_BookingApplication.Controllers
                             System.Web.HttpContext.Current.Session["Company_AdminID"] = userID;
                             return RedirectToAction("AddServiceGroup", "CompanyAdmin");
                         }
-                        else if (UserManager.IsInRole(userID, "Employee"))
+                        else if (UserManager.IsInRole(userID, "Agency_Manager"))
                         {
-                            System.Web.HttpContext.Current.Session["AdminID"] = userID;
-                            return RedirectToAction("Dashboard", "Admin_Dashboard");
+                            System.Web.HttpContext.Current.Session["Agency_ManagerID"] = userID;
+                            return RedirectToAction("CustomerList", "CompanyAdmin");
                         }
 
                         return RedirectToLocal(returnUrl);

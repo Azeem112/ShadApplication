@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Shad_BookingApplication.Controllers
 {
-    [Authorize(Roles = "Company_Admin")]
+    [Authorize(Roles = "Company_Admin,Agency_Manager")]
 
     public class CompanyAdminController : Controller
     {
@@ -20,7 +20,6 @@ namespace Shad_BookingApplication.Controllers
         // GET: CompanyAdmin
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -185,7 +184,8 @@ namespace Shad_BookingApplication.Controllers
         {
 
             AddAgencyViewModel addAgencyViewModel = new AddAgencyViewModel();
-            addAgencyViewModel.BusinessSubCatageory = db.AspNetBusinessSubCatageories.ToList();
+            
+            
             var id = User.Identity.GetUserId();
             var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
             var cus_data = new AspNetCustomer();
@@ -205,12 +205,42 @@ namespace Shad_BookingApplication.Controllers
                 cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
 
             }
+
+
+            //sub category dropdown in agency 
+            var cus =db.AspNetCustomer_SubCatageory.Where(x => x.CustomerID == cus_data.Id).ToList();
+            List<AspNetBusinessSubCatageory> sub_data = new List<AspNetBusinessSubCatageory>();
+            foreach (var item in cus)
+            {
+                var sub=db.AspNetBusinessSubCatageories.Where(x => x.Id == item.SubCatageoryId).SingleOrDefault();
+                var data = new AspNetBusinessSubCatageory();
+                data.Id = sub.Id;
+                data.Name = sub.Name;
+                data.BussinessCatageoryId = sub.BussinessCatageoryId;
+                sub_data.Add(data);
+                
+            }
+        
+            
+             ViewBag.BusinessSubCatageory = sub_data;
+
+
+
+
+
+            //agency admin dropdown list
             if (cus_data != null)
             {
                 ViewBag.AgencyAdmin = new SelectList(db.AspNetUsers.Where(x =>( x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && ((x.HeadId == cus_data.UserID) || x.Id == cus_data.UserID)), "Id", "UserName");
             }
 
-            addAgencyViewModel.SMS = db.AspNetCustomerSMS.ToList();
+
+
+            addAgencyViewModel.SMS = db.AspNetCustomerSMS.Where(x=>x.Id==cus_data.SmsID).ToList();
+
+
+
+
             return View(addAgencyViewModel);
         }
 
@@ -222,6 +252,7 @@ namespace Shad_BookingApplication.Controllers
         {
 
             // Adding Details
+            
             /* 
             if(!ModelState.IsValid)
              {
@@ -348,6 +379,7 @@ namespace Shad_BookingApplication.Controllers
 
             // Adding user Types
             addAgencyViewModel.UserType.CompanyName = addAgencyViewModel.Detail.BussinessName;
+            
             db.AspNetCustomerTypes.Add(addAgencyViewModel.UserType);
             db.SaveChanges();
 
@@ -388,8 +420,27 @@ namespace Shad_BookingApplication.Controllers
             agency.GalleryID = gallary.Id;
             agency.WorkingID = id;
 
-            var user_id1 = User.Identity.GetUserId();
-            var cus_id = db.AspNetCustomers.Where(x => x.UserID == user_id1).FirstOrDefault().Id;
+            var u_id = User.Identity.GetUserId();
+            var h_id = db.AspNetUsers.Where(x => x.Id == u_id).Select(y => y.HeadId).SingleOrDefault();
+            var cus_data = new AspNetCustomer();
+
+            if (h_id == null)
+
+            {
+
+                cus_data = db.AspNetCustomers.Where(x => x.UserID == u_id).SingleOrDefault();
+
+            }
+
+            else
+
+            {
+
+                cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
+
+            }
+
+            var cus_id = cus_data.Id;
 
             agency.HeadId = cus_id;
 
@@ -1234,14 +1285,102 @@ namespace Shad_BookingApplication.Controllers
         public ActionResult AddCustomer()
         {
             AddCompanyCustomerViewModel obj = new AddCompanyCustomerViewModel();
+            
             return View(obj);
         }
 
         [HttpPost]
-        public ActionResult AddCustomer(AddCompanyCustomerViewModel customer)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCustomer(AddCompanyCustomerViewModel customer , HttpPostedFileBase[] files)
         {
+            var id = User.Identity.GetUserId();
+            var agency = db.AspNetAgencies.Where(x => x.UserID == id).FirstOrDefault();
+           var agency_id =agency.Id;
+            
+            customer.Gender=Request.Form["Gender"];
+            customer.TimeZone=Request.Form["timezone"];
 
-            return View();
+            HttpPostedFileBase file = Request.Files["upload"];
+            if (file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/ServerFiles"), fileName);
+                file.SaveAs(path);
+                customer.Image = path;
+
+            }
+            else
+            {
+                customer.Image = "";
+            }
+
+            var notification = new AspNetCompanyNotifination();
+            //AspNetCompanyNotifination customer.Notification;
+            notification.SendAppointmentMessage = false;
+            notification.DifferentSmsInterval = false;
+            notification.DifferentEmailInterval = false;
+            notification.DefaultSmsRemainder = false;
+            notification.DefaultEmailRemainder = false;
+            if (Request.Form["appointment_message"] == "on")
+            {
+
+                notification.SendAppointmentMessage = true;
+            }
+            
+
+            if (Request.Form["use_different_sms_interval"] == "on")
+            {
+
+                notification.DifferentSmsInterval = true;
+            }
+            
+
+            if (Request.Form["email_interval"] == "on")
+            {
+
+                notification.DifferentEmailInterval = true;
+            }
+            
+
+            if (Request.Form["default_sms_reminder"] == "on")
+            {
+
+                notification.DefaultSmsRemainder = true;
+            }
+            
+            if (Request.Form["default_email_reminder"] == "on")
+            {
+
+                notification.DefaultEmailRemainder = true;
+            }
+
+            notification.SmsBeforeArrive =Request.Form["sms_before_arrive"];
+            notification.EmailBeforeArrive =Request.Form["before_arrive"] ;
+            db.AspNetCompanyNotifinations.Add(notification);
+            db.SaveChanges();
+            var company_customer = new AspNetCompanyCustomer();
+            company_customer.AgencyId = agency_id;
+            company_customer.CompanyNotificationId = notification.Id;
+            company_customer.FirstName =customer.FirstName;
+            company_customer.LastName =customer.LastName;
+            company_customer.Occupation =customer.Occupation;
+            company_customer.BateofBirth = customer.BateofBirth;
+            company_customer.City = customer.City;
+            company_customer.Contradiction = customer.Contradiction;
+            company_customer.Email = customer.Email;
+            company_customer.Gender =customer.Gender;
+            company_customer.Image =customer.Image;
+            company_customer.PostCode =customer.PostCode;
+            company_customer.RefferedBy =customer.RefferedBy;
+            company_customer.SmsNumber = customer.SmsNumber;
+            company_customer.Telephone = customer.Telephone;
+            company_customer.TimeZone = customer.TimeZone;
+            company_customer.Adress = customer.Adress;
+            db.AspNetCompanyCustomers.Add(company_customer);
+            db.SaveChanges();
+            
+
+            return RedirectToAction("CustomerList");
         }
 
         public ActionResult AddEmployee()
@@ -1337,13 +1476,111 @@ namespace Shad_BookingApplication.Controllers
             return RedirectToAction("VoucherList");
         }
 
+        public ActionResult EditVoucher(int id)
+        {
+            var data = new AspNetGiftVoucher();
+            data = db.AspNetGiftVouchers.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.fix = false;
+            ViewBag.per = false;
+            ViewBag.recu = false;
+            ViewBag.redmeeOnline = false;
+            ViewBag.voided = false;
+            if (data.AspNetExpire.Name=="Fixed")
+            {
+                ViewBag.fix = true;
+            }
+            if (data.AspNetExpire.Name== "Period")
+            {
+                ViewBag.per = true;
+            }
 
+            if (data.AspNetExpire.Name == "Recuring")
+            {
+                ViewBag.recu = true;
+            }
+            
+            if(data.RedmeeOnline==true)
+            {
+                ViewBag.redmeeOnline=true;
+            }
+            if (data.Voided == true)
+            {
+                ViewBag.voided = true;
+            }
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult UpdateVoucher(AspNetGiftVoucher voucher)
+        {
+            var ex_id=Request.Form["expire_id"];
+            var vou_id= Convert.ToInt16(Request.Form["voucher_id"]);
+            var he=Request.Form["RedmeeOnline"];
+            var type = Request.Form["Type"];
+            
+            var db_data=db.AspNetGiftVouchers.Where(x => x.Id == vou_id).SingleOrDefault();
+            if(voucher.Name=="Fixed")
+            {
+                db_data.AspNetExpire.From = Convert.ToDateTime(Request.Form["Fixed_From"]);
+                db_data.AspNetExpire.To = Convert.ToDateTime(Request.Form["Fixed_To"]);
+                db_data.AspNetExpire.Date = Convert.ToDateTime(Request.Form["Fixed_date"]);
+            }
+            if(voucher.Name=="Period")
+            {
+                db_data.AspNetExpire.From = Convert.ToDateTime(Request.Form["Period_From"]);
+                db_data.AspNetExpire.To = Convert.ToDateTime(Request.Form["Period_To"]);
+            }
+            
+            if (voucher.Name == "Recuring")
+            {
+                db_data.AspNetExpire.Every =Request.Form["Recuring_Every"];
+                db_data.AspNetExpire.From = Convert.ToDateTime(Request.Form["Recuring_From"]);
+                db_data.AspNetExpire.To = Convert.ToDateTime(Request.Form["Recuring_To"]);
+            }
+            if (Request.Form["Voided"] == "on")
+            {
+                db_data.Voided = true;
+            }
+            else
+            {
+                db_data.Voided = false;
+            }
+
+            if (Request.Form["RedmeeOnline"] == "on")
+            {
+                db_data.RedmeeOnline = true;
+            }
+            else
+            {
+                db_data.RedmeeOnline = false;
+            }
+
+
+
+            db_data.Name = voucher.Name;
+          
+            db_data.Sku = voucher.Sku;
+            db_data.Type = type;
+            db_data.Discount = voucher.Discount;
+            db_data.Description = voucher.Description;
+            db.SaveChanges();
+            return RedirectToAction("VoucherList","CompanyAdmin");
+        }
         public ActionResult AgencyList()
         {
             var user_id1 = User.Identity.GetUserId();
-            var cus_id = db.AspNetCustomers.Where(x => x.UserID == user_id1).Select(y => y.Id).FirstOrDefault();
-            var data = db.AspNetAgencies.Where(x => x.HeadId == cus_id).ToList();
-            return View(data);
+            var user_data=db.AspNetUsers.Where(x => x.Id == user_id1).SingleOrDefault();
+            var data = new List<AspNetAgency>();
+            if (user_data.HeadId == null)
+            {
+                var cus_id = db.AspNetCustomers.Where(x => x.UserID == user_id1).Select(y => y.Id).FirstOrDefault();
+                data = db.AspNetAgencies.Where(x => x.HeadId == cus_id).ToList();
+            }
+            else
+            {
+                var cus_id = db.AspNetCustomers.Where(x => x.UserID == user_data.HeadId).Select(y => y.Id).FirstOrDefault();
+                data = db.AspNetAgencies.Where(x => x.HeadId == cus_id).ToList();
+            }
+                return View(data);
         }
 
         public ActionResult CompanyProfile()
@@ -1371,14 +1608,161 @@ namespace Shad_BookingApplication.Controllers
 
         public ActionResult CustomerList()
         {
-            return View();
+            var data = new List<AspNetCompanyCustomer>();
+            var id=User.Identity.GetUserId();
+            var cus_data=db.AspNetCustomers.Where(x => x.UserID == id).SingleOrDefault();
+            
+            if (cus_data!=null)
+            {
+                 var agency_data = db.AspNetAgencies.Where(x => x.HeadId == cus_data.Id);
+                foreach(var item in agency_data)
+                {
+                    var comp_cus = db.AspNetCompanyCustomers.Where(x => x.AgencyId == item.Id);
+                    foreach(var item1 in comp_cus)
+                    {
+                        data.Add(item1);
+                    }
+                }
+            }
+            
+            if (cus_data == null)
+            {
+                var Name=db.AspNetUsers.Where(x=>x.Id==id).FirstOrDefault().AspNetRoles.FirstOrDefault();
+                db.AspNetUsers.Where(x => (x.AspNetRoles.Select(y => y.Name).Contains("Company_Admin") || x.AspNetRoles.Select(y => y.Name).Contains("Agency_Manager")) && (x.Id == id));
+                if (Name.Name == "Agency_Manager")
+                {
+                    var agency = db.AspNetAgencies.Where(x => x.UserID == id).SingleOrDefault();
+                    if (agency != null)
+                    {
+                        data = db.AspNetCompanyCustomers.Where(x => x.AgencyId == agency.Id).ToList();
+                        return View(data);
+                    }
+                }
+                if(Name.Name=="Company_Admin")
+                {
+                    var user=db.AspNetUsers.Where(x => x.Id == id).SingleOrDefault();
+                   var cus= db.AspNetCustomers.Where(y => y.UserID == user.HeadId).SingleOrDefault();
+                    var agency_data = db.AspNetAgencies.Where(x => x.HeadId == cus.Id);
+                    foreach (var item in agency_data)
+                    {
+                        var comp_cus = db.AspNetCompanyCustomers.Where(x => x.AgencyId == item.Id);
+                        foreach (var item1 in comp_cus)
+                        {
+                            data.Add(item1);
+                        }
+                    }
+                }
+            }
+             
+            return View(data);
         }
 
-        public ActionResult EditCustomer()
+        public ActionResult EditCustomer(int id )
         {
-            return View();
+            var data = db.AspNetCompanyCustomers.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.appointmentMessage = data.AspNetCompanyNotifination.SendAppointmentMessage;
+            ViewBag.smsBeforeArrive = data.AspNetCompanyNotifination.SmsBeforeArrive;
+            ViewBag.emailReminder = data.AspNetCompanyNotifination.DefaultEmailRemainder;
+            ViewBag.smsReminder = data.AspNetCompanyNotifination.DefaultSmsRemainder;
+            ViewBag.emailInterval = data.AspNetCompanyNotifination.DifferentEmailInterval;
+            ViewBag.differentSmsInterval = data.AspNetCompanyNotifination.DifferentSmsInterval;
+            ViewBag.emailBeforeArrive = data.AspNetCompanyNotifination.EmailBeforeArrive;
+            return View(data);
         }
+        [HttpPost]
+        public ActionResult UpdateCustomer( AddCompanyCustomerViewModel customer, HttpPostedFileBase[] files)
+        {
+            var id = User.Identity.GetUserId();
+            
+            var agency_id = Convert.ToInt16( Request.Form["agency_id"]);
+            var cus = db.AspNetCompanyCustomers.Where(x => x.AgencyId == agency_id).SingleOrDefault();
+            
+            customer.Gender = Request.Form["Gender"];
+            customer.TimeZone = Request.Form["timezone"];
+            
+            HttpPostedFileBase file = Request.Files["upload"];
+            if (file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/ServerFiles"), fileName);
+                file.SaveAs(path);
+                customer.Image = path;
 
+            }
+            else
+            {
+                customer.Image = "";
+            }
+            
+
+
+            var notification = db.AspNetCompanyNotifinations.Where(x=>x.Id==cus.CompanyNotificationId).SingleOrDefault();
+            //AspNetCompanyNotifination customer.Notification;
+            notification.SendAppointmentMessage = false;
+            notification.DifferentSmsInterval = false;
+            notification.DifferentEmailInterval = false;
+            notification.DefaultSmsRemainder = false;
+            notification.DefaultEmailRemainder = false;
+            var hr=Request.Form["appointment_message"];
+
+            if (Request.Form["appointment_message"] == "on")
+            {
+
+                notification.SendAppointmentMessage = true;
+            }
+
+
+            if (Request.Form["use_different_sms_interval"] == "on")
+            {
+
+                notification.DifferentSmsInterval = true;
+            }
+
+
+            if (Request.Form["email_interval"] == "on")
+            {
+
+                notification.DifferentEmailInterval = true;
+            }
+
+
+            if (Request.Form["default_sms_reminder"] == "on")
+            {
+
+                notification.DefaultSmsRemainder = true;
+            }
+
+            if (Request.Form["default_email_reminder"] == "on")
+            {
+
+                notification.DefaultEmailRemainder = true;
+            }
+            notification.SmsBeforeArrive = Request.Form["sms_before_arrive"];
+            notification.EmailBeforeArrive = Request.Form["before_arrive"];
+            
+            db.SaveChanges();
+            var company_customer = cus;
+            company_customer.AgencyId = agency_id;
+            company_customer.CompanyNotificationId = notification.Id;
+            company_customer.FirstName = customer.FirstName;
+            company_customer.LastName = customer.LastName;
+            company_customer.Occupation = customer.Occupation;
+            company_customer.BateofBirth = customer.BateofBirth;
+            company_customer.City = customer.City;
+            company_customer.Contradiction = customer.Contradiction;
+            company_customer.Email = customer.Email;
+            company_customer.Gender = customer.Gender;
+            company_customer.Image = customer.Image;
+            company_customer.PostCode = customer.PostCode;
+            company_customer.RefferedBy = customer.RefferedBy;
+            company_customer.SmsNumber = customer.SmsNumber;
+            company_customer.Telephone = customer.Telephone;
+            company_customer.TimeZone = customer.TimeZone;
+            company_customer.Adress = customer.Adress;
+            db.SaveChanges();
+            return RedirectToAction("CustomerList", "CompanyAdmin");
+
+        }
 
         public ActionResult EditService()
         {

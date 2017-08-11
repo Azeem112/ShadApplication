@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Shad_BookingApplication.Models.AspNetCompanyCustomer>
 @{
     ViewBag.Title = "CustomerList";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
@@ -106,59 +106,61 @@
 
                     <div class="panel panel-visible" id="spy3">
                         <div class="panel-body pn">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
-                                                colspan="1" aria-sort="ascending"
-                                                aria-label="Name: activate to sort column descending" style="width: 12%;">
-                                                <center>Customers id</center>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Position: activate to sort column ascending" style="width: 25%;">
-                                                <center> Customer details</center>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Office: activate to sort column ascending" style="width: 25%;">
-                                                <center> Address</center>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Office: activate to sort column ascending" style="width: 13%;">
-                                                <center> SMS Remain</center>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Age: activate to sort column ascending" style="width: 10%;">
-                                                <center> Status</center>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
-                                                aria-label="Age: activate to sort column ascending" style="width: 15%;">
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="myCustomers">
+                             <div class="table-responsive">
+                                    <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0" aria-controls="datatable2" rowspan="1"
+                                                    colspan="1" aria-sort="ascending"
+                                                    aria-label="Name: activate to sort column descending" style="width: 12%;">
+                                                    <center>Customers id</center>
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending" style="width: 25%;">
+                                                    <center> Customer details</center>
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                    aria-label="Office: activate to sort column ascending" style="width: 25%;">
+                                                    <center> Address</center>
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                    aria-label="Office: activate to sort column ascending" style="width: 13%;">
+                                                    <center> SMS Remain</center>
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                    aria-label="Age: activate to sort column ascending" style="width: 10%;">
+                                                    <center> Status</center>
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable2" rowspan="1" colspan="1"
+                                                    aria-label="Age: activate to sort column ascending" style="width: 15%;">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myCustomers">
+                                            @{
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>001</center></td>
-                                            <td><center>hamza <br> <a>hamza@gmail.com</a><br>+92314566778</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
+                                                int count = 1;
+                                                foreach (var item in Model)
+                                                {
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><center>002</center></td>
-                                            <td><center>hamza <br> <a>hamza@gmail.com</a><br>+92314566778</center></td>
-                                            <td><center>123 rue du faubourg des postes <br>590000 Lille</center></td>
-                                            <td><center>50</center></td>
-                                            <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);">Confirmed</button></center></td>
-                                            <td><center><div class="btn-group"><button type="button" class="btn btn-default">View</button><button type="button" class="btn btn-danger">Delete</button></div></center></td>
-                                        </tr>
+                                                    <tr role="row" class="odd">
+                                                        <td class="sorting_1"><center> @count</center></td>
+                                                        <td><center>@item.FirstName <br> <a>@item.Email</a><br>@item.Telephone</center></td>
+                                                        <td><center>@item.Adress</center></td>
+                                                        <td><center>@item.AspNetAgency.AspNetCustomerSM.RemainingSMS</center></td>
+                                                        <td><center><button type="button" class="btn active btn-dark btn-sm" style="background-color: rgb(97,144,126);padding:5px 5px;">Confirmed</button></center></td>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                                        <td><center><div class="btn-group"><a><button type="button" class="btn btn-sm btn-default" style="padding:5px 5px;">View</button></a><a href="@Url.Action("EditCustomer", "CompanyAdmin", new { id = item.Id })"><button type="button" class="btn btn-sm btn-primary" onclick="" style="padding:5px 5px;">Edit</button></a><a><button type="button" class="btn btn-sm btn-danger" style="padding:5px 5px;">Delete</button></a></div></center></td>
+                                                    </tr>
+                                                    count++;
+                                                }
+
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                                     
                         </div>
 
                     </div>
