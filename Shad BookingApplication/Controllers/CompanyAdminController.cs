@@ -1423,8 +1423,7 @@ namespace Shad_BookingApplication.Controllers
             return RedirectToAction("CustomerList");
         }
 
-            return group_ls;
-        }
+
 
         public ActionResult AddEmployee()
         {
