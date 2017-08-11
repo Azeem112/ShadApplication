@@ -173,7 +173,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DetailId" Type="int" />
           <Property Name="Adress" Type="nvarchar(max)" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
@@ -186,8 +185,8 @@
           <Property Name="AgencyId" Type="int" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Telephone" Type="int" />
-          <Property Name="SmsNumber" Type="nchar" MaxLength="10" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="14" />
+          <Property Name="SmsNumber" Type="nvarchar" MaxLength="14" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Occupation" Type="nvarchar" MaxLength="256" />
           <Property Name="Image" Type="nvarchar(max)" />
@@ -325,6 +324,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Rate" Type="float" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AspNetEmailNotification">
           <Key>
@@ -360,8 +361,6 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
           <Property Name="AgencyId" Type="int" />
           <Property Name="Photo" Type="nvarchar(max)" />
-          <Property Name="ServiceGroupId" Type="int" />
-          <Property Name="EmployeeServiceId" Type="int" />
         </EntityType>
         <EntityType Name="AspNetEmployee_Services">
           <Key>
@@ -407,6 +406,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="20" />
           <Property Name="Tax" Type="float" />
           <Property Name="CustomerID" Type="int" />
+          <Property Name="CompanyCustomerID" Type="int" />
         </EntityType>
         <EntityType Name="AspNetInvoiceOptions">
           <Key>
@@ -619,18 +619,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetBooking_ToCustomer">
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="0..1" />
-          <End Role="AspNetBooking" Type="Self.AspNetBooking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCompanyCustomer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetBooking">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetBookingOptiones_Cancelation">
           <End Role="AspNetBookingCancelation" Type="Self.AspNetBookingCancelation" Multiplicity="0..1" />
           <End Role="AspNetBookingOptiones" Type="Self.AspNetBookingOptiones" Multiplicity="*" />
@@ -763,18 +751,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetCompanyCustomer_CustomerDetail">
-          <End Role="AspNetCustomerDetail" Type="Self.AspNetCustomerDetail" Multiplicity="0..1" />
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCustomerDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetCompanyCustomer">
-              <PropertyRef Name="DetailId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetCompanyCustomer_ToAgency">
           <End Role="AspNetAgency" Type="Self.AspNetAgency" Multiplicity="0..1" />
           <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="*" />
@@ -835,27 +811,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetEmployee_EmployeeService">
-          <End Role="AspNetEmployee_Services" Type="Self.AspNetEmployee_Services" Multiplicity="0..1" />
-          <End Role="AspNetEmployee" Type="Self.AspNetEmployee" Multiplicity="*" />
+        <Association Name="FK_AspNetEmployee_Services_Services">
+          <End Role="AspNetService" Type="Self.AspNetService" Multiplicity="0..1" />
+          <End Role="AspNetEmployee_Services" Type="Self.AspNetEmployee_Services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetEmployee_Services">
+            <Principal Role="AspNetService">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetEmployee">
-              <PropertyRef Name="EmployeeServiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetEmployee_ServiceGroup">
-          <End Role="AspNetServiceGroup" Type="Self.AspNetServiceGroup" Multiplicity="0..1" />
-          <End Role="AspNetEmployee" Type="Self.AspNetEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetServiceGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetEmployee">
-              <PropertyRef Name="ServiceGroupId" />
+            <Dependent Role="AspNetEmployee_Services">
+              <PropertyRef Name="ServiceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1311,6 +1275,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Discount_Customer">
+          <End Role="AspNetCustomers" Type="Self.AspNetCustomers" Multiplicity="0..1" />
+          <End Role="AspNetDiscount" Type="Self.AspNetDiscount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetCustomers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetDiscount">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_User">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="AspNetEmployee" Type="Self.AspNetEmployee" Multiplicity="*" />
@@ -1344,6 +1320,18 @@
             </Principal>
             <Dependent Role="AspNetGiftVoucher">
               <PropertyRef Name="ExpireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_CompanyCustomer">
+          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="0..1" />
+          <End Role="AspNetInvoice" Type="Self.AspNetInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetCompanyCustomer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetInvoice">
+              <PropertyRef Name="CompanyCustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1445,10 +1433,6 @@
             <End Role="AspNetGiftVoucher" EntitySet="AspNetGiftVoucher" />
             <End Role="AspNetBooking" EntitySet="AspNetBooking" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetBooking_ToCustomer" Association="Self.FK_AspNetBooking_ToCustomer">
-            <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
-            <End Role="AspNetBooking" EntitySet="AspNetBooking" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetBookingOptiones_Cancelation" Association="Self.FK_AspNetBookingOptiones_Cancelation">
             <End Role="AspNetBookingCancelation" EntitySet="AspNetBookingCancelation" />
             <End Role="AspNetBookingOptiones" EntitySet="AspNetBookingOptiones" />
@@ -1493,10 +1477,6 @@
             <End Role="AspNetCompanyNotifination" EntitySet="AspNetCompanyNotifination" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetCompanyCustomer_CustomerDetail" Association="Self.FK_AspNetCompanyCustomer_CustomerDetail">
-            <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetail" />
-            <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetCompanyCustomer_ToAgency" Association="Self.FK_AspNetCompanyCustomer_ToAgency">
             <End Role="AspNetAgency" EntitySet="AspNetAgency" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
@@ -1517,13 +1497,9 @@
             <End Role="AspNetAgency" EntitySet="AspNetAgency" />
             <End Role="AspNetEmployee" EntitySet="AspNetEmployee" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetEmployee_EmployeeService" Association="Self.FK_AspNetEmployee_EmployeeService">
+          <AssociationSet Name="FK_AspNetEmployee_Services_Services" Association="Self.FK_AspNetEmployee_Services_Services">
+            <End Role="AspNetService" EntitySet="AspNetService" />
             <End Role="AspNetEmployee_Services" EntitySet="AspNetEmployee_Services" />
-            <End Role="AspNetEmployee" EntitySet="AspNetEmployee" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetEmployee_ServiceGroup" Association="Self.FK_AspNetEmployee_ServiceGroup">
-            <End Role="AspNetServiceGroup" EntitySet="AspNetServiceGroup" />
-            <End Role="AspNetEmployee" EntitySet="AspNetEmployee" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetItem_ToAspNetTax" Association="Self.FK_AspNetItem_ToAspNetTax">
             <End Role="AspNetTax" EntitySet="AspNetTax" />
@@ -1673,6 +1649,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Discount_Customer" Association="Self.FK_Discount_Customer">
+            <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
+            <End Role="AspNetDiscount" EntitySet="AspNetDiscount" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetEmployee" EntitySet="AspNetEmployee" />
@@ -1684,6 +1664,10 @@
           <AssociationSet Name="FK_GiftVoucher_Expire" Association="Self.FK_GiftVoucher_Expire">
             <End Role="AspNetExpire" EntitySet="AspNetExpire" />
             <End Role="AspNetGiftVoucher" EntitySet="AspNetGiftVoucher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_CompanyCustomer" Association="Self.FK_Invoice_CompanyCustomer">
+            <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomer" />
+            <End Role="AspNetInvoice" EntitySet="AspNetInvoice" />
           </AssociationSet>
           <AssociationSet Name="FK_Invoice_Customer" Association="Self.FK_Invoice_Customer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
@@ -1765,7 +1749,6 @@
           <Property Name="BookingItemId" Type="Int32" />
           <NavigationProperty Name="AspNetBookingItem" Relationship="Self.FK_AspNetBooking_BookingItem" FromRole="AspNetBooking" ToRole="AspNetBookingItem" />
           <NavigationProperty Name="AspNetGiftVoucher" Relationship="Self.FK_AspNetBooking_GiftVoucher" FromRole="AspNetBooking" ToRole="AspNetGiftVoucher" />
-          <NavigationProperty Name="AspNetCompanyCustomer" Relationship="Self.FK_AspNetBooking_ToCustomer" FromRole="AspNetBooking" ToRole="AspNetCompanyCustomer" />
           <NavigationProperty Name="AspNetBookingServices" Relationship="Self.FK_AspNetBookingServices_Bookingh" FromRole="AspNetBooking" ToRole="AspNetBookingServices" />
         </EntityType>
         <EntityType Name="AspNetBookingCancelation">
@@ -1907,7 +1890,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DetailId" Type="Int32" />
           <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1920,15 +1902,14 @@
           <Property Name="AgencyId" Type="Int32" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telephone" Type="Int32" />
-          <Property Name="SmsNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="SmsNumber" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Occupation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetAgency" Relationship="Self.FK_AspNetCompanyCustomer_ToAgency" FromRole="AspNetCompanyCustomer" ToRole="AspNetAgency" />
-          <NavigationProperty Name="AspNetBookings" Relationship="Self.FK_AspNetBooking_ToCustomer" FromRole="AspNetCompanyCustomer" ToRole="AspNetBooking" />
           <NavigationProperty Name="AspNetCompanyNotifination" Relationship="Self.FK_AspNetCompanyCustomer_CompanyNotification" FromRole="AspNetCompanyCustomer" ToRole="AspNetCompanyNotifination" />
-          <NavigationProperty Name="AspNetCustomerDetail" Relationship="Self.FK_AspNetCompanyCustomer_CustomerDetail" FromRole="AspNetCompanyCustomer" ToRole="AspNetCustomerDetail" />
+          <NavigationProperty Name="AspNetInvoices" Relationship="Self.FK_Invoice_CompanyCustomer" FromRole="AspNetCompanyCustomer" ToRole="AspNetInvoice" />
         </EntityType>
         <EntityType Name="AspNetCompanyNotifination">
           <Key>
@@ -1991,7 +1972,6 @@
           <Property Name="SubCatageoryNo" Type="Int32" />
           <NavigationProperty Name="AspNetAgencies" Relationship="Self.FK_Customers_CustomerDetailAgency" FromRole="AspNetCustomerDetail" ToRole="AspNetAgency" />
           <NavigationProperty Name="AspNetBusinessCatageory" Relationship="Self.FK_CustomerDetail_BusinessCatageory" FromRole="AspNetCustomerDetail" ToRole="AspNetBusinessCatageory" />
-          <NavigationProperty Name="AspNetCompanyCustomers" Relationship="Self.FK_AspNetCompanyCustomer_CustomerDetail" FromRole="AspNetCustomerDetail" ToRole="AspNetCompanyCustomer" />
           <NavigationProperty Name="AspNetCustomers" Relationship="Self.FK_Customers_CustomerDetail" FromRole="AspNetCustomerDetail" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetCustomerGallery">
@@ -2067,6 +2047,7 @@
           <NavigationProperty Name="AspNetCustomerType" Relationship="Self.FK_Customers_CustomerType" FromRole="AspNetCustomers" ToRole="AspNetCustomerType" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Customers_User" FromRole="AspNetCustomers" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetWorkingWeekTime" Relationship="Self.FK_Customers_Work" FromRole="AspNetCustomers" ToRole="AspNetWorkingWeekTime" />
+          <NavigationProperty Name="AspNetDiscounts" Relationship="Self.FK_Discount_Customer" FromRole="AspNetCustomers" ToRole="AspNetDiscount" />
           <NavigationProperty Name="AspNetInvoices" Relationship="Self.FK_Invoice_Customer" FromRole="AspNetCustomers" ToRole="AspNetInvoice" />
         </EntityType>
         <EntityType Name="AspNetCustomerSM">
@@ -2100,6 +2081,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Rate" Type="Double" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetCustomer" Relationship="Self.FK_Discount_Customer" FromRole="AspNetDiscount" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetEmailNotification">
           <Key>
@@ -2138,11 +2122,7 @@
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="AgencyId" Type="Int32" />
           <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceGroupId" Type="Int32" />
-          <Property Name="EmployeeServiceId" Type="Int32" />
           <NavigationProperty Name="AspNetAgency" Relationship="Self.FK_AspNetEmployee_Agency" FromRole="AspNetEmployee" ToRole="AspNetAgency" />
-          <NavigationProperty Name="AspNetEmployee_Services" Relationship="Self.FK_AspNetEmployee_EmployeeService" FromRole="AspNetEmployee" ToRole="AspNetEmployee_Services" />
-          <NavigationProperty Name="AspNetServiceGroup" Relationship="Self.FK_AspNetEmployee_ServiceGroup" FromRole="AspNetEmployee" ToRole="AspNetServiceGroup" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Employee_User" FromRole="AspNetEmployee" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetWorkingWeekTime" Relationship="Self.FK_Employee_Working" FromRole="AspNetEmployee" ToRole="AspNetWorkingWeekTime" />
         </EntityType>
@@ -2153,7 +2133,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" />
           <Property Name="ServiceId" Type="Int32" />
-          <NavigationProperty Name="AspNetEmployees" Relationship="Self.FK_AspNetEmployee_EmployeeService" FromRole="AspNetEmployee_Services" ToRole="AspNetEmployee" />
+          <NavigationProperty Name="AspNetService" Relationship="Self.FK_AspNetEmployee_Services_Services" FromRole="AspNetEmployee_Services" ToRole="AspNetService" />
         </EntityType>
         <EntityType Name="AspNetExpire">
           <Key>
@@ -2194,6 +2174,8 @@
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Tax" Type="Double" />
           <Property Name="CustomerID" Type="Int32" />
+          <Property Name="CompanyCustomerID" Type="Int32" />
+          <NavigationProperty Name="AspNetCompanyCustomer" Relationship="Self.FK_Invoice_CompanyCustomer" FromRole="AspNetInvoice" ToRole="AspNetCompanyCustomer" />
           <NavigationProperty Name="AspNetCustomer" Relationship="Self.FK_Invoice_Customer" FromRole="AspNetInvoice" ToRole="AspNetCustomers" />
         </EntityType>
         <EntityType Name="AspNetInvoiceOption">
@@ -2268,6 +2250,7 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsBookOnline" Type="Boolean" />
           <NavigationProperty Name="AspNetBookingServices" Relationship="Self.FK_AspNetBookingServices_Services" FromRole="AspNetService" ToRole="AspNetBookingServices" />
+          <NavigationProperty Name="AspNetEmployee_Services" Relationship="Self.FK_AspNetEmployee_Services_Services" FromRole="AspNetService" ToRole="AspNetEmployee_Services" />
           <NavigationProperty Name="AspNetTax" Relationship="Self.FK_AspNetService_ToTax" FromRole="AspNetService" ToRole="AspNetTax" />
           <NavigationProperty Name="AspNetService_Group" Relationship="Self.FK_Service_Group_Service" FromRole="AspNetService" ToRole="AspNetService_Group" />
         </EntityType>
@@ -2289,7 +2272,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetEmployees" Relationship="Self.FK_AspNetEmployee_ServiceGroup" FromRole="AspNetServiceGroup" ToRole="AspNetEmployee" />
           <NavigationProperty Name="AspNetService_Group" Relationship="Self.FK_Service_Group_ServiceGroup" FromRole="AspNetServiceGroup" ToRole="AspNetService_Group" />
         </EntityType>
         <EntityType Name="AspNetSocial">
@@ -2583,18 +2565,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetBooking_ToCustomer">
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="0..1" />
-          <End Role="AspNetBooking" Type="Self.AspNetBooking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetCompanyCustomer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetBooking">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetBookingServices_Bookingh">
           <End Role="AspNetBooking" Type="Self.AspNetBooking" Multiplicity="0..1" />
           <End Role="AspNetBookingServices" Type="Self.AspNetBookingService" Multiplicity="*" />
@@ -2763,15 +2733,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetCompanyCustomer_CustomerDetail">
-          <End Role="AspNetCustomerDetail" Type="Self.AspNetCustomerDetail" Multiplicity="0..1" />
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="*" />
+        <Association Name="FK_Invoice_CompanyCustomer">
+          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="0..1" />
+          <End Role="AspNetInvoice" Type="Self.AspNetInvoice" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetCustomerDetail">
+            <Principal Role="AspNetCompanyCustomer">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetCompanyCustomer">
-              <PropertyRef Name="DetailId" />
+            <Dependent Role="AspNetInvoice">
+              <PropertyRef Name="CompanyCustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2919,6 +2889,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Discount_Customer">
+          <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="0..1" />
+          <End Role="AspNetDiscount" Type="Self.AspNetDiscount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetCustomers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetDiscount">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Invoice_Customer">
           <End Role="AspNetCustomers" Type="Self.AspNetCustomer" Multiplicity="0..1" />
           <End Role="AspNetInvoice" Type="Self.AspNetInvoice" Multiplicity="*" />
@@ -2955,30 +2937,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetEmployee_EmployeeService">
-          <End Role="AspNetEmployee_Services" Type="Self.AspNetEmployee_Services" Multiplicity="0..1" />
-          <End Role="AspNetEmployee" Type="Self.AspNetEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetEmployee_Services">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetEmployee">
-              <PropertyRef Name="EmployeeServiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetEmployee_ServiceGroup">
-          <End Role="AspNetServiceGroup" Type="Self.AspNetServiceGroup" Multiplicity="0..1" />
-          <End Role="AspNetEmployee" Type="Self.AspNetEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetServiceGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetEmployee">
-              <PropertyRef Name="ServiceGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Employee_User">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
           <End Role="AspNetEmployee" Type="Self.AspNetEmployee" Multiplicity="*" />
@@ -3000,6 +2958,18 @@
             </Principal>
             <Dependent Role="AspNetEmployee">
               <PropertyRef Name="WorkingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetEmployee_Services_Services">
+          <End Role="AspNetService" Type="Self.AspNetService" Multiplicity="0..1" />
+          <End Role="AspNetEmployee_Services" Type="Self.AspNetEmployee_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetService">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetEmployee_Services">
+              <PropertyRef Name="ServiceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3288,10 +3258,6 @@
             <End Role="AspNetGiftVoucher" EntitySet="AspNetGiftVouchers" />
             <End Role="AspNetBooking" EntitySet="AspNetBookings" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetBooking_ToCustomer" Association="Self.FK_AspNetBooking_ToCustomer">
-            <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
-            <End Role="AspNetBooking" EntitySet="AspNetBookings" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetBookingServices_Bookingh" Association="Self.FK_AspNetBookingServices_Bookingh">
             <End Role="AspNetBooking" EntitySet="AspNetBookings" />
             <End Role="AspNetBookingServices" EntitySet="AspNetBookingServices" />
@@ -3348,9 +3314,9 @@
             <End Role="AspNetCompanyNotifination" EntitySet="AspNetCompanyNotifinations" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetCompanyCustomer_CustomerDetail" Association="Self.FK_AspNetCompanyCustomer_CustomerDetail">
-            <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetails" />
+          <AssociationSet Name="FK_Invoice_CompanyCustomer" Association="Self.FK_Invoice_CompanyCustomer">
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
+            <End Role="AspNetInvoice" EntitySet="AspNetInvoices" />
           </AssociationSet>
           <AssociationSet Name="FK_Customer_SubCatageory_Customer" Association="Self.FK_Customer_SubCatageory_Customer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
@@ -3400,6 +3366,10 @@
             <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Discount_Customer" Association="Self.FK_Discount_Customer">
+            <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
+            <End Role="AspNetDiscount" EntitySet="AspNetDiscounts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Invoice_Customer" Association="Self.FK_Invoice_Customer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />
             <End Role="AspNetInvoice" EntitySet="AspNetInvoices" />
@@ -3412,14 +3382,6 @@
             <End Role="AspNetEmailNotificationType" EntitySet="AspNetEmailNotificationTypes" />
             <End Role="AspNetEmailNotification" EntitySet="AspNetEmailNotifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetEmployee_EmployeeService" Association="Self.FK_AspNetEmployee_EmployeeService">
-            <End Role="AspNetEmployee_Services" EntitySet="AspNetEmployee_Services" />
-            <End Role="AspNetEmployee" EntitySet="AspNetEmployees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetEmployee_ServiceGroup" Association="Self.FK_AspNetEmployee_ServiceGroup">
-            <End Role="AspNetServiceGroup" EntitySet="AspNetServiceGroups" />
-            <End Role="AspNetEmployee" EntitySet="AspNetEmployees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetEmployee" EntitySet="AspNetEmployees" />
@@ -3427,6 +3389,10 @@
           <AssociationSet Name="FK_Employee_Working" Association="Self.FK_Employee_Working">
             <End Role="AspNetWorkingWeekTime" EntitySet="AspNetWorkingWeekTimes" />
             <End Role="AspNetEmployee" EntitySet="AspNetEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetEmployee_Services_Services" Association="Self.FK_AspNetEmployee_Services_Services">
+            <End Role="AspNetService" EntitySet="AspNetServices" />
+            <End Role="AspNetEmployee_Services" EntitySet="AspNetEmployee_Services" />
           </AssociationSet>
           <AssociationSet Name="FK_GiftVoucher_Expire" Association="Self.FK_GiftVoucher_Expire">
             <End Role="AspNetExpire" EntitySet="AspNetExpires" />
@@ -3675,7 +3641,6 @@
             <EntityTypeMapping TypeName="BookingModelModels.AspNetCompanyCustomer">
               <MappingFragment StoreEntitySet="AspNetCompanyCustomer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="PostCode" ColumnName="PostCode" />
@@ -3839,6 +3804,8 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3877,8 +3844,6 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="ServiceGroupId" ColumnName="ServiceGroupId" />
-                <ScalarProperty Name="EmployeeServiceId" ColumnName="EmployeeServiceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3928,6 +3893,7 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Tax" ColumnName="Tax" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CompanyCustomerID" ColumnName="CompanyCustomerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

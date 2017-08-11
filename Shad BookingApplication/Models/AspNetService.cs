@@ -18,6 +18,7 @@ namespace Shad_BookingApplication.Models
         public AspNetService()
         {
             this.AspNetBookingServices = new HashSet<AspNetBookingService>();
+            this.AspNetEmployee_Services = new HashSet<AspNetEmployee_Services>();
             this.AspNetService_Group = new HashSet<AspNetService_Group>();
         }
     
@@ -38,6 +39,8 @@ namespace Shad_BookingApplication.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetBookingService> AspNetBookingServices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetEmployee_Services> AspNetEmployee_Services { get; set; }
         public virtual AspNetTax AspNetTax { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetService_Group> AspNetService_Group { get; set; }
