@@ -1712,18 +1712,18 @@
 		intervension = intervension.trim();
 		
 		if (intervension == "Home") {
-		    document.getElementById('interventionZone').style.display = "block";
+			document.getElementById('interventionZone').style.display = "block";
 			document.getElementById("Home_id").checked = true;
 		}
 		else if (intervension == "Both") {
-		    document.getElementById('interventionZone').style.display = "block";
+			document.getElementById('interventionZone').style.display = "block";
 			
 			document.getElementById("both_id").checked = true;
 		}
 		else if (intervension == "On_site") {
-		    document.getElementById('interventionZone').style.display = "none";
-		    var kk=document.getElementById("onsite_id").checked=true ;
-		    
+			document.getElementById('interventionZone').style.display = "none";
+			var kk=document.getElementById("onsite_id").checked=true ;
+			
 			
 		}
 	});
@@ -1939,15 +1939,13 @@ function checkboxDetect(num)
  $("#drop").change(function () {
 var ddl = document.getElementById("drop");
   var selectedValue = ddl.options[ddl.selectedIndex].value;
-  if (selectedValue == "1")
-  {
-	var label1 = document.getElementById("agencyyy");
-	label1.style.display = 'none';
+  if (selectedValue == "Single Site Company") {
+	  var label1 = document.getElementById("agencyyy");
+	  label1.style.display = 'none';
   }
-  if (selectedValue == "2")
-  {
-	var label3 = document.getElementById("agencyyy");
-	label3.style.display = 'block';
+  if (selectedValue == "Multi Site Company") {
+	  var label3 = document.getElementById("agencyyy");
+	  label3.style.display = 'block';
   }
 });
 
@@ -2107,7 +2105,17 @@ function func22() {
 		google.maps.event.trigger(map, 'resize');
 
 	  }
-	   $(window).load(function () {
+	  $(window).load(function () {
+		  var ddl = document.getElementById("drop");
+		  var selectedValue = ddl.options[ddl.selectedIndex].value;
+		  if (selectedValue == "Single Site Company") {
+			  var label1 = document.getElementById("agencyyy");
+			  label1.style.display = 'none';
+		  }
+		  if (selectedValue == "Multi Site Company") {
+			  var label3 = document.getElementById("agencyyy");
+			  label3.style.display = 'block';
+		  }
 			BindResizeEvent();
 			initMap();
 		});
@@ -2116,6 +2124,8 @@ function func22() {
 				google.maps.event.trigger(map, 'resize');
 			});
 		}
+
+		
 </script>
 <script>
 jQuery(window).load(function () {

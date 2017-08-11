@@ -1,0 +1,659 @@
+﻿@model Shad_BookingApplication.Models.AspNetGiftVoucher
+@{
+    ViewBag.Title = "EditVoucher";
+    Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+}<!-- Start: Content-Wrapper -->
+<section id="content_wrapper">
+    <!-- Start: Topbar-Dropdown -->
+    <!-- End: Topbar-Dropdown -->
+    <!-- Start: Topbar -->
+    <header id="topbar">
+        <div class="alert alert-info" style="margin-bottom: 0">
+            <h4 style="margin-bottom: 0px; padding-bottom: 1px">
+                <span class="glyphicon glyphicon-plus" style="font-size: 16px; top: 3px"></span>
+                <strong id="headinggg">Add Voucher</strong>
+            </h4>
+            <p>Please fill out the form below to add voucher code and discount. You can add a voucher for soecific date, day of the week or date range.</p>
+        </div>
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+                <li class="crumb-active">
+                    <h3>Add Gift Vouchers</h3>
+                </li>
+            </ol>
+        </div>
+        <div class="topbar-right">
+        </div>
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div class="panel">
+        <div class="panel" id="spy3">
+
+            <div class="panel-body">
+@using (Html.BeginForm("UpdateVoucher", "CompanyAdmin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+                <div id="notifications" class="tab-pane">
+                    <div class="row">
+                        <div class="row">
+                            <div class="form-group col-md-3 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-12 col-xs-10 text-left" style="font-size: 18px">Gift Voucher settings</label>
+                                <label class="col-md-12 col-xs-10" style="margin-top: 2%">
+                                    The setting for this gift voucher
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-12 col-xs-10 text-left">Discount</label>
+                                <label class="col-md-12 col-xs-10">
+                                    @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @type = "number", @min = "0", @step = "0.5", @value = "0", @class = "form-control", @style = "padding: 0; padding-left: 5px", @id = "discount" } })
+                                    @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="form-group col-md-4 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-12 col-xs-10 text-left">Type</label>
+                                <label class="col-md-12 col-xs-10">
+                                    <select class="form-control" name="Type">
+                                        <option>-Choose-</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3 col-xs-10 col-md-offset-3 required">
+                                <label class="col-md-12 col-xs-10 text-left control-label">Gift Voucher Name</label>
+                                <label class="col-md-12 col-xs-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @type = "text", @class = "form-control", @style = "padding: 0; padding-left: 5px", @id = "Name" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="form-group col-md-4 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-12 col-xs-10 text-left">SKU/Handle</label>
+                                <label class="col-md-12 col-xs-10">
+                                    @Html.EditorFor(model => model.Sku, new { htmlAttributes = new { @type = "text", @class = "form-control", @style = "padding: 0; padding-left: 5px", @id = "Sku" } })
+                                    @Html.ValidationMessageFor(model => model.Sku, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-7 col-xs-10 col-md-offset-3">
+                                <label class="col-md-12 col-xs-10 text-left">Description</label>
+                                <label class="col-md-12 col-xs-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @type = "text", @class = "form-control", @style = "padding: 0; padding-left: 5px", @id = "description_text" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-12 col-xs-10 text-left" style="font-size: 18px">Gift Voucher Terms</label>
+                                <label class="col-md-12 col-xs-10" style="margin-top: 2%">
+                                    Set Rules for your Gift Voucher
+                                </label>
+                            </div>
+                            <div class="form-group col-md-7 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-5 text-right"></label>
+                                <div class="">
+                                    <input type="checkbox" checked="@((bool)Model.RedmeeOnline)" id="checkboxDefault3" name="RedmeeOnline" />
+                                    <label for="checkboxDefault3">Allow gift voucher to be redeemed online</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-7 col-xs-10 " style="margin-left:0%">
+                                <label class="col-md-5 text-right"></label>
+                                <div class="">
+                                    <input type="checkbox" checked="@((bool)Model.Voided)" id="checkboxDefault4" name="Voided" value="@Model.Voided">
+                                    <label for="checkboxDefault4">Allow gift voucher to be voided</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-7 col-xs-10">
+                                <label class="col-md-4 text-right"><h5>Allow gift Voucher to expire:</h5></label>
+                                <div class="col-xs-8">
+                                    <br>
+                                    <div class="">
+                                        <input type="radio" id="fix" name="ExpireId" value="Fixed" checked="@((bool)ViewBag.fix)">
+                                        <label for="fix">Fixed</label>
+
+
+
+
+</div>
+
+
+
+
+
+<div class="">
+                                        <input type="radio" id="per" name="ExpireId" value="Period" checked="@((bool)ViewBag.per)">
+                                        <label for="per">Period</label>
+                                    </div>
+                                    <div class="">
+                                        <input type="radio" id="rec" name="ExpireId" value="Recuring" checked="@((bool)ViewBag.recu)">
+                                        <label for="rec">Recuring</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="fixed" hidden="hidden">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker">Date </label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker2">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Fixed_Date"class="form-control" name="Fixed_Date"/>
+                                        <input type="text" class="" id="Fixed_Datehidden"name="Fixed_Datehidden" value="@Model.AspNetExpire.Date" hidden/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker6">From</label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker6">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Fixed_From" class="form-control" name="Fixed_From"/>
+                                        <input type="text" class="" id="Fixed_Fromhidden" name="Fixed_Fromhidden" value="@Model.AspNetExpire.From" hidden/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker6">To</label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker4">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Fixed_To" class="form-control" name="Fixed_To">
+                                        <input type="text"  id="Fixed_Tohidden" name="Fixed_Tohidden" value="@Model.AspNetExpire.To" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="period" hidden="hidden">
+
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker5"> From Date/Time</label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker5">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Period_From" class="form-control" name="Period_From"/>
+                                        <input type="text" id="Period_Fromhidden" name="Period_Fromhidden" value="@Model.AspNetExpire.From" hidden/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker5">To Date/time</label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker7">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Period_To" class="form-control" name="Period_To"/>
+                                        <input type="text"  id="Period_Tohidden" name="Period_Tohidden" value="@Model.AspNetExpire.To" hidden/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="recure" hidden="hidden">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker2">Every </label>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="Recuring_Every" name="Recuring_Every">
+                                        <option></option>
+                                        <option> Monday</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                    </select> 
+                                    <input type="text" name="Recuring_Everyhidden" id="Recuring_Everyhidden" value="@Model.AspNetExpire.Every" hidden />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker6">From</label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker6">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Recuring_From" class="form-control" name="Recuring_From"/>
+                                        <input type="text"  id="Recuring_Fromhidden" name="Recuring_Fromhidden" value="@Model.AspNetExpire.From" hidden />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="datetimepicker6" >To</label>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="datetimepicker6">
+                                        <span class="input-group-addon cursor">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text" id="Recuring_To" class="form-control" name="Recuring_To">
+                                        <input type="text"  id="Recuring_Tohidden" name="Recuring_Tohidden" value="@Model.AspNetExpire.To" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" id="expire_id" value="@Model.ExpireId" hidden/>
+                        <input type="text" id="voucher_id" value="@Model.Id" hidden />
+                        
+                        <button type="submit" class="btn btn-primary pull-right col-md-1" style="margin-right:90px;border-radius:3px;">Save</button>
+                        <button type="submit" class="btn btn-default pull-right col-md-1" style="margin-right:40px;border-radius:3px;">Cancel</button>
+                    </div>
+                </div>
+}
+
+            </div>
+        </div>
+
+        <br>
+    </div>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+    <footer id="content-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="footer-legal">© 2017 PlateformeRDV</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <span class="footer-meta"></span>
+                <a href="#content" class="footer-return-top">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Page Footer -->
+</section>
+<!-- End: Content-Wrapper -->
+<!-- BEGIN: PAGE SCRIPTS -->
+<style>
+    /* demo styles -summernote */
+    .btn-toolbar > .btn-group.note-fontname {
+        display: none;
+    }
+
+    /* demo styles - hides several ckeditor toolbar buttons */
+    #cke_52,
+    #cke_53 {
+        display: none !important;
+    }
+</style>
+     <!-- jQuery -->
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")"></script>
+
+
+<script>
+    $(window).load(function () {
+       
+        
+        if ($("#fix").is(':checked'))
+        {
+            var val1 = $("#Fixed_Datehidden").val();
+            var val2 = $("#Fixed_Fromhidden").val();
+            var val3 = $("#Fixed_Tohidden").val();
+            $("#Fixed_Date").val(val1);
+            $("#Fixed_From").val(val2);
+            $("#Fixed_To").val(val3);
+
+            $("#fixed").show();
+        
+        }
+        if($("#per").is(':checked'))
+        {
+            var val1 = $("#Period_Fromhidden").val();
+            var val2 = $("Period_Tohidden").val();
+            $("#Period_From").val(val2);
+            $("#Period_To").val(val3);
+
+            $("#period").show();
+
+        }
+        if($("#rec").is(':checked'))
+        {
+            var val1 = $("#Recuring_Everyhidden").val();
+            var val2 = $("#Recuring_Fromhidden").val();
+            var val3 = $("#Recuring_Tohidden").val();
+            $("#Recuring_Every").val(val1);
+            $("#Recuring_From").val(val2);
+            $("#Recuring_To").val(val3);
+            $("#recure").show();
+        }
+        
+    });
+    $(document).ready(function () {
+    $("#fix").click(function(){
+        $("#period").hide();
+    });
+       $("#fix").click(function(){
+        $("#recure").hide();
+    });
+
+    $("#fix").click(function(){
+        $("#fixed").show();
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+    $("#per").click(function(){
+        $("#fixed").hide();
+    });
+       $("#per").click(function(){
+        $("#recure").hide();
+    });
+
+    $("#per").click(function(){
+        $("#period").show();
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+    $("#rec").click(function(){
+        $("#period").hide();
+    });
+       $("#rec").click(function(){
+        $("#fixed").hide();
+    });
+
+    $("#rec").click(function(){
+        $("#recure").show();
+    });
+});
+</script>
+
+<script>
+    function jsFunction(a) {
+        if (a == 12) {
+            var x = document.getElementsByClassName("form-control wh-time");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                x[i].placeholder = "11:59 AM";
+            }
+        }
+        if (a == 24) {
+            var x = document.getElementsByClassName("form-control wh-time");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                x[i].placeholder = "23:59";
+            }
+        }
+    }
+
+        jQuery(document).ready(function () {
+
+        "use strict";
+
+        // Init Theme Core
+        Core.init();
+
+        // Init Demo JS
+        Demo.init();
+
+
+        // CKEditor
+        CKEDITOR.replace( 'editor1' );
+
+        // Init Select2 - Basic Single
+        $(".select2-single").select2();
+
+        // Init Select2 - Basic Multiple
+        $(".select2-multiple").select2({
+            placeholder: "Select a state",
+            allowClear: true
+        });
+
+        // Init Select2 - Contextuals (via html classes)
+        $(".select2-primary").select2(); // select2 contextual - primary
+        $(".select2-success").select2(); // select2 contextual - success
+        $(".select2-info").select2();    // select2 contextual - info
+        $(".select2-warning").select2(); // select2 contextual - warning
+
+        // Init Bootstrap Maxlength Plugin
+        $('input[maxlength]').maxlength({
+            threshold: 15,
+            placement: "right"
+        });
+
+        // Dual List Plugin Init
+        var demo1 = $('.demo1').bootstrapDualListbox({
+            nonSelectedListLabel: 'Options',
+            selectedListLabel: 'Selected',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: true,
+            nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+        });
+
+        $("#demoform").submit(function () {
+            alert("Options Selected: " + $('.demo1').val());
+            return false;
+        });
+
+        // Init Twitter Typeahead.js
+        var substringMatcher = function (strs) {
+            return function findMatches(q, cb) {
+                var matches, substrRegex;
+
+                // an array that will be populated with substring matches
+                matches = [];
+
+                // regex used to determine if a string contains the substring `q`
+                substrRegex = new RegExp(q, 'i');
+
+                // iterate through the pool of strings and for any string that
+                // contains the substring `q`, add it to the `matches` array
+                $.each(strs, function (i, str) {
+                    if (substrRegex.test(str)) {
+                        // the typeahead jQuery plugin expects suggestions to a
+                        // JavaScript object, refer to typeahead docs for more info
+                        matches.push({
+                            value: str
+                        });
+                    }
+                });
+
+                cb(matches);
+            };
+        };
+
+        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+            'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+            'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+            'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+            'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+            'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+            'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+            'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+            'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+        ];
+
+        // Init Typeahead Plugin with state aray
+        $('.typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        }, {
+            name: 'states',
+            displayKey: 'value',
+            source: substringMatcher(states)
+        });
+
+        // DateRange plugin options
+        var rangeOptions = {
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                'Last 7 Days': [moment().subtract('days', 6), moment()],
+                'Last 30 Days': [moment().subtract('days', 29), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+            },
+            startDate: moment().subtract('days', 29),
+            endDate: moment()
+        }
+
+        // Init DateRange plugin
+        $('#daterangepicker1').daterangepicker();
+
+        // Init DateRange plugin
+        $('#daterangepicker2').daterangepicker(
+            rangeOptions,
+            function (start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+        );
+
+        // Init DateRange plugin
+        $('#inline-daterange').daterangepicker(
+            rangeOptions,
+            function (start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+        );
+
+        // Init DateTimepicker - fields
+        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker2').datetimepicker();
+
+        // Init DateTimepicker - inline + range detection
+        $('#datetimepicker3').datetimepicker({
+            defaultDate: "9/4/2014",
+            inline: true,
+        });
+
+        // Init DateTimepicker - fields + Date disabled (only time picker)
+        $('#datetimepicker5').datetimepicker({
+            defaultDate: "9/25/2014",
+            pickDate: false,
+        });
+        // Init DateTimepicker - fields + Date disabled (only time picker)
+        $('#datetimepicker6').datetimepicker({
+            defaultDate: "9/25/2014",
+            pickDate: false,
+        });
+        // Init DateTimepicker - inline + Date disabled (only time picker)
+        $('#datetimepicker7').datetimepicker({
+            defaultDate: "9/25/2014",
+            pickDate: false,
+            inline: true
+        });
+
+        // Init Colorpicker plugin
+        $('#demo_apidemo').colorpicker({
+            color: bgPrimary
+        });
+        $('.demo-auto').colorpicker();
+
+        // Init jQuery Tags Manager
+        $(".tm-input").tagsManager({
+            tagsContainer: '.tags',
+            prefilled: ["Miley Cyrus", "Apple", "A Long Tag", "Na uh"],
+            tagClass: 'tm-tag-info',
+        });
+
+        // Init Boostrap Multiselects
+        $('#multiselect1').multiselect();
+        $('#multiselect2').multiselect({
+            includeSelectAllOption: true
+        });
+        $('#multiselect3').multiselect();
+        $('#multiselect4').multiselect({
+            enableFiltering: true,
+        });
+        $('#multiselect5').multiselect({
+            buttonClass: 'multiselect dropdown-toggle btn btn-default btn-primary'
+        });
+        $('#multiselect6').multiselect({
+            buttonClass: 'multiselect dropdown-toggle btn btn-default btn-info'
+        });
+        $('#multiselect7').multiselect({
+            buttonClass: 'multiselect dropdown-toggle btn btn-default btn-success'
+        });
+        $('#multiselect8').multiselect({
+            buttonClass: 'multiselect dropdown-toggle btn btn-default btn-warning'
+        });
+
+        // Init jQuery spinner init - default
+        $("#spinner1").spinner();
+
+        // Init jQuery spinner init - currency
+        $("#spinner2").spinner({
+            min: 5,
+            max: 2500,
+            step: 25,
+            start: 1000,
+            //numberFormat: "C"
+        });
+
+        // Init jQuery spinner init - decimal
+        $("#spinner3").spinner({
+            step: 0.01,
+            numberFormat: "n"
+        });
+
+        // jQuery Time Spinner settings
+        $.widget("ui.timespinner", $.ui.spinner, {
+            options: {
+                // seconds
+                step: 60 * 1000,
+                // hours
+                page: 60
+            },
+            _parse: function (value) {
+                if (typeof value === "string") {
+                    // already a timestamp
+                    if (Number(value) == value) {
+                        return Number(value);
+                    }
+                    return +Globalize.parseDate(value);
+                }
+                return value;
+            },
+
+            _format: function (value) {
+                return Globalize.format(new Date(value), "t");
+            }
+        });
+
+        // Init jQuery Time Spinner
+        $("#spinner4").timespinner();
+
+        // Init jQuery Masked inputs
+        $('.date').mask('99/99/9999');
+        $('.time').mask('99:99:99');
+        $('.date_time').mask('99/99/9999 99:99:99');
+        $('.zip').mask('99999-999');
+        $('.phone').mask('(999) 999-9999');
+        $('.phoneext').mask("(999) 999-9999 x99999");
+        $(".money").mask("999,999,999.999");
+        $(".product").mask("999.999.999.999");
+        $(".tin").mask("99-9999999");
+        $(".ssn").mask("999-99-9999");
+        $(".ip").mask("9ZZ.9ZZ.9ZZ.9ZZ");
+        $(".eyescript").mask("~9.99 ~9.99 999");
+        $(".custom").mask("9.99.999.9999");
+
+});
+</script>
+
+<!-- END: PAGE SCRIPTS -->
+<!-- DateRange Plugin -->
+<script src="@Url.Content("~/vendor/plugins/daterange/daterangepicker.js")"></script>
+
+<!-- DateTime Plugin -->
+<script src="@Url.Content("~/vendor/plugins/datepicker/js/bootstrap-datetimepicker.js")"></script>

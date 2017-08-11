@@ -790,7 +790,6 @@
     <Content Include="Views\CompanyAdmin\Create_Invoice2.cshtml" />
     <Content Include="Views\CompanyAdmin\CustomerDetails.cshtml" />
     <Content Include="Views\CompanyAdmin\CustomerList.cshtml" />
-    <Content Include="Views\CompanyAdmin\EditCustomer.cshtml" />
     <Content Include="Views\CompanyAdmin\EditService.cshtml" />
     <Content Include="Views\CompanyAdmin\EditServiceGroup.cshtml" />
     <Content Include="Views\CompanyAdmin\EmployeeList.cshtml" />
@@ -814,6 +813,8 @@
     <Content Include="Views\SuperAdmin\EditUser.cshtml" />
     <Content Include="Views\SuperAdmin\EditItem.cshtml" />
     <Content Include="Views\CompanyAdmin\EditAgency.cshtml" />
+    <Content Include="Views\CompanyAdmin\EditVoucher.cshtml" />
+    <Content Include="Views\CompanyAdmin\EditCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
