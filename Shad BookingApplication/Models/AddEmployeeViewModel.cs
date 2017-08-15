@@ -12,7 +12,14 @@ namespace Shad_BookingApplication.Models
         public List<AspNetAgency> agency_list { get; set; }
 
         public List<group_struct> GroupServicesList { get; set; }
+        public List<agency_struct> agency_location_list { get; set; }
 
+
+    }
+    public class agency_struct
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 
     public class group_struct

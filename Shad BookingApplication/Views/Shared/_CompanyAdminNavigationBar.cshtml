@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.AspNet.Identity;
+@using Shad_BookingApplication.Models;
 @{
     ViewBag.Title = "_CompanyAdminNavigationBar";
     Layout = "~/Views/Shared/_MainHeader.cshtml";
@@ -54,26 +55,46 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="" class="accordion-toggle">
-                    <span class="glyphicon glyphicon-book"></span>
-                    <span class="sidebar-title">Agency</span>
-                    <span class="caret"></span>
-                </a>
-                <ul class="nav sub-nav" style="">
-                    <li>
-                        <a href="@Url.Action("AgencyList","CompanyAdmin")">
-                            <span class="fa fa-cube"></span>Agency List
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("AddAgency","CompanyAdmin")">
-                            <span class="fa fa-cube"></span>Add Agency
-                        </a>
-                    </li>
+            @{
+                var id = User.Identity.GetUserId();
+                BookingModelEntities db = new BookingModelEntities();
+                var h_id = db.AspNetUsers.Where(x => x.Id == id).Select(y => y.HeadId).SingleOrDefault();
+                var cus_data = new AspNetCustomer();
+                if (h_id == null)
+                {
+                    cus_data = db.AspNetCustomers.Where(x => x.UserID == id).SingleOrDefault();
+                }
+                else
+                {
+                    cus_data = db.AspNetCustomers.Where(x => x.UserID == h_id).SingleOrDefault();
+                }
 
-                </ul>
-            </li>
+                if (cus_data.AspNetCustomerType.SingleorMulti == "Multi Site Company")
+                {
+                    <li>
+                        <a href="" class="accordion-toggle">
+                            <span class="glyphicon glyphicon-book"></span>
+                            <span class="sidebar-title">Agency</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="nav sub-nav" style="">
+                            <li>
+                                <a href="@Url.Action("AgencyList", "CompanyAdmin")">
+                                    <span class="fa fa-cube"></span>Agency List
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="CheckAgency()" href="@Url.Action("AddAgency", "CompanyAdmin")">
+                                    <span class="fa fa-cube"></span>Add Agency
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+
+            }
+
+            
             <li class="">
                 <a href="" class="accordion-toggle">
                     <span class="fa fa-users"></span>
@@ -82,12 +103,12 @@
                 </a>
                 <ul class="nav sub-nav" style="">
                     <li class="">
-                        <a href="@Url.Action("CustomerList","CompanyAdmin")">
+                        <a href="@Url.Action("CustomerList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Customer List
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("AddCustomer","CompanyAdmin")">
+                        <a href="@Url.Action("AddCustomer", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Add Customer
                         </a>
                     </li>
@@ -101,12 +122,12 @@
                 </a>
                 <ul class="nav sub-nav" style="">
                     <li>
-                        <a href="@Url.Action("EmployeeList","CompanyAdmin")">
+                        <a href="@Url.Action("EmployeeList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span> Employees List
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("AddEmployee","CompanyAdmin")">
+                        <a href="@Url.Action("AddEmployee", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Add Employee
                         </a>
                     </li>
@@ -121,22 +142,22 @@
                 </a>
                 <ul class="nav sub-nav" style="">
                     <li class="">
-                        <a href="@Url.Action("ServiceGroupList","CompanyAdmin")">
+                        <a href="@Url.Action("ServiceGroupList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Services Group List
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("AddServiceGroup","CompanyAdmin")">
+                        <a href="@Url.Action("AddServiceGroup", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Add Service Group
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("ServiceList","CompanyAdmin")">
+                        <a href="@Url.Action("ServiceList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Services List
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("AddService","CompanyAdmin")">
+                        <a href="@Url.Action("AddService", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Add Service
                         </a>
                     </li>
@@ -150,12 +171,12 @@
                 </a>
                 <ul class="nav sub-nav" style="">
                     <li class="">
-                        <a href="@Url.Action("InvoiceList","CompanyAdmin")">
+                        <a href="@Url.Action("InvoiceList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Invoices List
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("Create_Invoice","CompanyAdmin")">
+                        <a href="@Url.Action("Create_Invoice", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Create Invoice
                         </a>
                     </li>
@@ -169,12 +190,12 @@
                 </a>
                 <ul class="nav sub-nav" style="">
                     <li class="">
-                        <a href="@Url.Action("voucherList","CompanyAdmin")">
+                        <a href="@Url.Action("voucherList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Vouchers List
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("Addvoucher","CompanyAdmin")">
+                        <a href="@Url.Action("Addvoucher", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Add Vouchers
                         </a>
                     </li>
@@ -188,19 +209,19 @@
                 </a>
                 <ul class="nav sub-nav" style="">
                     <li class="">
-                        <a href="@Url.Action("SalesDiscountList","CompanyAdmin")">
+                        <a href="@Url.Action("SalesDiscountList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>List Sales Discount
                         </a>
                     </li>
                     <li class="">
-                        <a href="@Url.Action("AddSalesDiscountList","CompanyAdmin")">
+                        <a href="@Url.Action("AddSalesDiscountList", "CompanyAdmin")">
                             <span class="fa fa-cube"></span>Add Sales Discount
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="">
-                <a href="@Url.Action("Report","CompanyAdmin")">
+                <a href="@Url.Action("Report", "CompanyAdmin")">
                     <span class="fa fa-file-text"></span>
                     <span class="sidebar-title">Reports</span>
                 </a>
@@ -211,27 +232,36 @@
                     <span class="sidebar-title">SMS</span>
                 </a>
             </li>
-            <li class="active">
-                <a href="" class="accordion-toggle">
-                    <span class="glyphicon glyphicon-user"></span>
-                    <span class="sidebar-title">Users</span>
-                    <span class="caret"></span>
-                </a>
-                <ul class="nav sub-nav" style="">
-                    <li class="">
-                        <a href="@Url.Action("UserList","CompanyAdmin")">
-                            <span class="fa fa-cube"></span> Users List
-                        </a>
-                    </li>
+
+            @{
+                var user_id = User.Identity.GetUserId();
+                var role = db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetRoles.FirstOrDefault();
+                if (role.Name == "Company_Admin")
+                {
                     <li class="active">
-                        <a href="@Url.Action("AddUser","CompanyAdmin")">
-                            <span class="fa fa-cube"></span> Add User
+                        <a href="" class="accordion-toggle">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="sidebar-title">Users</span>
+                            <span class="caret"></span>
                         </a>
+                        <ul class="nav sub-nav" style="">
+                            <li class="">
+                                <a href="@Url.Action("UserList","CompanyAdmin")">
+                                    <span class="fa fa-cube"></span> Users List
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="@Url.Action("AddUser","CompanyAdmin")">
+                                    <span class="fa fa-cube"></span> Add User
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                </ul>
-            </li>
+                }
+            }
+            
             <li>
-                <a href="login.html">
+                <a href="@Url.Action("LogOff","Account")">
                     <span class="glyphicon glyphicon-log-out"></span>
                     <span class="sidebar-title">Logout</span>
                 </a>
@@ -240,4 +270,33 @@
         <!-- End: Sidebar Left Content -->
 </aside>
 <!-- End: Sidebar Left -->
+
+	<!-- Jquery -->
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function CheckAgency()
+    {
+        $.ajax({
+            type: "GET",
+            url: "/CompanyAdmin/CheckAgencyNo",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
+</script>
+
+
 @RenderBody();

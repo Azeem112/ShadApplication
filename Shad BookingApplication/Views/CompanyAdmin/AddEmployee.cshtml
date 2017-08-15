@@ -2,6 +2,21 @@
 @{
     ViewBag.Title = "AddEmployee";
     Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    if (Model.agency_list != null)
+    {
+        foreach (var item in Model.agency_list)
+        {
+            listItems.Add(new SelectListItem
+            {
+                Text = item.AspNetCustomerDetail.BussinessName,
+                Value = item.Id.ToString(),
+                Selected = true
+            });
+        }
+    }
+
 }
 <!-- Start: Content-Wrapper -->
 <section id="content_wrapper">
@@ -280,7 +295,7 @@
                         <div class="row form-group">
                             <h4 class="col-md-3 col-xs-12 text-left">Working Place</h4>
                         </div>
-                        <div class="row form-group">
+                        @*<div class="row form-group">
                             <div class="radio col-md-1 col-md-offset-1 col-xs-12 text-right">
                                 <label>
                                     <input type="radio" name="workingPlaceRadio" onchange="func1()" value="1">On site
@@ -297,8 +312,8 @@
                                 </label>
                             </div>
                             @Html.HiddenFor(model => model.Employee.WorkingPlace, new { @id = "IntervensionZone_id" })
-                        </div>
-                        @*<div class="row form-group">
+                        </div>*@
+                        <div class="row form-group">
                             <div class="radio col-md-1 col-md-offset-1 col-xs-12 text-right">
                                 <label>
                                     <strong>  Location</strong>
@@ -306,18 +321,16 @@
                             </div>
                         </div>
 
-                        <div class="row form-group">
-
-                            <div class="checkbox" style="margin-left: 3%">
-                                <label class=" col-md-4 col-md-offset-1 col-xs-12 text-left"><input type="checkbox" value="">Agency XYZ-----59000Lille</label>
+                        @foreach (var item3 in Model.agency_location_list)
+                        {
+                            <div class="row form-group">
+                                <div class="checkbox" style="margin-left: 3%">
+                                    <label class="col-md-4 col-md-offset-1 col-xs-12 text-left"><input type="checkbox" id="agency_id_@item3.Id" value="">@item3.Name</label>
+                                </div>
                             </div>
 
-                            <div class="checkbox" style="margin-left: 3%">
-                                <label class="col-md-4 col-md-offset-1 col-xs-12 text-left"><input type="checkbox" value="">Agency ZUIDP,VCUGE-RUE-----62000Arras</label>
-                            </div>
-
-                        </div>*@
-
+                        }
+                        <input type="hidden" id="time_count" value="@Model.agency_location_list.Count()" />
 
 
                     </div>
@@ -329,14 +342,18 @@
 
                         <div class="col-md-2 ">
                         </div>
-                        <div class="col-md-7 col-xs-11">
-                            <select class="form-control">
-                                <option selected disabled>Select an Agency</option>
-                                <option>option1</option>
-                                <option>option2</option>
-                            </select>
-                        </div>
-                        <div class="row">
+                        @*<div class="col-md-7 col-xs-11">
+                            @Html.DropDownList("Selected_Agency", listItems, "Select a Agency", new { @class = "form-control"})
+                            @Html.ValidationMessage("Selected_Agency", new { @class = "text-danger" })
+                        </div>*@
+
+                        @{ int i = 0;}
+                        @foreach (var item in Model.agency_location_list)
+                        {
+                            i=i+1;
+                            var week_id="pick_working_div_"+i;
+
+                        <div class="row" id="@week_id">
                             <div class="row form-group">
                                 <div class="col-md-8 col-md-offset-2 col-xs-11">
                                     <div class="table-responsive">
@@ -604,13 +621,20 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr id="r8">
+                                                <td>
+                                                    <input type="button" onclick="custome_timepicker()" class="btn btn-success" value="Save" />
+                                                </td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
+                            
                         </div>
                         <input type="hidden" id="custom_timepicker_id" name="custom_timepicker_name" />
+
+                        }
 
                         <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
                         <div class="row">
@@ -664,6 +688,19 @@
 </section>
 <!-- end: Content-Wrapper -->
 <script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //alert("emp ready")
+        var count = parseInt($("#time_count").val());
+        alert(count);
+        for (var j = 1; i <= count; j++)
+        {
+            $("#pick_working_div_"+j).hide();
+        }
+        //$("#pick_working_div").hide();
+
+    });
 
     function Set_Celender()
     {
@@ -872,6 +909,10 @@
 
 
 <script type="text/javascript">
+
+
+
+
 $(function () {
 				$('#ii1').datetimepicker({
 					format: 'LT',
