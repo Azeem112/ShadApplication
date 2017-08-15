@@ -2733,15 +2733,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AspNetCompanyCustomer_CustomerDetail">
-          <End Role="AspNetCustomerDetail" Type="Self.AspNetCustomerDetail" Multiplicity="0..1" />
-          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="*" />
+        <Association Name="FK_Invoice_CompanyCustomer">
+          <End Role="AspNetCompanyCustomer" Type="Self.AspNetCompanyCustomer" Multiplicity="0..1" />
+          <End Role="AspNetInvoice" Type="Self.AspNetInvoice" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetCustomerDetail">
+            <Principal Role="AspNetCompanyCustomer">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetCompanyCustomer">
-              <PropertyRef Name="DetailId" />
+            <Dependent Role="AspNetInvoice">
+              <PropertyRef Name="CompanyCustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3314,9 +3314,9 @@
             <End Role="AspNetCompanyNotifination" EntitySet="AspNetCompanyNotifinations" />
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetCompanyCustomer_CustomerDetail" Association="Self.FK_AspNetCompanyCustomer_CustomerDetail">
-            <End Role="AspNetCustomerDetail" EntitySet="AspNetCustomerDetails" />
+          <AssociationSet Name="FK_Invoice_CompanyCustomer" Association="Self.FK_Invoice_CompanyCustomer">
             <End Role="AspNetCompanyCustomer" EntitySet="AspNetCompanyCustomers" />
+            <End Role="AspNetInvoice" EntitySet="AspNetInvoices" />
           </AssociationSet>
           <AssociationSet Name="FK_Customer_SubCatageory_Customer" Association="Self.FK_Customer_SubCatageory_Customer">
             <End Role="AspNetCustomers" EntitySet="AspNetCustomers" />

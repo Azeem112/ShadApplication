@@ -84,6 +84,14 @@ namespace Shad_BookingApplication
                 roleManager.Create(role);
             }
 
+            // creating Creating Agency Admin role    
+            if (!roleManager.RoleExists("Agency_Admin"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Agency_Admin";
+                roleManager.Create(role);
+            }
+
         }
     }
 }
