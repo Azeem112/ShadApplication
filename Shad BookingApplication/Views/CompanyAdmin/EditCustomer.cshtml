@@ -2,7 +2,151 @@
 @{
 	ViewBag.Title = "AddCustomer";
 	Layout = "~/Views/Shared/_CompanyAdminNavigationBar.cshtml";
+	List<SelectListItem> listItems3 = new List<SelectListItem>();
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "---Never---",
+		Value = "",
+		Disabled=true
+	});
+	listItems3.Add(new SelectListItem
+	{
+		Text = "2 hours",
+		Value = "2",
+		Selected = true
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "3 hours",
+		Value = "3",
+		Selected = false
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "6 hours",
+		Value = "6",
+		Selected = false
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "12 hours",
+		Value = "12",
+		Selected = false
+	});
+
+	listItems3.Add(new SelectListItem
+	{
+		Text = "24 hours",
+		Value = "24",
+		Selected = false
+	});
+	listItems3.Add(new SelectListItem
+	{
+		Text = "48 hours",
+		Value = "48",
+		Selected = false
+	});
+	listItems3.Add(new SelectListItem
+	{
+		Text = "72 hours",
+		Value = "72",
+		Selected = false
+	});
+	listItems3.Add(new SelectListItem
+	{
+		Text = "1 week",
+		Value = "1",
+		Selected = false
+	});
+
+
+	List<SelectListItem> listItems4 = new List<SelectListItem>();
+
+	listItems4.Add(new SelectListItem
+	{
+		Text = "---Never---",
+		Value = "",
+		Disabled = true
+	});
+	listItems4.Add(new SelectListItem
+	{
+		Text = "2 hours",
+		Value = "2",
+		Selected = true
+	});
+
+	listItems4.Add(new SelectListItem
+	{
+		Text = "3 hours",
+		Value = "3",
+		Selected = false
+	});
+
+	listItems4.Add(new SelectListItem
+	{
+		Text = "6 hours",
+		Value = "6",
+		Selected = false
+	});
+
+	listItems4.Add(new SelectListItem
+	{
+		Text = "12 hours",
+		Value = "12",
+		Selected = false
+	});
+
+	listItems4.Add(new SelectListItem
+	{
+		Text = "24 hours",
+		Value = "24",
+		Selected = false
+	});
+	listItems4.Add(new SelectListItem
+	{
+		Text = "48 hours",
+		Value = "48",
+		Selected = false
+	});
+	listItems4.Add(new SelectListItem
+	{
+		Text = "72 hours",
+		Value = "72",
+		Selected = false
+	});
+	listItems4.Add(new SelectListItem
+	{
+		Text = "1 week",
+		Value = "1",
+		Selected = false
+	});
+
+
+
+	List<SelectListItem> listItems2 = new List<SelectListItem>();
+
+	listItems2.Add(new SelectListItem
+	{
+		Text = "Male",
+		Value = "Male",
+		Selected = false
+	});
+	listItems2.Add(new SelectListItem
+	{
+		Text = "Female",
+		Value = "Female",
+		Selected = false
+	});
+
+
 }
+
+
+
 
 <!-- Start: Content-Wrapper -->
 <section id="content_wrapper">
@@ -148,10 +292,9 @@
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right control-label">Gender:</label>
 								<div class="col-md-3 col-xs-12">
-									<select class="form-control" name="Gender" id="gender">
-										<option value="Male">Male</option>
-										<option value="Female">Female</option>
-									</select>
+										@Html.DropDownListFor(model => model.Gender, listItems2, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+
 								</div>
 
 								<div class="col-md-2 col-xs-12 text-right control-label">
@@ -303,17 +446,9 @@
 
 							<div class="row form-group">
 								<div class="col-md-3 col-xs-6">
-									<select class="form-control" name="before_arrive" id="before_arrive">
-										<option selected="" disabled="">--Never--</option>
-										<option value="2">2 hours</option>
-										<option value="3">3 hours</option>
-										<option value="6">6 hours</option>
-										<option value="12">12 hours</option>
-										<option value="24">24 hours</option>
-										<option value="48">48 hours</option>
-										<option value="72">72 hours</option>
-										<option value="1w">1 Week</option>
-									</select>
+									@Html.DropDownListFor(model => model.AspNetCompanyNotifination.EmailBeforeArrive, listItems3, new { @class = "form-control" })
+									@Html.ValidationMessageFor(model => model.AspNetCompanyNotifination.EmailBeforeArrive, "", new { @class = "text-danger" })
+									
 								</div>
 								<p class="form-control" style="border: none;">before the customer arrives</p>
 							</div>
@@ -327,17 +462,11 @@
 
 							<div class="row form-group">
 								<div class="col-md-3 col-xs-6">
-									<select class="form-control" name="sms_before_arrive" id="sms_before_arrive">
-										<option selected="" disabled="">--Never--</option>
-										<option value="2">2 hours</option>
-										<option value="3">3 hours</option>
-										<option value="6">6 hours</option>
-										<option value="12">12 hours</option>
-										<option value="24">24 hours</option>
-										<option value="48">48 hours</option>
-										<option value="72">72 hours</option>
-										<option value="1w">1 Week</option>
-									</select>
+
+									@Html.DropDownListFor(model => model.AspNetCompanyNotifination.SmsBeforeArrive, listItems4, new { @class = "form-control" })
+									@Html.ValidationMessageFor(model => model.AspNetCompanyNotifination.SmsBeforeArrive, "", new { @class = "text-danger" })
+
+
 								</div>
 								<p class="form-control" style="border: none;">before the customer arrives</p>
 							</div>
@@ -349,6 +478,7 @@
 
 							<input type="text" id="notification_id" name="notification_id" value="@Model.CompanyNotificationId" hidden />
 							<input type="text" id="agency_id" name="agency_id" value="@Model.AgencyId" hidden />
+							<input type="text" id="customer_id" name="customer_id" value="@Model.Id" hidden />
 							<center>
 								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(4)"><span><strong><</strong></span> Back</button>
 								<button type="button" class="btn btn-primary" onclick="changeTabFunc(4)">Next <span><strong>></strong></span></button>
@@ -440,14 +570,10 @@
 <script type="text/javascript">
 	$(window).load(function () {
 		alert("hahahah");
-		var sms = $("#sms_before_arrive_hidden").val();
-		var email = $("#before_arrive_hidden").val();
-		var gender = $("#genderhidden").val();
 		var timezone = $("#timezonehidden").val();
-		$("#sms_before_arrive").val(sms);
-		$("#before_arrive").val(email);
-		$("#gender").val(gender);
+
 		$("#timezone").val(timezone);
+		alert("ok");
 		
 
 	});

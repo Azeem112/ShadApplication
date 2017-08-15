@@ -478,7 +478,7 @@ namespace Shad_BookingApplication.Controllers
             db.AspNetCustomerBusinessDetails.Add(BusinessDetail);
             db.SaveChanges();
 
-
+            /*
             // Adding user Types
             addAgencyViewModel.UserType.CompanyName = addAgencyViewModel.Detail.BussinessName;
             
@@ -487,7 +487,7 @@ namespace Shad_BookingApplication.Controllers
 
             // Getting SMS ID
             var sms_package_id = addAgencyViewModel.SingleSms.ItemID;
-
+            */
 
             // Adding Working time
             var time = Request.Form["custom_timepicker_name"].ToString();
@@ -513,8 +513,8 @@ namespace Shad_BookingApplication.Controllers
             agency.BussinessID = BusinessDetail.Id;
             agency.RegionID = region.Id;
             agency.LocationId = addAgencyViewModel.Location.Id;
-            agency.SmsID = sms_package_id;
-            agency.TypeID = addAgencyViewModel.UserType.Id;
+            //agency.SmsID = sms_package_id;
+            //agency.TypeID = addAgencyViewModel.UserType.Id;
             agency.ContactId = addAgencyViewModel.Contact.Id;
             agency.DetailId = addAgencyViewModel.Detail.Id;
             agency.SocialID = addAgencyViewModel.Social.Id;
@@ -1212,12 +1212,12 @@ namespace Shad_BookingApplication.Controllers
             var contact = db.AspNetCustomerContacts.Where(x => x.Id == agency_data.ContactId).SingleOrDefault();
             var social = db.AspNetSocials.Where(x => x.Id == agency_data.SocialID).SingleOrDefault();
             var region = db.AspNetCustomerRegions.Where(x => x.Id == agency_data.RegionID).SingleOrDefault();
-            var user = db.AspNetUsers.Where(x => x.Id == agency_data.UserID).SingleOrDefault();
+           // var user = db.AspNetUsers.Where(x => x.Id == agency_data.UserID).SingleOrDefault();
             var usertype = db.AspNetCustomerTypes.Where(x => x.Id == agency_data.TypeID).SingleOrDefault();
             var gallery = db.AspNetCustomerGalleries.Where(x => x.Id == agency_data.GalleryID).SingleOrDefault();
-            // var workingTime = db.AspNetWorkingTimes.Where(x => x.Id == agency_data.WorkingID).SingleOrDefault();
-            var userType = db.AspNetCustomerTypes.Where(x => x.Id == agency_data.TypeID).SingleOrDefault();
-            var sms = db.AspNetCustomerSMS.Where(x => x.Id == agency.SingleSms.Id).SingleOrDefault();
+            //var userType = db.AspNetCustomerTypes.Where(x => x.Id == agency_data.TypeID).SingleOrDefault();
+            
+            //var sms = db.AspNetCustomerSMS.Where(x => x.Id == agency.SingleSms.Id).SingleOrDefault();
 
 
 
@@ -1338,10 +1338,14 @@ namespace Shad_BookingApplication.Controllers
             //db.SaveChanges();
 
             //usertype
+            /*
             usertype.CompanyName = agency.Detail.BussinessName;
             usertype.SingleorMulti = agency.UserType.SingleorMulti;
             usertype.Status = agency.UserType.Status;
             db.SaveChanges();
+            */
+    
+    
             //sms
             //if(agency.SingleSms.ItemID==2)
             //{
@@ -1744,19 +1748,19 @@ namespace Shad_BookingApplication.Controllers
             var type = Request.Form["Type"];
             
             var db_data=db.AspNetGiftVouchers.Where(x => x.Id == vou_id).SingleOrDefault();
-            if(voucher.Name=="Fixed")
+            if(Request.Form["ExpireId"] =="Fixed")
             {
                 db_data.AspNetExpire.From = Convert.ToDateTime(Request.Form["Fixed_From"]);
                 db_data.AspNetExpire.To = Convert.ToDateTime(Request.Form["Fixed_To"]);
                 db_data.AspNetExpire.Date = Convert.ToDateTime(Request.Form["Fixed_date"]);
             }
-            if(voucher.Name=="Period")
+            if(Request.Form["ExpireId"] == "Period")
             {
                 db_data.AspNetExpire.From = Convert.ToDateTime(Request.Form["Period_From"]);
                 db_data.AspNetExpire.To = Convert.ToDateTime(Request.Form["Period_To"]);
             }
             
-            if (voucher.Name == "Recuring")
+            if (Request.Form["ExpireId"] == "Recuring")
             {
                 db_data.AspNetExpire.Every =Request.Form["Recuring_Every"];
                 db_data.AspNetExpire.From = Convert.ToDateTime(Request.Form["Recuring_From"]);
@@ -1899,11 +1903,11 @@ namespace Shad_BookingApplication.Controllers
         public ActionResult UpdateCustomer( AddCompanyCustomerViewModel customer, HttpPostedFileBase[] files)
         {
             var id = User.Identity.GetUserId();
+            var agency_id = Convert.ToInt16(Request.Form["agency_id"]);
+            var cus_id = Convert.ToInt16( Request.Form["customer_id"]);
+            var cus = db.AspNetCompanyCustomers.Where(x => x.Id == cus_id).SingleOrDefault();
             
-            var agency_id = Convert.ToInt16( Request.Form["agency_id"]);
-            var cus = db.AspNetCompanyCustomers.Where(x => x.AgencyId == agency_id).SingleOrDefault();
-            
-            customer.Gender = Request.Form["Gender"];
+           
             customer.TimeZone = Request.Form["timezone"];
             
             HttpPostedFileBase file = Request.Files["upload"];
@@ -1963,8 +1967,8 @@ namespace Shad_BookingApplication.Controllers
 
                 notification.DefaultEmailRemainder = true;
             }
-            notification.SmsBeforeArrive = Request.Form["sms_before_arrive"];
-            notification.EmailBeforeArrive = Request.Form["before_arrive"];
+            notification.SmsBeforeArrive = Request.Form["AspNetCompanyNotifination.SmsBeforeArrive"];
+            notification.EmailBeforeArrive = Request.Form["AspNetCompanyNotifination.EmailBeforeArrive"];
             
             db.SaveChanges();
             var company_customer = cus;

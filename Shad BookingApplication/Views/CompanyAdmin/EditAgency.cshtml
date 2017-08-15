@@ -58,7 +58,7 @@
 
 
 
-
+	/*
 
 	List<SelectListItem> listItems4 = new List<SelectListItem>();
 	listItems4.Add(new SelectListItem
@@ -85,7 +85,7 @@
 		}
 	}
 
-
+	*/
 	List<SelectListItem> listItems1 = new List<SelectListItem>();
 
 	listItems1.Add(new SelectListItem
@@ -101,6 +101,7 @@
 		Value = "Multi Site Company",
 		Selected = false
 	});
+	/*
 	var flag1 =false;
 	var flag2 = false;
 	if(Model.UserType.Status == "Active    ")
@@ -126,7 +127,7 @@
 		Value = "Inactive  ",
 		Selected = flag2
 	});
-
+	*/
 
 	List<SelectListItem> listItems3 = new List<SelectListItem>();
 
@@ -219,16 +220,16 @@
 						<li class="" id="dynamicItem6">
 							<a href="#photoGallery" data-toggle="tab" aria-expanded="true">Gallery</a>
 						</li>
-						<li class="" id="dynamicItem7">
+						<!--<li class="" id="dynamicItem7">
 							<a href="#userAndAccountType" data-toggle="tab" aria-expanded="true">User Type</a>
 						</li>
 						<li class="" id="dynamicItem8">
 							<a href="#optionSMS" data-toggle="tab" aria-expanded="true">SMS</a>
-						</li>
-						<li class="" id="dynamicItem9">
+						</li>-->
+						<li class="" id="dynamicItem7">
 							<a href="#workingHours" data-toggle="tab" aria-expanded="true">Working Hours</a>
 						</li>
-						<li class="" id="dynamicItem10">
+						<li class="" id="dynamicItem8">
 							<a href="#social" data-toggle="tab" aria-expanded="true">Social</a>
 						</li>
 					</ul>
@@ -245,7 +246,7 @@
 										@Html.DropDownList("AgencyAdmin", null, new { @class = "form-control" })
 										@*@Html.ValidationMessageFor(, "", new { @class = "text-danger" })*@
 									</div>
-									
+
 								</div>
 
 								<div class="row form-group required">
@@ -269,20 +270,26 @@
 										</div>
 									</div>
 								</div>
-								<div class="row form-group required">
-									<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
-									<div class="col-md-3 col-xs-12">
-										@Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the first name") } })
-										@Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
-									</div>
-									<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
-									<div class="col-md-3 col-xs-12">
-										@Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the last name") } })
-										@Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+								<!--
+										<div class="row form-group required">
+											<label class="col-md-2 col-xs-12 text-right control-label">First Name</label>
+											<div class="col-md-3 col-xs-12">
+											@*	@Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the first name") } })
+												@Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
+											*@
+											</div>
+											<label class="col-md-2 col-xs-12 text-right control-label">Last Name</label>
+											<div class="col-md-3 col-xs-12">
+												@*
+												@Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayName("Enter the last name") } })
+												@Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+											   *@
+
+											</div>
+										</div>
+											-->
 
 
-									</div>
-								</div>
 								<div class="row form-group required">
 									<label class="col-md-2 col-xs-12 text-right control-label">Sub-category:</label>
 									<div class="col-md-8 col-xs-12">
@@ -620,7 +627,7 @@
 									<h3 class="col-md-2" style="margin-left: 1%; margin-top: 1%">Intervension Zone:</h3>
 									<div class="radio col-md-1 col-xs-12 text-right">
 										<label>
-											<input type="radio" id="Home_id" name="workingPlaceRadio" onchange="func2()" value="Home" >Home
+											<input type="radio" id="Home_id" name="workingPlaceRadio" onchange="func2()" value="Home">Home
 										</label>
 									</div>
 									<div class="radio col-md-2 col-md-offset-1 col-xs-12 text-right mt10">
@@ -1157,7 +1164,7 @@
 							<div class="row form-group">
 								<label class="col-md-2 col-xs-12 text-right">Description:</label>
 								<div class="col-md-8 col-xs-12">
-									<textarea name="editor1" class="form-control" rows="5" id="business-description" >@Model.BusinessDetail.Description</textarea>
+									<textarea name="editor1" class="form-control" rows="5" id="business-description">@Model.BusinessDetail.Description</textarea>
 									@*@Html.TextAreaFor(model => model.BusinessDetail.Description, new { @rows="5" , @id="business-description", @class = "form-control", @name = "editor_id" })
 										@Html.ValidationMessageFor(model => model.BusinessDetail.Description, "", new { @class = "text-danger" })*@
 
@@ -1219,8 +1226,8 @@
 								<button type="button" class="btn btn-primary" onclick="changeTabFunc(6)">Next <span><strong>></strong></span></button>
 							</center>
 						</div>
-
-						<div id="userAndAccountType" class="tab-pane">
+						<!--
+						   <div id="userAndAccountType" class="tab-pane">
 							<div class="row form-group required">
 								<label class="col-md-2 col-xs-12 text-right  control-label">Email:</label>
 								<div class="col-md-8 col-xs-12">
@@ -1259,9 +1266,9 @@
 									<label>Status:</label>
 								</div>
 								<div class="col-md-3 col-xs-12">
-									@Html.DropDownListFor(model => model.UserType.Status, listItems2, new { @class = "form-control" })
+								@*	@Html.DropDownListFor(model => model.UserType.Status, listItems2, new { @class = "form-control" })
 									@Html.ValidationMessageFor(model => model.UserType.Status, "", new { @class = "text-danger" })
-
+									*@
 
 								</div>
 							</div>
@@ -1288,7 +1295,7 @@
 							</center>
 						</div>
 
-
+						-->
 
 						<div id="workingHours" class="tab-pane">
 							<div class="row">
@@ -1570,8 +1577,8 @@
 								</div>
 							</div>
 							<center>
-								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(9)"><span><strong><</strong></span> Back</button>
-								<button type="button" class="btn btn-primary" onclick="changeTabFunc(9); custome_timepicker();" >Next <span><strong>></strong></span></button>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(7)"><span><strong><</strong></span> Back</button>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc(7); custome_timepicker();">Next <span><strong>></strong></span></button>
 							</center>
 							<input type="hidden" id="custom_timepicker_id" name="custom_timepicker_name" />
 						</div>
@@ -1601,34 +1608,35 @@
 							</div>
 							<center>
 								@*<button type="button" class="btn btn-success" style="width: 15%; border-radius: 10px">Save</button>*@
-								<input type="submit" class="btn btn-success" style="width: 15%; border-radius: 10px" value="Save" onclick="custome_timepicker();"/>
+								<input type="submit" class="btn btn-success" style="width: 15%; border-radius: 10px" value="Save" onclick="custome_timepicker();" />
 							</center>
 							<br><br>
 							<center>
-								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(10)"><span><strong><</strong></span> Back</button>
+								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(8)"><span><strong><</strong></span> Back</button>
 							</center>
 
 						</div>
-
+						<!--
 						<div id="optionSMS" class="tab-pane">
 							<div class="row form-group">
 								<label class="col-md-2 col-xs-12 text-right">Option SMS</label>
 								<div class="col-md-8 col-xs-12">
-
+							@*
 									@Html.DropDownListFor(model => model.SingleSms.ItemID, listItems4, new { @class = "form-control" })
 									@Html.ValidationMessageFor(model => model.SingleSms.ItemID, "", new { @class = "text-danger" })
-								</div>
+							*@
+									</div>
 							</div>
 							<center>
 								<button type="button" class="btn btn-primary" onclick="changeTabFunc2(8)"><span><strong><</strong></span> Back</button>
 								<button type="button" class="btn btn-primary" onclick="changeTabFunc(8)">Next <span><strong>></strong></span></button>
 							</center>
 						</div>
-
+							-->
 					</div>
 				</div>
 			</div>
-			<input type="number" value="@ViewBag.id" name="agency_id"id="agency_id" hidden/>			
+			<input type="number" value="@ViewBag.id" name="agency_id" id="agency_id" hidden />
 
 			<br><br><br><br><br><br><br>
 		</div>
@@ -1651,6 +1659,7 @@
 	<!-- End: Page Footer -->
 
 </section>
+
 <!-- jQuery -->
 <!-- Jquery -->
 
@@ -1667,9 +1676,9 @@
 
 
 
-
+    /*
 	function user_data() {
-		alert($("#agency_id").val());
+		//alert($("#agency_id").val());
 		var agencyAdmin_id = $("#AgencyAdmin").val();
 
 		$.ajax({
@@ -1706,8 +1715,10 @@
 			}
 		});
 	}
+    */
 	jQuery(window).load(function () {
-		user_data();
+	    //user_data();
+	    alert("intervention");
 		var intervension = $("#IntervensionZone_id").val();
 		intervension = intervension.trim();
 		
@@ -1993,7 +2004,6 @@ function jsFunction(a){
 		}
 	}
 }
-
 function changeTabFunc(a) {
 	document.getElementById("dynamicItem" + a).className = "";
 	document.getElementById("dynamicItem" + (a + 1)).className = "active";
@@ -2019,20 +2029,21 @@ function changeTabFunc(a) {
 	}
 	if (a == 6) {
 		document.getElementById("photoGallery").className = "tab-pane";
-		document.getElementById("userAndAccountType").className = "tab-pane active";
-	}
-	if (a == 7) {
-		document.getElementById("userAndAccountType").className = "tab-pane";
-		document.getElementById("optionSMS").className = "tab-pane active";
-	}
-	if (a == 8) {
-		document.getElementById("optionSMS").className = "tab-pane";
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
-	if (a == 9) {
+	if (a == 7) {
 		document.getElementById("workingHours").className = "tab-pane";
 		document.getElementById("social").className = "tab-pane active";
 	}
+	/*
+	if(a==8){
+		document.getElementById("optionSMS").className = "tab-pane";
+		document.getElementById("workingHours").className = "tab-pane active";
+	}
+	if(a==8){
+		document.getElementById("workingHours").className = "tab-pane";
+		document.getElementById("social").className = "tab-pane active";
+	}*/
 }
 function changeTabFunc2(a) {
 	document.getElementById("dynamicItem" + a).className = "";
@@ -2062,20 +2073,21 @@ function changeTabFunc2(a) {
 		document.getElementById("photoGallery").className = "tab-pane";
 		document.getElementById("businessDetails").className = "tab-pane active";
 	}
+
 	if (a == 7) {
 
-		document.getElementById("userAndAccountType").className = "tab-pane";
+		document.getElementById("workingHours").className = "tab-pane";
 		document.getElementById("photoGallery").className = "tab-pane active";
 	}
-	if (a == 8) {
+	/*if(a==8){
 		document.getElementById("optionSMS").className = "tab-pane";
 		document.getElementById("userAndAccountType").className = "tab-pane active";
 	}
-	if (a == 9) {
+	if(a==8){
 		document.getElementById("workingHours").className = "tab-pane";
 		document.getElementById("optionSMS").className = "tab-pane active";
-	}
-	if (a == 10) {
+	}*/
+	if (a == 8) {
 		document.getElementById("social").className = "tab-pane";
 		document.getElementById("workingHours").className = "tab-pane active";
 	}
@@ -2132,7 +2144,7 @@ jQuery(window).load(function () {
 
 
 	var region_id = $("#region_id1").val();
-	//alert(region_id);
+	alert(region_id);
 	   $("#region_id1").val(region_id);
 	   
 	   $.ajax({
@@ -2143,6 +2155,7 @@ jQuery(window).load(function () {
 		   dataType: "json",
 		   success: function (response)
 		   {
+		       alert(response);
 			  // alert(response.CurrencyName);
 			   $("#region_country_id").val(response.CountryName);
 			   $("#region_timezone_id").val(response.TimeZoneName);
@@ -2264,7 +2277,7 @@ function custome_timepicker() {
 
 jQuery(window).load(function () {
 	var region_id = $("#region_id1").val();
-	 alert(region_id);
+	
 	$.ajax({
 		type: "GET",
 		url: "/CompanyAdmin/Get_WorkingTime",
@@ -2272,8 +2285,8 @@ jQuery(window).load(function () {
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: function (response) {
-
-			alert(response);
+		    alert(response);
+			
 			var row_no = 1;
 			var j = 1;
 			for (var i = 0; i < response.length; i++) {
