@@ -63,6 +63,9 @@
 
     </div>
 
+@using (Html.BeginForm("AddEmployee", "CompanyAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
     <!-- Start: Topbar -->
     <header id="topbar">
         <div class="topbar-left">
@@ -77,6 +80,9 @@
                 </li>
             </ol>
 
+        </div>
+        <div class="topbar-right">
+            <input class="btn btn-success" onclick="CallBack()" value="Save" type="submit"/>
         </div>
 
 
@@ -99,7 +105,7 @@
                             <label class="col-md-2 col-xs-12 text-center control-label">Pseudo</label>
                             <div class="col-md-8 col-xs-11">
                                 @*<input type="text" class="form-control" placeholder="Your Nick name or actual name" required="required">*@
-                                @Html.EditorFor(model => model.Employee.NickName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name" ,@required = "required" } })
+                                @Html.EditorFor(model => model.Employee.NickName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Employee.NickName, "", new { @class = "text-danger" })
 
 
@@ -110,7 +116,7 @@
                             <label class="col-md-2 col-xs-12 text-center control-label">Firstname</label>
                             <div class="col-md-8 col-xs-11">
                                 @*<input type="text" class="form-control" placeholder="" required="required">*@
-                                @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control",@required = "required" } })
+                                @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.user.FirstName, "", new { @class = "text-danger" })
 
 
@@ -129,7 +135,7 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Notes:</label>
                             <div class="col-md-8 col-xs-11">
-                                @Html.EditorFor(model => model.Employee.Notes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name", @required = "required" } })
+                                @Html.EditorFor(model => model.Employee.Notes, new { htmlAttributes = new { @class = "form-control", @placeholder = "", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Employee.Notes, "", new { @class = "text-danger" })
 
 
@@ -147,7 +153,7 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">SMS Number:</label>
                             <div class="col-md-8 col-xs-11">
-                                @Html.EditorFor(model => model.Employee.SMSNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Nick name or actual name", @required = "required" } })
+                                @Html.EditorFor(model => model.Employee.SMSNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Employee.SMSNumber, "", new { @class = "text-danger" })
 
 
@@ -165,7 +171,7 @@
                         <div class="row form-group required">
                             <label class="col-md-2 col-xs-12 text-center control-label">Password:</label>
                             <div class="col-md-8 col-xs-11">
-                                @Html.EditorFor(model => model.user.PasswordHash, new { htmlAttributes = new {@type= "password", @class = "form-control", @required = "required" } })
+                                @Html.EditorFor(model => model.user.PasswordHash, new { htmlAttributes = new { @type = "password", @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.user.PasswordHash, "", new { @class = "text-danger" })
                                
 
@@ -181,7 +187,7 @@
                                 <div ng-controller="upload">
                                     <div class="col-md-2 col-xs-11">
                                         <label class="btn btn-default btn-system btn-file btn-block">
-                                            Upload Image <input type="file" fileinput="file" accept="image/*" filepreview="filepreview" />
+                                            Upload Image <input type="file" fileinput="file" accept="image/*" filepreview="filepreview" name="Employee_img" />
                                         </label>
                                     </div>
                                     <div class="col-md-2 col-xs-6">
@@ -199,12 +205,14 @@
                         </div>
                         <div class="row form-group ">
                             <div class="checkbox" style="margin-left: 6%">
-                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Send email when new booking is made</label>
+                                <label class="col-md-8 col-xs-12"><input type="checkbox" id="chk_Sb_mail_id" onclick="SendBooking_Mail()" value="">Send email when new booking is made</label>
+                                @Html.HiddenFor(model => model.Employee.SendBookingMail, new { @id = "Sb_mail_id" })
                             </div>
                         </div>
                         <div class="row form-group ">
                             <div class="checkbox" style="margin-left: 6%">
-                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">Send sms when new booking is made</label>
+                                <label class="col-md-8 col-xs-12"><input type="checkbox"  id="chk_Sb_sms_id" onclick="SendBooking_SMS()" value="">Send sms when new booking is made</label>
+                                @Html.HiddenFor(model => model.Employee.SendBookingSMS, new { @id = "Sb_sms_id" })
                             </div>
                         </div>
 
@@ -217,9 +225,11 @@
                             <h4 class="col-md-3 col-xs-12 text-left">Services</h4>
                         </div>
 
+                        @{ var group_services_ids = "";}
                         @foreach (var item in Model.GroupServicesList)
                         {
-
+                            var services_ids = "";
+                            group_services_ids = group_services_ids + "," + item.group_id;
                         <div class="row form-group ">
                             <div class="col-md-8 col-xs-10" style="padding: 0px; margin:0px; margin-left: 6%">
                                 <div class="col-md-6 col-xs-12" style=" float: left">
@@ -228,7 +238,7 @@
                                     <div class="row form-group">
 
                                         <div class="checkbox" style="margin-left: 6%">
-                                            <label class="col-md-8 col-xs-12"><input type="checkbox" value="@item.group_id">@item.group_name</label>
+                                            <label class="col-md-8 col-xs-12"><input type="checkbox" class="groupservice_class" onclick="CheckGroupServices()" id="group_id_@item.group_id">@item.group_name</label>
                                         </div>
 
                                     </div>
@@ -236,12 +246,19 @@
                                 <div class="col-md-6 col-xs-12" style=" float: right">
 
                                     <label class="col-md-12 col-xs-10  text-left" style=" padding-left: 3px; margin:0px;">Sub Category</label>
+                                    @foreach (var item2 in item.service_grouplist)
+                                    {
+                                        services_ids = services_ids + "," + item2.service_id;
+                                    }
+
+                                    <input type="hidden" id="hiddengroupid_@item.group_id" value="@services_ids"/>
+
                                     <div class="row form-group">
                                         @foreach (var item2 in item.service_grouplist)
                                         {
 
                                             <div class="checkbox" style="margin-left: 6%">
-                                                <label class="col-md-8 col-xs-12"><input type="checkbox" value="">@item2.service_name</label>
+                                                <label class="col-md-8 col-xs-12"><input type="checkbox" class="group_id_@item.group_id" id="group_id_@item2.service_id" value="">@item2.service_name</label>
                                             </div>
                                         }
                                     </div>
@@ -255,6 +272,8 @@
 
                         </div>
                         }
+                        @{<input type="hidden" id="group_ids" value="@group_services_ids" />}
+                        <input type="hidden" id="selected_services_id" name="selected_services_name"/>
                     </div>
                     <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
                     <div class="row">
@@ -274,9 +293,10 @@
                             </div>
                             <div class="radio col-md-2 col-md-offset-2 col-xs-12 text-right mt10">
                                 <label>
-                                    <input type="radio" name="workingPlaceRadio" onchange="func2()" value="3">Both
+                                    <input type="radio" name="workingPlaceRadio" onchange="func22()" value="3">Both
                                 </label>
                             </div>
+                            @Html.HiddenFor(model => model.Employee.WorkingPlace, new { @id = "IntervensionZone_id" })
                         </div>
                         @*<div class="row form-group">
                             <div class="radio col-md-1 col-md-offset-1 col-xs-12 text-right">
@@ -329,61 +349,260 @@
                                                 <th>Lunch From</th>
                                                 <th>Lunch To</th>
                                             </tr>
-                                            <tr>
+                                            <tr id="r1">
                                                 <td>Monday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59 "></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c1" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(1)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii1'>
+                                                        <input id="i1" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii2'>
+                                                        <input id="i2" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii3'>
+                                                        <input id="i3" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii4'>
+                                                        <input id="i4" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="r2">
                                                 <td>Tuesday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c2" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(2)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii5'>
+                                                        <input id="i5" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii6'>
+                                                        <input id="i6" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii7'>
+                                                        <input id="i7" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii8'>
+                                                        <input id="i8" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="r3">
                                                 <td>Wednesday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c3" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(3)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii9'>
+                                                        <input id="i9" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii10'>
+                                                        <input id="i10" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-t4me"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii11'>
+                                                        <input id="i11" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii12'>
+                                                        <input id="i12" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="r4">
                                                 <td>Thursday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c4" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(4)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii13'>
+                                                        <input id="i13" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii14'>
+                                                        <input id="i14" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii15'>
+                                                        <input id="i15" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii16'>
+                                                        <input id="i16" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
                                             </tr>
-                                            <tr>
+                                            <tr id="r5">
                                                 <td>Friday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c5" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(5)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii17'>
+                                                        <input id="i17" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii18'>
+                                                        <input id="i18" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii19'>
+                                                        <input id="i19" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii20'>
+                                                        <input id="i20" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
                                             </tr>
-                                            <tr>
+                                            <tr id="r6">
                                                 <td>Saturday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c6" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(6)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii21'>
+                                                        <input id="i21" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii22'>
+                                                        <input id="i22" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii23'>
+                                                        <input id="i23" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii24'>
+                                                        <input id="i24" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="r7">
                                                 <td>Sunday</td>
-                                                <td><div class="checkbo ml20"><input type="checkbox" name="dayOffCheck"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
-                                                <td><div class="form-group"><input type="text" class="form-control wh-time" placeholder="23:59"></div></td>
+                                                <td><div class="checkbo ml20"><input id="c7" type="checkbox" name="dayOffCheck" onclick="checkboxDetect(7)"></div></td>
+                                                <td>
+                                                    <div class='input-group date' id='ii25'>
+                                                        <input id="i25" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class='input-group date' id='ii26'>
+                                                        <input id="i26" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii27'>
+                                                        <input id="i27" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class='input-group date' id='ii28'>
+                                                        <input id="i28" type='text' class="form-control" placeholder="23:59" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -391,6 +610,7 @@
                             </div>
 
                         </div>
+                        <input type="hidden" id="custom_timepicker_id" name="custom_timepicker_name" />
 
                         <div style="background-color: #eff0f2; height:2px; width:80%; margin-left: 2%; margin-bottom: 2%;"> </div>
                         <div class="row">
@@ -399,7 +619,8 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-8 col-md-offset-2 col-xs-12" style="margin-left: 3%">
-                                    <input type="checkbox" name="wh-checkbox">  Sync PlatformeRDV with outlook, Google or Apple Calendar
+                                    <input type="checkbox" id="chk_cs_id" onclick="Set_Celender()" checked="checked" name="wh-checkbox">  Sync PlatformeRDV with outlook, Google or Apple Calendar
+                                    @Html.HiddenFor(model => model.Employee.CelenderSync, new { @id = "CS_id" })
                                 </div>
                             </div>
                         </div>
@@ -412,8 +633,10 @@
                             <div class="row form-group">
                                 <div class="col-md-8 col-md-offset-2 col-xs-12" style="margin-left: 3%">
                                     <div class="btn-group btn-toggle">
-                                        <button class="btn btn-xs btn-default">ON</button>
-                                        <button class="btn btn-xs btn-info active">OFF</button>
+                                        <span onclick="foo(1)" class="btn btn-xs btn-default">ON</span>
+                                        <span onclick="foo(2)"class="btn btn-xs btn-info active">OFF</span>
+                                        @Html.HiddenFor(model => model.Employee.Status, new { @id = "employee_status_id" })
+
                                     </div>
                                 </div>
                             </div>
@@ -425,6 +648,7 @@
 
     </section>
     <!-- End: Content -->
+                            }
     <!-- Begin: Page Footer -->
     <footer id="content-footer" class="affix">
         <div class="row">
@@ -439,3 +663,843 @@
 
 </section>
 <!-- end: Content-Wrapper -->
+<script type="text/javascript">
+
+    function Set_Celender()
+    {
+        //chk_cs_id
+        if ($("#chk_cs_id").prop("checked") == true) {
+            $("#CS_id").val("true");
+        }
+        else if ($("#chk_cs_id").prop("checked") == false) {
+            $("#CS_id").val(false);
+        }
+
+    }
+    function CallBack()
+    {
+        custome_timepicker();
+        Set_SelectedServices();
+    }
+
+    function foo(val)
+    {
+        if (val == "1")
+        {
+            $("#employee_status_id").val("Active")
+        }
+        else if (val == "2") {
+            $("#employee_status_id").val("InActive")
+        }
+
+    }
+    function SendBooking_SMS()
+    {
+       
+        if ($("#chk_Sb_sms_id").prop("checked") == true) {
+            $("#Sb_sms_id").val("true");
+        }
+        else if ($("#chk_Sb_sms_id").prop("checked") == false) {
+            $("#Sb_sms_id").val(false);
+        }
+    }
+
+    function SendBooking_Mail()
+    {
+       
+
+        if ($("#chk_Sb_mail_id").prop("checked") == true) {
+            $("#Sb_mail_id").val("true");
+        }
+        else if ($("#chk_Sb_mail_id").prop("checked") == false) {
+            $("#Sb_mail_id").val(false);
+        }
+    }
+
+    function Set_SelectedServices()
+    {
+        var selected_service = "";
+        var selected_group = "";
+        $('.groupservice_class').each(function () {
+            if ($(this).prop("checked") == true)
+            {
+                selected_group = this.id;
+            }
+        });
+       
+        selected_group = selected_group.split("_")[2];
+
+        $('.group_id_' + selected_group).each(function () {
+            if ($(this).prop("checked") == true) {
+                selected_service = selected_service + "," + (this.id).split("_")[2];
+            }
+        });
+        $("#selected_services_id").val(selected_service);
+        alert( $("#selected_services_id").val());
+    }
+  
+    function CheckGroupServices()
+    {
+        $('input.groupservice_class').on('change', function ()
+        {
+            $('input.groupservice_class').not(this).prop('checked', false);
+
+            if ($(this).prop("checked") == true)
+            {
+                $('.' + this.id).each(function () {
+                    $(this).prop('disabled', false);
+                });
+            }
+
+            var group_ids_list = $("#group_ids").val().split(",");
+            var group_service_id = (this.id).split("_")[2];
+
+            for (var j = 0; j < group_ids_list.length; j++)
+            {
+               
+                if (group_ids_list[j] != "")
+                {
+                    
+                    if (group_ids_list[j] != group_service_id)
+                    {
+                        $('.group_id_' + group_ids_list[j]).each(function () {
+                          
+                            $(this).prop('disabled', true);
+                        });
+                    }
+                    
+                }
+            }
+           
+
+        });
+    }
+    
+    function custome_timepicker()
+    {
+        var time_string = "";
+        var i = 1
+        for (var k = 0; k < 7; k++) {
+            if (i == 1) {
+                var ckbox = $('#c1');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Monday-";
+                    for (var j = i ; j < 5 ; j++) {
+                        var val = $("#i" + j).val();
+                        time_string = time_string + val + ",";
+                    }
+                    time_string = time_string + "|";
+                }
+            }
+            else if (i == 5) {
+                var ckbox = $('#c2');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Tuesday-";
+                    for (var j = i ; j < 9 ; j++) {
+                        time_string = time_string + $("#i" + j).val() + ",";
+                    }
+                    time_string = time_string + "|";
+                }
+            }
+            else if (i == 9) {
+                var ckbox = $('#c3');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Wednesday-";
+                    for (var j = i ; j < 13 ; j++) {
+                        time_string = time_string + $("#i" + j).val() + ",";
+                    }
+                    time_string = time_string + "|";
+                }
+            }
+            else if (i == 13) {
+                var ckbox = $('#c4');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Thursday-";
+                    for (var j = i ; j < 17 ; j++) {
+                        time_string = time_string + $("#i" + j).val() + ",";
+                    }
+                    time_string = time_string + "|";
+                }
+            }
+            else if (i == 17) {
+                var ckbox = $('#c5');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Friday-";
+                    for (var j = i ; j < 21 ; j++) {
+                        time_string = time_string + $("#i" + j).val() + ",";
+                    }
+
+                    time_string = time_string + "|";
+                }
+            }
+            else if (i == 21) {
+                var ckbox = $('#c6');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Saturday-";
+                    for (var j = i ; j < 25 ; j++) {
+                        time_string = time_string + $("#i" + j).val() + ",";
+                    }
+                    time_string = time_string + "|";
+                }
+            }
+            else if (i == 25) {
+                var ckbox = $('#c7');
+                if (!ckbox.is(':checked')) {
+                    time_string = time_string + "Sunday-";
+                    for (var j = i ; j < 29 ; j++) {
+                        time_string = time_string + $("#i" + j).val() + ",";
+                    }
+                    time_string = time_string + "|";
+                }
+            }
+            i = i + 4;
+
+
+        }
+        alert(time_string);
+
+        $("#custom_timepicker_id").val(time_string);
+
+    }
+
+
+</script>
+
+<!-- Jquery -->
+
+<script src="@Url.Content("~/vendor/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/vendor/jquery/jquery_ui/jquery-ui.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+$(function () {
+				$('#ii1').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii2').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii3').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii4').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii5').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii6').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii7').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii8').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii9').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii10').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii11').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii12').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii13').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii14').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii15').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii16').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii17').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii18').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii19').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+$(function () {
+				$('#ii20').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii21').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii22').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii23').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii24').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii25').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii26').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii27').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+
+$(function () {
+				$('#ii28').datetimepicker({
+					format: 'LT',
+					 pickDate: false
+				});
+			});
+function checkboxDetect(num)
+{
+	if(document.getElementById("c"+num).checked == true)
+	{
+		document.getElementById("r"+num).style.backgroundColor = "lightgrey";
+		document.getElementById("i"+((num-1)*4+1)).disabled = true;
+		document.getElementById("i"+((num-1)*4+2)).disabled = true;
+		document.getElementById("i"+((num-1)*4+3)).disabled = true;
+		document.getElementById("i"+((num-1)*4+4)).disabled = true;
+	}
+	else
+	{
+		document.getElementById("r"+num).style.backgroundColor = "white";
+		document.getElementById("i"+((num-1)*4+1)).disabled = false;
+		document.getElementById("i"+((num-1)*4+2)).disabled = false;
+		document.getElementById("i"+((num-1)*4+3)).disabled = false;
+		document.getElementById("i"+((num-1)*4+4)).disabled = false;
+	}
+}
+
+$("#drop").change(function () {
+
+	 var ddl = document.getElementById("drop");
+	 var selectedValue = ddl.options[ddl.selectedIndex].value;
+
+	 if (selectedValue == "Single Site Company") {
+		 var label1 = document.getElementById("agencyyy");
+		 label1.style.display = 'none';
+	 }
+	 if (selectedValue == "Multi Site Company") {
+		 var label3 = document.getElementById("agencyyy");
+		 label3.style.display = 'block';
+	 }
+});
+
+var image_counter = 1;
+function readFile() {
+			  if (image_counter == 5)
+			  {
+				  document.getElementById("fileToUpload").disabled=true;
+			  }
+
+		  if (this.files && this.files[0]) {
+
+			var FR= new FileReader();
+
+			FR.addEventListener("load", function(e) {
+			  document.getElementById("dispImage"+image_counter).src = e.target.result;
+			  currImage = e.target.result;
+			  image_counter++;
+			  document.getElementById("dispImage"+image_counter).style.display="block";
+
+			  //alert(currImage);
+			});
+
+			FR.readAsDataURL( this.files[0] );
+		  }
+
+		}var sDATA;
+		var currImage="@Url.Content("~/img/avatar1.png")";
+			currImage = document.getElementById("fileToUpload").addEventListener("change", readFile);
+			var retrievedObject = JSON.parse(sessionStorage.getItem('curr'));
+
+function jsFunction(a){
+	if(a==12){
+		var x = document.getElementsByClassName("form-control wh-time");
+		var i;
+		for (i = 0; i < x.length; i++) {
+			x[i].placeholder = "11:59 AM";
+		}
+	}
+	if(a==24){
+		var x = document.getElementsByClassName("form-control wh-time");
+		var i;
+		for (i = 0; i < x.length; i++) {
+			x[i].placeholder = "23:59";
+		}
+	}
+}
+function changeTabFunc(a){
+	document.getElementById("dynamicItem"+a).className = "";
+	document.getElementById("dynamicItem"+(a+1)).className = "active";
+	if(a==1){
+		document.getElementById("Details").className = "tab-pane";
+		document.getElementById("locationDetails").className = "tab-pane active";
+	}
+	if(a==2){
+		document.getElementById("locationDetails").className = "tab-pane";
+		document.getElementById("contactDetails").className = "tab-pane active";
+	}
+	if(a==3){
+		document.getElementById("contactDetails").className = "tab-pane";
+		document.getElementById("regionalSettings").className = "tab-pane active";
+	}
+	if(a==4){
+		document.getElementById("regionalSettings").className = "tab-pane";
+		document.getElementById("businessDetails").className = "tab-pane active";
+	}
+	if(a==5){
+		document.getElementById("businessDetails").className = "tab-pane";
+		document.getElementById("photoGallery").className = "tab-pane active";
+	}
+	if(a==6){
+		document.getElementById("photoGallery").className = "tab-pane";
+		document.getElementById("userAndAccountType").className = "tab-pane active";
+	}
+	if(a==7){
+		document.getElementById("userAndAccountType").className = "tab-pane";
+		document.getElementById("optionSMS").className = "tab-pane active";
+	}
+	if(a==8){
+		document.getElementById("optionSMS").className = "tab-pane";
+		document.getElementById("workingHours").className = "tab-pane active";
+	}
+	if (a == 9)
+	{
+		custome_timepicker();
+		document.getElementById("workingHours").className = "tab-pane";
+		document.getElementById("social").className = "tab-pane active";
+	}
+}
+function changeTabFunc2(a){
+	document.getElementById("dynamicItem"+a).className = "";
+	document.getElementById("dynamicItem"+(a-1)).className = "active";
+	if(a==2){
+
+		document.getElementById("locationDetails").className = "tab-pane";
+		document.getElementById("Details").className = "tab-pane active";
+	}
+	if(a==3){
+
+		document.getElementById("contactDetails").className = "tab-pane";
+		document.getElementById("locationDetails").className = "tab-pane active";
+	}
+	if(a==4){
+
+		document.getElementById("regionalSettings").className = "tab-pane";
+		document.getElementById("contactDetails").className = "tab-pane active";
+	}
+	if(a==5){
+
+		document.getElementById("businessDetails").className = "tab-pane";
+		document.getElementById("regionalSettings").className = "tab-pane active";
+	}
+	if(a==6){
+
+		document.getElementById("photoGallery").className = "tab-pane";
+		document.getElementById("businessDetails").className = "tab-pane active";
+	}
+	if(a==7){
+
+		document.getElementById("userAndAccountType").className = "tab-pane";
+		document.getElementById("photoGallery").className = "tab-pane active";
+	}
+	if(a==8){
+		document.getElementById("optionSMS").className = "tab-pane";
+		document.getElementById("userAndAccountType").className = "tab-pane active";
+	}
+	if(a==9){
+		document.getElementById("workingHours").className = "tab-pane";
+		document.getElementById("optionSMS").className = "tab-pane active";
+	}
+	if(a==10){
+		document.getElementById("social").className = "tab-pane";
+		document.getElementById("workingHours").className = "tab-pane active";
+	}
+}
+function func1() {
+	$("#IntervensionZone_id").val("On_site");
+	alert($("#IntervensionZone_id").val());
+
+}
+function func2() {
+	$("#IntervensionZone_id").val("Home");
+
+}
+function func22() {
+	$("#IntervensionZone_id").val("Both");
+
+}
+ var map;
+	  function initMap() {
+		map = new google.maps.Map(document.getElementById('map'), {
+		  center: {lat: 30.397, lng: 64.644},
+		  zoom: 4
+		});
+		google.maps.event.trigger(map, 'resize');
+
+	  }
+	   $(window).load(function () {
+			BindResizeEvent();
+			initMap();
+		});
+		function BindResizeEvent() {
+			$("a[href='#locationDetails']").on('shown.bs.tab', function () {
+				google.maps.event.trigger(map, 'resize');
+			});
+		}
+	jQuery(document).ready(function () {
+
+		"use strict";
+
+		// Init Theme Core
+		Core.init();
+
+		// Init Demo JS
+		Demo.init();
+
+
+		// CKEditor
+		CKEDITOR.replace('editor1');
+
+		// Init Select2 - Basic Single
+		$(".select2-single").select2();
+
+		// Init Select2 - Basic Multiple
+		$(".select2-multiple").select2({
+			placeholder: "Select a state",
+			allowClear: true
+		});
+
+		// Init Select2 - Contextuals (via html classes)
+		$(".select2-primary").select2(); // select2 contextual - primary
+		$(".select2-success").select2(); // select2 contextual - success
+		$(".select2-info").select2();    // select2 contextual - info
+		$(".select2-warning").select2(); // select2 contextual - warning
+
+		// Init Bootstrap Maxlength Plugin
+		$('input[maxlength]').maxlength({
+			threshold: 15,
+			placement: "right"
+		});
+
+		// Dual List Plugin Init
+		var demo1 = $('.demo1').bootstrapDualListbox({
+			nonSelectedListLabel: 'Options',
+			selectedListLabel: 'Selected',
+			preserveSelectionOnMove: 'moved',
+			moveOnSelect: true,
+			nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+		});
+
+		$("#demoform").submit(function () {
+			alert("Options Selected: " + $('.demo1').val());
+			return false;
+		});
+
+		// Init Twitter Typeahead.js
+		var substringMatcher = function (strs) {
+			return function findMatches(q, cb) {
+				var matches, substrRegex;
+
+				// an array that will be populated with substring matches
+				matches = [];
+
+				// regex used to determine if a string contains the substring `q`
+				substrRegex = new RegExp(q, 'i');
+
+				// iterate through the pool of strings and for any string that
+				// contains the substring `q`, add it to the `matches` array
+				$.each(strs, function (i, str) {
+					if (substrRegex.test(str)) {
+						// the typeahead jQuery plugin expects suggestions to a
+						// JavaScript object, refer to typeahead docs for more info
+						matches.push({
+							value: str
+						});
+					}
+				});
+
+				cb(matches);
+			};
+		};
+
+		var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+			'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+			'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+			'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+			'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+			'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+			'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+			'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+			'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+		];
+
+		// Init Typeahead Plugin with state aray
+		$('.typeahead').typeahead({
+			hint: true,
+			highlight: true,
+			minLength: 1
+		}, {
+			name: 'states',
+			displayKey: 'value',
+			source: substringMatcher(states)
+		});
+
+		// DateRange plugin options
+		var rangeOptions = {
+			ranges: {
+				'Today': [moment(), moment()],
+				'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+				'Last 7 Days': [moment().subtract('days', 6), moment()],
+				'Last 30 Days': [moment().subtract('days', 29), moment()],
+				'This Month': [moment().startOf('month'), moment().endOf('month')],
+				'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+			},
+			startDate: moment().subtract('days', 29),
+			endDate: moment()
+		}
+
+		// Init DateRange plugin
+		$('#daterangepicker1').daterangepicker();
+
+		// Init DateRange plugin
+		$('#daterangepicker2').daterangepicker(
+			rangeOptions,
+			function (start, end) {
+				$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+			}
+		);
+
+		// Init DateRange plugin
+		$('#inline-daterange').daterangepicker(
+			rangeOptions,
+			function (start, end) {
+				$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+			}
+		);
+
+		// Init DateTimepicker - fields
+		$('#datetimepicker1').datetimepicker();
+		$('#datetimepicker2').datetimepicker();
+
+		// Init DateTimepicker - inline + range detection
+		$('#datetimepicker3').datetimepicker({
+			defaultDate: "9/4/2014",
+			inline: true,
+		});
+
+		// Init DateTimepicker - fields + Date disabled (only time picker)
+		$('#datetimepicker5').datetimepicker({
+			defaultDate: "9/25/2014",
+			pickDate: false,
+		});
+		// Init DateTimepicker - fields + Date disabled (only time picker)
+		$('#datetimepicker6').datetimepicker({
+			defaultDate: "9/25/2014",
+			pickDate: false,
+		});
+		// Init DateTimepicker - inline + Date disabled (only time picker)
+		$('#datetimepicker7').datetimepicker({
+			defaultDate: "9/25/2014",
+			pickDate: false,
+			inline: true
+		});
+
+		// Init Colorpicker plugin
+		$('#demo_apidemo').colorpicker({
+			color: bgPrimary
+		});
+		$('.demo-auto').colorpicker();
+
+		// Init jQuery Tags Manager
+		$(".tm-input").tagsManager({
+			tagsContainer: '.tags',
+			prefilled: ["Miley Cyrus", "Apple", "A Long Tag", "Na uh"],
+			tagClass: 'tm-tag-info',
+		});
+
+		// Init Boostrap Multiselects
+		$('#multiselect1').multiselect();
+		$('#multiselect2').multiselect({
+			includeSelectAllOption: true
+		});
+		$('#multiselect3').multiselect();
+		$('#multiselect4').multiselect({
+			enableFiltering: true,
+		});
+		$('#multiselect5').multiselect({
+			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-primary'
+		});
+		$('#multiselect6').multiselect({
+			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-info'
+		});
+		$('#multiselect7').multiselect({
+			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-success'
+		});
+		$('#multiselect8').multiselect({
+			buttonClass: 'multiselect dropdown-toggle btn btn-default btn-warning'
+		});
+
+		// Init jQuery spinner init - default
+		$("#spinner1").spinner();
+
+		// Init jQuery spinner init - currency
+		$("#spinner2").spinner({
+			min: 5,
+			max: 2500,
+			step: 25,
+			start: 1000,
+			//numberFormat: "C"
+		});
+
+		// Init jQuery spinner init - decimal
+		$("#spinner3").spinner({
+			step: 0.01,
+			numberFormat: "n"
+		});
+
+		// jQuery Time Spinner settings
+		$.widget("ui.timespinner", $.ui.spinner, {
+			options: {
+				// seconds
+				step: 60 * 1000,
+				// hours
+				page: 60
+			},
+			_parse: function (value) {
+				if (typeof value === "string") {
+					// already a timestamp
+					if (Number(value) == value) {
+						return Number(value);
+					}
+					return +Globalize.parseDate(value);
+				}
+				return value;
+			},
+
+			_format: function (value) {
+				return Globalize.format(new Date(value), "t");
+			}
+		});
+
+		// Init jQuery Time Spinner
+		$("#spinner4").timespinner();
+
+		// Init jQuery Masked inputs
+		$('.date').mask('99/99/9999');
+		$('.time').mask('99:99:99');
+		$('.date_time').mask('99/99/9999 99:99:99');
+		$('.zip').mask('99999-999');
+		$('.phone').mask('(999) 999-9999');
+		$('.phoneext').mask("(999) 999-9999 x99999");
+		$(".money").mask("999,999,999.999");
+		$(".product").mask("999.999.999.999");
+		$(".tin").mask("99-9999999");
+		$(".ssn").mask("999-99-9999");
+		$(".ip").mask("9ZZ.9ZZ.9ZZ.9ZZ");
+		$(".eyescript").mask("~9.99 ~9.99 999");
+		$(".custom").mask("9.99.999.9999");
+
+});
+</script>
+

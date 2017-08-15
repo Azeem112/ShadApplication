@@ -1435,7 +1435,40 @@ namespace Shad_BookingApplication.Controllers
 
             //employeeViewModel.GroupServicesList = Get_CompanyServicesOfLoginUser();
 
+            var id=User.Identity.GetUserId();
+            var user_data=db.AspNetUsers.Where(x => x.Id == id).SingleOrDefault();
+            var cus_data=db.AspNetCustomers.Where(x => x.UserID == user_data.HeadId).SingleOrDefault();
+            var agenc_data = db.AspNetAgencies.Where(x => x.HeadId == cus_data.Id).ToList();
+
+            employeeViewModel.agency_list = agenc_data;
             return View(employeeViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddEmployee(AddEmployeeViewModel employeeViewModel)
+        {
+            //selected_services_name
+            var services_list = Request.Form["selected_services_name"].ToString();
+
+
+            HttpPostedFileBase file = Request.Files["Employee_img"];
+            if (file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/ServerFiles"), fileName);
+                file.SaveAs(path);
+                employeeViewModel.Employee.Photo = path;
+
+            }
+            else
+            {
+                employeeViewModel.Employee.Photo = "";
+            }
+
+            var time = Request.Form["custom_timepicker_name"].ToString();
+            var id = time_string_parse(time);
+
+            return View();
         }
 
         public ActionResult AddItem()
