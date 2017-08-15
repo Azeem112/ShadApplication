@@ -1676,7 +1676,7 @@
 
 
 
-    /*
+	/*
 	function user_data() {
 		//alert($("#agency_id").val());
 		var agencyAdmin_id = $("#AgencyAdmin").val();
@@ -1715,10 +1715,10 @@
 			}
 		});
 	}
-    */
+	*/
 	jQuery(window).load(function () {
-	    //user_data();
-	    alert("intervention");
+		//user_data();
+		alert("intervention");
 		var intervension = $("#IntervensionZone_id").val();
 		intervension = intervension.trim();
 		
@@ -2117,6 +2117,7 @@ function func22() {
 		google.maps.event.trigger(map, 'resize');
 
 	  }
+	/*
 	  $(window).load(function () {
 		  var ddl = document.getElementById("drop");
 		  var selectedValue = ddl.options[ddl.selectedIndex].value;
@@ -2130,7 +2131,7 @@ function func22() {
 		  }
 			BindResizeEvent();
 			initMap();
-		});
+		});*/
 		function BindResizeEvent() {
 			$("a[href='#locationDetails']").on('shown.bs.tab', function () {
 				google.maps.event.trigger(map, 'resize');
@@ -2142,7 +2143,7 @@ function func22() {
 <script>
 jQuery(window).load(function () {
 
-
+	alert("hahaha");
 	var region_id = $("#region_id1").val();
 	alert(region_id);
 	   $("#region_id1").val(region_id);
@@ -2155,7 +2156,7 @@ jQuery(window).load(function () {
 		   dataType: "json",
 		   success: function (response)
 		   {
-		       alert(response);
+			   alert(response);
 			  // alert(response.CurrencyName);
 			   $("#region_country_id").val(response.CountryName);
 			   $("#region_timezone_id").val(response.TimeZoneName);
@@ -2285,7 +2286,7 @@ jQuery(window).load(function () {
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: function (response) {
-		    alert(response);
+			alert(response);
 			
 			var row_no = 1;
 			var j = 1;

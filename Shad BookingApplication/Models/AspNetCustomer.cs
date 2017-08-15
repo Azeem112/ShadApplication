@@ -20,7 +20,6 @@ namespace Shad_BookingApplication.Models
             this.AspNetAgencies = new HashSet<AspNetAgency>();
             this.AspNetComanyServices = new HashSet<AspNetComanyService>();
             this.AspNetCustomer_SubCatageory = new HashSet<AspNetCustomer_SubCatageory>();
-            this.AspNetDiscounts = new HashSet<AspNetDiscount>();
             this.AspNetInvoices = new HashSet<AspNetInvoice>();
         }
     
@@ -54,8 +53,6 @@ namespace Shad_BookingApplication.Models
         public virtual AspNetCustomerType AspNetCustomerType { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetWorkingWeekTime AspNetWorkingWeekTime { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetDiscount> AspNetDiscounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetInvoice> AspNetInvoices { get; set; }
     }

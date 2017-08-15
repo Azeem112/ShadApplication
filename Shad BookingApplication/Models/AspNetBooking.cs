@@ -38,6 +38,7 @@ namespace Shad_BookingApplication.Models
     
         public virtual AspNetBookingItem AspNetBookingItem { get; set; }
         public virtual AspNetGiftVoucher AspNetGiftVoucher { get; set; }
+        public virtual AspNetCompanyCustomer AspNetCompanyCustomer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetBookingService> AspNetBookingServices { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Shad_BookingApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetCompanyCustomer()
         {
-            this.AspNetInvoices = new HashSet<AspNetInvoice>();
+            this.AspNetBookings = new HashSet<AspNetBooking>();
         }
     
         public int Id { get; set; }
@@ -40,8 +40,8 @@ namespace Shad_BookingApplication.Models
         public string Image { get; set; }
     
         public virtual AspNetAgency AspNetAgency { get; set; }
-        public virtual AspNetCompanyNotifination AspNetCompanyNotifination { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetInvoice> AspNetInvoices { get; set; }
+        public virtual ICollection<AspNetBooking> AspNetBookings { get; set; }
+        public virtual AspNetCompanyNotifination AspNetCompanyNotifination { get; set; }
     }
 }

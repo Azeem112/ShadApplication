@@ -27,8 +27,12 @@ namespace Shad_BookingApplication.Models
         public string UserId { get; set; }
         public Nullable<int> AgencyId { get; set; }
         public string Photo { get; set; }
+        public Nullable<int> ServiceGroupId { get; set; }
+        public Nullable<int> EmployeeServiceId { get; set; }
     
         public virtual AspNetAgency AspNetAgency { get; set; }
+        public virtual AspNetEmployee_Services AspNetEmployee_Services { get; set; }
+        public virtual AspNetServiceGroup AspNetServiceGroup { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetWorkingWeekTime AspNetWorkingWeekTime { get; set; }
     }

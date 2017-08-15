@@ -620,7 +620,7 @@ namespace Shad_BookingApplication.Controllers
                             mon.StartTime = mon_obj.StartTime;
                             mon.EndTime = mon_obj.EndTime;
                             mon.LunchFrom = mon_obj.LunchFrom;
-                            mon.LunchToo = mon.LunchToo;
+                            mon.LunchToo = mon_obj.LunchToo;
                             mon.Day = mon_obj.Day;
                             mon.isoff = mon_obj.isoff;
                             mon_obj.Id = mon.Id;
@@ -676,7 +676,7 @@ namespace Shad_BookingApplication.Controllers
                             tue.StartTime = tue_obj.StartTime;
                             tue.EndTime = tue_obj.EndTime;
                             tue.LunchFrom = tue_obj.LunchFrom;
-                            tue.LunchToo = tue.LunchToo;
+                            tue.LunchToo = tue_obj.LunchToo;
                             tue.Day = tue_obj.Day;
                             tue.isoff = tue_obj.isoff;
                             tue_obj.Id = tue.Id;
@@ -732,7 +732,7 @@ namespace Shad_BookingApplication.Controllers
                             wed.StartTime = wed_obj.StartTime;
                             wed.EndTime = wed_obj.EndTime;
                             wed.LunchFrom = wed_obj.LunchFrom;
-                            wed.LunchToo = wed.LunchToo;
+                            wed.LunchToo = wed_obj.LunchToo;
                             wed.Day = wed_obj.Day;
                             wed.isoff = wed_obj.isoff;
                             wed_obj.Id = wed.Id;

@@ -17,6 +17,7 @@ namespace Shad_BookingApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetServiceGroup()
         {
+            this.AspNetEmployees = new HashSet<AspNetEmployee>();
             this.AspNetService_Group = new HashSet<AspNetService_Group>();
         }
     
@@ -24,6 +25,8 @@ namespace Shad_BookingApplication.Models
         public string Name { get; set; }
         public string Description { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetEmployee> AspNetEmployees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetService_Group> AspNetService_Group { get; set; }
     }

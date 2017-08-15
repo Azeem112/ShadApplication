@@ -17,9 +17,5 @@ namespace Shad_BookingApplication.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<double> Rate { get; set; }
-        public Nullable<int> CustomerId { get; set; }
-        public string Type { get; set; }
-    
-        public virtual AspNetCustomer AspNetCustomer { get; set; }
     }
 }

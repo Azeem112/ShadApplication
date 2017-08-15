@@ -21,9 +21,7 @@ namespace Shad_BookingApplication.Models
         public string Status { get; set; }
         public Nullable<double> Tax { get; set; }
         public Nullable<int> CustomerID { get; set; }
-        public Nullable<int> CompanyCustomerID { get; set; }
     
-        public virtual AspNetCompanyCustomer AspNetCompanyCustomer { get; set; }
         public virtual AspNetCustomer AspNetCustomer { get; set; }
     }
 }
